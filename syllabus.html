@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>课程大纲 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html" class="cur"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><h1 id="课程大纲">课程大纲</h1>
+<h2 id="课程目标">课程目标</h2>
+<p>让有科研经验但近年少写代码的老师和学生，能指挥 Claude Code 与 Codex
+这类 Agent 写稿、读文献和做实验，并把这些步骤接成能自己运行的流程。</p>
+<p>完成课程后，你能够：</p>
+<ol type="1">
+<li>为一个科研任务建项目文件夹，用文件把材料、约定和产物交代给
+Agent。</li>
+<li>让一个 Agent 写、另一家的 Agent 审，并把反复用到的要求做成
+Skill。</li>
+<li>用 Agent 把一批论文整理成可追溯的知识库，从中提出能检验的问题。</li>
+<li>指挥 Agent
+在本机或远程服务器上完成一次能重跑的实验，读懂结果能说明什么。</li>
+<li>把以上步骤接成定时运行的流程，认出 Agent
+最常见的几类失败，并为每类加上检查。</li>
+</ol>
+<h2 id="安排">安排</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>课</th>
+<th>时长</th>
+<th>下课时你有</th>
+<th>新添的工具</th>
+<th>对应目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 课前准备</td>
+<td>自学 20 分钟</td>
+<td>能和 Agent 对话的项目文件夹</td>
+<td>Claude Code，Codex</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1 Agent 写作</td>
+<td>60 分钟</td>
+<td>一稿没有 AI 味的稿子，一个写作 Skill</td>
+<td>AGENTS.md，Skill，跨厂商审稿</td>
+<td>1，2</td>
+</tr>
+<tr>
+<td>2 Agent 探索</td>
+<td>60 分钟</td>
+<td>论文知识库，三个能检验的问题</td>
+<td>Ego 浏览器，Obsidian，Sub-agent</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3 Agent 实验</td>
+<td>60 分钟</td>
+<td>一次能重跑的实验，一张结果图</td>
+<td>Git 与 GitHub，SSH 服务器，后台任务</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4 Agent 自动化与自进化</td>
+<td>60 分钟</td>
+<td>夜里自己跑的研究循环</td>
+<td>定时唤醒，无人值守调用，经验榜，GitHub Pages</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5 选修 编排安全</td>
+<td>60 分钟</td>
+<td>工作台的权限表</td>
+<td>权限模式，沙箱</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6 选修 编排理论</td>
+<td>60 分钟</td>
+<td>一个算得出来的编排决策</td>
+<td></td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>时长可按现场微调。四堂必修按顺序上，后一堂会用到前一堂做出的东西；两堂选修在第四堂之后任选。</p>
+<h2 id="每堂课怎么上">每堂课怎么上</h2>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 至 5 分钟</td>
+<td>看成品：先看这堂课最后要做出来的东西</td>
+</tr>
+<tr>
+<td>5 至 15 分钟</td>
+<td>讲：本课新添的工具，为什么需要它</td>
+</tr>
+<tr>
+<td>15 至 50 分钟</td>
+<td>做：三段练习，每段先演示，再各自动手</td>
+</tr>
+<tr>
+<td>50 至 55 分钟</td>
+<td>最容易出错的地方</td>
+</tr>
+<tr>
+<td>55 至 60 分钟</td>
+<td>回顾要点，布置用自己的材料再做一遍</td>
+</tr>
+</tbody>
+</table>
+<p>讲的部分不超过十分钟，其余时间都在动手。每段练习给一张任务卡，复制给
+Agent
+就能开始。任务卡都写清四件事：读什么，做什么，存到哪，做到哪里停。</p>
+<h2 id="考核">考核</h2>
+<p>每堂课带走的成果就是作业，课后换成自己的材料再做一遍。结课作品是用自己的课题搭一个小工作台：包含前四堂的产物，在一次无人值守的运行之后交出一个结果页面。</p>
+<h2 id="需要准备">需要准备</h2>
+<ul>
+<li>一台 Mac 或 Windows 电脑。</li>
+<li>至少一个订阅：Claude 的 Pro 或以上，或者含 Codex 的 ChatGPT
+套餐。两个都有最好，第 1 课起会让一家写、另一家审。</li>
+<li>第 3 课最好有一台能 SSH
+登录的服务器；没有的话，用本机跑一个小实验也能完成。</li>
+</ul>
+</article>
+<article lang="en"><h1 id="syllabus">Syllabus</h1>
+<h2 id="aim">Aim</h2>
+<p>Researchers who know their field but have not written much code
+lately learn to direct agents such as Claude Code and Codex through
+writing, reading the literature and running experiments, and to join
+these steps into a workflow that runs on its own.</p>
+<p>By the end of the course you will be able to:</p>
+<ol type="1">
+<li>Set up a project folder for a research task and use files to hand an
+agent its material, conventions and outputs.</li>
+<li>Have one agent write and an agent from another vendor review, and
+turn requirements you repeat into a Skill.</li>
+<li>Use agents to turn a set of papers into a traceable knowledge base
+and draw testable questions from it.</li>
+<li>Direct an agent through a rerunnable experiment, locally or on a
+remote server, and read what the result does and does not show.</li>
+<li>Join these steps into a scheduled workflow, recognise the most
+common ways agents fail, and add a check for each.</li>
+</ol>
+<h2 id="schedule">Schedule</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Session</th>
+<th>Length</th>
+<th>You leave with</th>
+<th>Tools added</th>
+<th>Outcomes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 Setup</td>
+<td>20 min, self-paced</td>
+<td>A project folder you can talk to an agent in</td>
+<td>Claude Code, Codex</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1 Writing with Agents</td>
+<td>60 min</td>
+<td>A draft with no AI flavour, a writing Skill</td>
+<td>AGENTS.md, Skills, cross-vendor review</td>
+<td>1, 2</td>
+</tr>
+<tr>
+<td>2 Exploring with Agents</td>
+<td>60 min</td>
+<td>A literature knowledge base, three testable questions</td>
+<td>Ego browser, Obsidian, sub-agents</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3 Experimenting with Agents</td>
+<td>60 min</td>
+<td>A rerunnable experiment, one result figure</td>
+<td>Git and GitHub, SSH servers, background jobs</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4 Automation and Self-Evolution</td>
+<td>60 min</td>
+<td>A research loop that runs overnight</td>
+<td>Scheduled wake-ups, headless runs, playbooks, GitHub Pages</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5 Elective: Safety</td>
+<td>60 min</td>
+<td>A permission map for your workbench</td>
+<td>Permission modes, sandbox</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6 Elective: Theory</td>
+<td>60 min</td>
+<td>An orchestration decision you can compute</td>
+<td></td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Timings can shift a little on the day. The four core sessions run in
+order, since each uses what the previous one built. The electives can
+follow session four in either order.</p>
+<h2 id="how-a-session-runs">How a session runs</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Time</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 to 5 min</td>
+<td>See the finished product the session builds toward</td>
+</tr>
+<tr>
+<td>5 to 15 min</td>
+<td>Talk: the tools this session adds, and why you need them</td>
+</tr>
+<tr>
+<td>15 to 50 min</td>
+<td>Do: three exercises, each a short demo then hands-on</td>
+</tr>
+<tr>
+<td>50 to 55 min</td>
+<td>Where agents go wrong most</td>
+</tr>
+<tr>
+<td>55 to 60 min</td>
+<td>Key points, and redoing it on your own material</td>
+</tr>
+</tbody>
+</table>
+<p>Talking takes at most ten minutes; the rest is hands-on. Each
+exercise comes with a task card you paste to the agent. Every card says
+four things: what to read, what to do, where to save it, and where to
+stop.</p>
+<h2 id="assessment">Assessment</h2>
+<p>What you build in each session is the assignment; afterwards, redo it
+with your own material. The final piece is a small workbench for your
+own research topic. It holds the outputs of the four core sessions and,
+after one unattended run, produces a results page.</p>
+<h2 id="what-you-need">What you need</h2>
+<ul>
+<li>A Mac or Windows computer.</li>
+<li>At least one subscription: Claude Pro or above, or a ChatGPT plan
+that includes Codex. Both is best, since from session one one vendor
+writes and the other reviews.</li>
+<li>For session three, ideally a server you can SSH into. Without one, a
+small experiment on your own machine works too.</li>
+</ul>
+</article>
+</main>
+</div>
+</body>
+</html>

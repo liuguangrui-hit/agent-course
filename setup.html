@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>课前准备 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html" class="cur"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="课前准备">0 课前准备</h1>
+<div class="goal">
+<p>二十分钟后，你有一个 Agent
+能读能写的项目文件夹，并且已经让它干完第一件活。</p>
+</div>
+<h2 id="需要什么">需要什么</h2>
+<p>一台 Mac 或 Windows 电脑，加上至少一个订阅：Claude 的 Pro
+或以上，或者含 Codex 的 ChatGPT 套餐。两个都有最好。</p>
+<p>不需要会编程，也不需要先学命令行。下面全程用桌面应用，像用聊天软件一样用。</p>
+<h2 id="装-claude-桌面版5-分钟">1 装 Claude 桌面版，5 分钟</h2>
+<p>从 <a href="https://code.claude.com/docs/en/desktop">Claude Code
+桌面版说明</a> 页面下载安装包，安装后用你的 Claude
+账号登录，点窗口上方的 <strong>Code</strong> 标签。Code 标签里的 Claude
+能读写你电脑上的文件，这是它和网页聊天最大的区别。</p>
+<h2 id="打开练习文件夹3-分钟">2 打开练习文件夹，3 分钟</h2>
+<div class="download">
+<p><a href="downloads/lesson-0-zh.zip">下载第 0 课练习材料</a></p>
+</div>
+<p>解压到桌面，得到 <code>lesson-0</code>
+文件夹，里面只有一份乱糟糟的会议记录 <code>notes.md</code>。</p>
+<p>在 Code 标签的输入框附近有几个选项：运行位置选
+<strong>Local</strong>，项目文件夹选刚解压的
+<code>lesson-0</code>，权限模式先选最保守的
+<strong>Manual</strong>。Manual
+下它每次改文件或运行命令都会先问你，你能看清它每一步在做什么。</p>
+<h2 id="让它干第一件活5-分钟">3 让它干第一件活，5 分钟</h2>
+<p>把下面这段复制进输入框：</p>
+<pre class="text"><code>读 notes.md，这是一次组会的记录。
+把它整理成一页纪要：列出做了哪些决定，每个人的待办是什么，截止时间是哪天。
+存成 minutes.md。做完告诉我新建或改动了哪些文件。</code></pre>
+<p>它会先读文件，再问你能不能新建
+<code>minutes.md</code>，同意即可。打开文件夹，<code>minutes.md</code>
+出现了，打开看内容对不对。</p>
+<p>接着追加一句，练习多轮对话：</p>
+<pre class="text"><code>把待办按截止日期从近到远排好，再另存一份英文版 minutes-en.md。</code></pre>
+<p>这张任务卡的写法后面每堂课都会用：<strong>读什么，做什么，存到哪，做到哪里停</strong>。四件事说清楚，Agent
+就很少跑偏。</p>
+<h2 id="装-codex5-分钟">4 装 Codex，5 分钟</h2>
+<p>按 <a href="https://learn.chatgpt.com/docs/quickstart">Codex
+快速入门</a> 下载 Codex 桌面应用，用 ChatGPT 账号登录，打开同一个
+<code>lesson-0</code> 文件夹，发这段：</p>
+<pre class="text"><code>读 notes.md 和 minutes.md。检查纪要有没有漏掉或写错会上的决定，列出来。不要改任何文件。</code></pre>
+<p>一家写，另一家查。这是第 1 课的核心做法，这里先尝一口。</p>
+<h2 id="可选命令行">5 可选：命令行</h2>
+<p>习惯终端的人可以装命令行版，功能和桌面版一样。Claude Code 在 Mac
+上运行
+<code>curl -fsSL https://claude.ai/install.sh | bash</code>，Codex 运行
+<code>npm i -g @openai/codex</code>。之后在项目文件夹里输入
+<code>claude</code> 或 <code>codex</code> 即可开始。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>一个对话聊到底。</strong> Agent
+每回答一次，都要把这个对话里之前的全部内容重读一遍。聊得越久越慢、越贵，也越容易忘掉早先交代的要求。换一件事就开新对话；需要接着用的东西，让它写进文件。</p>
+</div>
+<div class="pitfall">
+<p><strong>把整个桌面设成项目文件夹。</strong> Agent
+会到处翻找，又慢，也可能动到不该动的文件。一件任务一个文件夹，要用的材料放进去。</p>
+</div>
+<div class="pitfall">
+<p><strong>两个对话同时改同一个文件。</strong>
+后保存的会覆盖先保存的，而且两边都以为自己做完了。同一件事只交给一个对话。</p>
+</div>
+<div class="pitfall">
+<p><strong>订阅和 API Key 混着用。</strong> 如果电脑里设过
+<code>ANTHROPIC_API_KEY</code>，Claude Code
+第一次启动会问你要不要用它，同意就改成按用量计费。用订阅就选不用。</p>
+</div>
+<section id="要点" class="keypoints">
+<h2>要点</h2>
+<ul>
+<li>Agent 只认文件夹里的东西：材料放进去，结果存成文件。</li>
+<li>一件事，一个对话，一个文件夹。</li>
+<li>任务卡写清四件事：读什么，做什么，存到哪，做到哪里停。</li>
+</ul>
+</section>
+</article>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="setup">0 Setup</h1>
+<div class="goal">
+<p>In twenty minutes you will have a project folder an agent can read
+and write, and it will have finished its first job.</p>
+</div>
+<h2 id="what-you-need">What you need</h2>
+<p>A Mac or Windows computer and at least one subscription: Claude Pro
+or above, or a ChatGPT plan that includes Codex. Both is best.</p>
+<p>You do not need to code or learn the command line first. Everything
+below uses the desktop apps, much like a chat app.</p>
+<h2 id="install-the-claude-desktop-app-5-minutes">1 Install the Claude
+desktop app, 5 minutes</h2>
+<p>Download the installer from the <a
+href="https://code.claude.com/docs/en/desktop">Claude Code desktop
+page</a>, sign in with your Claude account, and click the
+<strong>Code</strong> tab at the top. In the Code tab, Claude can read
+and write files on your computer. That is the big difference from
+chatting on the web.</p>
+<h2 id="open-the-exercise-folder-3-minutes">2 Open the exercise folder,
+3 minutes</h2>
+<div class="download">
+<p><a href="downloads/lesson-0-en.zip">Download the Session 0
+materials</a></p>
+</div>
+<p>Unzip it to your desktop. You get a <code>lesson-0</code> folder
+holding one messy set of meeting notes, <code>notes.md</code>.</p>
+<p>Near the input box in the Code tab there are a few options. Set the
+environment to <strong>Local</strong>, choose the <code>lesson-0</code>
+folder as the project folder, and start with the most cautious
+permission mode, <strong>Manual</strong>. In Manual mode it asks before
+every file edit or command, so you can see each step it takes.</p>
+<h2 id="give-it-its-first-job-5-minutes">3 Give it its first job, 5
+minutes</h2>
+<p>Paste this into the input box:</p>
+<pre class="text"><code>Read notes.md, the notes from a group meeting.
+Turn them into one page of minutes: what was decided, each person&#39;s to-dos, and their deadlines.
+Save it as minutes.md. When you&#39;re done, tell me which files you created or changed.</code></pre>
+<p>It reads the file first, then asks whether it may create
+<code>minutes.md</code>. Say yes. Open the folder:
+<code>minutes.md</code> is there. Check whether the content is
+right.</p>
+<p>Then send one more line to practise a multi-turn conversation:</p>
+<pre class="text"><code>Sort the to-dos by deadline, soonest first, and save a Chinese version as minutes-zh.md.</code></pre>
+<p>Every session uses this way of writing a task card: <strong>what to
+read, what to do, where to save it, where to stop</strong>. Say those
+four things and the agent rarely drifts.</p>
+<h2 id="install-codex-5-minutes">4 Install Codex, 5 minutes</h2>
+<p>Follow the <a href="https://learn.chatgpt.com/docs/quickstart">Codex
+quickstart</a> to install the Codex desktop app, sign in with your
+ChatGPT account, open the same <code>lesson-0</code> folder, and
+send:</p>
+<pre class="text"><code>Read notes.md and minutes.md. Check whether the minutes miss or misstate any decision from the meeting, and list them. Don&#39;t change any files.</code></pre>
+<p>One vendor writes, the other checks. That is the core habit of
+session one, and you just had a first taste.</p>
+<h2 id="optional-the-command-line">5 Optional: the command line</h2>
+<p>If you like the terminal, install the command-line versions. They do
+the same things as the desktop apps. For Claude Code on a Mac, run
+<code>curl -fsSL https://claude.ai/install.sh | bash</code>; for Codex,
+run <code>npm i -g @openai/codex</code>. Then type <code>claude</code>
+or <code>codex</code> inside a project folder to start.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>One conversation for everything.</strong> Every time the
+agent replies, it rereads the whole conversation so far. The longer you
+chat, the slower and more expensive it gets, and the more likely it
+forgets what you asked early on. Start a new conversation for each new
+task, and have the agent write anything you need later into a file.</p>
+</div>
+<div class="pitfall">
+<p><strong>Making your whole desktop the project folder.</strong> The
+agent searches everywhere, which is slow and may touch files it
+shouldn’t. One task, one folder, with the material it needs inside.</p>
+</div>
+<div class="pitfall">
+<p><strong>Two conversations editing the same file.</strong> The later
+save overwrites the earlier one, and both think they finished. Give each
+task to one conversation only.</p>
+</div>
+<div class="pitfall">
+<p><strong>Mixing a subscription with an API key.</strong> If
+<code>ANTHROPIC_API_KEY</code> is set on your machine, Claude Code asks
+on first launch whether to use it. Saying yes switches you to
+pay-per-use billing. If you’re on a subscription, say no.</p>
+</div>
+<section id="key-points" class="keypoints">
+<h2>Key points</h2>
+<ul>
+<li>The agent only knows what is in the folder: put material in, save
+results as files.</li>
+<li>One task, one conversation, one folder.</li>
+<li>A task card says four things: what to read, what to do, where to
+save it, where to stop.</li>
+</ul>
+</section>
+</article>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html" class="cur"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><h1 id="用-agent-做科研">用 Agent 做科研</h1>
+<p><span class="subtitle">从一篇稿子到一位 AI 科学家</span></p>
+<p>四堂实践课，外加两堂选修。每堂一小时左右，下课时手里有一个当堂做出来、能接着用的东西。</p>
+<p>Agent
+已经能读文件和跑代码，也能查资料和写网页。真正拉开差距的是会不会组织它干活：给它什么材料，让谁写谁审，什么时候放手让它自己跑，什么时候必须停下来看一眼。这门课练的就是这件事。</p>
+<p>课程从写作开始，因为写作要的工具最少。之后每堂课添几样新工具，先是浏览器和知识库，再是服务器和定时任务。到第四堂，前面做出的东西连成一个能自己转起来的科研循环。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>课</th>
+<th>下课时你有</th>
+<th>新添的工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="setup.html">0 课前准备</a></td>
+<td>一个能和 Agent 对话的项目文件夹</td>
+<td>Claude Code，Codex</td>
+</tr>
+<tr>
+<td><a href="writing.html">1 Agent 写作</a></td>
+<td>一稿没有 AI 味的稿子，一个随时能调用的写作 Skill</td>
+<td>AGENTS.md，Skill，跨厂商审稿</td>
+</tr>
+<tr>
+<td>2 Agent 探索</td>
+<td>一个方向的论文知识库，三个能检验的问题</td>
+<td>Ego 浏览器，Obsidian，Sub-agent</td>
+</tr>
+<tr>
+<td>3 Agent 实验</td>
+<td>一次能重跑的实验，一张结果图</td>
+<td>Git 与 GitHub，SSH 服务器，后台任务</td>
+</tr>
+<tr>
+<td>4 Agent 自动化与自进化</td>
+<td>一个夜里自己跑的研究循环</td>
+<td>定时唤醒，无人值守调用，经验榜，GitHub Pages</td>
+</tr>
+<tr>
+<td>5 选修 编排安全</td>
+<td>你的工作台的权限表</td>
+<td>权限模式，沙箱</td>
+</tr>
+<tr>
+<td>6 选修 编排理论</td>
+<td>一个算得出来的编排决策</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>每堂课都有一个当堂能看见的目标，一份可下载的练习材料，一段 Agent
+最容易出错的地方和对应的办法。最后一部分最值钱，它们来自每天和 Agent
+一起干活踩过的坑，很少写在官方文档里。</p>
+<p>开始之前，先花二十分钟做完<a
+href="setup.html">课前准备</a>。课程安排和目标见<a
+href="syllabus.html">课程大纲</a>。</p>
+</article>
+<article lang="en"><h1 id="research-with-agents">Research with Agents</h1>
+<p><span class="subtitle">From one draft to an AI scientist</span></p>
+<p>Four hands-on sessions and two electives. Each runs about an hour,
+and you leave with something you built in the room and can keep
+using.</p>
+<p>Agents can already read files and run code, search the literature and
+build web pages. What separates people now is whether they can organise
+that work: what material to hand over, who writes and who reviews, when
+to let the agent run on its own, and when to stop and look. That is what
+this course practises.</p>
+<p>We start with writing, because writing needs the fewest tools. Each
+session then adds a few: first a browser and a knowledge base, then
+servers and scheduled jobs. By session four, what you built earlier
+joins into a research loop that runs by itself.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Session</th>
+<th>You leave with</th>
+<th>Tools added</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="setup.html">0 Setup</a></td>
+<td>A project folder you can talk to an agent in</td>
+<td>Claude Code, Codex</td>
+</tr>
+<tr>
+<td><a href="writing.html">1 Writing with Agents</a></td>
+<td>A draft with no AI flavour, and a writing Skill you can call any
+time</td>
+<td>AGENTS.md, Skills, cross-vendor review</td>
+</tr>
+<tr>
+<td>2 Exploring with Agents</td>
+<td>A knowledge base for one research direction, and three testable
+questions</td>
+<td>Ego browser, Obsidian, sub-agents</td>
+</tr>
+<tr>
+<td>3 Experimenting with Agents</td>
+<td>An experiment anyone can rerun, and one result figure</td>
+<td>Git and GitHub, SSH servers, background jobs</td>
+</tr>
+<tr>
+<td>4 Automation and Self-Evolution</td>
+<td>A research loop that runs overnight</td>
+<td>Scheduled wake-ups, headless runs, playbooks, GitHub Pages</td>
+</tr>
+<tr>
+<td>5 Elective: Safety</td>
+<td>A permission map for your workbench</td>
+<td>Permission modes, sandbox</td>
+</tr>
+<tr>
+<td>6 Elective: Theory</td>
+<td>An orchestration decision you can compute</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Every session has a goal you can see by the end of the hour, a
+downloadable case, and a section on where agents go wrong most and what
+to do about it. That last part is the most valuable. It comes from
+working with agents every day, and little of it is in the official
+docs.</p>
+<p>Before the first session, spend twenty minutes on <a
+href="setup.html">Setup</a>. The schedule and learning outcomes are in
+the <a href="syllabus.html">Syllabus</a>.</p>
+</article>
+</main>
+</div>
+</body>
+</html>
