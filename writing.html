@@ -25,231 +25,375 @@
 <span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
 </nav>
 <main>
-<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skill</span><span class="chip new">+ 跨厂商审稿</span></div><h1 id="agent-写作">1 Agent 写作</h1>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skill</span><span class="chip new">+ 跨厂商审稿</span><span class="chip new">+ LaTeX</span><span class="chip new">+ Python 作图</span></div><h1 id="agent-写作">1 Agent 写作</h1>
 <div class="goal">
-<p>一小时后，你手里有一段被重讲过的稿子，读起来像你最欣赏的那篇论文，看不出
-AI 写过；还有一个以后随时能调用的写作 Skill。</p>
+<p>九十分钟后，你手里有一篇从题目到结论整体重讲过的论文，两张能直接放进投稿的数据图，一份另一家
+Agent 写的编辑审稿意见，还有一个下次改论文时一句话就能调出的 Skill。</p>
 </div>
 <div class="download">
 <p><a href="downloads/lesson-1-zh.zip">下载第 1 课练习材料</a></p>
 </div>
+<p>练习用的是一篇四页的短论文：几种训练损失在训练标签有错时表现如何。实验是真的，<code>code/run_experiment.py</code>
+在笔记本上一分钟就能重跑出全部数据；文字和图则是常见的初稿样子。</p>
 <h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
-<p>打开练习材料里的 <code>before.md</code> 和
-<code>after.md</code>。两份说的是同一件事：一个 Agent
-三个月替课题组初筛新论文。前一份是常见的 AI
-稿，开头铺背景，满篇在一定程度上和值得注意的是，结尾一句不是取代而是助手。后一份第一句就是结果：</p>
-<blockquote>
-<p>三个月里，一个 Agent 替我们组读完了 4200 篇新论文。它只推荐了 310
-篇，其中 268 篇确实值得精读。</p>
-</blockquote>
-<p>数字一个没变，变的是讲法。这堂课就做这件事。</p>
-<h2 id="为什么会有-ai-味10-分钟">为什么会有 AI 味，10 分钟</h2>
-<p>AI
-味主要来自三种习惯。一是限定堆满，每句都带着可能或者在一定程度上，给自己留后路。二是套话句式，不是什么而是什么，这正是，总之。三是什么都罗列，不做取舍，读者找不到重点。</p>
-<p>让 Agent
-一句一句地润色，这三样只会越改越多：每一轮它都在原句上加补充，稿子越来越长。管用的办法是给它一篇范文，让它读懂原稿后合上原稿，围绕最抓人的一点另起一稿重讲。</p>
-<p>还有一点：自己写的东西自己审不出毛病，模型也一样。同一个模型写和审，品味相同，问题互相看不见。所以这堂课让
-Claude 写，让 Codex 审。</p>
-<h2 id="练习-1一句话润色10-分钟">练习 1：一句话润色，10 分钟</h2>
-<p>先做一个对照组。在 Claude 里打开 <code>lesson-1</code>
-文件夹，发：</p>
-<pre class="text"><code>读 draft.md，把它改得更好读，存成 v1.md。</code></pre>
-<p>拿 <code>style_table.md</code> 对一遍
-v1。多半会发现：词换了，句子顺了，开头还在铺背景，限定还在。</p>
-<h2 id="练习-2照范文重讲15-分钟">练习 2：照范文重讲，15 分钟</h2>
-<p>范文用一篇写得好的论文。课上用 ResNet
-那篇，它的摘要五句话讲完一件事；课后换成你自己最欣赏的那篇。</p>
-<pre class="text"><code>把 arXiv 1512.03385 的 PDF 下载到 exemplar/ 文件夹。
-读这篇范文的摘要和引言，用三句话告诉我它的开头是怎样抓住读者的。
-然后读 draft.md，告诉我其中最值得读者记住的一点是什么。
-不要在原稿上改。围绕这一点，照范文的讲法另起一稿，存成 v2.md。</code></pre>
-<p>把 v1 和 v2 放在一起看。v2 应该第一句就是结果，而且明显更短。</p>
-<h2 id="练习-3把要求留下来请另一家来审15-分钟">练习
-3：把要求留下来，请另一家来审，15 分钟</h2>
-<p><strong>写进 AGENTS.md。</strong>
-刚才你可能已经说了好几遍去掉背景铺垫、不要堆限定。每次开新对话都重说一遍太累，把它写进项目里的
-<code>AGENTS.md</code>，Codex 每次开工都会先读它。练习材料里的
-<code>CLAUDE.md</code> 只有一行 <code>@AGENTS.md</code>，意思是让 Claude
-Code 也去读同一份，两家共用一套约定。</p>
-<pre class="text"><code>把这次对话里我反复强调的写作要求整理进 AGENTS.md。只写以后每次都适用的，不超过十行。</code></pre>
-<p><strong>做成 Skill。</strong> AGENTS.md 是每次都要遵守的规矩，Skill
-是用到时才加载的一套做法。把练习 2 的流程和 <code>style_table.md</code>
-打包成 Skill，下次一句话就能调出来。</p>
-<pre class="text"><code>把练习 2 的重讲流程和 style_table.md 做成本项目的一个 Skill，名字叫 plain-retell。
-做完告诉我它存在哪里，以后怎么调用。</code></pre>
-<p><strong>请 Codex 审。</strong> 在 Codex 里打开同一个文件夹：</p>
-<pre class="text"><code>你是期刊编辑。只看 v2.md 和 style_table.md，不看其他稿子。
-先只读第一段，判断读者会不会想往下读。再逐段指出还有 AI 味的地方，指到具体句子，说明往哪个方向改。
-意见存成 review.md，注明你审的是 v2.md。不要改 v2.md。</code></pre>
-<p>回到 Claude，让它按意见再重讲一稿：</p>
-<pre class="text"><code>读 review.md，按意见把 v2.md 整体重讲一遍，存成 v3.md。不要逐句修补。</code></pre>
+<div class="pair">
+<figure>
+<img src="assets/img/paper-before.png" alt="初稿第一页" />
+<figcaption aria-hidden="true">初稿第一页</figcaption>
+</figure>
+<figure>
+<img src="assets/img/paper-after.png" alt="重讲后第一页" />
+<figcaption aria-hidden="true">重讲后第一页</figcaption>
+</figure>
+</div>
+<p>左边的题目三行长，摘要从深度学习的成功讲起，最重要的结果藏在第七句，前面还挂着
+may 和
+approximately。右边的题目是一句论断，摘要第一句就是最抓人的现象：标签错四成时，网络第
+3 轮已经学到 92%，之后 77 轮都在记错误标签，最后掉到 67%。</p>
+<div class="pair">
+<figure>
+<img src="assets/img/fig-before.png" alt="初稿的图" />
+<figcaption aria-hidden="true">初稿的图</figcaption>
+</figure>
+<figure>
+<img src="assets/img/fig-after.png" alt="重画的图" />
+<figcaption aria-hidden="true">重画的图</figcaption>
+</figure>
+</div>
+<p>图也一样。左边二十条线缠在一起，图例盖住数据，颜色循环用完后重复，看不出哪条是哪个方法。右边每个方法一条均值线加误差带，名字直接标在线旁，按单栏宽度原尺寸画，放进论文后字号仍有
+7 磅。</p>
+<p>两版用的是同一份数据，没有新增一个实验。</p>
+<h2 id="讲10-分钟">讲，10 分钟</h2>
+<p><strong>论文靠一个点抓人。</strong>
+审稿人先读题目和摘要，决定要不要往下读。题目是招牌，可以说大，Attention
+Is All You Need
+就没说清做了什么。摘要第一句给最抓人的结果，接着按读者会追问的顺序展开：它成立吗，为什么，换个条件还成立吗。结果节也按这个顺序排，每段第一句写结论。局限在讨论里集中讲一次。</p>
+<p><strong>Agent 的初稿为什么总是一股 AI 味。</strong>
+它天生谨慎，每句都留后路，同一句限定在摘要、引言和结论里各说一遍。让它一句一句地润色，这些只会越改越多。管用的是给一篇目标刊会的范文，让它读懂全文后合上原稿，围绕最抓人的一点另起一稿重讲。</p>
+<p><strong>图要按最终尺寸画。</strong>
+先想好这张图要读者看到哪一个结论，再决定画什么。直接按栏宽画矢量图，同一方法在所有图里同一颜色，多个种子画均值和误差带，线旁直接标名字，结论写进图注。画完要在编译出来的
+PDF 里看，而不是看单独的图片文件。</p>
+<p><strong>写和审分给两家。</strong>
+同一个模型写完再审，品味相同，问题互相看不见。这堂课让 Claude 写，让
+Codex 以编辑的眼光审。</p>
+<h2 id="练习-1找到那一个点起题目和摘要15-分钟">练习
+1：找到那一个点，起题目和摘要，15 分钟</h2>
+<p>在 Claude 里打开 <code>lesson-1</code> 文件夹：</p>
+<pre class="text"><code>读 paper/main.tex 和 data/ 里的两个数据文件。
+再把 arXiv 1611.03530 的 PDF 下载到 exemplar/，读它的题目、摘要和引言第一段。
+告诉我：这篇范文的开头怎样抓住读者；我们这篇论文里最抓人的一个结果是什么，数字是多少。
+然后给出三个题目，每个不超过十个词，要像范文那样是一句论断。先停下来等我选。</code></pre>
+<p>挑一个题目，或者自己改一个，再让它写摘要：</p>
+<pre class="text"><code>用我选的题目，写不超过 150 词的摘要。第一句就是最抓人的那个结果。
+每个发现只带一个数字，局限不进摘要。存到 versions/v1/abstract.tex。</code></pre>
+<h2 id="练习-2整体重讲再用脚本核对数字20-分钟">练习
+2：整体重讲，再用脚本核对数字，20 分钟</h2>
+<pre class="text"><code>不要在 paper/main.tex 上改。合上原稿，按范文的讲法另起一稿写全文，存到 versions/v1/main.tex，沿用 v1 的题目和摘要。
+引言第一段就讲那个最抓人的例子；结果按读者会追问的顺序排，每段第一句是结论；局限只在讨论里讲一段。
+图先沿用 paper/figures/。编译出 PDF，告诉我页数。</code></pre>
+<p>AI 改写最容易出的事故是数字。初稿里就埋了两处：摘要写 GCE 约
+96.2%，表里是 96.0；引言说提升超过 30 个点，实际是 28.6。让 Agent
+写一个脚本来查，而不是让它自己读一遍说没问题：</p>
+<pre class="text"><code>写 code/check_numbers.py：从一个 .tex 文件里找出所有百分数和点数，
+逐个到 data/results.csv 与 data/curves.csv 的汇总值里找对应，对不上的列出来，标明行号。
+先在 paper/main.tex 上运行，再在 versions/v1/main.tex 上运行，把两次结果都给我看。</code></pre>
+<p>在初稿上它应该能抓出那两处。如果 v1
+里还有对不上的，让它改正后重新编译。</p>
+<h2 id="练习-3把数据图画到能投稿20-分钟">练习 3：把数据图画到能投稿，20
+分钟</h2>
+<pre class="text"><code>读 code/plot_draft.py 和 style_table.md 的图部分，重写一个 code/plot_paper.py：
+按单栏宽度 3.25 英寸原尺寸画，字号 7 到 9 磅，输出矢量 PDF 到 versions/v1/figures/；
+每个方法在两张图里用同一种色盲友好的颜色；多个种子画均值线加一个标准差的带；
+线旁直接标方法名，不用盖住数据的图例；图里不放标题。
+每张图先用一句话告诉我它要读者看到什么结论，再动手画，并把这句话写成图注的第一句。
+改 versions/v1/main.tex 引用新图，编译后把 PDF 的每一页渲染成图片，自己检查有没有文字重叠、出界或者字太小，有问题就改。</code></pre>
+<p>最后一句很关键。Agent
+能看图片，让它看编译后的页面，而不是只看单独导出的图，很多问题只有放进栏里才看得出来。</p>
+<h2 id="练习-4请-codex-审把做法留下来15-分钟">练习 4：请 Codex
+审，把做法留下来，15 分钟</h2>
+<p>在 Codex 里打开同一个文件夹：</p>
+<pre class="text"><code>你是目标会议的领域主席。只看 versions/v1/main.pdf 和 style_table.md，不看其他版本。
+先只读题目和摘要，判断审稿人会不会想读下去，说明理由。再逐节指出还在防守的句子、
+重复的限定和读者看不懂的地方，指到具体句子并说明往哪改；图也逐张看。
+意见存成 versions/v1/review.md，第一行写明你审的是 versions/v1/main.pdf。不要改任何文件。</code></pre>
+<p>回到 Claude：</p>
+<pre class="text"><code>读 versions/v1/review.md，按意见把论文整体重讲一遍，存到 versions/v2/。不要逐句修补。
+重讲前先列出意见里的每一条，重讲后逐条说明怎样处理的，再运行 check_numbers.py。</code></pre>
+<p>最后把这一整套做法留下来：</p>
+<pre class="text"><code>1. 把这次我反复强调的要求整理进 AGENTS.md，只写以后每次都适用的，不超过十行。
+2. 把练习 1 到练习 4 的流程、style_table.md 和 plot_paper.py 的画图约定做成本项目的一个 Skill，名字叫 paper-retell。
+告诉我 Skill 存在哪里，以后怎样调用。</code></pre>
+<p><code>AGENTS.md</code> 是每次开工都要遵守的规矩，Codex
+自动读它；练习材料里的 <code>CLAUDE.md</code> 只有一行
+<code>@AGENTS.md</code>，让 Claude Code
+读同一份，两家共用一套约定。Skill 是用到时才加载的一整套做法。</p>
 <h2 id="最容易出错的地方">最容易出错的地方</h2>
 <div class="pitfall">
 <p><strong>逐句修补，越改越长。</strong>
-每轮改动都在原句上加限定和补充，几轮下来比原稿还长。改不动的时候，让它合上原稿整体重讲。</p>
+每轮改动都在原句上加一句补充或限定，几轮下来比初稿还长，重点被淹没。改不动的时候，让它合上原稿整体重讲；就算是按意见修改，也是重讲。</p>
 </div>
 <div class="pitfall">
 <p><strong>叮嘱它要严谨。</strong>
-写作任务里加一句不要夸大、注意准确，结果就是满篇限定。写作只交代读者是谁，最想让读者记住什么。数字对不对，另开一步专门核对。</p>
+写作任务里加一句不要夸大、保持原有结论范围，结果就是满篇 may 和 to some
+extent。写作任务只交代读者和最想让读者记住什么，数字对不对交给核对脚本。</p>
+</div>
+<div class="pitfall">
+<p><strong>题目越改越长。</strong> 让 Agent
+起题目，它会追求准确，把限定词全堆上去。题目是招牌，要让人记住，可以说大。给它看几篇名作的题目，再明确要一句论断。</p>
+</div>
+<div class="pitfall">
+<p><strong>同一个数各处说法不一。</strong> 改写时 a quarter of ideas
+变成 a quarter of all ideas，分母悄悄换了；摘要和表格的数字差
+0.2。数字一律用脚本对回数据文件，同一个数在全文各处用同一种说法。</p>
+</div>
+<div class="pitfall">
+<p><strong>重讲把改过的问题又带回来。</strong>
+第三轮重讲时，第一轮你亲手纠正过的题目问题又出现了，因为它只读了最近一轮意见。每轮意见都存档，重讲前把历次意见全读一遍。</p>
+</div>
+<div class="pitfall">
+<p><strong>图在论文里字只有 4 磅。</strong> 按默认的 8 乘 6
+英寸画好再缩进 3.25
+英寸的栏，字就缩到原来的四成。按最终尺寸画，在编译后的 PDF 里检查。</p>
 </div>
 <div class="pitfall">
 <p><strong>自己审自己。</strong>
 同一个模型写完再审，挑出的多是错别字。换一家的 Agent
-审，并让意见注明审的是哪一版，稿子改了就重审，旧意见不能挂在新稿上。</p>
-</div>
-<div class="pitfall">
-<p><strong>AGENTS.md 越写越长。</strong>
-每出一次问题就往里加一条，几周后几百行，Agent
-反而不照做了。只留长期稳定的约定，加新的之前先删重复的。</p>
+审，意见注明审的是哪一版；稿子改了就重审，旧意见不能挂在新稿上。</p>
 </div>
 <div class="promo">
 <p><strong>在 AI 科学家里。</strong> <a
 href="https://github.com/liuguangrui-hit/ai-scientist">AI
-科学家</a>写论文时也分这两步：叙事编辑读懂全文后，照目标刊会的范文另起一稿；再由另一家厂商的
+科学家</a>写论文也是这几步：叙事编辑读懂全文后照目标刊会的范文另起一稿，再由另一家厂商的
 Agent
-以编辑的眼光审稿，读完标题和摘要不想往下读，就退回重写。你正在读的这份教程，也是这样改出来的。</p>
+以编辑的眼光审稿，读完题目和摘要不想往下读就退回重写，连续三次不过才交给人裁定。上面每一条容易出错的地方，都是它在真实论文上踩过的坑。</p>
 </div>
-<h2 id="换成你自己的材料">换成你自己的材料</h2>
-<p>找一段你自己写过、不太满意的稿子，再挑一篇你最欣赏的论文当范文。开一个新对话，说一句用
-plain-retell 重讲这段稿子，然后让 Codex 审一遍。</p>
+<h2 id="换成你自己的论文">换成你自己的论文</h2>
+<p>拿一篇你正在写的论文，再从目标刊会挑一篇你最欣赏的论文当范文。开一个新对话，说用
+paper-retell 改这篇论文，范文在
+exemplar/。数据图让它从你的原始结果文件重画，而不是改图片。最后让 Codex
+审一遍，把 <code>preview/after.pdf</code> 当作参照看看差距在哪。</p>
 <section id="要点" class="keypoints">
 <h2>要点</h2>
 <ul>
-<li>改稿靠范文和整体重讲，不靠逐句修补。</li>
-<li>写和审交给不同厂商的 Agent，意见对应到具体版本。</li>
+<li>论文靠一个点抓人：题目是招牌，摘要第一句给结果，结果按读者的追问排。</li>
+<li>改稿靠范文和整体重讲，不靠逐句修补；数字交给脚本核对。</li>
+<li>图按最终尺寸画，在编译后的 PDF 里检查。</li>
+<li>写和审交给两家 Agent，意见对应到具体版本，历次意见都要重读。</li>
 <li>反复说的要求写进 AGENTS.md，反复做的流程做成 Skill。</li>
 </ul>
 </section>
 </article>
-<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skills</span><span class="chip new">+ Cross-vendor review</span></div><h1 id="writing-with-agents">1 Writing with Agents</h1>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skills</span><span class="chip new">+ Cross-vendor review</span><span class="chip new">+ LaTeX</span><span class="chip new">+ Plotting in Python</span></div><h1 id="writing-with-agents">1 Writing with Agents</h1>
 <div class="goal">
-<p>In an hour you will have a paragraph of your own retold so it reads
-like the paper you most admire, with no trace of AI. You will also have
-a writing Skill you can call any time.</p>
+<p>In ninety minutes you will have a paper retold from title to
+conclusion, two data figures ready for submission, an editorial review
+written by a second vendor’s agent, and a Skill that brings the whole
+method back with one line the next time you revise a paper.</p>
 </div>
 <div class="download">
 <p><a href="downloads/lesson-1-en.zip">Download the Session 1
 materials</a></p>
 </div>
+<p>The exercise paper is a four-page study of how training losses cope
+when some training labels are wrong. The experiment is real:
+<code>code/run_experiment.py</code> regenerates all the data in about a
+minute on a laptop. The text and figures look like a typical first
+draft.</p>
 <h2 id="see-the-finished-product-5-minutes">See the finished product, 5
 minutes</h2>
-<p>Open <code>before.md</code> and <code>after.md</code> from the
-materials. Both describe the same thing: an agent that pre-screened new
-papers for a research group for three months. The first is typical AI
-prose. It opens with background, hedges every sentence, and closes with
-“not about replacing researchers but about becoming their capable
-assistant”. The second opens with the result:</p>
-<blockquote>
-<p>In three months, an agent read 4,200 new papers for our group. It
-recommended 310, and 268 of them were worth a close read.</p>
-</blockquote>
-<p>Not one number changed. Only the telling did. That is what this
-session is about.</p>
-<h2 id="where-the-ai-flavour-comes-from-10-minutes">Where the AI flavour
-comes from, 10 minutes</h2>
-<p>Most of it comes from three habits. Hedges everywhere: every sentence
-carries a “to some extent” or “preliminary results indicate” as an
-escape hatch. Stock frames: “not X but Y”, “notably”, “in conclusion”.
-And listing instead of choosing, so the reader can’t find the point.</p>
-<p>Ask an agent to polish sentence by sentence and all three get worse.
-Each round adds to the sentence already there, and the draft keeps
-growing. What works is to give it an exemplar, have it read the draft,
-then set the draft aside and retell it from scratch around the single
-most gripping point.</p>
-<p>One more thing. Nobody catches their own faults, and models are no
-different. When the same model writes and reviews, it shares its own
-taste and can’t see the problems. So in this session Claude writes and
-Codex reviews.</p>
-<h2 id="exercise-1-one-line-polish-10-minutes">Exercise 1: one-line
-polish, 10 minutes</h2>
-<p>Start with a control. Open the <code>lesson-1</code> folder in Claude
-and send:</p>
-<pre class="text"><code>Read draft.md, make it read better, and save it as v1.md.</code></pre>
-<p>Check v1 against <code>style_table.md</code>. You will probably find
-the words changed and the sentences flow, but it still opens with
-background and the hedges are still there.</p>
-<h2 id="exercise-2-retell-after-an-exemplar-15-minutes">Exercise 2:
-retell after an exemplar, 15 minutes</h2>
-<p>The exemplar is a well-written paper. In class we use the ResNet
-paper, whose abstract says one thing in five sentences. Afterwards, use
-the paper you admire most.</p>
-<pre class="text"><code>Download the PDF of arXiv 1512.03385 into the exemplar/ folder.
-Read its abstract and introduction, and tell me in three sentences how its opening hooks the reader.
-Then read draft.md and tell me the one thing in it most worth remembering.
-Don&#39;t edit the draft. Build a fresh version around that point, told the way the exemplar tells things, and save it as v2.md.</code></pre>
-<p>Put v1 and v2 side by side. v2 should open with the result and be
-clearly shorter.</p>
+<div class="pair">
+<figure>
+<img src="assets/img/paper-before.png" alt="Draft, page 1" />
+<figcaption aria-hidden="true">Draft, page 1</figcaption>
+</figure>
+<figure>
+<img src="assets/img/paper-after.png" alt="Retold, page 1" />
+<figcaption aria-hidden="true">Retold, page 1</figcaption>
+</figure>
+</div>
+<p>On the left the title runs three lines, the abstract opens with the
+success of deep learning, and the key result hides in the seventh
+sentence behind “may” and “approximately”. On the right the title is a
+claim, and the abstract opens with the most striking observation: with
+40% of labels wrong, the network reaches 92% by epoch 3, spends the next
+77 epochs memorizing the wrong labels, and ends at 67%.</p>
+<div class="pair">
+<figure>
+<img src="assets/img/fig-before.png" alt="Draft figure" />
+<figcaption aria-hidden="true">Draft figure</figcaption>
+</figure>
+<figure>
+<img src="assets/img/fig-after.png" alt="Redrawn figure" />
+<figcaption aria-hidden="true">Redrawn figure</figcaption>
+</figure>
+</div>
+<p>The figures tell the same story. On the left twenty lines tangle
+together, the legend covers the data, and the colour cycle runs out and
+repeats, so you cannot tell which line is which method. On the right
+each method is one mean line with a band, its name sits next to the
+line, and the figure is drawn at its final one-column width, so the text
+is still 7 pt in the paper.</p>
+<p>Both versions use the same data. Not one experiment was added.</p>
+<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
+<p><strong>A paper hooks the reader with one point.</strong> Reviewers
+read the title and abstract and decide whether to go on. A title is a
+sign, and it may claim big: Attention Is All You Need does not say what
+the paper did. The abstract’s first sentence gives the most striking
+result, then follows the questions a reader would ask: does it hold,
+why, does it hold elsewhere. Results follow the same order, each
+paragraph opening with its conclusion. Limitations are stated once, in
+the discussion.</p>
+<p><strong>Why agent drafts smell of AI.</strong> Agents are cautious by
+nature. Every sentence gets an escape hatch, and the same caveat appears
+in the abstract, the introduction and the conclusion. Ask one to polish
+sentence by sentence and this only grows. What works is to give it an
+exemplar from the target venue, have it read the whole paper, then set
+the draft aside and retell it from scratch around the single most
+striking point.</p>
+<p><strong>Draw figures at their final size.</strong> Decide which
+conclusion the reader should take from a figure before deciding what to
+plot. Draw vector graphics at column width, give each method one colour
+across all figures, show the mean and a band over seeds, label lines
+directly, and put the conclusion in the caption. Then look at it in the
+compiled PDF, not as a separate image file.</p>
+<p><strong>Split writing and reviewing between vendors.</strong> A model
+reviewing its own writing shares its own taste and cannot see the
+problems. In this session Claude writes and Codex reviews as an
+editor.</p>
 <h2
-id="exercise-3-keep-the-rules-get-a-second-vendor-to-review-15-minutes">Exercise
-3: keep the rules, get a second vendor to review, 15 minutes</h2>
-<p><strong>Write it into AGENTS.md.</strong> You have probably said
-“drop the background” and “stop hedging” several times already.
-Repeating it in every new conversation gets old, so put it in the
-project’s <code>AGENTS.md</code>. Codex reads that file every time it
-starts. The <code>CLAUDE.md</code> in the materials holds one line,
-<code>@AGENTS.md</code>, which tells Claude Code to read the same file,
-so both agents share one set of conventions.</p>
-<pre class="text"><code>Collect the writing requirements I kept repeating in this conversation into AGENTS.md. Only rules that always apply, ten lines at most.</code></pre>
-<p><strong>Make it a Skill.</strong> AGENTS.md holds rules that always
-apply. A Skill is a method loaded only when needed. Package the exercise
-2 workflow and <code>style_table.md</code> as a Skill, and next time one
-line brings it back.</p>
-<pre class="text"><code>Turn the retelling workflow from exercise 2, together with style_table.md, into a Skill for this project called plain-retell.
-Tell me where it is saved and how to call it.</code></pre>
-<p><strong>Ask Codex to review.</strong> Open the same folder in
-Codex:</p>
-<pre class="text"><code>You are a journal editor. Look only at v2.md and style_table.md, no other drafts.
-First read only the opening paragraph and judge whether a reader would want to go on. Then go paragraph by paragraph and point out what still reads as AI-written, quoting the sentence and saying which way to change it.
-Save your comments as review.md and note that you reviewed v2.md. Don&#39;t edit v2.md.</code></pre>
-<p>Back in Claude, have it retell once more from the comments:</p>
-<pre class="text"><code>Read review.md and retell v2.md as a whole following the comments. Save it as v3.md. Don&#39;t patch sentence by sentence.</code></pre>
+id="exercise-1-find-the-one-point-write-the-title-and-abstract-15-minutes">Exercise
+1: find the one point, write the title and abstract, 15 minutes</h2>
+<p>Open the <code>lesson-1</code> folder in Claude:</p>
+<pre class="text"><code>Read paper/main.tex and the two data files in data/.
+Then download the PDF of arXiv 1611.03530 into exemplar/ and read its title, abstract and the first paragraph of its introduction.
+Tell me how the exemplar&#39;s opening hooks the reader, and what the single most striking result in our paper is, with its number.
+Then propose three titles, each ten words or fewer, each a claim the way the exemplar&#39;s title is. Stop and wait for me to choose.</code></pre>
+<p>Pick a title, or adjust one, then have it write the abstract:</p>
+<pre class="text"><code>Using the title I chose, write an abstract of at most 150 words. The first sentence is the most striking result.
+Give each finding one number only, and leave limitations out of the abstract. Save it to versions/v1/abstract.tex.</code></pre>
+<h2
+id="exercise-2-retell-the-whole-paper-then-check-the-numbers-with-a-script-20-minutes">Exercise
+2: retell the whole paper, then check the numbers with a script, 20
+minutes</h2>
+<pre class="text"><code>Don&#39;t edit paper/main.tex. Set the draft aside and write the whole paper afresh, told the way the exemplar tells things. Save it to versions/v1/main.tex, using the v1 title and abstract.
+The first paragraph of the introduction tells the striking example. Order the results by the questions a reader would ask, each paragraph opening with its conclusion. Limitations get one paragraph, in the discussion.
+Keep the figures in paper/figures/ for now. Compile the PDF and tell me how many pages it has.</code></pre>
+<p>The most common accident when an agent rewrites a paper is a number.
+The draft already hides two: the abstract says GCE reaches about 96.2%,
+the table says 96.0; the introduction claims an improvement of over 30
+points, which is really 28.6. Have the agent write a script to check,
+rather than read it over and say it looks fine:</p>
+<pre class="text"><code>Write code/check_numbers.py: find every percentage and point difference in a .tex file,
+match each against summary values computed from data/results.csv and data/curves.csv, and list the ones that don&#39;t match, with line numbers.
+Run it on paper/main.tex, then on versions/v1/main.tex, and show me both results.</code></pre>
+<p>On the draft it should catch both. If v1 still has mismatches, have
+it fix them and recompile.</p>
+<h2
+id="exercise-3-bring-the-data-figures-up-to-submission-standard-20-minutes">Exercise
+3: bring the data figures up to submission standard, 20 minutes</h2>
+<pre class="text"><code>Read code/plot_draft.py and the figures part of style_table.md, then write code/plot_paper.py:
+draw at the final single-column width of 3.25 inches, text 7 to 9 pt, vector PDF output to versions/v1/figures/;
+one colour-blind-safe colour per method, the same in both figures; for multiple seeds, a mean line with a one-standard-deviation band;
+label lines directly instead of a legend over the data; no title inside the plot.
+Before drawing each figure, tell me in one sentence what conclusion it should show the reader, and make that sentence the first line of its caption.
+Point versions/v1/main.tex at the new figures, compile, render every PDF page as an image, and check it yourself for overlapping text, text running out of bounds, or text too small. Fix anything you find.</code></pre>
+<p>The last instruction matters most. Agents can look at images, so have
+it look at the compiled page rather than the figure on its own. Many
+problems only show once the figure sits in the column.</p>
+<h2
+id="exercise-4-get-codex-to-review-then-keep-the-method-15-minutes">Exercise
+4: get Codex to review, then keep the method, 15 minutes</h2>
+<p>Open the same folder in Codex:</p>
+<pre class="text"><code>You are an area chair for the target conference. Look only at versions/v1/main.pdf and style_table.md, no other versions.
+First read only the title and abstract and judge whether a reviewer would want to read on, and why. Then go section by section and point out sentences that still hedge,
+repeated caveats, and anything a reader would not follow, quoting the sentence and saying which way to change it. Look at each figure too.
+Save your comments as versions/v1/review.md, with the first line naming versions/v1/main.pdf as what you reviewed. Don&#39;t change any files.</code></pre>
+<p>Back in Claude:</p>
+<pre class="text"><code>Read versions/v1/review.md and retell the whole paper following the comments. Save it to versions/v2/. Don&#39;t patch sentence by sentence.
+Before retelling, list every comment; afterwards, say how you handled each one, then run check_numbers.py.</code></pre>
+<p>Finally, keep the method:</p>
+<pre class="text"><code>1. Collect the requirements I kept repeating this time into AGENTS.md. Only rules that always apply, ten lines at most.
+2. Turn the workflow of exercises 1 to 4, style_table.md, and the plotting conventions in plot_paper.py into a Skill for this project called paper-retell.
+Tell me where the Skill is saved and how to call it.</code></pre>
+<p><code>AGENTS.md</code> holds rules that apply every time; Codex reads
+it automatically. The <code>CLAUDE.md</code> in the materials is one
+line, <code>@AGENTS.md</code>, so Claude Code reads the same file and
+both agents share one set of conventions. A Skill is a complete method
+loaded only when needed.</p>
 <h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
 <div class="pitfall">
-<p><strong>Patching sentence by sentence, the draft keeps
-growing.</strong> Each round adds a hedge or a clarification to the
-sentence already there, and a few rounds later the draft is longer than
-the original. When it stops improving, have the agent put the draft
-aside and retell the whole thing.</p>
+<p><strong>Patching sentence by sentence, the paper keeps
+growing.</strong> Each round adds a clarification or a caveat to the
+sentence already there, and a few rounds later the paper is longer than
+the draft and the point is buried. When it stops improving, have the
+agent set the draft aside and retell the whole paper, even when working
+from review comments.</p>
 </div>
 <div class="pitfall">
 <p><strong>Telling it to be rigorous.</strong> Add “don’t overclaim” or
-“be precise” to a writing task and you get hedges everywhere. For
-writing, say only who the reader is and what you most want them to
-remember. Checking the numbers is a separate step.</p>
+“keep the original scope” to a writing task and you get “may” and “to
+some extent” everywhere. A writing task says only who the reader is and
+what they should remember. Leave the numbers to the checking script.</p>
+</div>
+<div class="pitfall">
+<p><strong>Titles that keep getting longer.</strong> Asked for a title,
+an agent aims for accuracy and piles on every qualifier. A title is a
+sign that should stick, and it may claim big. Show it a few famous
+titles and ask explicitly for a claim.</p>
+</div>
+<div class="pitfall">
+<p><strong>The same number told differently in different
+places.</strong> In a rewrite, “a quarter of ideas” becomes “a quarter
+of all ideas” and the denominator quietly changes; the abstract and the
+table differ by 0.2. Check every number against the data file with a
+script, and phrase each number the same way everywhere.</p>
+</div>
+<div class="pitfall">
+<p><strong>A retell brings back problems you already fixed.</strong> In
+the third round, the title problem you corrected by hand in round one is
+back, because the agent read only the latest comments. Archive every
+round of comments, and have it reread all of them before each
+retell.</p>
+</div>
+<div class="pitfall">
+<p><strong>Figures with 4 pt text in the paper.</strong> Draw at the
+default 8 by 6 inches and shrink into a 3.25-inch column, and the text
+shrinks to about 40%. Draw at final size and check in the compiled
+PDF.</p>
 </div>
 <div class="pitfall">
 <p><strong>Reviewing its own work.</strong> The same model reviewing
 what it wrote mostly finds typos. Have another vendor’s agent review,
-and make every review name the version it read. When the draft changes,
-review again; old comments don’t carry over to a new draft.</p>
-</div>
-<div class="pitfall">
-<p><strong>AGENTS.md keeps growing.</strong> Add a line every time
-something goes wrong and in a few weeks it is hundreds of lines long,
-and the agent stops following it. Keep only stable, long-term
-conventions, and remove duplicates before adding anything new.</p>
+make every review name the version it read, and review again when the
+paper changes. Old comments don’t carry over to a new draft.</p>
 </div>
 <div class="promo">
 <p><strong>Inside the AI Scientist.</strong> The <a
 href="https://github.com/liuguangrui-hit/ai-scientist">AI Scientist</a>
-writes papers in the same two steps. A narrative editor reads the whole
-paper and writes a fresh version modelled on an exemplar from the target
-venue. Then an agent from a different vendor reviews it as an editor
-would, and if the title and abstract don’t make it want to read on, the
-draft goes back. The course you are reading was revised the same
-way.</p>
+writes papers in the same steps. A narrative editor reads the whole
+paper and retells it modelled on an exemplar from the target venue. An
+agent from a different vendor then reviews it as an editor would; if the
+title and abstract don’t make it want to read on, the paper goes back,
+and only after three failed rounds does a person decide. Every pitfall
+above is one it has hit on real papers.</p>
 </div>
-<h2 id="now-with-your-own-material">Now with your own material</h2>
-<p>Pick a paragraph you wrote and are not happy with, and a paper you
-admire as the exemplar. Open a new conversation, say “use plain-retell
-on this paragraph”, then have Codex review the result.</p>
+<h2 id="now-with-your-own-paper">Now with your own paper</h2>
+<p>Take a paper you are writing and pick an exemplar you admire from the
+target venue. Open a new conversation and say “use paper-retell on this
+paper; the exemplar is in exemplar/”. Have it redraw the data figures
+from your raw result files rather than editing images. Then have Codex
+review, and compare against <code>preview/after.pdf</code> to see how
+far you got.</p>
 <section id="key-points" class="keypoints">
 <h2>Key points</h2>
 <ul>
-<li>Revise with an exemplar and a full retell, not sentence-by-sentence
-patches.</li>
-<li>Give writing and reviewing to agents from different vendors, and tie
-every review to a specific version.</li>
+<li>A paper hooks with one point: the title is a sign, the abstract
+opens with the result, results follow the reader’s questions.</li>
+<li>Revise with an exemplar and a full retell, not patches; leave
+numbers to a checking script.</li>
+<li>Draw figures at final size and check them in the compiled PDF.</li>
+<li>Split writing and reviewing between vendors, tie each review to a
+version, and reread every past round of comments.</li>
 <li>Requirements you repeat go into AGENTS.md; workflows you repeat
 become Skills.</li>
 </ul>
