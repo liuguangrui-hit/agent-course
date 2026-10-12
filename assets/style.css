@@ -70,3 +70,16 @@ button.copy.done { background: var(--accent); color: #fff; border-color: var(--a
 .pair figure { margin: 0; }
 .pair img { width: 100%; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
 .pair figcaption { font-size: 14px; color: var(--muted); text-align: center; margin-top: 4px; }
+nav.side .sub { padding-left: 26px; font-size: 14px; }
+nav.side .sub .num { width: 2.2em; }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+.pager a { display: block; max-width: 48%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); }
+.pager a:hover { border-color: var(--accent); }
+.pager a.next { text-align: right; margin-left: auto; }
+.pager small { display: block; color: var(--muted); font-size: 12px; }
+.meta { color: var(--muted); font-size: 14px; margin-top: -4px; }
+details { border: 1px solid var(--line); border-radius: 10px; padding: 6px 16px; margin: 12px 0; background: #fafafa; }
+details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
+.deep { border: 1px solid var(--line); border-radius: 10px; padding: 4px 18px; margin: 20px 0; }
+.deep p:first-child strong { color: var(--accent); }
+@media (max-width: 760px) { nav.side .sub { padding-left: 10px; } }

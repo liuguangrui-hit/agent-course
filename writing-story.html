@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>论文的讲法 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="writing-story.html" class="cur sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
+<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
+<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
+<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
+<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
+<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><h1 id="论文的讲法">1.1 论文的讲法</h1>
+<p><span class="meta">课后深入，约 45 分钟。用到第 1
+课练习材料。</span></p>
+<p>审稿人一天要看好几篇论文，每篇先给题目和摘要几十秒。这几十秒决定他是带着兴趣读下去，还是带着挑剔读下去。这一节讲怎样把一篇论文讲成让人想读下去的样子，以及怎样让
+Agent 照这个讲法写。</p>
+<h2 id="先找到那一个点">先找到那一个点</h2>
+<p>一篇论文里通常有好几个结果，能拿来开篇的只有一个。好的开篇结果有三个特征：出人意料，带数字，具体到能在脑子里成像。</p>
+<p>练习论文里有四个候选：</p>
+<ol type="1">
+<li>在 40% 噪声下，GCE 的最终准确率比交叉熵高 28.6 个点。</li>
+<li>噪声越大，GCE 的优势越大，从 15.7 个点到 36.6 个点。</li>
+<li>交叉熵第 3 轮就学到 92%，之后 77 轮都在记错误标签，最后掉到
+67%。</li>
+<li>标签平滑没有任何保护作用。</li>
+</ol>
+<p>第 1 条和第 2 条是比较，读者要先知道 GCE 是什么才会在意。第 4
+条是否定，适合放在后面回答追问。第 3
+条是一个故事：网络明明已经学会了，又亲手忘掉。它不需要任何背景就能听懂，而且马上引出下一个问题，那怎么才能不忘。这就是开篇的那个点。</p>
+<p>让 Agent
+帮你找时，不要问最重要的结果是什么，它会给你最全面的那个。换一个问法：</p>
+<pre class="text"><code>读 paper/main.tex 和 data/。列出这篇论文里所有能拿来开篇的结果，每个写一句话，带数字。
+然后按这个标准排序：审稿人读完会不会转头讲给同事听。说明排第一的理由。</code></pre>
+<h2 id="题目">题目</h2>
+<p>题目是招牌，不是摘要的缩写。Attention Is All You Need
+没告诉你做了什么，但没人记不住它。Understanding deep learning requires
+rethinking generalization 是一句论断，读完就知道作者要推翻什么。</p>
+<p>初稿的题目是 Towards an Empirical Understanding of the Robustness of
+Loss Functions to Label Noise: A Preliminary Study on Two-Layer Neural
+Networks。二十多个词里，Towards，Empirical，Preliminary
+三个词都在提前道歉，Two-Layer Neural Networks
+把适用范围也写进了题目。</p>
+<p>重讲后的题目是 Bounded Losses Do Not Memorize Wrong
+Labels。主语是方法，谓语是那个现象，读者能立刻判断它对不对。</p>
+<p>几条规则：</p>
+<ul>
+<li>尽量写成一句论断，主谓俱全。</li>
+<li>十个词以内，冒号后的副题能省就省。</li>
+<li>用领域通行的叫法，不在题目里放自造的名字。</li>
+<li>防御类工作可以用盾牌，防火墙一类的形象说法，让人一眼看出是防御。</li>
+<li>不要让 Agent
+一次只给一个题目。让它给三个，你来选，再让它沿着你选的方向改。</li>
+</ul>
+<h2 id="摘要">摘要</h2>
+<p>一个好用的五句结构：</p>
+<ol type="1">
+<li>那个点，带数字。</li>
+<li>为什么会这样，一句话讲机制。</li>
+<li>我们做了什么，规模多大。</li>
+<li>主要发现，每个只带一个数字。</li>
+<li>落点，读者该带走什么。</li>
+</ol>
+<p>初稿摘要的开头：</p>
+<blockquote>
+<p>In recent years, deep neural networks have achieved remarkable
+success across a wide range of tasks. However, it is worth noting that
+real-world datasets inevitably contain noisy labels, which may, to some
+extent, adversely affect model performance.</p>
+</blockquote>
+<p>两句话没有一个信息是审稿人不知道的。重讲后的开头：</p>
+<blockquote>
+<p>Flip 40% of the training labels and a two-layer network trained with
+cross-entropy reaches 92% test accuracy by epoch 3, then spends the next
+77 epochs memorizing the wrong labels and ends at 67%.</p>
+</blockquote>
+<p>第一句就是那个故事。局限不进摘要，摘要里每一句都在往前推。</p>
+<h2 id="引言">引言</h2>
+<p>引言的第一段讲那个例子，讲得比摘要更具体：哪张图，什么条件，数字是多少。第二段才给背景，而且只给理解这个例子所需的背景。第三段讲机制或方法的核心想法。最后一段按读者会追问的顺序，把论文要回答的问题说出来，指向对应章节。</p>
+<p>初稿的引言末尾是一个四条的贡献清单，把摘要又说了一遍，最后一条是 We
+discuss the limitations of our
+study。这种清单在很多领域是惯例，但如果要用，每条只带一个数字，不能和摘要重复，更不要把讨论局限算成贡献。</p>
+<h2 id="结果">结果</h2>
+<p>初稿按实验编号组织：RQ1，RQ2，RQ3。这是作者做实验的顺序，不是读者想知道的顺序。</p>
+<p>读者读完引言，脑子里的问题是：这个现象是真的吗；换个噪声比例还成立吗；常用的替代办法行不行。结果节就按这个顺序排，每一段的第一句直接是结论：</p>
+<ul>
+<li>Cross-entropy learns the task, then unlearns it.</li>
+<li>The bounded loss leads at every noise rate.</li>
+<li>Label smoothing gives no protection.</li>
+<li>Dropping high-loss samples works when the noise rate is known.</li>
+</ul>
+<p>只读这四句，就知道整个结果节说了什么。</p>
+<h2 id="讨论与局限">讨论与局限</h2>
+<p>局限只讲一次，放在讨论里，写成证据范围的陈述：这些结果来自什么样的设置，哪些条件没有覆盖。初稿把合成数据这条限定从摘要一路说到结论，共说了四遍，还在两个结果段后面各加了一句
+It should be noted
+that。讲一次，读者就记住了；讲四次，读者会以为作者自己都不信。</p>
+<p>不要写 Our conclusions should be interpreted with caution
+这种话。它没有提供信息，只表达了不安。</p>
+<h2 id="结论">结论</h2>
+<p>一到两句。不要把摘要再说一遍，也不要写 We hope this work can provide
+insights。重讲后的结论只有两句：交叉熵把最大的梯度给了最可能错的标签，有界损失把这个梯度压下去，网络就留住了前几轮找到的答案。</p>
+<h2 id="范文怎么用">范文怎么用</h2>
+<p>范文从目标刊会里挑，挑你自己读着最舒服的那篇。让 Agent
+学的是结构，不是措辞：</p>
+<pre class="text"><code>读 exemplar/ 里的论文。不要摘抄句子。
+告诉我它的题目，摘要的每一句和引言的每一段各承担什么作用，写成一张表。
+然后按这张表的结构，为 paper/main.tex 写一个提纲，每一行写这一段要讲的结论。先停下来等我看提纲。</code></pre>
+<p>先看提纲再让它写全文，比写完再改省事得多。提纲阶段改一行，全文阶段要改一段。</p>
+<h2 id="练习">练习</h2>
+<p>用你自己正在写的一篇论文，让 Agent
+列出所有能开篇的结果并排序，然后为排第一的结果写三个版本的引言第一段：一个从结果开始，一个从一个具体例子开始，一个从一个反常识的问题开始。读三个版本，选一个。</p>
+<details>
+<summary>
+练习论文的参考写法
+</summary>
+<p>从结果开始：A network trained on noisy labels often knows the right
+answer early and forgets it later.</p>
+<p>从例子开始：In our two-layer network with 40% of labels flipped,
+cross-entropy reaches 92% test accuracy at epoch 3 and falls to 67% by
+epoch 80.</p>
+<p>从问题开始：Why does a network that has already found the right
+answer spend 77 more epochs unlearning it?</p>
+<p>重讲稿用了第一种接第二种：先一句概括，紧接着用例子落地。</p>
+</details>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>题目追求准确。</strong> Agent
+起题目时会把方法，设置和范围全写进去，越改越长。告诉它题目是招牌，给它看几个名作的题目，要求写成一句论断。</p>
+</div>
+<div class="pitfall">
+<p><strong>开篇先铺背景。</strong> 不加约束时，Agent 的第一句几乎总是 In
+recent years。在任务卡里明确第一句写什么，比事后删掉有效。</p>
+</div>
+<div class="pitfall">
+<p><strong>先否定再收窄。</strong> We do not claim X. Rather, we show
+the narrower Y. 这种句子读起来像在辩护。直接写 Y，X
+为什么不成立放进讨论。</p>
+</div>
+<div class="pitfall">
+<p><strong>段首只写话题。</strong> Memorization. Robust losses.
+这样的段首标题只告诉读者这段讲什么，没告诉他结论。改成一句结论，读者扫一遍段首就能读懂整节。</p>
+</div>
+<div class="pitfall">
+<p><strong>用自造的名字。</strong> Agent
+喜欢给方法起名字，然后全文都用这个名字。大同行没见过这个词，每读到一次都要回想一次。用领域里通行的叫法，必须起名时只在一处定义。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li>Simon Peyton Jones, <a
+href="https://www.microsoft.com/en-us/research/?p=186470">How to write a
+great research
+paper</a>：把论文当成讲一个想法，先想清楚要讲哪一个。</li>
+<li>George Gopen and Judith Swan, <a
+href="https://prod.lsa.umich.edu/content/dam/sweetland-assets/sweetland-documents/Graduates/DWG/The-Science-of-Scientific-Writing.pdf">The
+Science of Scientific
+Writing</a>：读者期待信息出现在句子的什么位置。</li>
+<li>George Whitesides, <a
+href="https://doi.org/10.1002/adma.200400767">Whitesides’ Group: Writing
+a Paper</a>：从提纲开始写论文。</li>
+</ul>
+</article>
+<article lang="en"><h1 id="how-a-paper-is-told">1.1 How a paper is told</h1>
+<p><span class="meta">Self-study, about 45 minutes. Uses the Session 1
+materials.</span></p>
+<p>A reviewer reads several papers a day and gives each title and
+abstract a few dozen seconds first. Those seconds decide whether the
+reviewer reads on with interest or with a red pen. This section is about
+telling a paper so that people want to keep reading, and about getting
+an agent to write it that way.</p>
+<h2 id="first-find-the-one-point">First find the one point</h2>
+<p>A paper usually has several results, and only one of them can open
+it. A good opening result has three traits: it is surprising, it has a
+number, and it is concrete enough to picture.</p>
+<p>The exercise paper has four candidates:</p>
+<ol type="1">
+<li>At 40% noise, GCE’s final accuracy is 28.6 points higher than
+cross-entropy’s.</li>
+<li>The more noise, the bigger GCE’s advantage, from 15.7 points to 36.6
+points.</li>
+<li>Cross-entropy reaches 92% by epoch 3, spends the next 77 epochs
+memorizing the wrong labels, and ends at 67%.</li>
+<li>Label smoothing gives no protection at all.</li>
+</ol>
+<p>Candidates 1 and 2 are comparisons; a reader has to know what GCE is
+before caring. Candidate 4 is a negative, better kept for answering
+follow-up questions later. Candidate 3 is a story: the network has
+learned the task, then unlearns it with its own hands. Anyone can follow
+it with no background, and it raises the next question at once: how do
+you stop it forgetting? That is the point to open with.</p>
+<p>When you ask an agent to find it, don’t ask for the most important
+result. You will get the most comprehensive one. Ask this way
+instead:</p>
+<pre class="text"><code>Read paper/main.tex and data/. List every result in this paper that could open it, one sentence each, with its number.
+Then rank them by this test: after reading it, would a reviewer turn around and tell a colleague? Explain why the top one ranks first.</code></pre>
+<h2 id="title">Title</h2>
+<p>A title is a sign meant to be remembered. The abstract does the
+summarizing. Attention Is All You Need does not tell you what the paper
+did, yet nobody forgets it. Understanding deep learning requires
+rethinking generalization is a claim, and once you have read it you know
+what the authors set out to overturn.</p>
+<p>The draft’s title is Towards an Empirical Understanding of the
+Robustness of Loss Functions to Label Noise: A Preliminary Study on
+Two-Layer Neural Networks. In twenty-odd words, Towards, Empirical and
+Preliminary all apologize in advance, and Two-Layer Neural Networks
+writes the scope into the title.</p>
+<p>The retold title is Bounded Losses Do Not Memorize Wrong Labels. The
+subject is the method, the verb phrase is the phenomenon, and a reader
+can judge at once whether it is true.</p>
+<p>A few rules:</p>
+<ul>
+<li>Make it a claim whenever you can, with a subject and a verb.</li>
+<li>Ten words or fewer; drop the subtitle after the colon if you
+can.</li>
+<li>Use the field’s standard terms, never a name you coined.</li>
+<li>Defensive work can use images such as a shield or a firewall, so
+readers see at a glance that it is about defense.</li>
+<li>Don’t let the agent give you one title at a time. Have it give
+three, choose one yourself, then have it refine along the direction you
+chose.</li>
+</ul>
+<h2 id="abstract">Abstract</h2>
+<p>A five-sentence structure that works:</p>
+<ol type="1">
+<li>The point, with its number.</li>
+<li>Why it happens, the mechanism in one sentence.</li>
+<li>What we did, and at what scale.</li>
+<li>The main findings, one number each.</li>
+<li>The landing: what the reader should take away.</li>
+</ol>
+<p>The draft abstract opens:</p>
+<blockquote>
+<p>In recent years, deep neural networks have achieved remarkable
+success across a wide range of tasks. However, it is worth noting that
+real-world datasets inevitably contain noisy labels, which may, to some
+extent, adversely affect model performance.</p>
+</blockquote>
+<p>Those two sentences tell a reviewer nothing new. The retold
+opening:</p>
+<blockquote>
+<p>Flip 40% of the training labels and a two-layer network trained with
+cross-entropy reaches 92% test accuracy by epoch 3, then spends the next
+77 epochs memorizing the wrong labels and ends at 67%.</p>
+</blockquote>
+<p>The first sentence is the story. Limitations stay out of the
+abstract, and every sentence in it moves forward.</p>
+<h2 id="introduction">Introduction</h2>
+<p>The first paragraph of the introduction tells the example, in more
+detail than the abstract: which figure, under what conditions, with what
+numbers. Background comes in the second paragraph, and only the
+background needed to understand the example. The third paragraph gives
+the core idea of the mechanism or method. The last paragraph states the
+questions the paper answers, in the order a reader would ask them, each
+pointing to its section.</p>
+<p>The draft’s introduction ends with a four-item list of contributions
+that repeats the abstract, and the last item is We discuss the
+limitations of our study. Many fields expect such a list. If you use
+one, give each item one number, don’t repeat the abstract, and never
+count a discussion of limitations as a contribution.</p>
+<h2 id="results">Results</h2>
+<p>The draft organizes results by experiment number: RQ1, RQ2, RQ3. That
+is the order the authors ran the experiments in. Readers want something
+else.</p>
+<p>After the introduction, the reader’s questions are: is this
+phenomenon real; does it still hold at other noise rates; do the usual
+alternatives work? The results section follows that order, and the first
+sentence of each paragraph is the conclusion itself:</p>
+<ul>
+<li>Cross-entropy learns the task, then unlearns it.</li>
+<li>The bounded loss leads at every noise rate.</li>
+<li>Label smoothing gives no protection.</li>
+<li>Dropping high-loss samples works when the noise rate is known.</li>
+</ul>
+<p>Read only those four sentences and you know what the whole results
+section says.</p>
+<h2 id="discussion-and-limitations">Discussion and limitations</h2>
+<p>State the limitations once, in the discussion, as a statement of the
+evidence’s scope: what kind of setting the results come from, and which
+conditions they do not cover. The draft carries the synthetic-data
+caveat from the abstract all the way to the conclusion, four times in
+all, and adds an It should be noted that after two of the results
+paragraphs as well. Say it once and the reader remembers it. Say it four
+times and the reader concludes that the authors don’t believe their own
+results.</p>
+<p>Don’t write sentences like Our conclusions should be interpreted with
+caution. They carry no information, only unease.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>One or two sentences. Don’t restate the abstract, and don’t write We
+hope this work can provide insights. The retold conclusion has just two
+sentences: Cross-entropy gives its largest gradient to the labels most
+likely to be wrong. A bounded loss turns that gradient down, and the
+network keeps the answer it found in the first few epochs.</p>
+<h2 id="how-to-use-an-exemplar">How to use an exemplar</h2>
+<p>Pick the exemplar from the target venue, the paper you yourself find
+most pleasant to read. The agent should learn its structure and leave
+its wording alone:</p>
+<pre class="text"><code>Read the paper in exemplar/. Don&#39;t copy any sentences.
+Tell me the job its title does, and the job of each sentence of its abstract and each paragraph of its introduction, as a table.
+Then follow that table&#39;s structure to write an outline for paper/main.tex, one line per paragraph stating the conclusion that paragraph makes. Stop and wait for me to review the outline.</code></pre>
+<p>Reviewing the outline before the agent writes the full paper is far
+less work than fixing the paper afterwards. A one-line change at the
+outline stage is a one-paragraph change in the full text.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Take a paper you are writing. Have the agent list every result that
+could open it and rank them, then write three versions of the
+introduction’s first paragraph for the top result: one that opens with
+the result, one that opens with a concrete example, and one that opens
+with a counterintuitive question. Read all three and choose one.</p>
+<details>
+<summary>
+Sample answers for the exercise paper
+</summary>
+<p>Opening with the result: A network trained on noisy labels often
+knows the right answer early and forgets it later.</p>
+<p>Opening with an example: In our two-layer network with 40% of labels
+flipped, cross-entropy reaches 92% test accuracy at epoch 3 and falls to
+67% by epoch 80.</p>
+<p>Opening with a question: Why does a network that has already found
+the right answer spend 77 more epochs unlearning it?</p>
+<p>The retold paper uses the first followed by the second: one sentence
+of summary, then the example to ground it.</p>
+</details>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Titles that chase accuracy.</strong> When an agent writes a
+title it packs in the method, the setting and the scope, and each
+revision makes it longer. Tell it a title is a sign, show it a few
+famous titles, and ask for a claim.</p>
+</div>
+<div class="pitfall">
+<p><strong>Opening with background.</strong> Left unconstrained, an
+agent’s first sentence is almost always In recent years. Saying in the
+task card what the first sentence should be works better than deleting
+it afterwards.</p>
+</div>
+<div class="pitfall">
+<p><strong>Denying first, then narrowing.</strong> We do not claim X.
+Rather, we show the narrower Y. Sentences like this read like a defense.
+Write Y directly, and put why X fails in the discussion.</p>
+</div>
+<div class="pitfall">
+<p><strong>Paragraph leads that only name a topic.</strong> Leads like
+Memorization. Robust losses. tell readers what the paragraph is about
+and leave out its conclusion. Make each lead a conclusion, and a reader
+who skims the leads understands the whole section.</p>
+</div>
+<div class="pitfall">
+<p><strong>Coined names.</strong> Agents like to name a method and then
+use the name throughout. Readers from neighboring fields have never seen
+the word and have to recall it every time it appears. Use the field’s
+standard terms, and if you must coin a name, define it in one place
+only.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Simon Peyton Jones, <a
+href="https://www.microsoft.com/en-us/research/?p=186470">How to write a
+great research paper</a>: treat a paper as conveying one idea, and
+decide which one before you write.</li>
+<li>George Gopen and Judith Swan, <a
+href="https://prod.lsa.umich.edu/content/dam/sweetland-assets/sweetland-documents/Graduates/DWG/The-Science-of-Scientific-Writing.pdf">The
+Science of Scientific Writing</a>: where in a sentence readers expect
+each piece of information.</li>
+<li>George Whitesides, <a
+href="https://doi.org/10.1002/adma.200400767">Whitesides’ Group: Writing
+a Paper</a>: writing a paper starting from the outline.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="writing.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1 Agent 写作</span><span lang="en">1 Writing with Agents</span></a><a class="next" href="writing-numbers.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.2 数字从数据来</span><span lang="en">1.2 Numbers come from data</span></a></nav>
+</main>
+</div>
+</body>
+</html>

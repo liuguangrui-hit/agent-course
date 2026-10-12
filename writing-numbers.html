@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数字从数据来 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
+<a href="writing-numbers.html" class="cur sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
+<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
+<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
+<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
+<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><h1 id="数字从数据来">1.2 数字从数据来</h1>
+<p><span class="meta">课后深入，约 30 分钟。用到第 1
+课练习材料和参考答案。</span></p>
+<p>Agent 改写论文时，最危险的不是文风，是数字。它会把 96.0 写成约
+96.2，把 28.6 个点写成超过 30
+个点；重跑实验以后，表格更新了，正文还停在旧数字上。这些错误语气通顺，读起来毫无破绽，靠读是读不出来的。</p>
+<p>这一节给三道防线：数字从数据生成，脚本核对剩下的数字，同一个数各处同一种说法。</p>
+<h2 id="为什么读不出来">为什么读不出来</h2>
+<p>试一下：</p>
+<pre class="text"><code>读 paper/main.tex 和 data/results.csv，检查正文里的数字和数据是否一致。</code></pre>
+<p>Agent
+多半会认真地读一遍，然后告诉你基本一致，也许顺手指出一两处。它可能漏掉摘要里的
+96.2，因为 96.0 和 96.2
+太接近，在一段通顺的文字里不扎眼。人读也一样。数字一致性是机械问题，应该交给机械的办法。</p>
+<h2 id="第一道防线数字宏">第一道防线：数字宏</h2>
+<p>让正文根本不手写结果数字。一个脚本从数据算出每个要报告的数，写成
+LaTeX 宏：</p>
+<pre class="text"><code>% paper/numbers.tex，由 code/make_numbers.py 生成，不要手改
+\newcommand{\ceFinalForty}{67.4}
+\newcommand{\gceFinalForty}{96.0}
+\newcommand{\gapGceCeForty}{28.6}</code></pre>
+<p>正文写 <code>GCE ends at \gceFinalForty\%</code>，编译出来就是
+96.0%。表格也一样，由同一个脚本生成 <code>table_main.tex</code>，正文用
+<code>\input{table_main.tex}</code> 引入。</p>
+<p>这样一来，重跑实验后只要重新运行脚本再编译，正文，表格和图同时更新，不可能有一处还停在旧数字上。任务卡：</p>
+<pre class="text"><code>写 code/make_numbers.py：从 data/results.csv 和 data/curves.csv 计算论文里要报告的每个数，
+写成 paper/numbers.tex 里的 \newcommand 宏，宏名能看出含义；再生成 paper/table_main.tex。
+然后把 versions/v1/main.tex 正文里手写的结果数字全部换成宏，表格换成 \input，编译确认 PDF 里的数字不变。</code></pre>
+<p>参考答案里的 <code>code/make_numbers.py</code>
+是一种写法，六十行左右。</p>
+<h2 id="第二道防线核对脚本">第二道防线：核对脚本</h2>
+<p>有些数字不适合做成宏，比如摘要里四舍五入到整数的 16 个点，或者 Agent
+重讲时临时算出的差值。对这些，用脚本把正文里每一个百分数和点数找出来，到数据里找对应：</p>
+<pre class="text"><code>写 code/check_numbers.py：从一个 .tex 文件里找出所有百分数和点数，
+逐个到 data/ 的汇总值里找对应，对不上的列出来，标明行号。
+先在 paper/main.tex 上运行，再在 versions/v1/main.tex 上运行。</code></pre>
+<p>在初稿上，参考答案的脚本输出：</p>
+<pre class="text"><code>line 16: 96.2\% not found in the data
+line 28: 30 percentage points not found in the data
+2 unsupported number(s)</code></pre>
+<p><strong>候选集要小。</strong>
+这个脚本的思路是：从数据算出一组候选值，正文里的数要能在候选值里找到。我们第一版把每条平均曲线第
+1 轮的准确率也放进了候选，结果漏掉了 96.2：交叉熵在 20% 噪声下第 1
+轮的平均准确率恰好是
+96.24，而这个数论文里从未报告。候选越多，错误的数碰巧对上的机会越大。只放论文实际报告的那几类量。</p>
+<h2
+id="第三道防线同一个数同一种说法">第三道防线：同一个数，同一种说法</h2>
+<p>脚本只能查数值，查不了意思。重讲时，a quarter of ideas on other
+subjects 变成 a quarter of all ideas study another topic，数字都是
+25%，分母已经换了。规则很简单：一个数第一次出现时怎么说，摘要，引言，图注和正文就都怎么说。让审稿的
+Agent 专门查这一项：</p>
+<pre class="text"><code>列出 versions/v1/main.tex 里每个出现两次以上的数字，把每次出现的整句并排列出，指出主语或分母不一致的地方。</code></pre>
+<h2 id="一条命令重建整篇论文">一条命令重建整篇论文</h2>
+<p>数字宏的好处要靠流程兑现。把实验，生成数字，画图和编译串成一条命令：</p>
+<pre class="text"><code>写一个 Makefile，make paper 依次运行 make_numbers.py，plot_paper.py 和 latexmk，
+make check 运行 check_numbers.py。告诉我每个目标依赖哪些文件。</code></pre>
+<p>以后任何人拿到这个文件夹，一条 <code>make paper</code>
+就能从数据得到同一份 PDF。第 3 课在服务器上重跑实验时，你会用到它。</p>
+<h2 id="练习">练习</h2>
+<p>把 <code>data/</code> 里 GCE 的一个种子的结果故意改掉一点，重新运行
+<code>make paper</code>，看看 PDF 里哪些数字变了，再运行
+<code>make check</code>。然后把数据改回来。</p>
+<details>
+<summary>
+会发生什么
+</summary>
+<p>用了数字宏的地方，正文和表格会一起变；<code>check_numbers.py</code>
+不报错，因为数字就是从新数据来的。没有改成宏，仍然手写的地方，<code>make check</code>
+会把它列出来。这正是两道防线的分工：宏保证一致，脚本抓住漏网的。</p>
+</details>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>重跑实验后正文没跟上。</strong>
+表格是新的，摘要还是旧数字。只要有一个数是手写的，这种事迟早发生。结果数字一律走宏。</p>
+</div>
+<div class="pitfall">
+<p><strong>差值先四舍五入还是后四舍五入。</strong> 表里 GCE 83.8，CE
+47.2，读者心算差值是 36.6；用原始均值算是
+36.7。两种都对，但论文里只能有一种。约定差值由表中的数相减，参考答案的脚本就是这样生成
+<code>\gapGceCeSixty</code> 的。</p>
+</div>
+<div class="pitfall">
+<p><strong>百分数和百分点混用。</strong> 从 67.4% 到 96.0% 是提高 28.6
+个百分点，不是 28.6%。Agent 经常混写，核对脚本要把两种说法都抓出来。</p>
+</div>
+<div class="pitfall">
+<p><strong>Agent 自己补数字。</strong>
+摘要要求每个发现带一个数，手头没有现成的，它会算一个，甚至编一个看起来合理的。每个新出现的数字都要能追到
+data/ 里。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://doi.org/10.1371/journal.pcbi.1003285">Ten Simple
+Rules for Reproducible Computational Research</a>：Sandve 等人，PLoS
+Computational Biology，2013。</li>
+<li><a
+href="https://ctan.org/pkg/latexmk">latexmk</a>：自动处理多次编译和引用的
+LaTeX 构建工具。</li>
+</ul>
+</article>
+<article lang="en"><h1 id="numbers-come-from-data">1.2 Numbers come from data</h1>
+<p><span class="meta">Self-study, about 30 minutes. Uses the Session 1
+materials and answers.</span></p>
+<p>When an agent rewrites a paper, style is the smaller risk. The real
+danger is the numbers. It turns 96.0 into about 96.2 and 28.6 points
+into over 30 points; after you rerun the experiments, the table gets
+updated and the text stays on the old numbers. These errors read
+smoothly and leave no trace on the page, so no amount of reading finds
+them.</p>
+<p>This section gives three lines of defense: generate numbers from the
+data, check the remaining numbers with a script, and phrase the same
+number the same way everywhere.</p>
+<h2 id="why-reading-doesnt-catch-them">Why reading doesn’t catch
+them</h2>
+<p>Try it:</p>
+<pre class="text"><code>Read paper/main.tex and data/results.csv and check whether the numbers in the text match the data.</code></pre>
+<p>The agent will most likely read it all carefully and tell you it
+broadly matches, perhaps pointing out one or two things along the way.
+It can easily miss the 96.2 in the abstract, because 96.0 and 96.2 are
+so close that the difference doesn’t stand out in fluent text. People
+reading are no different. Number consistency is a mechanical problem,
+and it belongs to a mechanical method.</p>
+<h2 id="first-line-of-defense-number-macros">First line of defense:
+number macros</h2>
+<p>Keep hand-typed result numbers out of the text entirely. A script
+computes every number to be reported from the data and writes it as a
+LaTeX macro:</p>
+<pre class="text"><code>% paper/numbers.tex, generated by code/make_numbers.py. Do not edit by hand.
+\newcommand{\ceFinalForty}{67.4}
+\newcommand{\gceFinalForty}{96.0}
+\newcommand{\gapGceCeForty}{28.6}</code></pre>
+<p>The text says <code>GCE ends at \gceFinalForty\%</code>, which
+compiles to 96.0%. Tables work the same way: the same script generates
+<code>table_main.tex</code>, and the text pulls it in with
+<code>\input{table_main.tex}</code>.</p>
+<p>Now when you rerun the experiments, you rerun the script and
+recompile, and the text, the tables and the figures all update together.
+No place can be left behind on an old number. The task card:</p>
+<pre class="text"><code>Write code/make_numbers.py: compute every number the paper reports from data/results.csv and data/curves.csv,
+and write them as \newcommand macros in paper/numbers.tex, with macro names that show what each one means; also generate paper/table_main.tex.
+Then replace every hand-typed result number in the text of versions/v1/main.tex with a macro and the table with \input, and compile to confirm the numbers in the PDF are unchanged.</code></pre>
+<p>The <code>code/make_numbers.py</code> in the answers is one way to
+write it, about sixty lines.</p>
+<h2 id="second-line-of-defense-a-checking-script">Second line of
+defense: a checking script</h2>
+<p>Some numbers don’t suit a macro, such as the 16 points rounded to a
+whole number in the abstract, or a difference the agent works out on the
+spot while retelling. For these, use a script to find every percentage
+and point difference in the text and look for its match in the data:</p>
+<pre class="text"><code>Write code/check_numbers.py: find every percentage and point difference in a .tex file,
+look each one up among the summary values from data/, and list the ones that don&#39;t match, with line numbers.
+Run it on paper/main.tex first, then on versions/v1/main.tex.</code></pre>
+<p>On the draft, the script in the answers prints:</p>
+<pre class="text"><code>line 16: 96.2\% not found in the data
+line 28: 30 percentage points not found in the data
+2 unsupported number(s)</code></pre>
+<p><strong>Keep the candidate set small.</strong> The script works like
+this: it computes a set of candidate values from the data, and every
+number in the text has to be found among them. Our first version also
+put the epoch-1 accuracy of every mean curve into the candidates, and it
+missed the 96.2: the mean epoch-1 accuracy of cross-entropy at 20% noise
+happens to be 96.24, a number the paper never reports. The more
+candidates, the better the odds that a wrong number matches one by
+chance. Include only the kinds of quantities the paper actually
+reports.</p>
+<h2 id="third-line-of-defense-same-number-same-wording">Third line of
+defense: same number, same wording</h2>
+<p>A script can check values. It cannot check meaning. In a retell, a
+quarter of ideas on other subjects becomes a quarter of all ideas study
+another topic; both are 25%, and the denominator has changed. The rule
+is simple: however a number is phrased the first time it appears, the
+abstract, the introduction, the captions and the body all phrase it the
+same way. Have the reviewing agent check exactly this:</p>
+<pre class="text"><code>List every number that appears two or more times in versions/v1/main.tex, show the full sentence for each occurrence side by side, and point out where the subject or the denominator differs.</code></pre>
+<h2 id="rebuild-the-whole-paper-with-one-command">Rebuild the whole
+paper with one command</h2>
+<p>Number macros pay off only through the workflow. Chain the
+experiment, number generation, plotting and compilation into one
+command:</p>
+<pre class="text"><code>Write a Makefile where make paper runs make_numbers.py, plot_paper.py and latexmk in that order,
+and make check runs check_numbers.py. Tell me which files each target depends on.</code></pre>
+<p>From then on, anyone who gets this folder can run one
+<code>make paper</code> and get the same PDF from the data. You will use
+it in Session 3 when you rerun experiments on a server.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Deliberately change the result of one GCE seed in <code>data/</code>
+a little, rerun <code>make paper</code>, see which numbers in the PDF
+change, then run <code>make check</code>. Afterwards, change the data
+back.</p>
+<details>
+<summary>
+What happens
+</summary>
+<p>Wherever macros are used, the text and the table change together;
+<code>check_numbers.py</code> reports nothing, because the numbers come
+straight from the new data. Any place still typed by hand, with no
+macro, gets listed by <code>make check</code>. That is exactly how the
+two lines of defense divide the work: macros keep numbers consistent,
+and the script catches whatever slips through.</p>
+</details>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>The text falls behind after a rerun.</strong> The table is
+new and the abstract still has the old number. As long as even one
+number is typed by hand, this happens sooner or later. Every result
+number goes through a macro.</p>
+</div>
+<div class="pitfall">
+<p><strong>Rounding a difference before or after.</strong> The table has
+GCE at 83.8 and CE at 47.2, so a reader works out a gap of 36.6; from
+the raw means it is 36.7. Both are correct, and the paper gets to use
+only one. Agree that differences are computed from the numbers in the
+table; that is how the script in the answers generates
+<code>\gapGceCeSixty</code>.</p>
+</div>
+<div class="pitfall">
+<p><strong>Mixing percent and percentage points.</strong> Going from
+67.4% to 96.0% is a gain of 28.6 percentage points. It is not a 28.6%
+gain. Agents often mix the two, so the checking script has to catch both
+phrasings.</p>
+</div>
+<div class="pitfall">
+<p><strong>The agent supplies its own numbers.</strong> Asked for one
+number per finding in the abstract, with none ready to hand, it computes
+one, or even invents one that looks plausible. Every new number has to
+trace back to data/.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://doi.org/10.1371/journal.pcbi.1003285">Ten Simple
+Rules for Reproducible Computational Research</a>: Sandve et al., PLoS
+Computational Biology, 2013.</li>
+<li><a href="https://ctan.org/pkg/latexmk">latexmk</a>: a LaTeX build
+tool that handles repeated compilation and references
+automatically.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="writing-story.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.1 论文的讲法</span><span lang="en">1.1 How a paper is told</span></a><a class="next" href="writing-figures.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.3 数据图</span><span lang="en">1.3 Data figures</span></a></nav>
+</main>
+</div>
+</body>
+</html>

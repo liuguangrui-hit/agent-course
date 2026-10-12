@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数据图 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
+<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
+<a href="writing-figures.html" class="cur sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
+<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
+<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
+<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
+<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
+<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
+<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
+<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
+<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+</nav>
+<main>
+<article lang="zh"><h1 id="数据图">1.3 数据图</h1>
+<p><span class="meta">课后深入，约 45 分钟。用到第 1
+课练习材料和参考答案。</span></p>
+<p>审稿人翻论文，先看题目和摘要，接着看图。一张好图让人不读正文也知道结论；一张难看的图让人怀疑作者对待实验是否同样随意。Agent
+很会画图，但它默认画的是 matplotlib 的样子：8 乘 6
+英寸，图例框在右上角，标题写在图上。这一节讲怎样让它画出能直接放进投稿的图。</p>
+<h2 id="先定结论再画">先定结论，再画</h2>
+<p>每张图只回答一个问题。动手之前，用一句话写下读者看完这张图应该得出什么结论。这句话就是图注的第一句，也决定了画什么，不画什么。</p>
+<p>练习论文的两张图：</p>
+<ul>
+<li>图 1：交叉熵先学会了，又忘掉了；GCE 没有。所以画 40%
+噪声下的测试准确率随训练轮次的变化。</li>
+<li>图 2：GCE
+的领先在每个噪声比例都成立，而且噪声越大领先越多。所以画最终准确率随噪声比例的变化。</li>
+</ul>
+<p>初稿把每个种子的每条曲线都画了出来，二十条线，因为它想展示全部数据。展示全部数据是表格和附录的事，图要的是那一个结论。</p>
+<p>任务卡里把这一步写死：</p>
+<pre class="text"><code>动手画之前，先用一句话告诉我这张图要读者看到什么结论。我同意后再画，这句话写成图注第一句。</code></pre>
+<h2 id="尺寸和字号">尺寸和字号</h2>
+<p>图要按最终在论文里的尺寸画。常见版式的宽度：</p>
+<table>
+<thead>
+<tr>
+<th>版式</th>
+<th>单栏</th>
+<th>通栏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IEEE 会议与期刊</td>
+<td>3.5 英寸</td>
+<td>7.16 英寸</td>
+</tr>
+<tr>
+<td>ACM 双栏</td>
+<td>3.33 英寸</td>
+<td>7 英寸</td>
+</tr>
+<tr>
+<td>NeurIPS，ICML 一类单栏模板</td>
+<td>正文宽 5.5 英寸左右</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>以模板为准，最可靠的是在 LaTeX 里打印
+<code>\the\columnwidth</code>。图里的字用 7 到 9
+磅，和正文的脚注差不多大。matplotlib 里设 <code>figsize</code>
+为最终宽度，<code>font.size</code> 为 8，插入论文时不要再用
+<code>width=\columnwidth</code> 缩放，直接按原尺寸放。</p>
+<p>初稿的图是 8 乘 6 英寸画的，插进 3.25 英寸的栏，所有东西缩到四成：10
+磅的字变成 4 磅。</p>
+<h2 id="颜色">颜色</h2>
+<ul>
+<li><strong>一个方法一种颜色，所有图里都一样。</strong>
+在脚本开头定义一个字典，方法名对颜色，所有图都从这里取。初稿两张图画线的顺序不同，交叉熵在一张图里是橙色，在另一张里是蓝色。</li>
+<li><strong>色盲友好。</strong> 约 8%
+的男性有红绿色弱。用经过检验的调色板，比如 Okabe 和 Ito
+的八色方案，或者用工具实际检验配色在色弱下是否可分，不要凭眼睛判断。</li>
+<li><strong>颜色不是唯一的区分。</strong>
+线旁直接标名字，必要时加不同的点形，黑白打印也能读。</li>
+<li><strong>不用彩虹色表示大小。</strong>
+连续量用单一色相由浅到深。</li>
+</ul>
+<h2 id="误差和不确定性">误差和不确定性</h2>
+<p>五个种子就画五个种子的统计量，不要画五条线。均值线加一个标准差的带最常用，误差带的含义写进图注：Lines
+are means over five seeds; bands show one standard deviation.
+柱状图用误差棒，同样说明是标准差还是置信区间。</p>
+<p>Agent
+有时会悄悄平滑曲线或去掉离群的种子，让图更好看。图要如实，平滑和剔除都要在图注里写明，最好不做。</p>
+<h2 id="标注">标注</h2>
+<ul>
+<li><strong>直接标注代替图例。</strong>
+方法名写在线的末端。线末端挨得太近时，挪开一点，或者把两条几乎重合的线合并成一个标签，参考答案里交叉熵和标签平滑就是这样处理的。</li>
+<li><strong>标出那个关键事件。</strong> 图 1 的结论是交叉熵在第 3
+轮达到峰值后下降，就在峰值处加一个箭头和一句话。读者的眼睛会先落在这里。</li>
+<li><strong>不放图标题。</strong> 标题的作用由图注承担。</li>
+<li><strong>坐标轴写读者的语言并带单位。</strong> Test accuracy (%)
+而不是 acc，Training labels flipped (%) 而不是 noise。</li>
+</ul>
+<h2 id="版面细节">版面细节</h2>
+<ul>
+<li>去掉上边框和右边框，只留浅灰色的横向网格线，不用虚线。</li>
+<li>输出矢量 PDF，并设 <code>pdf.fonttype</code> 为 42，让字体以
+TrueType 嵌入。不少投稿系统会拒收含 Type 3 字体的 PDF，IEEE 的 PDF
+eXpress 就会报错。</li>
+<li>字体与正文接近。正文是衬线体，图里也用衬线体。</li>
+<li>所有图由一个脚本从数据生成，样式集中在脚本开头。改一处样式，所有图一起变。</li>
+</ul>
+<h2 id="让-agent-看渲染后的页面">让 Agent 看渲染后的页面</h2>
+<p>Agent 能看图片，这是检查图最有用的能力。但它只看自己导出的
+PNG，看不出图放进栏里以后的问题：字太小，和正文字号不协调，图注和图分到两页。让它看编译后的页面：</p>
+<pre class="text"><code>编译 versions/v1/main.tex，把 PDF 每一页渲染成 150 dpi 的图片。
+逐页看每张图：有没有文字重叠或出界，最小的字是否不小于正文脚注，颜色在两张图里是否一致，图注第一句是否就是图要说的结论。
+列出问题，改脚本重画，再编译再看，直到没有问题为止。</code></pre>
+<p>这个看了再改的循环，Agent 自己能跑好几轮，你只需要看最后的结果。</p>
+<h2 id="表还是图">表还是图</h2>
+<p>精确数值给表，趋势和对比给图。练习论文两者都有：表 1
+给每个配置的均值和标准差，图 2
+给趋势。两者内容重叠时，图在正文，表可以放附录。</p>
+<h2 id="练习">练习</h2>
+<p>把图 2 换一种画法：只看 40%
+噪声，画四个方法最终准确率的横向条形图，带误差棒，按准确率排序。对比原来的折线图，说出各自适合回答什么问题。</p>
+<details>
+<summary>
+参考思路
+</summary>
+<p>条形图回答在这个噪声比例下谁最好，好多少，一眼看清排序和差距。折线图回答优势如何随噪声变化，能看出
+GCE
+的领先在扩大。论文的结论是领先随噪声增大，所以正文用折线图；如果某个审稿人只关心
+40% 这一个设置，条形图可以放进附录。条形图要从 0
+开始画，否则长度会夸大差距。</p>
+</details>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>画大了再缩。</strong> 默认尺寸画好再缩进栏宽，字缩到 4
+磅。按最终尺寸画，插入时不缩放。</p>
+</div>
+<div class="pitfall">
+<p><strong>图例压住数据。</strong> 图例默认放在 Agent
+觉得最好的位置，常常正好盖住一段曲线。用直接标注，或者明确要求图例放在数据之外。</p>
+</div>
+<div class="pitfall">
+<p><strong>同一方法颜色不一致。</strong>
+每张图单独画，颜色按画线顺序分配，换个顺序就变了。颜色由方法名决定，写在一个字典里。</p>
+</div>
+<div class="pitfall">
+<p><strong>手改图片。</strong> 在 PNG
+上补字或者用绘图软件调颜色，下次重跑实验图就回到原样。图只从脚本生成，改图就是改脚本。</p>
+</div>
+<div class="pitfall">
+<p><strong>只看单独的图。</strong>
+图本身没问题，放进论文后字和正文差太多，或者图注挤到下一页。在编译后的
+PDF 里检查。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li>Nicolas Rougier, Michael Droettboom and Philip Bourne, <a
+href="https://doi.org/10.1371/journal.pcbi.1003833">Ten Simple Rules for
+Better Figures</a>，PLoS Computational Biology，2014。</li>
+<li>Claus Wilke, <a href="https://clauswilke.com/dataviz/">Fundamentals
+of Data Visualization</a>：免费在线书，讲颜色，误差和图的选择。</li>
+<li>Okabe and Ito, <a href="https://jfly.uni-koeln.de/color/">Color
+Universal Design</a>：色盲友好的八色方案及其由来。</li>
+</ul>
+</article>
+<article lang="en"><h1 id="data-figures">1.3 Data figures</h1>
+<p><span class="meta">Self-study, about 45 minutes. Uses the Session 1
+materials and answers.</span></p>
+<p>A reviewer leafing through a paper reads the title and abstract
+first, then looks at the figures. A good figure gives away the
+conclusion without the text; an ugly one makes the reviewer wonder
+whether the authors were just as careless with the experiments. Agents
+are good at plotting, but by default they draw what matplotlib draws: 8
+by 6 inches, a boxed legend in the upper right, a title on the plot.
+This section shows how to get figures that go straight into a
+submission.</p>
+<h2 id="decide-the-conclusion-then-draw">Decide the conclusion, then
+draw</h2>
+<p>Each figure answers one question. Before drawing, write down in one
+sentence what the reader should conclude from it. That sentence becomes
+the first sentence of the caption, and it decides what goes in the
+figure and what stays out.</p>
+<p>The two figures in the exercise paper:</p>
+<ul>
+<li>Figure 1: cross-entropy learns the task, then forgets it; GCE does
+not. So plot test accuracy against training epoch at 40% noise.</li>
+<li>Figure 2: GCE’s lead holds at every noise rate and grows with the
+noise. So plot final accuracy against noise rate.</li>
+</ul>
+<p>The draft plots every curve from every seed, twenty lines, because it
+wants to show all the data. Showing all the data is the job of tables
+and appendices. A figure is there for its one conclusion.</p>
+<p>Make this step mandatory in the task card:</p>
+<pre class="text"><code>Before drawing, tell me in one sentence what conclusion this figure should show the reader. Draw only after I agree, and make that sentence the first sentence of the caption.</code></pre>
+<h2 id="size-and-font-size">Size and font size</h2>
+<p>Draw each figure at the size it will have in the paper. Widths for
+common layouts:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Layout</th>
+<th>One column</th>
+<th>Full width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IEEE conferences and journals</td>
+<td>3.5 inches</td>
+<td>7.16 inches</td>
+</tr>
+<tr>
+<td>ACM two-column</td>
+<td>3.33 inches</td>
+<td>7 inches</td>
+</tr>
+<tr>
+<td>One-column templates such as NeurIPS and ICML</td>
+<td>Text width about 5.5 inches</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The template is the authority, and the most reliable way to read it
+is to print <code>\the\columnwidth</code> in LaTeX. Text inside the
+figure should be 7 to 9 pt, about the size of the footnotes. In
+matplotlib, set <code>figsize</code> to the final width and
+<code>font.size</code> to 8. When you insert the figure into the paper,
+don’t rescale it with <code>width=\columnwidth</code>; place it at its
+original size.</p>
+<p>The draft’s figures were drawn at 8 by 6 inches and inserted into a
+3.25-inch column, so everything shrinks to 40%: 10 pt text becomes 4
+pt.</p>
+<h2 id="color">Color</h2>
+<ul>
+<li><strong>One color per method, the same in every figure.</strong>
+Define a dictionary at the top of the script that maps method names to
+colors, and have every figure take its colors from it. The draft’s two
+figures draw the lines in different orders, so cross-entropy is orange
+in one figure and blue in the other.</li>
+<li><strong>Color-blind safe.</strong> About 8% of men have red-green
+color vision deficiency. Use a tested palette, such as the eight-color
+scheme by Okabe and Ito, or check with a tool whether your colors stay
+distinguishable under color vision deficiency. Don’t judge it by
+eye.</li>
+<li><strong>Color is never the only cue.</strong> Put names directly
+next to the lines, and add different markers when needed, so the figure
+still reads in black and white.</li>
+<li><strong>No rainbow scales for magnitude.</strong> Show a continuous
+quantity with a single hue running from light to dark.</li>
+</ul>
+<h2 id="error-and-uncertainty">Error and uncertainty</h2>
+<p>With five seeds, plot statistics over the five seeds. Five separate
+lines are the wrong picture. A mean line with a one-standard-deviation
+band is the most common choice, and the caption says what the band
+means: Lines are means over five seeds; bands show one standard
+deviation. Bar charts use error bars, and the caption likewise says
+whether they show standard deviation or a confidence interval.</p>
+<p>Agents sometimes quietly smooth curves or drop an outlying seed to
+make a figure look better. A figure has to be faithful. Any smoothing or
+exclusion goes in the caption, and it is best not to do either.</p>
+<h2 id="labels">Labels</h2>
+<ul>
+<li><strong>Label directly in place of a legend.</strong> Write each
+method’s name at the end of its line. When line ends crowd together,
+nudge the labels apart, or merge two nearly overlapping lines under one
+label; the answers do this for cross-entropy and label smoothing.</li>
+<li><strong>Mark the key event.</strong> Figure 1’s conclusion is that
+cross-entropy peaks at epoch 3 and then declines, so put an arrow and a
+short phrase at the peak. The reader’s eye lands there first.</li>
+<li><strong>No figure title.</strong> The caption does that job.</li>
+<li><strong>Axis labels in the reader’s language, with units.</strong>
+Test accuracy (%), never acc; Training labels flipped (%), never
+noise.</li>
+</ul>
+<h2 id="layout-details">Layout details</h2>
+<ul>
+<li>Remove the top and right spines and keep only light gray horizontal
+grid lines, solid, never dashed.</li>
+<li>Output vector PDF and set <code>pdf.fonttype</code> to 42 so fonts
+are embedded as TrueType. Many submission systems reject PDFs that
+contain Type 3 fonts; IEEE PDF eXpress flags them as errors.</li>
+<li>Match the font to the body text. If the body is a serif face, use a
+serif face in the figures too.</li>
+<li>Generate every figure from the data with one script, with the styles
+collected at the top of the script. Change a style in one place and
+every figure changes with it.</li>
+</ul>
+<h2 id="have-the-agent-look-at-the-rendered-page">Have the agent look at
+the rendered page</h2>
+<p>Agents can look at images, and for checking figures that is the most
+useful thing they can do. If it looks only at the PNG it exported,
+though, it cannot see what goes wrong once the figure sits in the
+column: text too small, a font size that clashes with the body text, a
+caption split from its figure across two pages. Have it look at the
+compiled page:</p>
+<pre class="text"><code>Compile versions/v1/main.tex and render every page of the PDF as an image at 150 dpi.
+Go through each figure page by page: is any text overlapping or out of bounds, is the smallest text at least the size of the footnotes, are the colors consistent across both figures, and is the first sentence of each caption the conclusion the figure is meant to show?
+List the problems, fix the script and redraw, then compile and look again, until there are no problems left.</code></pre>
+<p>The agent can run this look-and-fix loop for several rounds on its
+own. You only need to look at the final result.</p>
+<h2 id="table-or-figure">Table or figure</h2>
+<p>Exact values go in tables; trends and comparisons go in figures. The
+exercise paper has both: Table 1 gives the mean and standard deviation
+for every configuration, and Figure 2 shows the trend. When the two
+overlap, the figure stays in the main text and the table can move to the
+appendix.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Draw Figure 2 another way: at 40% noise only, a horizontal bar chart
+of the four methods’ final accuracy, with error bars, sorted by
+accuracy. Compare it with the original line chart and say which question
+each one answers best.</p>
+<details>
+<summary>
+One way to think about it
+</summary>
+<p>The bar chart answers which method is best at this noise rate and by
+how much; the ranking and the gaps are clear at a glance. The line chart
+answers how the advantage changes with noise, and shows GCE’s lead
+widening. The paper’s conclusion is that the lead grows with noise, so
+the main text uses the line chart; if a reviewer cares only about the
+40% setting, the bar chart can go in the appendix. A bar chart has to
+start at 0, or the bar lengths exaggerate the gaps.</p>
+</details>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Drawing large, then shrinking.</strong> Draw at the default
+size, shrink into the column width, and the text drops to 4 pt. Draw at
+final size and insert without scaling.</p>
+</div>
+<div class="pitfall">
+<p><strong>A legend sitting on the data.</strong> By default the legend
+goes wherever the agent thinks is best, which often covers a stretch of
+a curve. Label directly, or require explicitly that the legend sit
+outside the data.</p>
+</div>
+<div class="pitfall">
+<p><strong>The same method in different colors.</strong> Each figure is
+drawn separately and colors are assigned in drawing order, so a
+different order changes them. Let the method name decide the color,
+written in one dictionary.</p>
+</div>
+<div class="pitfall">
+<p><strong>Editing figure images by hand.</strong> Add text to a PNG or
+adjust colors in a drawing program, and the next experiment rerun puts
+the figure back the way it was. Figures come only from the script;
+changing a figure means changing the script.</p>
+</div>
+<div class="pitfall">
+<p><strong>Checking the figure on its own.</strong> The figure itself
+looks fine, but in the paper its text is far off the body size, or the
+caption gets pushed onto the next page. Check in the compiled PDF.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li>Nicolas Rougier, Michael Droettboom and Philip Bourne, <a
+href="https://doi.org/10.1371/journal.pcbi.1003833">Ten Simple Rules for
+Better Figures</a>, PLoS Computational Biology, 2014.</li>
+<li>Claus Wilke, <a href="https://clauswilke.com/dataviz/">Fundamentals
+of Data Visualization</a>: a free online book on color, error and
+choosing the right figure.</li>
+<li>Okabe and Ito, <a href="https://jfly.uni-koeln.de/color/">Color
+Universal Design</a>: the color-blind-safe eight-color scheme and where
+it comes from.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="writing-numbers.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.2 数字从数据来</span><span lang="en">1.2 Numbers come from data</span></a><a class="next" href="writing-review.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.4 审稿与返修</span><span lang="en">1.4 Review and revision</span></a></nav>
+</main>
+</div>
+</body>
+</html>
