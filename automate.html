@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent 自动化与自进化 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html" class="cur"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="automate-schedule.html" class="sub"><span class="num">4.1</span><span lang="zh">定时与无人值守</span><span lang="en">Scheduling and headless runs</span></a>
+<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验榜</span><span lang="en">Playbooks</span></a>
+<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果页</span><span lang="en">The results page</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip new">+ 定时任务</span><span class="chip new">+ 无人值守调用</span><span class="chip new">+ 手机通知</span><span class="chip new">+ 经验榜</span><span class="chip new">+ GitHub Pages</span></div><h1 id="agent-自动化与自进化">4 Agent 自动化与自进化</h1>
+<div class="goal">
+<p>一小时后，你的工作台会在夜里自己干活：晚上十点从问题清单里挑一个问题，写预测，把实验送上服务器；早上七点收回结果，请另一家
+Agent
+审，把这一轮学到的做法记进经验榜，更新一个手机上就能打开的结果网页，再推一条通知到你手机上。每过三轮，一个独立的反思检查会判断这个循环是否还在正道上，必要时让它停下。</p>
+</div>
+<p><span class="meta">课堂核心 60 分钟。课后深入 4.1 至 4.3
+共约一个半小时，按需选读。</span></p>
+<div class="download">
+<p><a href="downloads/lesson-4-zh.zip">下载第 4 课练习材料</a></p>
+</div>
+<p>练习材料接着第 3 课的仓库，多了几样：<code>LOOP.md</code>
+写一轮循环怎么走，<code>STATE.md</code>
+记到哪一步了，<code>playbook.md</code>
+是空的经验榜，<code>review_task.md</code> 和
+<code>reflection_task.md</code>
+是审查和反思的任务，<code>code/make_page.py</code>
+生成结果页，<code>ledger.csv</code> 是空的用量账本。</p>
+<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<div class="install">
+<p><strong>本课暗线：让 Agent 不用你叫也会开工，干完会告诉你。</strong>
+到第 3
+课为止，每件事都从你在对话框里发一句话开始。这一课添五样：定时任务让它按时开工；命令行版的
+Claude 和 Codex 让一个 Agent
+在无人值守时把事交给另一家；手机通知让它跑完叫你；经验榜让它每轮把做法记下来；GitHub
+Pages 把结果变成网页。</p>
+</div>
+<p>在 Claude 里打开 <code>lesson-4</code> 文件夹，先发：</p>
+<pre class="text"><code>先读 ../lesson-3/AGENTS.md，把里面的工具用法抄进本文件夹的 AGENTS.md。
+这个项目还要在夜里无人值守地跑。检查并补上：
+1. Claude Code 和 Codex 的命令行版，各用一句话测试能在命令行里无人值守地回答；
+2. 手机通知：用 ntfy，起一个别人猜不到的频道名，告诉我手机上装哪个应用、订阅哪个频道，然后发一条测试通知；
+3. 在我的 GitHub 上建一个公开仓库 lab-results，打开 GitHub Pages，放一个只有标题的 index.html，给我网址。
+装之前列出打算装什么、装在哪，等我同意。
+最后在 AGENTS.md 里补几行：通知怎么发，结果页在哪个仓库，未发表的数字和代码不进公开仓库。</code></pre>
+<p>手机上收到测试通知，打开网址看到标题，就装好了。五样里另外两样不用装：经验榜就是练习材料里的
+<code>playbook.md</code>，练习 1 第一次写进去；定时任务在练习 2
+里让它自己建。</p>
+<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
+<p>打开练习材料 <code>preview/site/</code> 里的结果页。它用第 3
+课的真实结果当第一轮：顶上一行是跑了几轮，预测命中了几次；下面每轮一行：问题，预测，对错，审查是否通过；页尾是经验榜，每条后面写着它来自哪一轮。这是公开页，只到对错这一层；完整的数字和图在
+<code>preview/internal/</code> 的内部页里。</p>
+<p>再打开
+<code>preview/notification.txt</code>，这是早上七点推到手机上的那条通知：一句话结论加结果页的链接。</p>
+<h2 id="讲10-分钟">讲，10 分钟</h2>
+<p><strong>每一轮都是一个新对话。</strong>
+一个对话开着跑一周，每醒一次都要把一周的内容重读一遍，越跑越慢，越跑越贵，也越容易忘掉第一天的要求。正确的做法是每次定时开工都开一个新对话，从
+<code>STATE.md</code>
+读到上次停在哪里，干完把进度写回去。记忆在文件里，不在对话里。</p>
+<p><strong>一件事只有一个对话在干。</strong>
+两个定时任务撞在一起，或者昨晚那轮还没收工今晚的又开工，两个对话会同时改同一批文件。开工第一步是占锁：建一个
+<code>.lock</code> 文件夹，建不成说明别人在干，退出。</p>
+<p><strong>自进化靠经验榜，不靠改规则。</strong>
+每轮收工时，把这一轮哪个做法有效、哪个出了问题，写成一两条经验，下一轮开工先读。经验榜只记做法，评价标准不归它改：预测命中率和审查是否通过，是这个循环的尺子，尺子不能跟着被量的东西一起变。</p>
+<p><strong>放手之前装一个刹车。</strong>
+全自动的循环最常见的失败，是沿着一个错的方向认真地跑很久。每三轮让一个独立的对话读一遍全部记录，判断方向对不对，它有权写一个
+<code>STOP</code> 文件让循环停下来等你。</p>
+<h2 id="练习-1先手动跑一轮15-分钟">练习 1：先手动跑一轮，15 分钟</h2>
+<p>读一遍 <code>LOOP.md</code>，它把一轮分成开工和收工两半：</p>
+<pre class="text"><code>按 LOOP.md 跑一轮开工：读 STATE.md 和 playbook.md，从 ../lesson-2/vault/questions.md 里挑一个还没做过的问题，
+写预测并提交，改代码，冒烟测试，送上服务器。这一轮为了课上演示，只跑 1 个种子、10 轮。
+干完把进度写进 STATE.md，然后停下。</code></pre>
+<p>几分钟后实验跑完，开一个新对话：</p>
+<pre class="text"><code>按 LOOP.md 跑一轮收工。</code></pre>
+<p>收工会拉回结果，写结果说明，用 Codex
+的命令行版审，把结果和错了的预测写回第 2
+课的知识库，按新的分歧补一个问题进问题清单，再更新经验榜和结果页，发通知。看手机。最后一步让循环不会做完三个问题就断粮。</p>
+<h2 id="练习-2让它自己按时开工15-分钟">练习 2：让它自己按时开工，15
+分钟</h2>
+<pre class="text"><code>建两个定时任务，都在本文件夹里运行：
+每晚 22:00 按 LOOP.md 跑开工，每早 07:00 按 LOOP.md 跑收工。
+每次都是新对话，开工前先看 STATE.md 和有没有 STOP 文件。
+定时任务用 Accept edits 模式，用到的命令写进项目设置的允许表，别的命令一律不放行。
+建好后各手动触发一次测试，告诉我它们在哪里能看到，怎样暂停。</code></pre>
+<p>Claude
+桌面版的定时任务在侧栏里能看到，可以暂停和手动运行。电脑要开着；合上盖子的笔记本到点不会开工，这时把定时任务换到服务器上，用命令行版跑，见
+<a href="automate-schedule.html">4.1</a>。</p>
+<h2 id="练习-3装刹车10-分钟">练习 3：装刹车，10 分钟</h2>
+<pre class="text"><code>再建一个定时任务，每天 08:00 看一眼：自上次反思以来如果又完成了三轮，就运行一次反思检查，否则直接退出。反思检查是一个独立的新对话，读 STATE.md，playbook.md，所有轮次的预测、结果和审查意见，不改它们，只写反思报告，必要时写 STOP。
+回答三个问题：预测命中率在变好还是变坏；最近几轮的问题是否越来越小、越来越像；经验榜里有没有哪条经验其实是在掩盖问题。
+写成 reflections/日期.md。如果它认为方向错了，写一个 STOP 文件说明理由，并推一条通知给我。</code></pre>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>一个对话跑一周。</strong>
+每次醒来都重读一周的上下文，又慢又贵，早先的要求也忘了。每轮开新对话，进度存在文件里。</p>
+</div>
+<div class="pitfall">
+<p><strong>两轮撞车。</strong>
+昨晚的实验还没跑完，今晚的又开工，两个对话改同一批文件，结果对不上预测。开工先占锁，占不到就退出。</p>
+</div>
+<div class="pitfall">
+<p><strong>认真地跑错方向。</strong>
+循环每晚都顺利完成，结果页每天都有新的一行，但问题一轮比一轮小，或者某个好结果其实来自一个没控制住的因素。设一个独立的反思检查，有权叫停。好结果和坏结果一样要被检查。</p>
+</div>
+<div class="pitfall">
+<p><strong>等待时空转。</strong>
+一轮里有一步要等实验，整个循环就停在那里，几个小时没有人看。只让真正依赖这个结果的步骤等，其他事照做；等待时一定有监视器挂着，不然一停就是一夜。</p>
+</div>
+<div class="pitfall">
+<p><strong>经验榜越来越长。</strong>
+每轮加两条，一个月后六十条，互相矛盾，下一轮根本读不完。经验榜限定条数，新经验和旧的相近就合并，挤出去的进归档。</p>
+</div>
+<div class="pitfall">
+<p><strong>让循环改自己的尺子。</strong>
+经验榜里出现一条把预测写宽一点，命中率立刻上升。评价标准和预测格式固定在
+<code>LOOP.md</code> 里，经验榜只能改做法。</p>
+</div>
+<div class="pitfall">
+<p><strong>半夜额度用完。</strong>
+定时任务跑到一半额度耗尽，它会反复重试，或者停在半截没人知道。开工前看一眼额度，不够就在状态文件里记下来，等下一个时间点，同时推一条通知。</p>
+</div>
+<div class="promo">
+<p><strong>在 AI 科学家里。</strong> <a
+href="https://github.com/liuguangrui-hit/ai-scientist">AI
+科学家</a>就是这个循环放大后的样子：问题来自文献森林，预测登记进假设森林，实验结果回来后对照，经验写进按行为分开的经验榜，每个季度一次独立反思，可以叫停整个流程。它的经验榜先从几千篇已发表论文里学，再用到自己的课题上，评价它的尺子只有一把：用学到的认识去预测还没看过的论文结果，准不准。</p>
+</div>
+<h2 id="工作台多了什么">工作台多了什么</h2>
+<div class="bench">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定时任务</td>
+<td>不用你叫，按时开工</td>
+</tr>
+<tr>
+<td>无人值守调用</td>
+<td>在没人看着的时候，把审查交给另一家</td>
+</tr>
+<tr>
+<td>手机通知</td>
+<td>跑完或卡住时叫你，只说结论</td>
+</tr>
+<tr>
+<td>经验榜</td>
+<td>每轮把做法记下来，下一轮先读，经验可以检验</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>结果变成网页，手机上看</td>
+</tr>
+</tbody>
+</table>
+<p>四堂必修课的工具到这里装齐了：两家
+Agent，编译画图和看页面，浏览器和知识库，版本和服务器，定时和通知。结课作品就是用它们为你自己的课题搭一个这样的工作台。两堂选修讲怎样给它装上锁，以及怎样算清这套东西的账。</p>
+</div>
+<h2 id="换成你自己的课题">换成你自己的课题</h2>
+<p>拿你自己的问题清单和实验代码，按 <code>LOOP.md</code>
+的格式写一份你的循环，先手动跑两轮，确认每一步都能从文件接上，再交给定时任务。头几天每天早上看一眼结果页和反思检查，确认它稳了，再改成只看通知。</p>
+<h2 id="课后深入">课后深入</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>节</th>
+<th>内容</th>
+<th>时长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="automate-schedule.html">4.1 定时与无人值守</a></td>
+<td>定时任务的几种做法；命令行版的用法与权限；状态文件；额度</td>
+<td>30 分钟</td>
+</tr>
+<tr>
+<td><a href="automate-playbook.html">4.2 经验榜</a></td>
+<td>一条经验的样子；合并与上限；怎样判断经验榜真的有用；反思检查</td>
+<td>30 分钟</td>
+</tr>
+<tr>
+<td><a href="automate-pages.html">4.3 结果页</a></td>
+<td>从结果文件生成网页；放什么不放什么；通知里写什么</td>
+<td>25 分钟</td>
+</tr>
+</tbody>
+</table>
+<section id="要点" class="keypoints">
+<h2>要点</h2>
+<ul>
+<li>每轮开新对话，进度和记忆都在文件里。</li>
+<li>一件事只有一个对话在干，开工先占锁。</li>
+<li>经验榜改做法，不改尺子；条数有上限。</li>
+<li>放手之前装刹车：独立反思，有权叫停。</li>
+<li>结果做成网页，通知只推结论和链接。</li>
+</ul>
+</section>
+</article>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip new">+ Scheduled tasks</span><span class="chip new">+ Headless runs</span><span class="chip new">+ Phone alerts</span><span class="chip new">+ Playbooks</span><span class="chip new">+ GitHub Pages</span></div><h1 id="automation-and-self-evolution">4 Automation and
+Self-Evolution</h1>
+<div class="goal">
+<p>In an hour your workbench will be ready to work overnight: at 10 pm
+it picks a question, writes predictions and sends the experiment to the
+server. At 7 am it brings back results, asks another vendor’s agent to
+review, records what it learned in the playbook, updates a results page
+you can open on your phone, and sends you a notification. Every three
+rounds, an independent reflection check judges whether the loop is still
+on track and stops it if needed.</p>
+</div>
+<p><span class="meta">Core class: 60 minutes. Self-study sections 4.1 to
+4.3 take about an hour and a half in total; read what you
+need.</span></p>
+<div class="download">
+<p><a href="downloads/lesson-4-en.zip">Download the Session 4
+materials</a></p>
+</div>
+<p>The materials extend Session 3’s repository with a few additions:
+<code>LOOP.md</code> describes a round, <code>STATE.md</code> records
+progress, <code>playbook.md</code> is an empty playbook,
+<code>review_task.md</code> and <code>reflection_task.md</code> are the
+review and reflection tasks, <code>code/make_page.py</code> builds the
+results page, and <code>ledger.csv</code> is an empty usage ledger.</p>
+<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
+tools at the start: send the card in 1 minute</h2>
+<div class="install">
+<p><strong>This session’s hidden thread: let the agent start without you
+calling it, and tell you when it finishes.</strong> Through Session 3,
+every job began with a message from you. This session adds five things:
+scheduled tasks to start on time; command-line Claude and Codex so one
+agent can hand work to another vendor unattended; phone notifications
+when work finishes; a playbook to record methods each round; and GitHub
+Pages to turn results into a web page.</p>
+</div>
+<p>Open the <code>lesson-4</code> folder in Claude and send:</p>
+<pre class="text"><code>First read ../lesson-3/AGENTS.md and copy its tool instructions into this folder&#39;s AGENTS.md.
+This project also needs to run unattended overnight. Check and set up:
+1. Command-line Claude Code and Codex. Test each with one sentence to show it can answer unattended from the command line;
+2. Phone notifications with ntfy. Choose a channel name others cannot guess, tell me which phone app to install and which channel to subscribe to, then send a test notification;
+3. A public repository on my GitHub called lab-results. Enable GitHub Pages, add an index.html containing only a title, and give me the URL.
+Before installing, list what you plan to install and where, and wait for my OK.
+Finally add a few lines to AGENTS.md: how to send notifications, which repository holds the results page, and that unpublished numbers and code stay out of the public repository.</code></pre>
+<p>Once the test notification reaches your phone and the URL shows the
+title, setup is done. The other two need no installation: the playbook
+is <code>playbook.md</code> in the materials, first filled in Exercise
+1; the agent creates scheduled tasks in Exercise 2.</p>
+<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
+minutes</h2>
+<p>Open the results page under <code>preview/site/</code>. It uses
+Session 3’s real results as round one. The top line shows how many
+rounds ran and how many predictions were right. Below, each round has a
+row: question, prediction, right or wrong, and whether the review
+passed. At the bottom is the playbook, each entry naming the round it
+came from. This is the public page, so it stops at right or wrong; the
+full numbers and figures are on the internal page under
+<code>preview/internal/</code>.</p>
+<p>Then open <code>preview/notification.txt</code>: the notification
+sent to your phone at 7 am, with a one-sentence conclusion and a link to
+the results page.</p>
+<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
+<p><strong>Every round is a new conversation.</strong> Keep one
+conversation running for a week, and each wake-up rereads the whole
+week. It gets slower, more expensive, and more likely to forget day
+one’s requirements. Start a new conversation for every scheduled run.
+Read <code>STATE.md</code> to find where the last one stopped, then
+write progress back when done. Memory lives in files.</p>
+<p><strong>Only one conversation works on a task.</strong> Two scheduled
+tasks may overlap, or tonight’s round may begin before last night’s
+ends. Both then edit the same files. First acquire a lock: create a
+<code>.lock</code> folder. If creation fails, someone else is working;
+exit.</p>
+<p><strong>Self-evolution comes from the playbook, not changing
+rules.</strong> At the end of each round, record one or two entries on
+what worked and what failed. Read them at the start of the next round.
+The playbook records methods; it cannot change the evaluation criteria.
+Prediction accuracy and passing review are the loop’s yardstick. The
+yardstick cannot change along with what it measures.</p>
+<p><strong>Fit a brake before letting go.</strong> A common failure of a
+fully automated loop is diligently following a wrong direction for a
+long time. Every three rounds, have an independent conversation read all
+records and judge the direction. It can write a <code>STOP</code> file
+to halt the loop and wait for you.</p>
+<h2 id="exercise-1-run-one-round-manually-15-minutes">Exercise 1: run
+one round manually, 15 minutes</h2>
+<p>Read <code>LOOP.md</code>. It splits a round into starting work and
+wrapping up:</p>
+<pre class="text"><code>Follow LOOP.md to start one round: read STATE.md and playbook.md, and pick an untried question from ../lesson-2/vault/questions.md.
+Write and commit predictions, change the code, run a smoke test, and send the experiment to the server. For this class demo, use only 1 seed and 10 epochs.
+Write progress to STATE.md, then stop.</code></pre>
+<p>A few minutes later, when the experiment finishes, start a new
+conversation:</p>
+<pre class="text"><code>Follow LOOP.md to wrap up one round.</code></pre>
+<p>Wrapping up brings back results, writes the report, calls
+command-line Codex to review, writes results and wrong predictions back
+to Session 2’s knowledge base, adds a question based on the new
+disagreement, updates the playbook and results page, and sends a
+notification. Check your phone. Adding a question keeps the loop from
+running out after the first three.</p>
+<h2 id="exercise-2-let-it-start-on-schedule-15-minutes">Exercise 2: let
+it start on schedule, 15 minutes</h2>
+<pre class="text"><code>Create two scheduled tasks, both running in this folder:
+at 22:00 each night, follow LOOP.md to start work; at 07:00 each morning, follow LOOP.md to wrap up.
+Use a new conversation each time. Before starting, check STATE.md and whether a STOP file exists.
+Use Accept edits mode for the scheduled tasks. Put the commands they need in the project&#39;s allow list; allow no other commands.
+Trigger each once manually to test. Tell me where I can see them and how to pause them.</code></pre>
+<p>Claude desktop’s scheduled tasks appear in the sidebar, where you can
+pause or run them manually. The computer must stay awake. A laptop with
+its lid closed will not start at the scheduled time. Move tasks to the
+server and use the command-line version in that case; see <a
+href="automate-schedule.html">4.1</a>.</p>
+<h2 id="exercise-3-fit-the-brake-10-minutes">Exercise 3: fit the brake,
+10 minutes</h2>
+<pre class="text"><code>Create another scheduled task to check daily at 08:00: if three more rounds have finished since the last reflection, run a reflection check; otherwise exit. The check is an independent new conversation. It reads STATE.md, playbook.md, and every round&#39;s predictions, results and reviews, changes none of them, and writes only its reflection report, plus STOP when needed.
+Answer three questions: is prediction accuracy improving or worsening? Are recent questions getting smaller and more alike? Does any playbook entry hide a problem?
+Write to reflections/&lt;date&gt;.md. If the direction looks wrong, write a STOP file with the reason and send me a notification.</code></pre>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>One conversation runs for a week.</strong> Each wake-up
+rereads a week’s context, slowly and expensively, and forgets early
+requirements. Start a new conversation each round and keep progress in
+files.</p>
+</div>
+<div class="pitfall">
+<p><strong>Rounds collide.</strong> Tonight’s round starts before last
+night’s experiment finishes. Two conversations edit the same files and
+results no longer match predictions. Acquire the lock first; exit if you
+cannot.</p>
+</div>
+<div class="pitfall">
+<p><strong>Diligently following a wrong direction.</strong> The loop
+finishes every night and adds a row each day, but questions keep
+shrinking, or a good result comes from an uncontrolled factor. Add an
+independent reflection check with power to stop it. Check good results
+as well as bad ones.</p>
+</div>
+<div class="pitfall">
+<p><strong>Idle waiting.</strong> One step waits for an experiment, and
+the whole loop sits there for hours. Wait only on steps that need the
+result; keep doing other work. Always leave a monitor running while
+waiting, or a pause can last all night.</p>
+</div>
+<div class="pitfall">
+<p><strong>The playbook keeps growing.</strong> Two entries per round
+become sixty in a month, contradicting each other and too long to read.
+Cap the entries, merge similar ones, and archive displaced entries.</p>
+</div>
+<div class="pitfall">
+<p><strong>The loop changes its own yardstick.</strong> A playbook entry
+says to widen predictions, and accuracy rises at once. Fix evaluation
+criteria and the prediction format in <code>LOOP.md</code>. The playbook
+changes only methods.</p>
+</div>
+<div class="pitfall">
+<p><strong>Quota runs out at midnight.</strong> A scheduled task
+exhausts the quota halfway through, then retries repeatedly or stops
+without anyone knowing. Check quota before starting. If it is
+insufficient, record that in the state file, wait for the next scheduled
+time, and send a notification.</p>
+</div>
+<div class="promo">
+<p><strong>Inside the AI Scientist.</strong> The <a
+href="https://github.com/liuguangrui-hit/ai-scientist">AI Scientist</a>
+is this loop at a larger scale: questions from the literature forest,
+predictions in the hypothesis forest, comparisons when results return,
+and experience in playbooks separated by behaviour. An independent
+quarterly reflection can stop the whole workflow. Its playbooks first
+learn from thousands of published papers, then apply that learning to
+its own topics. There is one yardstick: how accurately do learned
+insights predict results in papers it has not yet seen?</p>
+</div>
+<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<div class="bench">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scheduled tasks</td>
+<td>Start on time without you calling it</td>
+</tr>
+<tr>
+<td>Headless calls</td>
+<td>Hand reviews to another vendor while nobody is watching</td>
+</tr>
+<tr>
+<td>Phone notifications</td>
+<td>Call you when work ends or gets stuck, with just the conclusion</td>
+</tr>
+<tr>
+<td>Playbook</td>
+<td>Record methods each round, read them before the next, and test the
+experience</td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td>Turn results into a web page you can read on your phone</td>
+</tr>
+</tbody>
+</table>
+<p>The four core sessions’ tools are now installed: two vendors’ agents;
+compiling, plotting and viewing pages; a browser and knowledge base;
+versioning and a server; scheduling and notifications. Your final
+project uses them to build a workbench like this for your own topic. The
+two electives cover putting locks on it and counting its cost.</p>
+</div>
+<h2 id="now-with-your-own-topic">Now with your own topic</h2>
+<p>Use your own question list and experiment code to write a loop in the
+format of <code>LOOP.md</code>. Run two rounds manually first and
+confirm each step can pick up from files. Then hand it to scheduled
+tasks. For the first few days, check the results page and reflection
+each morning. Once it is stable, read only the notifications.</p>
+<h2 id="self-study-sections">Self-study sections</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="automate-schedule.html">4.1 Scheduling and headless
+runs</a></td>
+<td>Scheduling options; command-line use and permissions; state files;
+quotas</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="automate-playbook.html">4.2 Playbook</a></td>
+<td>An experience entry; merging and caps; testing whether it helps;
+reflection checks</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="automate-pages.html">4.3 Results page</a></td>
+<td>Generating pages from result files; what to publish; what to put in
+notifications</td>
+<td>25 minutes</td>
+</tr>
+</tbody>
+</table>
+<section id="key-points" class="keypoints">
+<h2>Key points</h2>
+<ul>
+<li>Start a new conversation each round. Progress and memory live in
+files.</li>
+<li>Only one conversation works on a task. Acquire the lock first.</li>
+<li>The playbook changes methods, not the yardstick; cap its
+entries.</li>
+<li>Fit a brake before letting go: an independent reflection with power
+to stop.</li>
+<li>Make results into a web page; notifications carry only a conclusion
+and link.</li>
+</ul>
+</section>
+</article>
+<nav class="pager"><a class="prev" href="experiment-evidence.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.3 结果能说明什么</span><span lang="en">3.3 What a result shows</span></a><a class="next" href="automate-schedule.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.1 定时与无人值守</span><span lang="en">4.1 Scheduling and headless runs</span></a></nav>
+</main>
+</div>
+</body>
+</html>

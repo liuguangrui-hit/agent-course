@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>并行复筛与提问 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">拿到全文</span><span lang="en">Getting the full text</span></a>
+<a href="explore-vault.html" class="sub"><span class="num">2.2</span><span lang="zh">知识库怎么搭</span><span lang="en">Building the knowledge base</span></a>
+<a href="explore-parallel.html" class="cur sub"><span class="num">2.3</span><span lang="zh">并行复筛与提问</span><span lang="en">Parallel screening and questions</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="并行复筛与提问">2.3 并行复筛与提问</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>十几篇论文一个对话还勉强读得完，几百篇就不行了。这一节讲两件事：怎样把大量阅读分给
+Sub-agent 并行做，怎样让提出的问题来自文献而不是来自你和 Agent
+的闲聊。</p>
+<h2 id="sub-agent-是什么">Sub-agent 是什么</h2>
+<p>Sub-agent
+是主对话临时派出的助手。它从一个新的上下文开始，不带着主对话的聊天记录，干完把结果交回来，自己的阅读过程不占主对话的篇幅。Claude
+Code 和 Codex 都支持，在任务卡里说分给几个 Sub-agent
+并行做就会用上。</p>
+<p>适合交给 Sub-agent
+的事有三个特点：彼此独立，量大，每份产出格式相同。逐篇读论文写笔记，逐篇判断一篇论文该不该收，都是典型的例子。</p>
+<h2 id="任务怎么写">任务怎么写</h2>
+<p>主对话给每个 Sub-agent
+的任务要自成一体，它不知道主对话里聊过什么。它能读哪些文件，要在任务里写死：</p>
+<pre class="text"><code>你只读 vault/sources/ 下的这四个文件：……
+每篇按 vault/templates/paper.md 写一页笔记到 vault/papers/，每条结论注明页码。
+不读其他文件，不改模板，不写概念页。
+完成后只返回你写了哪些文件，以及哪篇论文读不出文字。</code></pre>
+<p>四个要点：给它的文件写死；格式指向模板；明确不许做的事；只返回文件清单。最后一点决定了并行有没有用：如果每个
+Sub-agent 都把笔记全文贴回主对话，主对话照样会被塞满。</p>
+<h2 id="复筛几百篇里挑出该读的">复筛：几百篇里挑出该读的</h2>
+<p>文献接口一查就是几百条，全读不现实。先按题目和摘要复筛：</p>
+<pre class="text"><code>读 papers.csv，共 300 条。分给 6 个 Sub-agent，每个 50 条。
+每条按 criteria.md 判断收或不收，写一句理由，结果写到 screening/第几组.csv。
+犹豫的一律收，后面细读时再删。</code></pre>
+<p>复筛的标准写在 <code>criteria.md</code> 里，所有 Sub-agent
+读同一份。犹豫的一律收，因为多收一篇的代价是细读时多看一眼，漏掉一篇的代价是整个方向缺一块。</p>
+<p>主对话合并结果后，随机抽十条自己看一眼。抽查发现某一组判得明显偏松或偏紧，就让那一组重做，而不是全部重做。</p>
+<h2 id="提问用干净的上下文">提问：用干净的上下文</h2>
+<p>你和 Agent
+聊了一下午，它已经知道你的想法和偏好。这时让它提研究问题，它会悄悄向你说过的话靠拢：问题看起来都很好，因为那是你自己的想法换了个说法。</p>
+<p>办法是提问题的那一步用一个新对话，或者一个
+Sub-agent，只给它知识库：</p>
+<pre class="text"><code>只读 vault/concepts/ 和 vault/conflicts.md，不读其他文件。
+提三个研究问题。每个写成一个论文题目和一段摘要，摘要里写预测的结果和数字，以及什么结果会推翻它。
+每个问题注明来自哪几页概念页或者哪一条分歧。</code></pre>
+<p>问题写成题目加摘要，而且带预测，有两个好处。一是逼它说清楚到底要发现什么，而不是提一个方向；二是第
+3 课跑完实验，可以直接拿结果和预测对照。</p>
+<h2 id="好问题的样子">好问题的样子</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>不好</th>
+<th>好</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>研究标签噪声对深度网络的影响</td>
+<td>验证集也带四成噪声时，早停选出的停止点比最优点晚多少轮</td>
+</tr>
+<tr>
+<td>提出一种新的鲁棒损失</td>
+<td>广义交叉熵在噪声高于五成时的优势来自它对大损失样本的截断</td>
+</tr>
+<tr>
+<td>没有预测</td>
+<td>预测：晚 10 轮以内，最终准确率损失不超过 3 个点</td>
+</tr>
+</tbody>
+</table>
+<p>好问题有一个具体的现象或者机制，能用手头的实验在一天内检验，结果出来时你知道它说明了什么。</p>
+<h2 id="查新">查新</h2>
+<p>提出的问题可能早就有人回答过。查新用另一家
+Agent，只做判断不改问题：</p>
+<pre class="text"><code>读 vault/questions.md。对每个问题，先看知识库里有没有论文已经回答了它；再用 OpenAlex 按关键词查一次。
+列出最接近的三篇和差别。只给判断，不改问题，不建议把问题收窄。</code></pre>
+<p>最后一句是故意加的：查新只回答有没有人做过，问题本身的大小由你判断。</p>
+<h2 id="练习">练习</h2>
+<p>用一个新对话和练习 2
+原来的对话，分别让它们提三个问题，比较两组问题和你自己想法的距离。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>Sub-agent 把全文贴回来。</strong>
+并行读完，主对话照样被塞满。任务卡里写明只返回文件清单。</p>
+</div>
+<div class="pitfall">
+<p><strong>复筛判得太紧。</strong>
+只收最相关的，漏掉一条相邻的线。犹豫的一律收，细读时再删。</p>
+</div>
+<div class="pitfall">
+<p><strong>问题越审越小。</strong> 审查的 Agent
+每轮都建议加条件，问题最后小到不值得做。查新只回答有没有人做过，不给它改问题的权力。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://code.claude.com/docs/en/sub-agents">Claude Code
+Sub-agents 文档</a></li>
+</ul>
+</article>
+<article lang="en"><h1 id="parallel-screening-and-questions">2.3 Parallel screening and
+questions</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>One conversation can just about read a dozen papers, but not
+hundreds. This section covers two things: splitting large reading jobs
+among Sub-agents, and making questions come from the literature rather
+than your chats with the agent.</p>
+<h2 id="what-a-sub-agent-is">What a Sub-agent is</h2>
+<p>A Sub-agent is an assistant the main conversation sends out for a
+task. It starts with a fresh context, without the main conversation’s
+chat history. It returns results when done, and its reading does not
+fill the main conversation. Claude Code and Codex both support this. Ask
+in the task card to split work among several Sub-agents in parallel.</p>
+<p>Work suited to Sub-agents has three features: independent parts, lots
+of them, and the same output format for each. Reading papers and writing
+notes, or deciding paper by paper whether to include them, are typical
+examples.</p>
+<h2 id="writing-the-task">Writing the task</h2>
+<p>Each Sub-agent’s task must stand on its own. It does not know what
+you discussed in the main conversation. Name exactly which files it may
+read:</p>
+<pre class="text"><code>Read only these four files under vault/sources/: ...
+For each, use vault/templates/paper.md to write one page of notes to vault/papers/, with a page number for every claim.
+Read no other files, don&#39;t change the template, and don&#39;t write concept pages.
+When done, return only the files you wrote and which papers had no extractable text.</code></pre>
+<p>Four points: fixed input files, a template for the format, explicit
+exclusions, and only a file list returned. The last decides whether
+parallel work helps. If every Sub-agent pastes its full notes back, the
+main conversation still fills up.</p>
+<h2
+id="screening-choose-what-to-read-from-hundreds-of-papers">Screening:
+choose what to read from hundreds of papers</h2>
+<p>A literature API query can return hundreds of records. Reading all of
+them is impractical. Screen titles and abstracts first:</p>
+<pre class="text"><code>Read papers.csv, which has 300 entries. Split it among 6 Sub-agents, 50 entries each.
+For each entry, use criteria.md to decide include or exclude, with a one-sentence reason. Write results to screening/group-N.csv.
+Include every uncertain case; remove it later during close reading if needed.</code></pre>
+<p>Put screening criteria in <code>criteria.md</code>. All Sub-agents
+read the same file. Include uncertain cases: the cost of an extra paper
+is another look during close reading; the cost of a missing paper is a
+gap in the whole direction.</p>
+<p>After merging results, the main conversation checks ten random
+entries. If one group is clearly too lenient or too strict, have that
+group redo its work rather than repeating everything.</p>
+<h2 id="questions-use-a-fresh-context">Questions: use a fresh
+context</h2>
+<p>After an afternoon of conversation, the agent knows your ideas and
+preferences. Ask for research questions then, and it drifts toward what
+you said. The questions look good because they are your own ideas
+rephrased.</p>
+<p>Use a new conversation or a Sub-agent for this step, giving it only
+the knowledge base:</p>
+<pre class="text"><code>Read only vault/concepts/ and vault/conflicts.md, no other files.
+Propose three research questions. Write each as a paper title and an abstract, with predicted results and numbers, and what result would refute it.
+For each question, name the concept pages or conflict entry it came from.</code></pre>
+<p>A title and abstract with a prediction do two things. They force the
+agent to say what it wants to discover, rather than naming a direction.
+And after Session 3’s experiment, you can compare results directly with
+the prediction.</p>
+<h2 id="what-a-good-question-looks-like">What a good question looks
+like</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Weak</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Study the effect of label noise on deep networks</td>
+<td>With 40% noise in the validation set too, how many epochs later than
+the optimum does early stopping choose to stop?</td>
+</tr>
+<tr>
+<td>Propose a new robust loss</td>
+<td>Generalized cross-entropy’s advantage above 50% noise comes from its
+truncation of high-loss samples</td>
+</tr>
+<tr>
+<td>No prediction</td>
+<td>Prediction: within 10 epochs of the optimum, with at most 3
+percentage points lost in final accuracy</td>
+</tr>
+</tbody>
+</table>
+<p>A good question names a specific phenomenon or mechanism, is testable
+with your existing experiment within a day, and leaves you able to say
+what the result means.</p>
+<h2 id="checking-novelty">Checking novelty</h2>
+<p>Someone may already have answered your question. Use another vendor’s
+agent to check. It judges without changing the questions:</p>
+<pre class="text"><code>Read vault/questions.md. For each question, first check whether a paper in the knowledge base has already answered it, then search OpenAlex by keywords.
+List the three closest papers and the differences. Give only your judgment. Don&#39;t change the questions or suggest narrowing them.</code></pre>
+<p>The last line is deliberate: a novelty check answers only whether
+someone has done it. You decide how broad the question should be.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Have a new conversation and the original conversation from Exercise 2
+each propose three questions. Compare how close the two sets are to your
+own ideas.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Sub-agents paste the full text back.</strong> After parallel
+reading, the main conversation still fills up. Say in the task card to
+return only a file list.</p>
+</div>
+<div class="pitfall">
+<p><strong>Screening too strictly.</strong> Keeping only the most
+relevant papers misses a neighbouring line of work. Include uncertain
+cases and cut during close reading.</p>
+</div>
+<div class="pitfall">
+<p><strong>Questions shrink with each review.</strong> The reviewing
+agent adds conditions each round until the question is too small to be
+worth doing. A novelty check answers whether someone has done it; give
+it no power to change the question.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://code.claude.com/docs/en/sub-agents">Claude Code
+Sub-agents documentation</a></li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="explore-vault.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.2 知识库怎么搭</span><span lang="en">2.2 Building the knowledge base</span></a><a class="next" href="experiment.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3 Agent 实验</span><span lang="en">3 Experimenting with Agents</span></a></nav>
+</main>
+</div>
+</body>
+</html>

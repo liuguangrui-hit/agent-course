@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>选修 编排理论 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html" class="cur"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="theory-usage.html" class="sub"><span class="num">6.1</span><span lang="zh">用量账本</span><span lang="en">The usage ledger</span></a>
+</nav>
+<main>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 用量账本</span></div><h1 id="选修-编排理论">6 选修 编排理论</h1>
+<div class="goal">
+<p>一小时后，你有一本用量账本，记着工作台里每件事花了多少 token
+和钱，用了多长时间，结果有没有被采用；你能用它算出三个编排决策：一个对话该在什么时候结束，审稿该在第几轮停，一件事该交给一个
+Agent 慢慢做还是拆给几个并行做。</p>
+</div>
+<p><span class="meta">课堂核心 60 分钟。课后深入 6.1 约 30 分钟。第 4
+课之后选修。</span></p>
+<div class="download">
+<p><a href="downloads/lesson-6-zh.zip">下载第 6 课练习材料</a></p>
+</div>
+<p>练习材料里有一份示例账本
+<code>ledger.csv</code>，按一个工作台两周的典型用法编成，四十件事；<code>calc.py</code>
+是三个决策的计算骨架。你也可以直接用自己第 4 课工作台的记录。</p>
+<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<div class="install">
+<p><strong>本课暗线：给工作台装一本账。</strong> 前几课装的工具都是让
+Agent
+多做事，这一课装的工具让你知道每件事花了多少。没有账，所有编排上的讨论都只能凭感觉：要不要让另一家审，要不要开
+Sub-agent，审几轮。有了账，这些都可以算。</p>
+</div>
+<pre class="text"><code>这个项目要记用量账。装 ccusage，用它列出最近两周每个对话的 token 用量、估算费用和起止时间。
+然后建 ledger.csv，每件事一行：日期，事情，用的 Agent，对话数，token，估算费用，耗时，结果是否被采用。
+能从 ccusage 里对上的自动填，对不上的列出来问我。装之前告诉我装什么，等我同意。</code></pre>
+<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
+<p>打开 <code>preview/decisions.md</code>，这是 <code>calc.py</code>
+在示例账本上算出来的。三段，每段一个决策，一张小表，一个数字。第一段：几条六十到一百轮的长对话，每
+27
+轮左右把进度写进文件，开新对话，总成本省下四成多。第二段：审稿第一轮总能提出被采纳的实质意见，第二轮一半，第三轮只剩八分之一，按一条意见值
+50 万 token 算，第三轮不值得开。第三段：读 14 篇论文拆给四个 Sub-agent
+后，耗时从 50 分钟降到 14 分钟，token 多花了 18%。</p>
+<h2 id="讲10-分钟">讲，10 分钟</h2>
+<p><strong>一个对话的成本随长度平方增长。</strong> Agent
+每回答一次，都把对话里此前的全部内容重读一遍。如果每轮新增的内容差不多，第
+k 轮要读 k 份，n 轮一共读 1 + 2 + … + n，约 n² / 2
+份。对话长度翻倍，成本变成四倍。缓存能打折扣，但不改变平方的形状。这是一个简化模型，真实的增长要拿你自己的日志来验，练习
+1 就做这件事。这就是第 0
+课说一件事一个对话的道理，现在可以算出来：把一个 60 轮的对话拆成三个 20
+轮的对话，只要交接文件不大，重读的总量大约降到原来的三分之一。</p>
+<p><strong>再做一轮的价值，要和它的成本比。</strong>
+审稿每多一轮，都有一定概率发现一个真问题。这个概率一轮比一轮小。当某一轮发现问题的概率乘以一个问题的价值，小于这一轮的花费，就该停了。概率不用猜，从账本里过去的审稿记录数出来。</p>
+<p><strong>并行主要买的是时间。</strong> 把一件事拆给四个
+Sub-agent，每个都要读一遍任务说明，主对话还要合并，token
+总量常常不降反升，你的账本会告诉你实际如何。省下来的是墙上的时间。值不值，看你的时间值多少：开会前要结果，并行；夜里跑，不急，串行。</p>
+<p><strong>下一个问题挑哪个，是探索和利用的平衡。</strong> 第 4
+课的循环每晚挑一个问题。总挑最有把握的，只会在一个小角落里打转；总挑最新的，什么都做不深。把每类问题的预测命中率和信息量记在账上，大部分时间挑期望收获最大的，留一小部分给还没试过的方向。</p>
+<h2 id="练习-1一个对话该在何时结束15-分钟">练习
+1：一个对话该在何时结束，15 分钟</h2>
+<pre class="text"><code>Claude Code 的原始对话日志里，每次回答都记着这一次的输入 token。取最长的三个对话，按回答的先后画输入 token 随轮次变化的曲线。
+对照 6.1 的分段算式估算：如果每 20 轮把进度写进一个 2 千 token 的文件、开新对话，总成本能省多少。
+把计算过程和结论写进 decisions.md 第一段。</code></pre>
+<h2 id="练习-2审稿该在第几轮停15-分钟">练习 2：审稿该在第几轮停，15
+分钟</h2>
+<pre class="text"><code>读 ledger.csv 里所有审稿的记录，按 review_round 和 substantive 两列，以及对应的 review.md。数出每一轮审稿中，提出过至少一条被采纳的实质意见的比例。
+设一条实质意见的价值相当于 V 个 token，你先按我给的 V 等于 50 万算，再告诉我 V 取多少时结论会变。
+算出从第几轮开始，期望价值低于这一轮的花费。写进 decisions.md 第二段。</code></pre>
+<p>V
+是你的判断：一条把论文从被拒拉回来的意见值多少。理论在这里不替你做决定，它把决定拆成一个你能回答的问题。</p>
+<h2 id="练习-3并行还是串行10-分钟">练习 3：并行还是串行，10 分钟</h2>
+<pre class="text"><code>在 ledger.csv 里找出读论文写笔记的两次记录，一次串行，一次用了 Sub-agent。
+比较 token、费用和耗时。按我的时间每小时值 X 元，算出并行在什么条件下划算。写进 decisions.md 第三段。</code></pre>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>凭感觉调编排。</strong> 觉得多审一轮更稳，觉得开 Sub-agent
+更省，结果正相反。先记账，再改编排。</p>
+</div>
+<div class="pitfall">
+<p><strong>只看 token，不看采用率。</strong>
+一个流程很省，但产出一半被你推翻重来，实际更贵。账本里要有结果是否被采用这一列，比较的是每个被采用的结果花了多少。</p>
+</div>
+<div class="pitfall">
+<p><strong>账记成一大笔。</strong>
+一周的用量只有一个总数，分不出是哪件事花的。按事情分段记，开工和收工各记一次。</p>
+</div>
+<div class="pitfall">
+<p><strong>拿模型的自我评估当数据。</strong> 让 Agent
+估计这轮审稿有没有用，它多半说有用。采纳与否由你或者后续结果判定，不让做事的那个
+Agent 自己打分。</p>
+</div>
+<div class="promo">
+<p><strong>在 AI 科学家里。</strong> <a
+href="https://github.com/liuguangrui-hit/ai-scientist">AI
+科学家</a>的每个模块开工和收工都记一笔用量，按账号，模块和任务分开。哪个环节交给哪家
+Agent，多少事并行，审几轮，都是从这本账里算出来再定的。</p>
+</div>
+<h2 id="工作台多了什么">工作台多了什么</h2>
+<div class="bench">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用量账本</td>
+<td>每件事花了多少一目了然，编排的改动可以事先算、事后验</td>
+</tr>
+</tbody>
+</table>
+<p>到这里，课程的工具都介绍完了。回到<a
+href="toolbox.html">工具箱</a>看一眼：从第 0 课的两个应用，到第 6
+课的一本账，每一样都是 Agent
+多出来的一种本事，也是你多出来的一层控制。</p>
+</div>
+<h2 id="课后深入">课后深入</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>节</th>
+<th>内容</th>
+<th>时长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="theory-usage.html">6.1 用量账本</a></td>
+<td>账本记什么；从工具里取数；按事情分段；常用的几个算式</td>
+<td>30 分钟</td>
+</tr>
+</tbody>
+</table>
+<section id="要点" class="keypoints">
+<h2>要点</h2>
+<ul>
+<li>对话成本随长度平方增长，长任务按段换对话，进度存文件。</li>
+<li>再做一轮的价值和成本比，概率从账本里数。</li>
+<li>并行主要买时间，token 往往不省。</li>
+<li>挑问题要在把握和新方向之间留比例。</li>
+<li>先记账，再改编排；比较的是每个被采用的结果的成本。</li>
+</ul>
+</section>
+</article>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Usage ledger</span></div><h1 id="elective-orchestration-theory">6 Elective: Orchestration
+Theory</h1>
+<div class="goal">
+<p>In an hour you will have a usage ledger recording each workbench
+task’s tokens, cost, time and whether its result was used. You can use
+it to calculate three orchestration decisions: when to end a
+conversation, which review round to stop at, and whether one agent
+should do a task in sequence or several should do it in parallel.</p>
+</div>
+<p><span class="meta">Core class: 60 minutes. Self-study section 6.1
+takes about 30 minutes. An elective after Session 4.</span></p>
+<div class="download">
+<p><a href="downloads/lesson-6-en.zip">Download the Session 6
+materials</a></p>
+</div>
+<p>The materials include an example <code>ledger.csv</code> with forty
+tasks, constructed around two weeks of typical workbench use.
+<code>calc.py</code> is a calculation skeleton for the three decisions.
+You can also use records from your own Session 4 workbench.</p>
+<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
+tools at the start: send the card in 1 minute</h2>
+<div class="install">
+<p><strong>This session’s hidden thread: give the workbench a
+ledger.</strong> Earlier tools let the agent do more. This one tells you
+what each task costs. Without records, orchestration decisions are
+guesswork: another vendor’s review, Sub-agents, how many review rounds.
+With records, you can calculate them.</p>
+</div>
+<pre class="text"><code>This project needs a usage ledger. Install ccusage and use it to list each conversation&#39;s token usage, estimated cost, and start and end times for the last two weeks.
+Then create ledger.csv, one row per task: date, task, agent used, conversation count, tokens, estimated cost, time taken, and whether the result was used.
+Fill what you can match from ccusage automatically. List unmatched items and ask me. Before installing, tell me what you will install and wait for my OK.</code></pre>
+<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
+minutes</h2>
+<p>Open <code>preview/decisions.md</code>, calculated by
+<code>calc.py</code> from the example ledger. Three parts, each with a
+decision, a small table and a number. First: for several long
+conversations of sixty to a hundred rounds, writing progress to a file
+and starting a new conversation about every 27 rounds saves over 40% of
+the total cost. Second: the first review round always proposes
+substantive comments that are adopted, the second does so half the time,
+and the third only one eighth of the time. At a value of 500,000 tokens
+per comment, round three is not worth starting. Third: splitting the
+reading of 14 papers among four Sub-agents cut time from 50 minutes to
+14, using 18% more tokens.</p>
+<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
+<p><strong>Conversation cost grows with the square of its
+length.</strong> Each response rereads everything earlier in the
+conversation. If each round adds roughly the same amount, round k reads
+k units. Across n rounds, that is 1 + 2 + … + n, about n² / 2 units.
+Double the length and the cost quadruples. Caching discounts the cost
+without changing the quadratic shape. This is a simplified model; check
+real growth against your own logs in Exercise 1. It explains Session 0’s
+one-task-one-conversation rule. You can now calculate it: split a
+60-round conversation into three of 20 rounds, and, if the handoff files
+are small, total rereading falls to about a third.</p>
+<p><strong>Compare the value of another round with its cost.</strong>
+Each review round has a chance of finding a real problem, and that
+chance falls each round. Stop when the chance of finding a problem times
+its value falls below the round’s cost. Count that chance from past
+reviews in the ledger rather than guessing.</p>
+<p><strong>Parallel work mainly buys time.</strong> Split a task among
+four Sub-agents and each reads the instructions, while the main
+conversation must merge results. Total tokens often rise rather than
+fall; your ledger tells you what actually happens. What you save is
+elapsed time. Whether it is worth it depends on your time’s value: need
+results before a meeting, parallel; overnight and no hurry,
+sequential.</p>
+<p><strong>Choosing the next question balances exploration and
+exploitation.</strong> Session 4’s loop picks a question each night.
+Always pick the safest and you circle in a small corner. Always pick the
+newest and you never go deep. Record prediction accuracy and information
+gained for each question type. Usually choose the highest expected gain,
+leaving a small share for untried directions.</p>
+<h2 id="exercise-1-when-to-end-a-conversation-15-minutes">Exercise 1:
+when to end a conversation, 15 minutes</h2>
+<pre class="text"><code>Claude Code&#39;s raw conversation logs record input tokens for each response. Take the three longest conversations and plot input tokens against response number.
+Use section 6.1&#39;s formula for splitting a conversation to estimate savings if, every 20 rounds, you write progress to a 2,000-token file and start a new conversation.
+Write the calculation and conclusion as the first part of decisions.md.</code></pre>
+<h2 id="exercise-2-which-review-round-to-stop-at-15-minutes">Exercise 2:
+which review round to stop at, 15 minutes</h2>
+<pre class="text"><code>Read all review records in ledger.csv, using the review_round and substantive columns and corresponding review.md files. For each review round, count the share that proposed at least one substantive comment that was adopted.
+Let one substantive comment be worth V tokens. First use my V of 500,000, then tell me at what V the conclusion changes.
+Calculate the first round whose expected value falls below its cost. Write the second part of decisions.md.</code></pre>
+<p>V is your judgment: what is a comment worth if it saves a paper from
+rejection? Theory does not decide for you here. It turns the decision
+into a question you can answer.</p>
+<h2 id="exercise-3-parallel-or-sequential-10-minutes">Exercise 3:
+parallel or sequential, 10 minutes</h2>
+<pre class="text"><code>Find two records of reading papers and writing notes in ledger.csv: one sequential, one using Sub-agents.
+Compare tokens, cost and time. With my time worth X yuan per hour, calculate when parallel work pays off. Write the third part of decisions.md.</code></pre>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Tuning orchestration by feel.</strong> Another review seems
+safer, Sub-agents seem cheaper, and the result is the opposite. Record
+usage before changing orchestration.</p>
+</div>
+<div class="pitfall">
+<p><strong>Counting tokens without adoption.</strong> A cheap workflow
+whose outputs you reject and redo half the time costs more in practice.
+Include whether the result was used in the ledger. Compare cost per
+adopted result.</p>
+</div>
+<div class="pitfall">
+<p><strong>One lump sum.</strong> A weekly total cannot tell you which
+task cost what. Record by task, once at the start and once at the
+end.</p>
+</div>
+<div class="pitfall">
+<p><strong>Using the model’s self-assessment as data.</strong> Ask the
+agent whether its review helped and it usually says yes. You or later
+results judge adoption; the working agent does not score itself.</p>
+</div>
+<div class="promo">
+<p><strong>Inside the AI Scientist.</strong> The <a
+href="https://github.com/liuguangrui-hit/ai-scientist">AI Scientist</a>
+records usage at each module’s start and finish, separated by account,
+module and task. Which vendor handles each step, how much runs in
+parallel and how many review rounds to use are decided after calculating
+from this ledger.</p>
+</div>
+<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<div class="bench">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usage ledger</td>
+<td>See each task’s cost at a glance; calculate orchestration changes
+beforehand and check them afterwards</td>
+</tr>
+</tbody>
+</table>
+<p>All the course’s tools have now been introduced. Look back at the <a
+href="toolbox.html">Toolbox</a>: from two apps in Session 0 to a ledger
+in Session 6, each adds a capability for the agent and a layer of
+control for you.</p>
+</div>
+<h2 id="self-study-sections">Self-study sections</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="theory-usage.html">6.1 Usage ledger</a></td>
+<td>What to record; getting numbers from tools; separating tasks; useful
+formulas</td>
+<td>30 minutes</td>
+</tr>
+</tbody>
+</table>
+<section id="key-points" class="keypoints">
+<h2>Key points</h2>
+<ul>
+<li>Conversation cost grows quadratically with length. Split long tasks
+into new conversations and save progress in files.</li>
+<li>Compare another round’s value with its cost; count probabilities
+from the ledger.</li>
+<li>Parallel work mainly buys time, often without saving tokens.</li>
+<li>Leave a share of question choices for new directions alongside safer
+ones.</li>
+<li>Record usage before changing orchestration; compare cost per adopted
+result.</li>
+</ul>
+</section>
+</article>
+<nav class="pager"><a class="prev" href="safety-hooks.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5.2 Hooks 与密钥</span><span lang="en">5.2 Hooks and secrets</span></a><a class="next" href="theory-usage.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6.1 用量账本</span><span lang="en">6.1 The usage ledger</span></a></nav>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>结果页 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="automate-schedule.html" class="sub"><span class="num">4.1</span><span lang="zh">定时与无人值守</span><span lang="en">Scheduling and headless runs</span></a>
+<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验榜</span><span lang="en">Playbooks</span></a>
+<a href="automate-pages.html" class="cur sub"><span class="num">4.3</span><span lang="zh">结果页</span><span lang="en">The results page</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="结果页">4.3 结果页</h1>
+<p><span class="meta">课后深入，约 25 分钟。</span></p>
+<p>循环每晚都在产出，你不可能每天早上打开文件夹一个个文件看。结果页把它们汇成一张网页，手机上就能看；通知只推一句结论和这个网页的链接。</p>
+<h2 id="从结果文件生成不手写">从结果文件生成，不手写</h2>
+<p>结果页由一个脚本从结果文件生成，每轮收工时重新生成一次：</p>
+<pre class="text"><code>写 code/make_page.py：读 runs/ 下每一轮的 prediction.md，results/，result.md 和 review.md，生成两份网页。
+site/ 是公开摘要：顶上一行汇总轮数和预测命中率；下面每轮一行，列出问题，预测，对错，以及审查是否通过；页尾是经验榜的前五条。
+internal/ 是内部版：在摘要之外，点进每一轮能看到完整数字，图和结果说明。
+只用 HTML 和一个 CSS 文件，不用外部框架。</code></pre>
+<p>为什么不让 Agent
+每轮手动改网页：手动改会漏，会把上一轮的数字改错，几轮之后网页和结果文件对不上。脚本生成，网页上的每个数字都来自文件，和第
+1 课数字从数据来是同一个道理。</p>
+<h2 id="发布到-github-pages">发布到 GitHub Pages</h2>
+<p>GitHub Pages 把一个仓库里的网页免费发布成网站。收工的最后一步：</p>
+<pre class="text"><code>运行 code/make_page.py，只把 site/ 复制到 lab-results 仓库，提交并推送。用 gh 查这个仓库的 Pages 部署状态，成功后再打开网址确认更新了。</code></pre>
+<p>免费账号只能从公开仓库发布网页，发布出来的网站也是公开的。所以公开摘要放在一个单独的公开仓库里，内部版和代码，数据一起留在私有仓库，在本机打开。</p>
+<h2 id="放什么不放什么">放什么，不放什么</h2>
+<p>公开的网页任何人都能看到，搜索引擎也可能收录。</p>
+<table>
+<thead>
+<tr>
+<th>放</th>
+<th>不放</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>问题，预测，对错</td>
+<td>还没发表的完整数字和图</td>
+</tr>
+<tr>
+<td>汇总的命中率</td>
+<td>代码和数据</td>
+</tr>
+<tr>
+<td>经验榜</td>
+<td>服务器地址，账号，任何密钥</td>
+</tr>
+</tbody>
+</table>
+<p>还没发表的工作，公开页只放到对错这一层，具体数字只在内部版里。</p>
+<h2 id="通知里写什么">通知里写什么</h2>
+<p>一条好的通知：</p>
+<pre class="text"><code>第 7 轮完成：带噪验证集早停的预测对了两条错了一条；审查通过。https://你的名字.github.io/lab-results/</code></pre>
+<p>一句结论，对错，审查，链接。ntfy
+的频道名谁知道谁就能收到，它相当于一个密码，不写进仓库和网页；通知里也不放未发表的数字。不推长日志，不推每一步的进度；只在三种时候推：一轮完成，出错停下，反思检查叫停。推得太多，你很快就不看了。</p>
+<h2 id="练习">练习</h2>
+<p>给结果页加一张折线图：横轴轮次，纵轴累计的预测命中率。图也由脚本从结果文件生成。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>让 Agent 手动改网页。</strong>
+几轮之后网页上的数字和结果文件对不上。网页由脚本从文件生成。</p>
+</div>
+<div class="pitfall">
+<p><strong>未发表的结果上了公开网页。</strong> 免费 Pages
+只能公开发布，完整数字一推上去就被人看到。公开页只放到对错这一层。</p>
+</div>
+<div class="pitfall">
+<p><strong>通知太多。</strong>
+每一步都推，一天几十条，真出事时那条被淹没。只在完成，出错，叫停时推。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://docs.github.com/zh/pages/quickstart">GitHub Pages
+快速开始</a></li>
+<li><a href="https://docs.ntfy.sh/">ntfy</a></li>
+</ul>
+</article>
+<article lang="en"><h1 id="results-page">4.3 Results page</h1>
+<p><span class="meta">Self-study, about 25 minutes.</span></p>
+<p>The loop produces work every night. You cannot open a folder and read
+every file each morning. A results page brings them together on a web
+page you can read on your phone. Notifications send only a one-sentence
+conclusion and the link.</p>
+<h2 id="generate-from-result-files">Generate from result files</h2>
+<p>A script generates the results page from files, rebuilding it at the
+end of each round:</p>
+<pre class="text"><code>Write code/make_page.py: read prediction.md, results/, result.md and review.md for each round under runs/ and generate two sets of pages.
+site/ is the public summary: a top line with round count and prediction accuracy; one row per round with the question, prediction, right or wrong, and whether review passed; the playbook&#39;s top five entries at the bottom.
+internal/ is the internal version: beyond the summary, clicking through to a round shows all numbers, figures and the result report.
+Use only HTML and one CSS file, no external frameworks.</code></pre>
+<p>Why not have the agent edit the page each round? Manual edits miss
+things or change last round’s numbers. After a few rounds, the page no
+longer matches the files. With a script, every number comes from a file:
+the same principle as Session 1’s numbers coming from data.</p>
+<h2 id="publish-to-github-pages">Publish to GitHub Pages</h2>
+<p>GitHub Pages publishes a repository’s web pages as a free website.
+The last step of wrapping up:</p>
+<pre class="text"><code>Run code/make_page.py. Copy only site/ to the lab-results repository, commit and push. Use gh to check its Pages deployment status. Once it succeeds, open the URL and confirm the update.</code></pre>
+<p>Free accounts can publish only from public repositories, and the
+website is public too. Keep the public summary in a separate public
+repository. Keep the internal version with code and data in the private
+repository, and open it locally.</p>
+<h2 id="what-to-publish">What to publish</h2>
+<p>Anyone can see a public page, and search engines may index it.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Publish</th>
+<th>Keep out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Questions, predictions, right or wrong</td>
+<td>Full unpublished numbers and figures</td>
+</tr>
+<tr>
+<td>Overall prediction accuracy</td>
+<td>Code and data</td>
+</tr>
+<tr>
+<td>Playbook</td>
+<td>Server addresses, accounts, any secrets</td>
+</tr>
+</tbody>
+</table>
+<p>For unpublished work, the public page goes only as far as right or
+wrong. Detailed numbers stay in the internal version.</p>
+<h2 id="what-a-notification-says">What a notification says</h2>
+<p>A good notification:</p>
+<pre class="text"><code>Round 7 complete: two predictions about noisy-validation early stopping were right and one was wrong; review passed. https://your-name.github.io/lab-results/</code></pre>
+<p>One conclusion, right or wrong, review, link. Anyone who knows an
+ntfy channel name can receive its messages. Treat it as a password and
+keep it out of repositories and pages. Keep unpublished numbers out of
+notifications too. Don’t send long logs or step-by-step progress. Notify
+only when a round finishes, an error stops it, or a reflection check
+halts it. Too many notifications and you soon stop reading them.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Add a line chart to the results page: round on the horizontal axis,
+cumulative prediction accuracy on the vertical. Generate it from result
+files with the script too.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>The agent edits pages manually.</strong> After a few rounds,
+the numbers on the page no longer match result files. Generate pages
+from files with a script.</p>
+</div>
+<div class="pitfall">
+<p><strong>Unpublished results on a public page.</strong> Free Pages
+publishes publicly; people can see the full numbers as soon as you push.
+Public pages go only as far as right or wrong.</p>
+</div>
+<div class="pitfall">
+<p><strong>Too many notifications.</strong> Dozens of updates each day
+bury the one that matters. Notify only on completion, error or a
+halt.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://docs.github.com/zh/pages/quickstart">GitHub Pages
+quickstart</a></li>
+<li><a href="https://docs.ntfy.sh/">ntfy</a></li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="automate-playbook.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.2 经验榜</span><span lang="en">4.2 Playbooks</span></a><a class="next" href="safety.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5 选修 编排安全</span><span lang="en">5 Elective: Safety</span></a></nav>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识库怎么搭 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">拿到全文</span><span lang="en">Getting the full text</span></a>
+<a href="explore-vault.html" class="cur sub"><span class="num">2.2</span><span lang="zh">知识库怎么搭</span><span lang="en">Building the knowledge base</span></a>
+<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与提问</span><span lang="en">Parallel screening and questions</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="知识库怎么搭">2.2 知识库怎么搭</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>知识库的用处是让下一次提问站在这一次的阅读上。它要同时满足两个读者：你，在
+Obsidian 里翻；Agent，在文件夹里读写。两边读的是同一批 Markdown
+文件，所以结构要简单到两边都不会走错。</p>
+<h2 id="文件夹结构">文件夹结构</h2>
+<pre class="text"><code>vault/
+├── sources/        PDF 原件和 manifest.csv，只增不改
+├── papers/         一篇论文一页笔记
+├── concepts/       概念页，把论文连起来
+├── templates/      笔记模板
+├── conflicts.md    论文之间的分歧
+└── questions.md    从知识库里提出的问题</code></pre>
+<p>在 <code>AGENTS.md</code>
+里写清这几条：原件只增不改；论文页一篇一页，文件名和 PDF
+对应；结论必须带页码；概念页只引用论文页，不直接引用 PDF。</p>
+<h2 id="论文页模板">论文页模板</h2>
+<pre class="text"><code>---
+title: A Closer Look at Memorization in Deep Networks
+authors: Arpit et al.
+year: 2017
+source: sources/arpit2017.pdf   # 相对 vault/ 根目录
+---
+## 问题
+## 设定
+## 主要结果
+- 结论一句话，数字。p. 页码
+## 和本课题的关系</code></pre>
+<p>模板固定，Sub-agent
+写出来的笔记格式就统一，后面合并和检索都省事。页码那一项最重要：没有页码的结论，过后很难复核。</p>
+<h2 id="概念页">概念页</h2>
+<p>论文页回答这篇论文说了什么，概念页回答关于这件事，现在知道什么。一页概念页的样子：</p>
+<pre class="text"><code># 早停
+
+一段综述：带噪标签下，网络在前几轮先拟合干净样本，之后才开始记住错误标签，所以按验证准确率选停止点，有望停在记住错误标签之前。
+分歧在于验证集本身也带噪声时这个办法还灵不灵。
+
+- [[arpit2017]]：先学规律后记噪声。
+- [[liu2020]]：早期学习正则化，不靠停止点也能挡住记忆。
+- ...</code></pre>
+<p>概念页的数量要少。三五个概念把十几篇论文连起来，比三十个概念各挂一篇论文有用。在
+Obsidian 的关系图里，孤立的论文就是还没想清它和谁有关的论文。</p>
+<h2 id="分歧表">分歧表</h2>
+<p>分歧是知识库里最值钱的部分，好问题大多从这里来。单独存一张表：</p>
+<table>
+<thead>
+<tr>
+<th>论文 A</th>
+<th>论文 B</th>
+<th>在什么设定下</th>
+<th>A 说</th>
+<th>B 说</th>
+<th>可能的原因</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>可能的原因一栏让 Agent 填它的猜测，并标明是猜测。第 3
+课挑问题时，先看这张表。</p>
+<h2 id="新论文进来">新论文进来</h2>
+<p>知识库会长大。每加一篇论文：</p>
+<pre class="text"><code>读 vault/papers/新论文.md。它和哪几个概念页有关？把它的结论合并进去：
+如果它说的和已有内容一致，在已有条目后补一个链接，不重复写；如果是新内容，加一条；如果冲突，写进 conflicts.md。
+不要在概念页末尾追加一段关于这篇论文的总结。</code></pre>
+<p>最后一句针对一个常见毛病：Agent
+喜欢在末尾追加，几十篇之后概念页变成论文摘要的流水账。合并的要求是改写已有的综述，让它同时覆盖旧的和新的，并且不比原来长多少。</p>
+<h2 id="用-obsidian-读">用 Obsidian 读</h2>
+<p>Obsidian
+是免费的桌面应用，打开一个文件夹就是一个库。课上用到的只有三样：</p>
+<ul>
+<li>双链：<code>[[文件名]]</code>
+跳到另一页，打开反向链接面板能看到谁链接了这一页。</li>
+<li>关系图：看哪些论文和概念连在一起，哪些孤立。</li>
+<li>搜索：全文搜一个词，比如一个数据集名，看哪些论文用过。</li>
+</ul>
+<p>插件很多，课上不需要。Agent 不依赖 Obsidian 本身，它只读写文件；关掉
+Obsidian 也照样工作。</p>
+<h2 id="练习">练习</h2>
+<p>往练习 2
+的知识库里加两篇你自己挑的论文，按上面的合并任务卡更新概念页。比较更新前后的概念页，看它是改写了综述还是在末尾追加。</p>
+<details>
+<summary>
+如果它还是在末尾追加
+</summary>
+<p>在任务卡里给一个长度上限，比如综述段不超过一百五十字，并要求它先说明这篇论文改变了综述的哪一句。改不动综述的论文，只补链接。</p>
+</details>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>概念页变成流水账。</strong>
+每篇论文在末尾追加一段，几十篇后没人读得下去。合并就是改写综述，不是追加。</p>
+</div>
+<div class="pitfall">
+<p><strong>概念太多。</strong>
+每篇论文造两三个新概念，关系图里全是孤点。先用已有概念，实在装不下再新建。</p>
+</div>
+<div class="pitfall">
+<p><strong>直接改原件。</strong> Agent 在 PDF
+旁边写了一个同名笔记，或者为了提取文字把 PDF
+转换覆盖了。原件只增不改，写进 <code>AGENTS.md</code>。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://help.obsidian.md/">Obsidian 帮助文档</a></li>
+</ul>
+</article>
+<article lang="en"><h1 id="building-the-knowledge-base">2.2 Building the knowledge
+base</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>A knowledge base lets your next question build on what you read this
+time. It serves two readers: you, browsing in Obsidian, and the agent,
+reading and writing in the folder. Both read the same Markdown files, so
+the structure needs to be simple enough for neither to get lost.</p>
+<h2 id="folder-structure">Folder structure</h2>
+<pre class="text"><code>vault/
+├── sources/        Original PDFs and manifest.csv; add, never change
+├── papers/         One page of notes per paper
+├── concepts/       Concept pages connecting papers
+├── templates/      Note templates
+├── conflicts.md    Disagreements between papers
+└── questions.md    Questions drawn from the knowledge base</code></pre>
+<p>Put these rules in <code>AGENTS.md</code>: add originals, never
+change them; one page per paper, with a filename matching the PDF; every
+claim needs a page number; concept pages cite paper pages, not PDFs
+directly.</p>
+<h2 id="paper-page-template">Paper page template</h2>
+<pre class="text"><code>---
+title: A Closer Look at Memorization in Deep Networks
+authors: Arpit et al.
+year: 2017
+source: sources/arpit2017.pdf   # Relative to the vault/ root
+---
+## Question
+## Setting
+## Main results
+- One-sentence conclusion, number. p. page number
+## Relation to this topic</code></pre>
+<p>A fixed template keeps Sub-agents’ notes consistent and makes merging
+and searching easier. Page numbers matter most: a claim without one is
+hard to check later.</p>
+<h2 id="concept-pages">Concept pages</h2>
+<p>A paper page answers what this paper says. A concept page answers
+what we now know about this subject. An example:</p>
+<pre class="text"><code># Early stopping
+
+Overview: with noisy labels, networks fit clean samples in the first few epochs, then start memorizing wrong labels. Choosing a stopping point by validation accuracy may stop them before that memorization.
+The disagreement is whether this still works when the validation set is noisy too.
+
+- [[arpit2017]]: learns patterns before memorizing noise.
+- [[liu2020]]: early-learning regularization can block memorization without a stopping point.
+- ...</code></pre>
+<p>Keep concept pages few. Three to five concepts connecting a dozen
+papers are more useful than thirty concepts with one paper each. In
+Obsidian’s graph view, an isolated paper is one whose connections you
+have yet to work out.</p>
+<h2 id="conflict-table">Conflict table</h2>
+<p>Disagreements are the most valuable part of the knowledge base. Most
+good questions come from them. Keep a separate table:</p>
+<table>
+<thead>
+<tr>
+<th>Paper A</th>
+<th>Paper B</th>
+<th>Setting</th>
+<th>A says</th>
+<th>B says</th>
+<th>Possible reason</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>Have the agent put its guesses in the possible reason column and mark
+them as guesses. Start with this table when choosing a question in
+Session 3.</p>
+<h2 id="when-a-new-paper-arrives">When a new paper arrives</h2>
+<p>The knowledge base grows. Each time you add a paper:</p>
+<pre class="text"><code>Read vault/papers/new-paper.md. Which concept pages does it relate to? Merge its conclusions into them:
+If it agrees with existing content, add a link to the existing entry without repeating it. If it adds something new, add an entry. If it conflicts, record that in conflicts.md.
+Don&#39;t append a summary of this paper to the end of a concept page.</code></pre>
+<p>The last line addresses a common habit: agents like appending, and
+after dozens of papers a concept page becomes a list of abstracts.
+Merging means rewriting the existing overview to cover both old and new
+work without making it much longer.</p>
+<h2 id="reading-with-obsidian">Reading with Obsidian</h2>
+<p>Obsidian is a free desktop app. Open a folder and it becomes a vault.
+The class uses only three features:</p>
+<ul>
+<li>Wikilinks: <code>[[filename]]</code> jumps to another page. The
+backlinks panel shows who links to this page.</li>
+<li>Graph view: see which papers and concepts connect, and which are
+isolated.</li>
+<li>Search: search all text for a term, such as a dataset name, to see
+which papers used it.</li>
+</ul>
+<p>There are many plugins, but you do not need them for class. The agent
+does not depend on Obsidian itself; it just reads and writes files. It
+works with Obsidian closed too.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Add two papers you choose to the knowledge base from Exercise 2.
+Update the concept pages with the merge task card above. Compare the
+pages before and after: did it rewrite the overview or append to the
+end?</p>
+<details>
+<summary>
+If it still appends to the end
+</summary>
+<p>Give a length limit in the task card, such as an overview paragraph
+of at most 150 characters, and ask it to say first which sentence the
+new paper changes. If a paper does not change the overview, add only a
+link.</p>
+</details>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Concept pages become a running list.</strong> A paragraph
+appended for every paper becomes unreadable after dozens. Merging means
+rewriting the overview, not appending.</p>
+</div>
+<div class="pitfall">
+<p><strong>Too many concepts.</strong> Two or three new concepts per
+paper leave the graph full of isolated points. Use existing concepts
+first; create a new one only when they do not fit.</p>
+</div>
+<div class="pitfall">
+<p><strong>Changing originals.</strong> The agent writes a note with the
+same name beside a PDF, or overwrites the PDF while converting it to
+extract text. Add originals, never change them. Put this in
+<code>AGENTS.md</code>.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://help.obsidian.md/">Obsidian help</a></li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="explore-fulltext.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.1 拿到全文</span><span lang="en">2.1 Getting the full text</span></a><a class="next" href="explore-parallel.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.3 并行复筛与提问</span><span lang="en">2.3 Parallel screening and questions</span></a></nav>
+</main>
+</div>
+</body>
+</html>

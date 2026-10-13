@@ -16,13 +16,14 @@
 <nav class="side">
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html" class="cur"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
 <a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
 <a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
-<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
-<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
-<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
-<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
 </nav>
 <main>
 <article lang="zh"><h1 id="课程大纲">课程大纲</h1>
@@ -57,7 +58,7 @@ Agent 审稿，并把这套做法做成 Skill。</li>
 <th>课</th>
 <th>时长</th>
 <th>下课时你有</th>
-<th>新添的工具</th>
+<th>暗线：这课装上的工具</th>
 <th>对应目标</th>
 </tr>
 </thead>
@@ -73,42 +74,42 @@ Agent 审稿，并把这套做法做成 Skill。</li>
 <td>1 Agent 写作</td>
 <td>60 分钟，课后深入约 3.5 小时</td>
 <td>重讲过的论文，两张能投稿的数据图，一个改论文的 Skill</td>
-<td>AGENTS.md，Skill，跨厂商审稿，LaTeX，Python 作图</td>
+<td>Python 环境，LaTeX，PDF 渲染，AGENTS.md，Skill</td>
 <td>1，2</td>
 </tr>
 <tr>
 <td>2 Agent 探索</td>
-<td>60 分钟</td>
+<td>60 分钟，课后深入约 1.5 小时</td>
 <td>论文知识库，三个能检验的问题</td>
-<td>Ego 浏览器，Obsidian，Sub-agent</td>
+<td>Ego 浏览器，Obsidian，文献接口，Sub-agent</td>
 <td>3</td>
 </tr>
 <tr>
 <td>3 Agent 实验</td>
-<td>60 分钟</td>
-<td>一次能重跑的实验，一张结果图</td>
-<td>Git 与 GitHub，SSH 服务器，后台任务</td>
+<td>60 分钟，课后深入约 1.5 小时</td>
+<td>一次先写预测，在服务器上跑完，能重跑的实验</td>
+<td>Git 与 GitHub，SSH 与 Tailscale，tmux 后台任务，监视器</td>
 <td>4</td>
 </tr>
 <tr>
 <td>4 Agent 自动化与自进化</td>
-<td>60 分钟</td>
-<td>夜里自己跑的研究循环</td>
-<td>定时唤醒，无人值守调用，经验榜，GitHub Pages</td>
+<td>60 分钟，课后深入约 1.5 小时</td>
+<td>夜里自己跑、早上看结果页的研究循环</td>
+<td>定时任务，无人值守调用，手机通知，经验榜，GitHub Pages</td>
 <td>5</td>
 </tr>
 <tr>
 <td>5 选修 编排安全</td>
-<td>60 分钟</td>
-<td>工作台的权限表</td>
-<td>权限模式，沙箱</td>
+<td>60 分钟，课后深入约 1 小时</td>
+<td>工作台的权限表和两道自动检查</td>
+<td>权限规则，沙箱，Hooks，密钥管理</td>
 <td>5</td>
 </tr>
 <tr>
 <td>6 选修 编排理论</td>
-<td>60 分钟</td>
-<td>一个算得出来的编排决策</td>
-<td></td>
+<td>60 分钟，课后深入约 30 分钟</td>
+<td>一本用量账本，一个算得出来的编排决策</td>
+<td>用量账本</td>
 <td>5</td>
 </tr>
 </tbody>
@@ -119,6 +120,10 @@ Agent 审稿，并把这套做法做成 Skill。</li>
 分钟，讲清原理，给出更多任务卡，练习和参考答案。时长可按现场微调。四堂必修按顺序上，后一堂会用到前一堂做出的东西；两堂选修在第四堂之后任选。</p>
 <h2 id="每堂课怎么上">每堂课怎么上</h2>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>时间</th>
@@ -127,12 +132,16 @@ Agent 审稿，并把这套做法做成 Skill。</li>
 </thead>
 <tbody>
 <tr>
+<td>开课第 1 分钟</td>
+<td>发出装工具任务卡：Agent 在后台装这一课的工具</td>
+</tr>
+<tr>
 <td>0 至 5 分钟</td>
 <td>看成品：先看这堂课最后要做出来的东西</td>
 </tr>
 <tr>
 <td>5 至 15 分钟</td>
-<td>讲：本课新添的工具，为什么需要它</td>
+<td>讲：这一课的做法，以及新装的工具让 Agent 多了什么本事</td>
 </tr>
 <tr>
 <td>15 至 50 分钟</td>
@@ -144,11 +153,13 @@ Agent 审稿，并把这套做法做成 Skill。</li>
 </tr>
 <tr>
 <td>55 至 60 分钟</td>
-<td>回顾要点，布置用自己的材料再做一遍</td>
+<td>回顾要点，看一眼工作台多了什么，布置用自己的材料再做一遍</td>
 </tr>
 </tbody>
 </table>
-<p>讲的部分不超过十分钟，其余时间都在动手。每段练习给一张任务卡，复制给
+<p>讲的部分不超过十分钟，其余时间都在动手。装工具和讲课同时进行：任务卡开课就发，Agent
+装的时候你在听讲，装完它会自己验证一遍，并把用法写进项目的
+<code>AGENTS.md</code>。需要你本人登录或授权的几步，GitHub，图书馆，服务器，最好课前先确认账号能用。每段练习给一张任务卡，复制给
 Agent
 就能开始。任务卡都写清四件事：读什么，做什么，存到哪，做到哪里停。</p>
 <h2 id="考核">考核</h2>
@@ -156,10 +167,14 @@ Agent
 <h2 id="需要准备">需要准备</h2>
 <ul>
 <li>一台 Mac 或 Windows 电脑。</li>
-<li>至少一个订阅：Claude 的 Pro 或以上，或者含 Codex 的 ChatGPT
-套餐。两个都有最好，第 1 课起会让一家写、另一家审。</li>
-<li>第 3 课最好有一台能 SSH
-登录的服务器；没有的话，用本机跑一个小实验也能完成。</li>
+<li>Claude 的 Pro 或以上订阅，和含 Codex 的 ChatGPT 套餐。第 1
+课起一家写，另一家审；只有一家的，审稿那一步用同一家开一个只读稿件的新对话代替，效果差一些。</li>
+<li>第 2 课：学校图书馆的机构登录账号，用来让浏览器替 Agent
+拿订阅论文的全文。</li>
+<li>第 3 课：一个 GitHub 账号；最好有一台能 SSH
+登录的服务器，没有的话用本机也能完成。</li>
+<li>第 4 课：手机上装好 Claude 应用或者一个能收推送的通知应用。</li>
+<li>其余工具都是免费软件，课上由 Agent 自己装。</li>
 </ul>
 </article>
 <article lang="en"><h1 id="syllabus">Syllabus</h1>
@@ -197,7 +212,7 @@ common ways agents fail, and add a check for each.</li>
 <th>Session</th>
 <th>Length</th>
 <th>You leave with</th>
-<th>Tools added</th>
+<th>The hidden thread: tools added</th>
 <th>Outcomes</th>
 </tr>
 </thead>
@@ -214,43 +229,46 @@ common ways agents fail, and add a check for each.</li>
 <td>60 min, plus about 3.5 h self-study</td>
 <td>A retold paper, two submission-ready data figures, a Skill for
 revising papers</td>
-<td>AGENTS.md, Skills, cross-vendor review, LaTeX, plotting in
-Python</td>
+<td>Python environment, LaTeX, PDF rendering, AGENTS.md, Skill</td>
 <td>1, 2</td>
 </tr>
 <tr>
 <td>2 Exploring with Agents</td>
-<td>60 min</td>
+<td>60 min, plus about 1.5 h self-study</td>
 <td>A literature knowledge base, three testable questions</td>
-<td>Ego browser, Obsidian, sub-agents</td>
+<td>Ego browser, Obsidian, literature APIs, Sub-agent</td>
 <td>3</td>
 </tr>
 <tr>
 <td>3 Experimenting with Agents</td>
-<td>60 min</td>
-<td>A rerunnable experiment, one result figure</td>
-<td>Git and GitHub, SSH servers, background jobs</td>
+<td>60 min, plus about 1.5 h self-study</td>
+<td>A rerunnable experiment, predicted first and completed on a
+server</td>
+<td>Git and GitHub, SSH and Tailscale, tmux background jobs,
+monitor</td>
 <td>4</td>
 </tr>
 <tr>
 <td>4 Automation and Self-Evolution</td>
-<td>60 min</td>
-<td>A research loop that runs overnight</td>
-<td>Scheduled wake-ups, headless runs, playbooks, GitHub Pages</td>
+<td>60 min, plus about 1.5 h self-study</td>
+<td>A research loop that runs overnight, with a results page to read in
+the morning</td>
+<td>Scheduled tasks, headless calls, phone notifications, playbook,
+GitHub Pages</td>
 <td>5</td>
 </tr>
 <tr>
-<td>5 Elective: Safety</td>
-<td>60 min</td>
-<td>A permission map for your workbench</td>
-<td>Permission modes, sandbox</td>
+<td>5 Elective: Orchestration Safety</td>
+<td>60 min, plus about 1 h self-study</td>
+<td>A permission table for the workbench and two automatic checks</td>
+<td>Permission rules, sandbox, Hooks, secret management</td>
 <td>5</td>
 </tr>
 <tr>
-<td>6 Elective: Theory</td>
-<td>60 min</td>
-<td>An orchestration decision you can compute</td>
-<td></td>
+<td>6 Elective: Orchestration Theory</td>
+<td>60 min, plus about 30 min self-study</td>
+<td>A usage ledger and an orchestration decision you can compute</td>
+<td>Usage ledger</td>
 <td>5</td>
 </tr>
 </tbody>
@@ -275,12 +293,17 @@ The electives can follow session four in either order.</p>
 </thead>
 <tbody>
 <tr>
+<td>First minute</td>
+<td>Send the tool installation task card: the agent installs this
+session’s tools in the background</td>
+</tr>
+<tr>
 <td>0 to 5 min</td>
 <td>See the finished product the session builds toward</td>
 </tr>
 <tr>
 <td>5 to 15 min</td>
-<td>Talk: the tools this session adds, and why you need them</td>
+<td>Talk: the method, and what the new tools let the agent do</td>
 </tr>
 <tr>
 <td>15 to 50 min</td>
@@ -292,14 +315,19 @@ The electives can follow session four in either order.</p>
 </tr>
 <tr>
 <td>55 to 60 min</td>
-<td>Key points, and redoing it on your own material</td>
+<td>Key points, what the workbench gained, and redoing it on your own
+material</td>
 </tr>
 </tbody>
 </table>
-<p>Talking takes at most ten minutes; the rest is hands-on. Each
-exercise comes with a task card you paste to the agent. Every card says
-four things: what to read, what to do, where to save it, and where to
-stop.</p>
+<p>Talking takes at most ten minutes; the rest is hands-on. Tool
+installation happens alongside the talk: send the card at the start,
+listen while the agent installs, and let it test the tools and write
+their use into the project’s <code>AGENTS.md</code>. For steps that need
+your login or authorization, such as GitHub, the library and the server,
+check your accounts work before class. Each exercise comes with a task
+card you paste to the agent. Every card says four things: what to read,
+what to do, where to save it, and where to stop.</p>
 <h2 id="assessment">Assessment</h2>
 <p>What you build in each session is the assignment; afterwards, redo it
 with your own material. The final piece is a small workbench for your
@@ -308,14 +336,21 @@ after one unattended run, produces a results page.</p>
 <h2 id="what-you-need">What you need</h2>
 <ul>
 <li>A Mac or Windows computer.</li>
-<li>At least one subscription: Claude Pro or above, or a ChatGPT plan
-that includes Codex. Both is best, since from session one one vendor
-writes and the other reviews.</li>
-<li>For session three, ideally a server you can SSH into. Without one, a
-small experiment on your own machine works too.</li>
+<li>Claude Pro or above, and a ChatGPT plan that includes Codex. From
+Session 1, one vendor writes and the other reviews. If you have only
+one, use a new conversation with the same vendor that reads only the
+draft for the review; it works less well.</li>
+<li>For Session 2: your university library’s institutional login, so the
+browser can get subscription full texts for the agent.</li>
+<li>For Session 3: a GitHub account, and ideally a server you can SSH
+into. Without one, you can complete the work locally.</li>
+<li>For Session 4: Claude on your phone or a notification app that can
+receive pushes.</li>
+<li>All other tools are free software, installed by the agent during
+class.</li>
 </ul>
 </article>
-<nav class="pager"><a class="prev" href="index.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 首页</span><span lang="en"> Home</span></a><a class="next" href="setup.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">0 课前准备</span><span lang="en">0 Setup</span></a></nav>
+<nav class="pager"><a class="prev" href="index.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 首页</span><span lang="en"> Home</span></a><a class="next" href="toolbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh"> 工具箱</span><span lang="en"> Toolbox</span></a></nav>
 </main>
 </div>
 </body>

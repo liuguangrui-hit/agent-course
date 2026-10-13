@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git 与 GitHub · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="experiment-git.html" class="cur sub"><span class="num">3.1</span><span lang="zh">Git 与 GitHub</span><span lang="en">Git and GitHub</span></a>
+<a href="experiment-server.html" class="sub"><span class="num">3.2</span><span lang="zh">服务器与后台任务</span><span lang="en">Servers and background jobs</span></a>
+<a href="experiment-evidence.html" class="sub"><span class="num">3.3</span><span lang="zh">结果能说明什么</span><span lang="en">What a result shows</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="git-与-github">3.1 Git 与 GitHub</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>Git 把文件夹在每次提交时的样子存成一个版本，GitHub
+把这些版本存到网上。对用 Agent 做研究的人，它解决一个具体问题：Agent
+改代码太快，你记不住哪个结果来自哪一版代码，也不敢放手让它大改，怕改坏了回不去。有了
+Git，两件事都有了答案。</p>
+<p>命令让 Agent
+去敲。下面是用得上的几个概念，以及什么时候让它做什么。</p>
+<h2 id="五个动作">五个动作</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>动作</th>
+<th>是什么</th>
+<th>什么时候让 Agent 做</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>提交</td>
+<td>给文件夹当前的样子拍一张快照，附一句说明</td>
+<td>每跑一次实验之前；每完成一件小事</td>
+</tr>
+<tr>
+<td>推送</td>
+<td>把本地的快照传到 GitHub</td>
+<td>每天收工；要在服务器上用新代码时</td>
+</tr>
+<tr>
+<td>拉取</td>
+<td>把 GitHub 上的新快照取到本地或服务器</td>
+<td>在服务器上跑实验之前</td>
+</tr>
+<tr>
+<td>查看历史</td>
+<td>看过去的快照和改了什么</td>
+<td>想知道某个结果是哪版代码时</td>
+</tr>
+<tr>
+<td>退回</td>
+<td>把某个文件或整个文件夹恢复到某次快照</td>
+<td>改坏了的时候</td>
+</tr>
+</tbody>
+</table>
+<p>每次提交有一个编号，一串十六进制字符，平时用 Git
+显示的前几位短编号就够了。这个编号就是代码版本的名字。</p>
+<h2 id="提交编号进结果">提交编号进结果</h2>
+<pre class="text"><code>修改 run_experiment.py：启动时读取当前的 Git 提交编号，写进 results.csv 的每一行；
+正式运行时，如果文件夹里有还没提交的改动，拒绝运行并提示先提交；冒烟测试不受这条限制。</code></pre>
+<p>这几行代码是整个实验可复查的基础。半年后审稿人问这个数字怎么来的，你查结果文件里的编号，切回那一版代码，用同样的数据和参数重跑一遍。数据放在哪，是哪个版本，也写进
+README。</p>
+<h2 id="哪些东西不进仓库">哪些东西不进仓库</h2>
+<p><code>.gitignore</code> 列出不进仓库的文件。一般是：</p>
+<ul>
+<li>数据集和大的结果文件，它们放在服务器上或者单独的存储里；</li>
+<li>环境文件夹，比如 <code>.venv/</code>；</li>
+<li>密钥和含密码的配置，比如 <code>.env</code>；</li>
+<li>下载的论文 PDF。</li>
+</ul>
+<p>GitHub
+仓库默认可以设成私有，未发表的代码先放私有仓库。即使是私有仓库，密钥也不要进去：仓库以后可能公开，也可能加进新的合作者。</p>
+<h2 id="退回">退回</h2>
+<p>改坏了不用慌：</p>
+<pre class="text"><code>run_experiment.py 改坏了，把它恢复到上一次提交的样子，其他文件不动。</code></pre>
+<pre class="text"><code>我想看第 1 课那次结果对应的代码。列出最近十次提交，找到提交说明里有 baseline 的那次，告诉我那时的 run_experiment.py 和现在有什么不同。</code></pre>
+<p>放手让 Agent 大改代码之前，先让它提交一次。改得不好，一句话退回。</p>
+<h2 id="多个对话同时改">多个对话同时改</h2>
+<p>两个对话同时改同一个文件夹，会互相覆盖。要并行做两件事，用 Git
+的工作树：同一个仓库在另一个文件夹里开一份副本，各改各的，最后合并。</p>
+<pre class="text"><code>用 git worktree 在 ../label-noise-lab-asym 开一个新分支 asym，我要在另一个对话里在那里做非对称噪声的实验。</code></pre>
+<p>Claude Code 桌面版新建对话时也可以直接选在工作树里开，效果相同。</p>
+<h2 id="提交说明">提交说明</h2>
+<p>让 Agent
+写提交说明时要求一句话说清做了什么，而不是改了哪些文件。好的说明：add
+noisy-validation early stopping。不好的说明：update
+run_experiment.py。半年后你按说明找版本，只有前一种找得到。</p>
+<h2 id="练习">练习</h2>
+<p>在练习 3 的仓库里，让 Agent
+故意把损失函数改错，跑一次冒烟测试看到结果异常，再让它退回到上一次提交，确认结果恢复。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>没提交就跑。</strong>
+结果不错，但代码已经又改了三次，回不去了。在实验脚本里检查有没有未提交的改动，有就拒绝运行。</p>
+</div>
+<div class="pitfall">
+<p><strong>密钥进了仓库。</strong> API Key 写在配置文件里一起提交，推到
+GitHub 后即使删掉，历史里还在。密钥放进 <code>.gitignore</code>
+列出的文件；一旦推上去，立刻作废那个 Key 重新生成。</p>
+</div>
+<div class="pitfall">
+<p><strong>数据进了仓库。</strong> 几 GB
+的数据集被提交，仓库推不上去，或者每次拉取都很慢。数据进
+<code>.gitignore</code>，仓库里只放下载数据的脚本。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://cli.github.com/manual/">GitHub CLI 手册</a></li>
+<li><a href="https://git-scm.com/book/zh/v2">Pro
+Git</a>：中文版，前三章足够。</li>
+</ul>
+</article>
+<article lang="en"><h1 id="git-and-github">3.1 Git and GitHub</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>Git saves a version of your folder at each commit. GitHub stores
+those versions online. For research with agents, this solves a concrete
+problem: the agent changes code so quickly that you cannot remember
+which result came from which version. You also hesitate to let it make
+big changes for fear you cannot go back. Git answers both concerns.</p>
+<p>Let the agent type the commands. Here are the concepts you need, and
+when to ask it to act.</p>
+<h2 id="five-actions">Five actions</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Action</th>
+<th>What it is</th>
+<th>When to ask the agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit</td>
+<td>Take a snapshot of the folder, with a short description</td>
+<td>Before every experiment; after each small task</td>
+</tr>
+<tr>
+<td>Push</td>
+<td>Send local snapshots to GitHub</td>
+<td>At the end of the day; when the server needs new code</td>
+</tr>
+<tr>
+<td>Pull</td>
+<td>Get new snapshots from GitHub onto your computer or server</td>
+<td>Before running an experiment on the server</td>
+</tr>
+<tr>
+<td>View history</td>
+<td>See past snapshots and what changed</td>
+<td>To find which code version produced a result</td>
+</tr>
+<tr>
+<td>Restore</td>
+<td>Return a file or the whole folder to a snapshot</td>
+<td>When a change breaks something</td>
+</tr>
+</tbody>
+</table>
+<p>Each commit has an ID, a string of hexadecimal characters. The short
+ID Git displays is usually enough. It is the name of the code
+version.</p>
+<h2 id="put-the-commit-id-in-results">Put the commit ID in results</h2>
+<pre class="text"><code>Change run_experiment.py: read the current Git commit ID at startup and write it into every row of results.csv.
+For a full run, refuse to run if the folder has uncommitted changes and prompt me to commit first. Exempt smoke tests from this rule.</code></pre>
+<p>These few lines are the foundation for checking an experiment later.
+Six months on, if a reviewer asks where a number came from, read the ID
+in the result file, return to that code version, and rerun with the same
+data and parameters. Put the data’s location and version in the README
+too.</p>
+<h2 id="what-stays-out-of-the-repository">What stays out of the
+repository</h2>
+<p><code>.gitignore</code> lists files to leave out. Usually:</p>
+<ul>
+<li>Datasets and large result files, kept on the server or in separate
+storage;</li>
+<li>Environment folders such as <code>.venv/</code>;</li>
+<li>Secrets and configuration containing passwords, such as
+<code>.env</code>;</li>
+<li>Downloaded paper PDFs.</li>
+</ul>
+<p>You can make a GitHub repository private. Keep unpublished code in a
+private repository first. Even in a private repository, leave secrets
+out: you may later make it public or add collaborators.</p>
+<h2 id="going-back">Going back</h2>
+<p>If a change breaks something, don’t panic:</p>
+<pre class="text"><code>run_experiment.py is broken. Restore it to the last commit, leaving other files alone.</code></pre>
+<pre class="text"><code>I want to see the code that produced Session 1&#39;s result. List the last ten commits, find the one with baseline in its message, and tell me how its run_experiment.py differs from the current one.</code></pre>
+<p>Before letting the agent make a big code change, have it commit. If
+the change is poor, one line takes you back.</p>
+<h2 id="several-conversations-editing-at-once">Several conversations
+editing at once</h2>
+<p>Two conversations editing the same folder overwrite each other. For
+two jobs in parallel, use Git worktrees: open a copy of the same
+repository in another folder, edit separately, then merge.</p>
+<pre class="text"><code>Use git worktree to open a new branch asym in ../label-noise-lab-asym. I will use another conversation there for asymmetric-noise experiments.</code></pre>
+<p>When starting a conversation in Claude Code desktop, you can also
+choose to open it in a worktree. The effect is the same.</p>
+<h2 id="commit-messages">Commit messages</h2>
+<p>Ask the agent for a one-sentence description of what it did, rather
+than which files it changed. Good: add noisy-validation early stopping.
+Poor: update run_experiment.py. Six months later, only the first helps
+you find the version.</p>
+<h2 id="exercise">Exercise</h2>
+<p>In the repository from Exercise 3, have the agent deliberately break
+the loss function. Run a smoke test to see the abnormal result, then
+restore the last commit and check that the result returns to normal.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Running without a commit.</strong> The result is good, but
+the code has changed three more times and you cannot go back. Check for
+uncommitted changes in the experiment script and refuse to run if there
+are any.</p>
+</div>
+<div class="pitfall">
+<p><strong>Secrets in the repository.</strong> An API key in a
+configuration file gets committed and pushed. Deleting it leaves it in
+the history. Keep secrets in files listed in <code>.gitignore</code>. If
+a key is pushed, revoke it at once and generate a new one.</p>
+</div>
+<div class="pitfall">
+<p><strong>Data in the repository.</strong> A dataset of several GB
+prevents a push or makes every pull slow. Put data in
+<code>.gitignore</code>; keep only the script to download it in the
+repository.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://cli.github.com/manual/">GitHub CLI manual</a></li>
+<li><a href="https://git-scm.com/book/zh/v2">Pro Git</a>: Chinese
+edition; the first three chapters are enough.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="experiment.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3 Agent 实验</span><span lang="en">3 Experimenting with Agents</span></a><a class="next" href="experiment-server.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3.2 服务器与后台任务</span><span lang="en">3.2 Servers and background jobs</span></a></nav>
+</main>
+</div>
+</body>
+</html>

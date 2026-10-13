@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>选修 编排安全 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html" class="cur"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="safety-sandbox.html" class="sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandbox</span></a>
+<a href="safety-hooks.html" class="sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥</span><span lang="en">Hooks and secrets</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 权限规则</span><span class="chip new">+ 沙箱</span><span class="chip new">+ Hooks</span><span class="chip new">+ 密钥管理</span></div><h1 id="选修-编排安全">5 选修 编排安全</h1>
+<div class="goal">
+<p>一小时后，你的工作台有一张权限表：常用的命令不再一次次问你，危险的命令一律拒绝；命令被关进沙箱，只能写项目文件夹和临时目录，只能连你允许的网站；另有两道自动检查，改完论文自动核对数字，推送之前自动查有没有密钥混进去。</p>
+</div>
+<p><span class="meta">课堂核心 60 分钟。课后深入 5.1 与 5.2
+共约一小时。第 4 课之后选修。</span></p>
+<div class="download">
+<p><a href="downloads/lesson-5-zh.zip">下载第 5 课练习材料</a></p>
+</div>
+<p>练习材料是两份配置的起点：<code>settings.example.json</code> 给
+Claude Code，<code>config.example.toml</code> 给 Codex；还有一个
+<code>hooks/</code> 文件夹，放两道检查的脚本骨架。</p>
+<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<div class="install">
+<p><strong>本课暗线：给前四课装好的工作台装上锁。</strong> 到第 4
+课，Agent 能登录出版社，连服务器，推
+GitHub，夜里还会自己开工。能力越多，一次失手的代价越大。这一课添四样：权限规则决定哪些命令自动放行，哪些一律拒绝；沙箱从系统层面限制它能写哪里，能连哪里；Hooks
+在特定时刻自动跑检查，不靠它记得；密钥管理让密码和 Key
+不出现在对话和仓库里。</p>
+</div>
+<p>打开你第 4 课的工作台文件夹，先发：</p>
+<pre class="text"><code>这个项目要收紧权限。先不改任何配置，做四件事：
+1. 读 AGENTS.md、LOOP.md 和最近的运行日志，列出这个工作台实际用到的命令，按 git，uv，ssh，gh 和其他分类；
+2. 检查沙箱需要的系统组件是否齐全，没有就告诉我需要装什么；
+3. 装 gitleaks，用它扫一遍这个仓库的全部历史，告诉我有没有密钥混进去过；
+4. 找出散在 AGENTS.md，LOOP.md 和脚本里的密钥类信息，比如 ntfy 的频道名，挪进一个列入 .gitignore 的 .env，原处改成引用变量名。
+装之前列出打算装什么，等我同意。</code></pre>
+<p>第 1 项的清单就是下面写权限表的依据。</p>
+<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
+<p>打开
+<code>preview/settings.json</code>。三段：拒绝表在最前，列出无论如何都不许做的事，比如删除整个目录，读你的
+SSH
+私钥，用管理员权限执行；允许表列出这个工作台天天要用，可以不问就做的命令；其余的照常问你。下面一段打开沙箱，写明它能写的目录和能连的网站。最后是两个
+Hook。</p>
+<h2 id="讲10-分钟">讲，10 分钟</h2>
+<p><strong>一路点同意等于没有权限检查。</strong>
+每条命令都问，十分钟后你就不看了，直接点同意。权限表的作用是让该问的才问：天天用的放进允许表，绝不能做的放进拒绝表，剩下少数才弹出来，你会认真看。</p>
+<p><strong>权限表管 Agent，沙箱管命令。</strong> 权限表决定 Agent
+能不能发起某条命令。命令一旦运行，它会调用别的程序、读别的文件，权限表管不到。沙箱在操作系统层面限制这条命令和它调用的一切：只能写这个文件夹，只能连这几个网站。两层叠在一起，才放心让它无人值守。</p>
+<p><strong>外部内容是数据，不是指令。</strong> Agent 读进来的网页，PDF
+和邮件里，可能有人专门写了给 Agent
+看的话，要它去做别的事。模型并不总能分辨。办法是分工：读外部内容的那一步只能写笔记文件夹，不能推送，不能运行别的命令；需要推送和发消息的那一步，不直接读外部原文，只读整理好的笔记，并且把笔记也当作资料看待，不当作命令。</p>
+<p><strong>检查交给 Hook，不交给记性。</strong> 在
+<code>AGENTS.md</code> 里写改完论文要核对数字，Agent
+多数时候照做，偶尔会忘。Hook
+是在特定事件发生时一定会运行的脚本：每次改完 <code>.tex</code>
+文件，每次推送之前。它不会忘。</p>
+<h2 id="练习-1写权限表15-分钟">练习 1：写权限表，15 分钟</h2>
+<pre class="text"><code>按刚才列出的命令清单，写 .claude/settings.json：
+拒绝：删除目录的命令，读 ~/.ssh 和 ~/.aws 下的文件，sudo，向未列出的地址推送；
+允许：git 的提交、查看和推送，uv run，ssh lab，gh，以及本项目的几个脚本；
+其余照常询问。对照 settings.example.json 的格式。
+再把同样的意思写成 Codex 的 .codex/config.toml。写完给我看，等我同意再保存。</code></pre>
+<p>保存后试三下：让它删掉 <code>runs/</code>
+目录，它应该被拒绝；让它提交一次，它应该不问就做；让它 ssh lab
+uptime，应该照常连上。读 ~/.ssh 的禁令拦的是 Agent 直接打开私钥文件，ssh
+命令自己用密钥不受影响。</p>
+<h2 id="练习-2打开沙箱10-分钟">练习 2：打开沙箱，10 分钟</h2>
+<pre class="text"><code>在 settings.json 里打开沙箱，用默认的可写范围；网络只允许 github.com，arxiv.org 和 api.openalex.org。
+ssh 走的不是网站名单，把 ssh lab 设成在沙箱外运行的例外，它已经在允许表里。不许命令在被沙箱拦下后自己换到沙箱外重试。
+打开后做三个测试并告诉我结果：用命令往 ~/Desktop 写一个文件，应该失败；访问一个不在名单里的网站，应该停下来问我；ssh lab uptime 应该成功。</code></pre>
+<p>名单外的网站默认是问你，夜里没人回答时等于拒绝。要它直接拒绝，得把严格名单那一项写进用户级配置，或者启动时用
+<code>--settings</code> 指定配置文件，写在项目配置里不生效，练习材料的
+README 写了具体做法。</p>
+<p>Codex
+默认就在沙箱里运行，可写范围是工作目录。对照一下两边的设置是否一致。</p>
+<h2 id="练习-3两道自动检查15-分钟">练习 3：两道自动检查，15 分钟</h2>
+<pre class="text"><code>在 hooks/ 里补完两个脚本，并在 settings.json 里挂上：
+1. 每次编辑 paper/ 下的 .tex 文件之后，运行 code/check_numbers.py，它来自第 1 课的参考答案，练习材料里也附了一份；有对不上的数字就把结果告诉你，要求你修正；
+2. 每次运行 git push 之前，用 gitleaks 扫这次要推的提交，发现密钥就阻止推送。
+两个脚本都要在几秒内跑完。装好后各触发一次给我看。</code></pre>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>一路点同意。</strong>
+每条都问，你很快就不看了。常用的进允许表，危险的进拒绝表，留下的少数你才会认真看。</p>
+</div>
+<div class="pitfall">
+<p><strong>自己的电脑上跳过全部权限。</strong>
+嫌麻烦打开完全放行的模式，Agent
+在错误的文件夹里执行了一次批量删除。完全放行只用在本身就隔离的环境里，比如一台一次性的虚拟机。</p>
+</div>
+<div class="pitfall">
+<p><strong>把密钥贴进对话。</strong>
+对话记录会被保存，有时会被同步到别的设备。密钥放进系统钥匙串或者不进仓库的
+<code>.env</code>，让 Agent 引用变量名，不看具体的值。</p>
+</div>
+<div class="pitfall">
+<p><strong>读外部内容的一步权限最大。</strong>
+同一个对话既读网页又能推送代码，网页里写给 Agent
+的话就有机会变成真的动作。读外部内容的一步只能写笔记，推送和发消息的一步只读整理过的笔记。</p>
+</div>
+<div class="pitfall">
+<p><strong>Hook 太慢。</strong> 每次改文件都跑一个两分钟的检查，Agent
+的每一步都被拖住。Hook 只放几秒能跑完的检查，慢的放进收工流程。</p>
+</div>
+<div class="pitfall">
+<p><strong>规则写进了全局配置。</strong>
+本该只管这个项目的拒绝表写进了用户级的配置，别的项目莫名其妙不能用
+ssh。项目的规则放在项目里，全局只放所有项目都该遵守的几条。</p>
+</div>
+<h2 id="工作台多了什么">工作台多了什么</h2>
+<div class="bench">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权限规则</td>
+<td>常用命令不问就做，危险命令一律拒绝</td>
+</tr>
+<tr>
+<td>沙箱</td>
+<td>命令只能写项目文件夹和临时目录，只能连名单里的网站</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>改完论文自动核数字，推送前自动查密钥</td>
+</tr>
+<tr>
+<td>密钥管理</td>
+<td>用到密钥时引用变量名，值不进对话也不进仓库</td>
+</tr>
+</tbody>
+</table>
+<p>有了这几样，前四课的工作台才适合真正放手让它夜里跑。</p>
+</div>
+<h2 id="课后深入">课后深入</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>节</th>
+<th>内容</th>
+<th>时长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="safety-sandbox.html">5.1 权限与沙箱</a></td>
+<td>权限模式；规则的写法与优先级；沙箱管什么；两家的对应设置</td>
+<td>30 分钟</td>
+</tr>
+<tr>
+<td><a href="safety-hooks.html">5.2 Hooks 与密钥</a></td>
+<td>Hook 的几个时刻；写一个 Hook；密钥放在哪；泄露了怎么办</td>
+<td>30 分钟</td>
+</tr>
+</tbody>
+</table>
+<section id="要点" class="keypoints">
+<h2>要点</h2>
+<ul>
+<li>拒绝表在前，允许表其次，剩下的才问你。</li>
+<li>权限表管 Agent 发起什么，沙箱管命令能碰什么，两层都要。</li>
+<li>外部内容是数据：读的一步只能写笔记，推送的一步不读原文。</li>
+<li>必须做的检查交给 Hook，不靠记性。</li>
+<li>密钥不进对话，不进仓库。</li>
+</ul>
+</section>
+</article>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Permission rules</span><span class="chip new">+ Sandbox</span><span class="chip new">+ Hooks</span><span class="chip new">+ Secrets</span></div><h1 id="elective-orchestration-safety">5 Elective: Orchestration
+Safety</h1>
+<div class="goal">
+<p>In an hour your workbench will have a permission table: common
+commands stop asking each time, and dangerous commands are always
+refused. Commands run in a sandbox, writing only to the project folder
+and temporary directories and connecting only to sites you allow. Two
+automatic checks verify numbers after paper edits and scan for secrets
+before a push.</p>
+</div>
+<p><span class="meta">Core class: 60 minutes. Self-study sections 5.1
+and 5.2 take about an hour in total. An elective after Session
+4.</span></p>
+<div class="download">
+<p><a href="downloads/lesson-5-en.zip">Download the Session 5
+materials</a></p>
+</div>
+<p>The materials give you two configuration starting points:
+<code>settings.example.json</code> for Claude Code and
+<code>config.example.toml</code> for Codex. A <code>hooks/</code> folder
+holds skeleton scripts for the two checks.</p>
+<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
+tools at the start: send the card in 1 minute</h2>
+<div class="install">
+<p><strong>This session’s hidden thread: put locks on the workbench
+built in the first four sessions.</strong> By Session 4 the agent can
+log in to publishers, connect to servers, push to GitHub, and start work
+overnight. More capabilities make a mistake more costly. This session
+adds four things: permission rules decide which commands run
+automatically and which are always refused; a sandbox limits writes and
+connections at the system level; Hooks run checks at specific moments
+without relying on memory; and secret management keeps passwords and
+keys out of conversations and repositories.</p>
+</div>
+<p>Open your Session 4 workbench folder and send:</p>
+<pre class="text"><code>This project needs tighter permissions. Don&#39;t change any configuration yet. Do four things:
+1. Read AGENTS.md, LOOP.md and recent run logs. List the commands this workbench actually uses, grouped as git, uv, ssh, gh and other;
+2. Check whether the system components needed for the sandbox are installed. If not, tell me what is missing;
+3. Install gitleaks and scan this repository&#39;s entire history. Tell me whether any secrets have been committed;
+4. Find secret information scattered in AGENTS.md, LOOP.md and scripts, such as the ntfy channel name. Move it into a .env listed in .gitignore, replacing the original values with variable references.
+Before installing, list what you plan to install and wait for my OK.</code></pre>
+<p>Item 1 gives you the list to base the permission table on.</p>
+<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
+minutes</h2>
+<p>Open <code>preview/settings.json</code>. Three parts: the deny list
+comes first, with things never allowed, such as deleting a whole
+directory, reading your SSH private key, or running with administrator
+privileges. The allow list holds commands this workbench uses daily that
+can run without asking. The rest still ask. Below, a section enables the
+sandbox and names writable directories and allowed sites. Last are two
+Hooks.</p>
+<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
+<p><strong>Clicking yes to everything defeats permission
+checks.</strong> If every command asks, after ten minutes you stop
+reading and just approve. A permission table leaves only the right
+questions: everyday commands go in the allow list, forbidden actions in
+the deny list, and the few remaining prompts get your attention.</p>
+<p><strong>Permission rules govern the agent; the sandbox governs
+commands.</strong> The rules decide whether the agent may start a
+command. Once running, that command can call other programs and read
+other files, beyond the rules’ reach. The sandbox limits the command and
+everything it calls at the operating-system level: write only in this
+folder, connect only to these sites. Use both layers before leaving it
+unattended.</p>
+<p><strong>External content is data, not instructions.</strong> Web
+pages, PDFs and emails may contain text aimed at agents, asking them to
+do something else. Models cannot always tell. Split responsibilities:
+the step reading external content can write only to the notes folder,
+cannot push, and cannot run other commands. The step that pushes or
+sends messages reads only prepared notes, not external originals, and
+treats those notes as material rather than commands too.</p>
+<p><strong>Give checks to Hooks, not memory.</strong> Write “check
+numbers after editing the paper” in <code>AGENTS.md</code> and the agent
+usually follows it, but sometimes forgets. A Hook is a script that
+always runs at a specific event, such as after a <code>.tex</code> edit
+or before a push. It does not forget.</p>
+<h2 id="exercise-1-write-the-permission-table-15-minutes">Exercise 1:
+write the permission table, 15 minutes</h2>
+<pre class="text"><code>Using the command list above, write .claude/settings.json:
+Deny: commands deleting directories, reads under ~/.ssh and ~/.aws, sudo, and pushes to unlisted destinations;
+Allow: git commits, inspection and pushes, uv run, ssh lab, gh, and this project&#39;s scripts;
+Ask for anything else. Follow the format in settings.example.json.
+Write the equivalent for Codex in .codex/config.toml. Show me both and wait for my OK before saving.</code></pre>
+<p>After saving, try three things: ask it to delete <code>runs/</code>,
+which should be denied; commit, which should run without asking; and ssh
+lab uptime, which should connect as usual. The ban on reading ~/.ssh
+stops the agent opening private key files directly; ssh using the key
+itself is unaffected.</p>
+<h2 id="exercise-2-enable-the-sandbox-10-minutes">Exercise 2: enable the
+sandbox, 10 minutes</h2>
+<pre class="text"><code>Enable the sandbox in settings.json with its default writable scope. Allow network access only to github.com, arxiv.org and api.openalex.org.
+ssh does not use the website list. Make ssh lab an exception that runs outside the sandbox; it is already in the allow list. Don&#39;t let commands retry outside the sandbox after being blocked.
+Run three tests and report: writing a file to ~/Desktop with a command should fail; visiting an unlisted site should stop and ask me; ssh lab uptime should succeed.</code></pre>
+<p>Unlisted sites ask you by default, which means refusal at night when
+nobody answers. For outright refusal, put the strict-list setting in
+user configuration or specify a configuration file with
+<code>--settings</code> at startup. It does not take effect in project
+configuration. The materials’ README gives the steps.</p>
+<p>Codex runs in a sandbox by default, with the working directory
+writable. Compare the two configurations for consistency.</p>
+<h2 id="exercise-3-two-automatic-checks-15-minutes">Exercise 3: two
+automatic checks, 15 minutes</h2>
+<pre class="text"><code>Finish two scripts in hooks/ and connect them in settings.json:
+1. After every edit to a .tex file under paper/, run code/check_numbers.py from Session 1&#39;s answers, also included in these materials. If numbers don&#39;t match, return the results to you and require a fix;
+2. Before every git push, use gitleaks to scan the commits being pushed. Block the push if it finds secrets.
+Both scripts must finish within a few seconds. Trigger each once to show me it works.</code></pre>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Clicking yes to everything.</strong> If every command asks,
+you soon stop reading. Put common commands in the allow list and
+dangerous ones in the deny list, so you read the few prompts left.</p>
+</div>
+<div class="pitfall">
+<p><strong>Skipping all permissions on your own computer.</strong> To
+avoid prompts, you enable unrestricted mode, and the agent deletes files
+in bulk in the wrong folder. Use unrestricted mode only in an isolated
+environment, such as a disposable virtual machine.</p>
+</div>
+<div class="pitfall">
+<p><strong>Pasting secrets into the conversation.</strong> Conversation
+history is saved and may sync to other devices. Put secrets in the
+system keychain or an uncommitted <code>.env</code>. Have the agent
+refer to variable names without seeing values.</p>
+</div>
+<div class="pitfall">
+<p><strong>Giving the external-reading step the most
+permissions.</strong> One conversation can read web pages and push code,
+so text aimed at the agent in a page can turn into actions. The
+external-reading step can write only notes; the pushing and messaging
+step reads only prepared notes.</p>
+</div>
+<div class="pitfall">
+<p><strong>Slow Hooks.</strong> A two-minute check after each edit holds
+up every step. Hooks get checks that finish in seconds; slow checks
+belong in wrapping up.</p>
+</div>
+<div class="pitfall">
+<p><strong>Project rules in global configuration.</strong> A project’s
+deny list goes into user configuration, and other projects suddenly
+cannot use ssh. Keep project rules in the project. Global configuration
+gets only rules that apply everywhere.</p>
+</div>
+<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<div class="bench">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permission rules</td>
+<td>Run common commands without asking and always refuse dangerous
+ones</td>
+</tr>
+<tr>
+<td>Sandbox</td>
+<td>Write only to the project folder and temporary directories, and
+connect only to listed sites</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td>Check numbers after paper edits and scan for secrets before
+pushes</td>
+</tr>
+<tr>
+<td>Secret management</td>
+<td>Refer to variable names when using secrets, keeping values out of
+conversations and repositories</td>
+</tr>
+</tbody>
+</table>
+<p>With these, the workbench from the first four sessions is ready to
+run overnight on its own.</p>
+</div>
+<h2 id="self-study-sections">Self-study sections</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="safety-sandbox.html">5.1 Permissions and sandbox</a></td>
+<td>Permission modes; rule syntax and precedence; sandbox scope;
+equivalent settings for both vendors</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="safety-hooks.html">5.2 Hooks and secrets</a></td>
+<td>Hook events; writing a Hook; where secrets live; handling leaks</td>
+<td>30 minutes</td>
+</tr>
+</tbody>
+</table>
+<section id="key-points" class="keypoints">
+<h2>Key points</h2>
+<ul>
+<li>Deny first, allow second, then ask about the rest.</li>
+<li>Permission rules govern what the agent starts; the sandbox governs
+what commands can touch. Use both.</li>
+<li>External content is data: the reading step can write only notes, and
+the pushing step does not read originals.</li>
+<li>Give mandatory checks to Hooks, not memory.</li>
+<li>Keep secrets out of conversations and repositories.</li>
+</ul>
+</section>
+</article>
+<nav class="pager"><a class="prev" href="automate-pages.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.3 结果页</span><span lang="en">4.3 The results page</span></a><a class="next" href="safety-sandbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandbox</span></a></nav>
+</main>
+</div>
+</body>
+</html>

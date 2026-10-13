@@ -16,24 +16,24 @@
 <nav class="side">
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
 <a href="setup.html" class="cur"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
 <a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
-<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
-<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
-<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
-<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="课前准备">0 课前准备</h1>
 <div class="goal">
 <p>半小时后，你有一个 Agent
-能读能写的项目文件夹，它已经干完第一件活，还替你装好了第 1
-课要用的环境。</p>
+能读能写的项目文件夹，它已经干完第一件活。</p>
 </div>
 <h2 id="需要什么">需要什么</h2>
-<p>一台 Mac 或 Windows 电脑，加上至少一个订阅：Claude 的 Pro
-或以上，或者含 Codex 的 ChatGPT 套餐。两个都有最好。</p>
+<p>一台 Mac 或 Windows 电脑，加上两个订阅：Claude 的 Pro 或以上，和含
+Codex 的 ChatGPT 套餐。只有一家也能上完，审稿的练习效果差一些。</p>
 <p>不需要会编程，也不需要先学命令行。下面全程用桌面应用，像用聊天软件一样用。</p>
 <h2 id="装-claude-桌面版5-分钟">1 装 Claude 桌面版，5 分钟</h2>
 <p>从 <a href="https://code.claude.com/docs/en/desktop">Claude Code
@@ -68,24 +68,21 @@
 快速入门</a> 下载 Codex 桌面应用，用 ChatGPT 账号登录，打开同一个
 <code>lesson-0</code> 文件夹，发这段：</p>
 <pre class="text"><code>读 notes.md 和 minutes.md。检查纪要有没有漏掉或写错会上的决定，列出来。不要改任何文件。</code></pre>
-<p>一家写，另一家查。这是第 1 课的核心做法，这里先尝一口。</p>
+<p>一家写，另一家查。这是第 1 课的核心做法。</p>
 <h2 id="可选命令行">5 可选：命令行</h2>
-<p>习惯终端的人可以装命令行版，功能和桌面版一样。Claude Code 在 Mac
-上运行
+<p>习惯终端的人可以装命令行版，读写文件和运行命令的本事和桌面版相同，界面和少数功能不同。第
+4 课让 Agent 夜里自己干活时会用到它，到时由 Agent 自己装。Claude Code 在
+Mac 上运行
 <code>curl -fsSL https://claude.ai/install.sh | bash</code>，Codex 运行
 <code>npm i -g @openai/codex</code>。之后在项目文件夹里输入
 <code>claude</code> 或 <code>codex</code> 即可开始。</p>
-<h2 id="为第-1-课装好环境5-到-15-分钟">6 为第 1 课装好环境，5 到 15
-分钟</h2>
-<p>第 1 课要编译 LaTeX 论文，用 Python 画图。装环境这种事正好交给
-Agent。下载<a href="downloads/lesson-1-zh.zip">第 1
-课练习材料</a>，解压后在 Claude 里打开 <code>lesson-1</code>
-文件夹，权限模式可以放到 <strong>Accept edits</strong>：</p>
-<pre class="text"><code>检查这台电脑能不能运行 code/run_experiment.py 和 code/plot_draft.py，能不能把 paper/main.tex 编译成 PDF。
-缺什么就装什么：Python 的包只装给这个文件夹用，不动系统里的 Python；没有 LaTeX 的话装一个轻量的。
-装之前先告诉我打算装什么、装在哪里，等我同意。最后实际编译一次 paper/main.tex，告诉我生成的 PDF 有几页。</code></pre>
-<p>看到 PDF 就算准备好了。等它装东西时，可以先翻翻 <code>preview/</code>
-里的两份 PDF。</p>
+<h2 id="下载第-1-课材料">6 下载第 1 课材料</h2>
+<p>在桌面建一个 <code>agent-course</code>
+文件夹，以后每课的练习材料都解压在它下面，<code>lesson-0</code>
+也挪进去。提前下载<a href="downloads/lesson-1-zh.zip">第 1
+课练习材料</a>解压到这里。第 1 课一开始，你会让 Agent
+自己把编译论文和画图要用的工具装上，这是整门课的暗线：每课添几样工具，Agent
+能干的事一课比一课多。全部工具见<a href="toolbox.html">工具箱</a>。</p>
 <h2 id="最容易出错的地方">最容易出错的地方</h2>
 <div class="pitfall">
 <p><strong>一个对话聊到底。</strong> Agent
@@ -107,7 +104,7 @@ Agent。下载<a href="downloads/lesson-1-zh.zip">第 1
 <section id="要点" class="keypoints">
 <h2>要点</h2>
 <ul>
-<li>Agent 只认文件夹里的东西：材料放进去，结果存成文件。</li>
+<li>材料放进项目文件夹，结果存成文件。</li>
 <li>一件事，一个对话，一个文件夹。</li>
 <li>任务卡写清四件事：读什么，做什么，存到哪，做到哪里停。</li>
 </ul>
@@ -116,12 +113,12 @@ Agent。下载<a href="downloads/lesson-1-zh.zip">第 1
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="setup">0 Setup</h1>
 <div class="goal">
 <p>In half an hour you will have a project folder an agent can read and
-write, it will have finished its first job, and it will have set up what
-Session 1 needs.</p>
+write, and it will have finished its first job.</p>
 </div>
 <h2 id="what-you-need">What you need</h2>
-<p>A Mac or Windows computer and at least one subscription: Claude Pro
-or above, or a ChatGPT plan that includes Codex. Both is best.</p>
+<p>A Mac or Windows computer and two subscriptions: Claude Pro or above,
+and a ChatGPT plan that includes Codex. You can complete the course with
+one vendor, though the review exercises work less well.</p>
 <p>You do not need to code or learn the command line first. Everything
 below uses the desktop apps, much like a chat app.</p>
 <h2 id="install-the-claude-desktop-app-5-minutes">1 Install the Claude
@@ -167,26 +164,26 @@ ChatGPT account, open the same <code>lesson-0</code> folder, and
 send:</p>
 <pre class="text"><code>Read notes.md and minutes.md. Check whether the minutes miss or misstate any decision from the meeting, and list them. Don&#39;t change any files.</code></pre>
 <p>One vendor writes, the other checks. That is the core habit of
-session one, and you just had a first taste.</p>
+session one.</p>
 <h2 id="optional-the-command-line">5 Optional: the command line</h2>
-<p>If you like the terminal, install the command-line versions. They do
-the same things as the desktop apps. For Claude Code on a Mac, run
+<p>If you like the terminal, install the command-line versions. They
+have the same ability to read and write files and run commands as the
+desktop apps, with a different interface and a few different features.
+Session 4 uses them for overnight work; the agent will install them
+then. For Claude Code on a Mac, run
 <code>curl -fsSL https://claude.ai/install.sh | bash</code>; for Codex,
 run <code>npm i -g @openai/codex</code>. Then type <code>claude</code>
 or <code>codex</code> inside a project folder to start.</p>
-<h2 id="set-up-for-session-1-5-to-15-minutes">6 Set up for Session 1, 5
-to 15 minutes</h2>
-<p>Session 1 compiles a LaTeX paper and draws figures in Python. Setting
-up an environment is exactly the kind of job to hand to an agent.
-Download the <a href="downloads/lesson-1-en.zip">Session 1
-materials</a>, unzip them, open the <code>lesson-1</code> folder in
-Claude, and you can relax the permission mode to <strong>Accept
-edits</strong>:</p>
-<pre class="text"><code>Check whether this computer can run code/run_experiment.py and code/plot_draft.py, and compile paper/main.tex into a PDF.
-Install whatever is missing: Python packages only for this folder, leaving the system Python alone; if there is no LaTeX, install a lightweight one.
-Before installing, tell me what you plan to install and where, and wait for my OK. Finally compile paper/main.tex once and tell me how many pages the PDF has.</code></pre>
-<p>Once you see the PDF, you are ready. While it installs, have a look
-at the two PDFs in <code>preview/</code>.</p>
+<h2 id="download-the-session-1-materials">6 Download the Session 1
+materials</h2>
+<p>Create an <code>agent-course</code> folder on your desktop. Unzip
+each session’s materials under it, and move <code>lesson-0</code> there
+too. Download the <a href="downloads/lesson-1-en.zip">Session 1
+materials</a> ahead of time and unzip them here. At the start of Session
+1, you will have the agent install what it needs to compile papers and
+draw figures. This is the course’s hidden thread: each session adds
+tools, and the agent can do more each time. See the <a
+href="toolbox.html">Toolbox</a> for the full list.</p>
 <h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
 <div class="pitfall">
 <p><strong>One conversation for everything.</strong> Every time the
@@ -214,15 +211,14 @@ pay-per-use billing. If you’re on a subscription, say no.</p>
 <section id="key-points" class="keypoints">
 <h2>Key points</h2>
 <ul>
-<li>The agent only knows what is in the folder: put material in, save
-results as files.</li>
+<li>Put material in the project folder and save results as files.</li>
 <li>One task, one conversation, one folder.</li>
 <li>A task card says four things: what to read, what to do, where to
 save it, where to stop.</li>
 </ul>
 </section>
 </article>
-<nav class="pager"><a class="prev" href="syllabus.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 课程大纲</span><span lang="en"> Syllabus</span></a><a class="next" href="writing.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1 Agent 写作</span><span lang="en">1 Writing with Agents</span></a></nav>
+<nav class="pager"><a class="prev" href="toolbox.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 工具箱</span><span lang="en"> Toolbox</span></a><a class="next" href="writing.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1 Agent 写作</span><span lang="en">1 Writing with Agents</span></a></nav>
 </main>
 </div>
 </body>

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拿到全文 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="explore-fulltext.html" class="cur sub"><span class="num">2.1</span><span lang="zh">拿到全文</span><span lang="en">Getting the full text</span></a>
+<a href="explore-vault.html" class="sub"><span class="num">2.2</span><span lang="zh">知识库怎么搭</span><span lang="en">Building the knowledge base</span></a>
+<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与提问</span><span lang="en">Parallel screening and questions</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="拿到全文">2.1 拿到全文</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>读文献的第一步是拿到对的那篇论文的完整 PDF。这件事听起来简单，交给
+Agent
+后却是出错最多的环节之一：它会编出不存在的论文，下载到错的文件，或者在登录页前卡住。这一节把这一步拆成三段：定名单，拿全文，核对。</p>
+<h2 id="定名单用接口不用网页搜索">定名单：用接口，不用网页搜索</h2>
+<p>让 Agent
+网页搜索某个方向的论文，混在结果里的，常有题目通顺，作者可信，实际查无此文的条目。网页搜索可以用来找线索，但名单要以文献接口为准，它返回的是数据库里的真实记录，结构整齐，适合批量处理：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>接口</th>
+<th>适合做什么</th>
+<th>要不要账号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://info.arxiv.org/help/api/">arXiv API</a></td>
+<td>按编号或关键词查预印本，直接给 PDF 链接</td>
+<td>不要</td>
+</tr>
+<tr>
+<td><a href="https://docs.openalex.org/">OpenAlex</a></td>
+<td>几乎所有正式发表的论文：DOI，期刊会议，引用关系，开放全文链接</td>
+<td>少量查询不要；批量查询申请一个免费 Key</td>
+</tr>
+<tr>
+<td><a href="https://api.semanticscholar.org/">Semantic Scholar
+API</a></td>
+<td>相似论文推荐，引用上下文</td>
+<td>大量调用时申请 Key</td>
+</tr>
+</tbody>
+</table>
+<p>一条好用的任务卡：</p>
+<pre class="text"><code>用 OpenAlex 查 2022 年以来题目或摘要里含 noisy labels 和 memorization 的论文，按引用数排序取前三十篇。
+每篇列出题目，第一作者，年份，期刊或会议，DOI，arXiv 编号如果有，开放全文链接如果有。存成 papers.csv，先不下载。</code></pre>
+<p>名单出来后你先过一遍，删掉明显不相干的，再进入下载。名单宁宽勿窄，读完再删比事后补漏省事得多。</p>
+<h2 id="拿全文三条路">拿全文：三条路</h2>
+<p><strong>有 arXiv 版本的，走 arXiv。</strong>
+最稳，不用登录，命令行就能下。注意 arXiv 有访问频率限制，批量下载时让
+Agent 每篇之间停几秒。</p>
+<p><strong>有开放全文链接的，直接下。</strong> OpenAlex 的
+<code>best_oa_location</code> 和 <code>locations</code>
+字段列出作者主页，机构库或出版社的开放版本，其中 <code>pdf_url</code>
+才是 PDF 本身，其余多是落地页。</p>
+<p><strong>只有订阅版的，用浏览器。</strong> 打开
+DOI，点机构登录，选你的学校，回到论文页点下载。这一串动作命令行做不了，Ego
+浏览器可以，因为它用的是你已经登录过的浏览器状态。第一次使用时你自己登录一次图书馆，以后
+Agent 直接沿用：</p>
+<pre class="text"><code>用 Ego 浏览器打开 https://doi.org/10.1109/TNNLS.2013.2292894 ，通过机构登录进入，下载全文 PDF 到 vault/sources/。
+路上遇到隐私或授权同意页可以点同意；遇到真人验证停下来叫我。</code></pre>
+<h2 id="出版社的常见坑">出版社的常见坑</h2>
+<p>每家出版社的网站结构不同，Agent 第一次去常会走错。几条普遍规律：</p>
+<ul>
+<li>通用的下载链接有时指向版权协议表格或投稿检查表，不是论文本身。</li>
+<li>有的期刊下载页会给参考文献里的另一篇论文。</li>
+<li>慢的网站会把 PDF 截断成零页的残缺文件，这时改用预印本。</li>
+<li>有的会议站点拒绝命令行访问，只能在浏览器里打开 PDF 链接。</li>
+<li>同一个账号的登录会过期，下载突然失败时先重新登录一次再判断。</li>
+<li>不在学校订阅范围内的期刊，Agent
+怎么点都拿不到，这时去找预印本，作者主页，机构库，甚至出版社的合集
+PDF。</li>
+</ul>
+<p>让 Agent 把每家出版社的成功路径记下来，下次直接走：</p>
+<pre class="text"><code>把这次每家出版社成功下载的路径和遇到的坑，整理成 notes/publishers.md，每家三行以内。以后下载前先读它。</code></pre>
+<h2 id="核对每个-pdf-两项检查">核对：每个 PDF 两项检查</h2>
+<pre class="text"><code>对 vault/sources/ 下的每个 PDF：用 pdfinfo 读页数，用 pdftotext 取前两页文字，检查论文题目里的主要词是否出现。
+页数为零或题目对不上的，列出来，并说明文件里实际是什么。</code></pre>
+<p>这里用的 <code>pdfinfo</code> 和 <code>pdftotext</code> 就是第 1
+课装的 poppler 里的工具，暗线上前面装的东西在这里接着用。核对结果写进
+<code>manifest.csv</code>，后面写笔记的 Sub-agent
+只读通过核对的文件。</p>
+<h2 id="几个人同时下载">几个人同时下载</h2>
+<p>如果你开了几个对话分头下载，每个对话在 Ego
+里开自己独立的任务空间，各写各的清单文件，最后再合并。几个对话共用一个任务空间，会互相抢同一个页面。</p>
+<h2 id="版权">版权</h2>
+<p>下载的全文只供你自己的研究使用，不放进公开仓库，不随练习材料分发。课程材料里只给论文清单，全文由每个人用自己的权限下载。</p>
+<h2 id="练习">练习</h2>
+<p>从你自己的方向挑三篇只有订阅版的论文，让 Agent 用 Ego
+下载，并把成功路径写进 <code>notes/publishers.md</code>。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>名单是编的。</strong>
+网页搜索给出的论文题目通顺、查无此文。名单从文献接口来，每条带 DOI 或
+arXiv 编号。</p>
+</div>
+<div class="pitfall">
+<p><strong>文件名对，内容错。</strong>
+拿到的可能是协议表格，检查表，别的论文，或者零页的残缺文件。核对页数和首页题目，两项都过才算拿到。</p>
+</div>
+<div class="pitfall">
+<p><strong>拿不到就放弃。</strong>
+订阅外的论文常有开放版本藏在作者主页或机构库里。标记为拿不到之前，让它把这几处都找一遍。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://docs.openalex.org/">OpenAlex 文档</a></li>
+<li><a href="https://info.arxiv.org/help/api/">arXiv API
+使用说明</a></li>
+<li><a href="https://lite.ego.app/">Ego Lite</a></li>
+</ul>
+</article>
+<article lang="en"><h1 id="getting-the-full-text">2.1 Getting the full text</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>The first step in reading the literature is getting a complete PDF of
+the right paper. It sounds simple, but with an agent it is one of the
+steps most likely to go wrong: it invents papers, downloads the wrong
+file, or gets stuck at a login page. This section splits the job into
+three parts: settle the list, get the full texts, check them.</p>
+<h2 id="settle-the-list-apis-not-web-search">Settle the list: APIs, not
+web search</h2>
+<p>Ask an agent to search the web for papers in a direction, and the
+results often include entries with fluent titles and plausible authors
+that do not exist. Web search can find leads, but use literature APIs
+for the list. They return real database records in a consistent
+structure suited to batch processing:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>API</th>
+<th>What it is good for</th>
+<th>Account needed?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://info.arxiv.org/help/api/">arXiv API</a></td>
+<td>Find preprints by ID or keyword, with direct PDF links</td>
+<td>No</td>
+</tr>
+<tr>
+<td><a href="https://docs.openalex.org/">OpenAlex</a></td>
+<td>Almost all published papers: DOI, venue, citations, open full-text
+links</td>
+<td>Not for a few queries; get a free key for batch queries</td>
+</tr>
+<tr>
+<td><a href="https://api.semanticscholar.org/">Semantic Scholar
+API</a></td>
+<td>Similar paper recommendations, citation context</td>
+<td>Get a key for large numbers of calls</td>
+</tr>
+</tbody>
+</table>
+<p>A useful task card:</p>
+<pre class="text"><code>Use OpenAlex to find papers since 2022 whose titles or abstracts contain noisy labels and memorization. Take the top thirty by citation count.
+For each, list the title, first author, year, journal or conference, DOI, arXiv ID if any, and open full-text link if any. Save to papers.csv. Don&#39;t download yet.</code></pre>
+<p>Look over the list and remove the obviously irrelevant entries before
+downloading. Start broad: cutting after reading is much easier than
+filling gaps later.</p>
+<h2 id="get-the-full-text-three-routes">Get the full text: three
+routes</h2>
+<p><strong>If there is an arXiv version, use arXiv.</strong> It is the
+most reliable route, needs no login, and works from the command line.
+arXiv limits request frequency, so have the agent pause a few seconds
+between batch downloads.</p>
+<p><strong>If there is an open full-text link, download
+directly.</strong> OpenAlex’s <code>best_oa_location</code> and
+<code>locations</code> fields list open versions on author sites,
+institutional repositories or publisher sites. The <code>pdf_url</code>
+is the PDF itself; the other links are mostly landing pages.</p>
+<p><strong>If there is only a subscription version, use the
+browser.</strong> Open the DOI, click institutional login, choose your
+university, then return to the paper and download. The command line
+cannot do this sequence, but Ego can, because it uses your browser’s
+signed-in state. Log in to the library yourself once; the agent reuses
+it afterwards:</p>
+<pre class="text"><code>Use Ego to open https://doi.org/10.1109/TNNLS.2013.2292894, enter through institutional login, and download the full PDF to vault/sources/.
+You can accept privacy or authorization consent pages along the way. Stop and call me at human verification.</code></pre>
+<h2 id="common-publisher-pitfalls">Common publisher pitfalls</h2>
+<p>Every publisher’s site is different, and an agent often takes a wrong
+turn on its first visit. A few common patterns:</p>
+<ul>
+<li>Generic download links sometimes point to copyright forms or
+submission checklists instead of the paper.</li>
+<li>Some journal download pages return another paper from the
+references.</li>
+<li>Slow sites can truncate a PDF into a broken file with zero pages.
+Try a preprint instead.</li>
+<li>Some conference sites reject command-line access; open the PDF link
+in a browser.</li>
+<li>Logins expire. If downloads suddenly fail, sign in again before
+deciding what went wrong.</li>
+<li>If your university does not subscribe to a journal, clicking will
+not get the paper. Look for a preprint, an author’s site, an
+institutional repository, or even a publisher’s collected PDF.</li>
+</ul>
+<p>Have the agent record each publisher’s successful route for next
+time:</p>
+<pre class="text"><code>Write the successful download route and pitfalls for each publisher from this run to notes/publishers.md, at most three lines per publisher. Read it before future downloads.</code></pre>
+<h2 id="check-two-checks-for-every-pdf">Check: two checks for every
+PDF</h2>
+<pre class="text"><code>For every PDF under vault/sources/, use pdfinfo to get the page count and pdftotext to extract the first two pages. Check whether the main words from the paper&#39;s title appear.
+List files with zero pages or a mismatched title, and say what is actually in them.</code></pre>
+<p><code>pdfinfo</code> and <code>pdftotext</code> come with poppler,
+installed in Session 1. The tools added earlier on the hidden thread
+keep working here. Write the checks to <code>manifest.csv</code>.
+Sub-agents writing notes later read only files that passed.</p>
+<h2 id="several-people-downloading-at-once">Several people downloading
+at once</h2>
+<p>If you use several conversations to download in parallel, give each
+its own task space in Ego and its own manifest file, then merge them at
+the end. Conversations sharing a task space fight over the same
+page.</p>
+<h2 id="copyright">Copyright</h2>
+<p>Downloaded full texts are for your own research. Do not put them in a
+public repository or distribute them with exercise materials. The course
+materials include only the paper list; everyone downloads the full texts
+with their own access.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Pick three subscription-only papers from your own direction. Have the
+agent download them with Ego and write the successful routes to
+<code>notes/publishers.md</code>.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>An invented list.</strong> Web search gives fluent paper
+titles that do not exist. Get the list from literature APIs, with a DOI
+or arXiv ID for each entry.</p>
+</div>
+<div class="pitfall">
+<p><strong>Right filename, wrong content.</strong> The file may be an
+agreement form, a checklist, another paper, or a broken file with zero
+pages. Check page count and first-page title. Both must pass.</p>
+</div>
+<div class="pitfall">
+<p><strong>Giving up when a download fails.</strong> Papers outside your
+subscription often have open versions on author sites or institutional
+repositories. Have the agent check these before marking a paper
+unavailable.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://docs.openalex.org/">OpenAlex documentation</a></li>
+<li><a href="https://info.arxiv.org/help/api/">arXiv API guide</a></li>
+<li><a href="https://lite.ego.app/">Ego Lite</a></li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="explore.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2 Agent 探索</span><span lang="en">2 Exploring with Agents</span></a><a class="next" href="explore-vault.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.2 知识库怎么搭</span><span lang="en">2.2 Building the knowledge base</span></a></nav>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用量账本 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="theory-usage.html" class="cur sub"><span class="num">6.1</span><span lang="zh">用量账本</span><span lang="en">The usage ledger</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="用量账本">6.1 用量账本</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>这一节讲账本记什么，从哪里取数，怎样分段，以及几条常用的算式。</p>
+<h2 id="记什么">记什么</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>列</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日期</td>
+<td></td>
+</tr>
+<tr>
+<td>事情</td>
+<td>一句话，比如第 7 轮收工，读 14 篇论文写笔记</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>Claude 或 Codex，哪个账号</td>
+</tr>
+<tr>
+<td>对话数</td>
+<td>这件事开了几个对话，含 Sub-agent</td>
+</tr>
+<tr>
+<td>输入 token，缓存读取，缓存写入，输出 token</td>
+<td>分开记，四者价格不同，输入和缓存读取通常占大头</td>
+</tr>
+<tr>
+<td>审稿轮次，是否提出实质意见</td>
+<td>只有审稿类的事情填，供算审稿该在第几轮停</td>
+</tr>
+<tr>
+<td>估算费用</td>
+<td>按官方 API
+价格估；订阅用户实际付的是月费，这一列只用来比相对大小</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>从开工到收工的墙上时间</td>
+</tr>
+<tr>
+<td>是否采用</td>
+<td>产出最后是被用上了，改了一部分，还是推翻重来</td>
+</tr>
+</tbody>
+</table>
+<p>最后一列最容易漏，也最重要。没有它，你只知道花了多少，不知道值不值。</p>
+<h2 id="从哪里取数">从哪里取数</h2>
+<p>Claude Code 把每个对话的用量记在本机的日志里，<a
+href="https://github.com/ryoppippi/ccusage">ccusage</a>
+按天、按对话汇总这些日志。Codex
+也有类似的本地记录。对话里也能随时查看当前用量和额度。</p>
+<pre class="text"><code>用 ccusage 列出今天每个对话的输入输出 token 和起止时间，按开始时间排序。
+对照 STATE.md 的记录，把每个对话对应到账本里的一件事，填进 ledger.csv。
+起止时间之差含着空闲的时间，耗时一列以 STATE.md 里记的开工和收工时间为准。</code></pre>
+<h2 id="按事情分段">按事情分段</h2>
+<p>账要按事情记，不按天记。一天的总数告诉你今天花得多，但不告诉你花在哪。最简单的分段办法是开工和收工各记一笔：开工时记下时间和当前累计用量，收工时再记一次，差值就是这件事的用量。</p>
+<p>第 4 课的循环里，这一步可以写进
+<code>LOOP.md</code>：开工的第一步、收工的最后一步，各往账本里追加一行。</p>
+<h2 id="几条常用算式">几条常用算式</h2>
+<p><strong>对话长度的成本。</strong> 每轮新增约 c 个 token，n
+轮的对话累计输入约 c · n² / 2。拆成 m 段，每段 n / m
+轮，每轮都要连带读一遍 h 个 token 的交接文件，另外每换一段要付一次
+r，用来写交接文件和重新熟悉任务。总量约 c · n² / (2m) + n · h + m ·
+r。中间一项和 m 无关，对 m 求最小，最佳段数约为 n · √(c /
+2r)。交接文件越短，每轮多读的越少；换段的代价 r
+越大，段就该分得越少。</p>
+<p><strong>再做一轮的价值。</strong> 第 k 轮发现实质问题的概率
+p_k，一个问题的价值 V，一轮的花费 C。p_k · V &lt; C 时停。p_k
+从账本里过去同类事情的记录数出来。</p>
+<p><strong>并行的划算条件。</strong> 串行耗时 T、花费 S；并行耗时
+T′、花费 S′。你的时间每小时值 w，当 (T − T′) · w &gt; S′ − S
+时并行划算。</p>
+<p><strong>每个被采用结果的成本。</strong>
+一段时间的总花费除以被采用的结果数。比较两种编排，比的是这个数，不是单次花费。</p>
+<p>这些式子都很粗。它们的用处不是给出精确的答案，而是把要不要再审一轮这种问题，拆成几个能从账本里查到的数和一个你自己判断的价值。</p>
+<h2 id="练习">练习</h2>
+<p>为你自己的工作台记一周账，然后挑一个你一直拿不准的编排问题，用上面的一条算式算一次。把结论和你原来的直觉对照。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>只记总数。</strong>
+一周一个数字，说明不了任何编排问题。按事情分段，开工收工各记一笔。</p>
+</div>
+<div class="pitfall">
+<p><strong>漏了是否采用。</strong>
+只比花费，省钱的流程可能一半产出被推翻。记下每个结果最后的去向。</p>
+</div>
+<div class="pitfall">
+<p><strong>把粗算当精算。</strong>
+式子里的数都是估的，算出的是量级和方向。结论差距不大时，按你的判断来，不必为了几个百分点改编排。</p>
+</div>
+<h2 id="延伸阅读">延伸阅读</h2>
+<ul>
+<li><a href="https://github.com/ryoppippi/ccusage">ccusage</a></li>
+<li><a href="https://code.claude.com/docs/en/costs">Claude Code
+成本管理</a></li>
+</ul>
+</article>
+<article lang="en"><h1 id="usage-ledger">6.1 Usage ledger</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>This section covers what to record, where to get numbers, how to
+separate tasks, and a few useful formulas.</p>
+<h2 id="what-to-record">What to record</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Date</td>
+<td></td>
+</tr>
+<tr>
+<td>Task</td>
+<td>One sentence, such as wrapping up round 7 or reading 14 papers and
+writing notes</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>Claude or Codex, and which account</td>
+</tr>
+<tr>
+<td>Conversation count</td>
+<td>Conversations used for this task, including Sub-agents</td>
+</tr>
+<tr>
+<td>Input tokens, cache reads, cache writes, output tokens</td>
+<td>Record separately; all four have different prices. Input and cache
+reads usually dominate</td>
+</tr>
+<tr>
+<td>Review round, substantive comment proposed?</td>
+<td>Only for review tasks, to calculate which round to stop at</td>
+</tr>
+<tr>
+<td>Estimated cost</td>
+<td>At official API prices. Subscribers pay a monthly fee; this column
+compares relative costs only</td>
+</tr>
+<tr>
+<td>Time taken</td>
+<td>Elapsed time from start to finish</td>
+</tr>
+<tr>
+<td>Adopted?</td>
+<td>Used, partly revised, or rejected and redone</td>
+</tr>
+</tbody>
+</table>
+<p>The last column is easiest to miss and matters most. Without it, you
+know what you spent but not whether it was worth it.</p>
+<h2 id="where-numbers-come-from">Where numbers come from</h2>
+<p>Claude Code records each conversation’s usage in local logs. <a
+href="https://github.com/ryoppippi/ccusage">ccusage</a> summarizes them
+by day or conversation. Codex has similar local records. You can also
+check current usage and quota within a conversation.</p>
+<pre class="text"><code>Use ccusage to list today&#39;s input and output tokens and start and end times per conversation, sorted by start time.
+Match conversations to tasks using STATE.md and fill ledger.csv.
+Start-to-end time includes idle time. Use the start and finish times in STATE.md for the time-taken column.</code></pre>
+<h2 id="separate-by-task">Separate by task</h2>
+<p>Record by task, not day. A daily total says you spent a lot but not
+where. The simplest method is recording at both start and finish: note
+the time and cumulative usage at the start, then again at the end. The
+difference is that task’s usage.</p>
+<p>In Session 4’s loop, add this to <code>LOOP.md</code>: append a
+ledger row as the first startup step and the last wrap-up step.</p>
+<h2 id="useful-formulas">Useful formulas</h2>
+<p><strong>Cost of conversation length.</strong> With about c new tokens
+per round, a conversation of n rounds has roughly c · n² / 2 total input
+tokens. Split it into m parts of n / m rounds. Each round also reads an
+h-token handoff file, and each new part costs r to write the handoff and
+get familiar with the task again. The total is about c · n² / (2m) + n ·
+h + m · r. The middle term is independent of m. Minimizing over m gives
+about n · √(c / 2r) parts. Shorter handoff files mean less rereading
+each round; a higher switching cost r means fewer parts.</p>
+<p><strong>Value of another round.</strong> If round k finds a
+substantive problem with probability p_k, a problem is worth V, and a
+round costs C, stop when p_k · V &lt; C. Count p_k from past similar
+tasks in the ledger.</p>
+<p><strong>When parallel work pays off.</strong> Sequential work takes T
+and costs S; parallel work takes T′ and costs S′. If your time is worth
+w per hour, parallel pays off when (T − T′) · w &gt; S′ − S.</p>
+<p><strong>Cost per adopted result.</strong> Total cost over a period
+divided by adopted results. Compare orchestration methods on this
+number, not cost per run.</p>
+<p>These formulas are rough. They do not give precise answers. They
+break questions such as whether to review again into numbers you can get
+from the ledger and a value you judge yourself.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Keep a week’s ledger for your workbench. Pick an orchestration
+question you have been unsure about and calculate it with one formula
+above. Compare the conclusion with your earlier intuition.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Only totals.</strong> One number per week answers no
+orchestration question. Record by task, at start and finish.</p>
+</div>
+<div class="pitfall">
+<p><strong>Missing adoption.</strong> Comparing only cost may favour a
+workflow whose outputs are rejected half the time. Record what happened
+to each result.</p>
+</div>
+<div class="pitfall">
+<p><strong>Treating rough estimates as precise.</strong> The formula
+inputs are estimates; the answers give scale and direction. If the gap
+is small, use your judgment rather than changing orchestration over a
+few percentage points.</p>
+</div>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://github.com/ryoppippi/ccusage">ccusage</a></li>
+<li><a href="https://code.claude.com/docs/en/costs">Claude Code cost
+management</a></li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="theory.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6 选修 编排理论</span><span lang="en">6 Elective: Theory</span></a><span></span></nav>
+</main>
+</div>
+</body>
+</html>

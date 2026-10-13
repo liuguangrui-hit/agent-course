@@ -16,6 +16,7 @@
 <nav class="side">
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
 <a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
 <a href="writing.html" class="cur"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
 <a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
@@ -24,14 +25,14 @@
 <a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
 <a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
 <a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
-<span class="soon"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></span>
-<span class="soon"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></span>
-<span class="soon"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></span>
-<span class="soon"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></span>
-<span class="soon"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></span>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
 </nav>
 <main>
-<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skill</span><span class="chip new">+ 跨厂商审稿</span><span class="chip new">+ LaTeX</span><span class="chip new">+ Python 作图</span></div><h1 id="agent-写作">1 Agent 写作</h1>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ Python 环境</span><span class="chip new">+ LaTeX</span><span class="chip new">+ PDF 渲染</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skill</span></div><h1 id="agent-写作">1 Agent 写作</h1>
 <div class="goal">
 <p>一小时后，你手里有一篇从题目到结论整体重讲过的论文，两张能直接放进投稿的数据图，一份另一家
 Agent 写的编辑审稿意见，还有一个下次改论文时一句话就能调出的 Skill。</p>
@@ -43,6 +44,24 @@ Agent 写的编辑审稿意见，还有一个下次改论文时一句话就能�
 </div>
 <p>练习用的是一篇四页的短论文：几种训练损失在训练标签有错时表现如何。实验是真的，<code>code/run_experiment.py</code>
 在笔记本上一分钟就能重跑出全部数据；文字和图则是常见的初稿样子。</p>
+<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<div class="install">
+<p><strong>本课暗线：让 Agent 能编译，能画图，能看页面。</strong> 第 0
+课只用到了 Agent 读写文本的本事。改论文还要三样东西：Python
+环境用来跑实验和画图，LaTeX 用来编译，PDF
+渲染工具把编译出的页面转成图片，Agent 才能自己看排版。装这些正好交给
+Agent，它在后台装，你接着往下听。</p>
+</div>
+<p>在 Claude 里打开 <code>lesson-1</code> 文件夹，权限模式放到
+<strong>Accept edits</strong>，先发这张任务卡：</p>
+<pre class="text"><code>这个项目要编译 LaTeX，跑 Python，把 PDF 页面渲染成图片给你自己看。检查这台电脑缺什么，补上：
+Python 用 uv 给这个文件夹建独立环境，不动系统里的 Python；LaTeX 装 TinyTeX 这类轻量发行版；PDF 渲染装 poppler。
+装之前列出打算装什么，装在哪，大概多大，等我同意。
+装完实际走一遍：跑 code/plot_draft.py，编译 paper/main.tex，把第一页渲染成 PNG，你自己看一眼，告诉我页数和第一页的题目。
+最后在 AGENTS.md 里补两行：这个项目怎样编译，怎样渲染页面。</code></pre>
+<p>最后一句是暗线的第一步：装好的工具怎么用写进
+<code>AGENTS.md</code>，下次开新对话，Agent
+一开工就知道，不用你再说。</p>
 <h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
 <div class="pair">
 <figure>
@@ -122,6 +141,11 @@ href="writing-numbers.html">1.2
 href="writing-skills.html">1.5 把做法留下来</a>。</p>
 <h2 id="最容易出错的地方">最容易出错的地方</h2>
 <div class="pitfall">
+<p><strong>让它随手装到系统里。</strong> 不加限制，Agent
+可能用管理员权限装包、改系统自带的
+Python，几个项目从此互相打架。要求它每个项目建独立环境，装之前先报清单，等你点头。</p>
+</div>
+<div class="pitfall">
 <p><strong>逐句修补，越改越长。</strong>
 每轮改动都在原句上加一句补充或限定，几轮下来比初稿还长，重点被淹没。改不动的时候，让它合上原稿整体重讲；就算是按审稿意见修改，也是重讲。</p>
 </div>
@@ -154,6 +178,44 @@ href="https://github.com/liuguangrui-hit/ai-scientist">AI
 科学家</a>写论文也是这几步：叙事编辑读懂全文后照目标刊会的范文另起一稿，再由另一家厂商的
 Agent
 以编辑的眼光审稿，读完题目和摘要不想往下读就退回重写，连续三次不过才交给人裁定。本课每一条容易出错的地方，都是它在真实论文上踩过的坑。</p>
+</div>
+<h2 id="工作台多了什么">工作台多了什么</h2>
+<div class="bench">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python 环境</td>
+<td>重跑实验，从数据文件重画图，跑核对脚本</td>
+</tr>
+<tr>
+<td>LaTeX</td>
+<td>改完立刻编译，看到真实页数</td>
+</tr>
+<tr>
+<td>PDF 渲染</td>
+<td>把页面转成图片自己检查排版，不再凭想象</td>
+</tr>
+<tr>
+<td>AGENTS.md</td>
+<td>每次开工自动读项目约定和编译方法</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>一句话调出一整套改论文的流程</td>
+</tr>
+</tbody>
+</table>
+<p>Python 环境、PDF 渲染和 AGENTS.md 以后每课都用；LaTeX 和 paper-retell
+等你写下一篇论文时一句话调出来。软件装在电脑上，换课不用重装；每课开头的装工具任务卡会让
+Agent 把上一课 <code>AGENTS.md</code>
+里的工具用法抄进新文件夹。下一课添浏览器和知识库，Agent
+开始能自己出门找资料。</p>
 </div>
 <h2 id="换成你自己的论文">换成你自己的论文</h2>
 <p>拿一篇你正在写的论文，再从目标刊会挑一篇你最欣赏的论文当范文。开一个新对话，说用
@@ -220,7 +282,7 @@ Skill 示例。</p>
 </ul>
 </section>
 </article>
-<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skills</span><span class="chip new">+ Cross-vendor review</span><span class="chip new">+ LaTeX</span><span class="chip new">+ Plotting in Python</span></div><h1 id="writing-with-agents">1 Writing with Agents</h1>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ Python env</span><span class="chip new">+ LaTeX</span><span class="chip new">+ PDF rendering</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skills</span></div><h1 id="writing-with-agents">1 Writing with Agents</h1>
 <div class="goal">
 <p>In an hour you will have a paper retold from title to conclusion, two
 data figures that can go straight into a submission, an editorial review
@@ -239,6 +301,27 @@ when some training labels are wrong. The experiment is real:
 <code>code/run_experiment.py</code> regenerates all the data in about a
 minute on a laptop. The text and figures look like a typical first
 draft.</p>
+<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
+tools at the start: send the card in 1 minute</h2>
+<div class="install">
+<p><strong>This session’s hidden thread: let the agent compile, draw
+figures and look at pages.</strong> Session 0 used only the agent’s
+ability to read and write text. Revising papers needs three more things:
+a Python environment to run experiments and draw figures, LaTeX to
+compile, and PDF rendering tools to turn compiled pages into images so
+the agent can check layout itself. Give installation to the agent. It
+installs in the background while you keep listening.</p>
+</div>
+<p>Open the <code>lesson-1</code> folder in Claude, set permissions to
+<strong>Accept edits</strong>, and send this task card first:</p>
+<pre class="text"><code>This project needs to compile LaTeX, run Python, and render PDF pages as images for you to inspect. Check what this computer is missing and add it:
+Use uv to create a separate Python environment for this folder, leaving the system Python alone; install a lightweight LaTeX distribution such as TinyTeX; install poppler for PDF rendering.
+Before installing, list what you plan to install, where, and roughly how large it is. Wait for my OK.
+Then test the whole path: run code/plot_draft.py, compile paper/main.tex, render the first page as a PNG, and look at it yourself. Tell me the page count and the title on the first page.
+Finally add two lines to AGENTS.md: how to compile this project and how to render its pages.</code></pre>
+<p>The last line is the first step of the hidden thread. Record how to
+use installed tools in <code>AGENTS.md</code>, and the agent knows at
+the start of the next conversation without you telling it again.</p>
 <h2 id="see-the-finished-product-5-minutes">See the finished product, 5
 minutes</h2>
 <div class="pair">
@@ -346,6 +429,13 @@ conventions. How <code>AGENTS.md</code> and a Skill divide the work is
 covered in <a href="writing-skills.html">1.5 Keeping the method</a>.</p>
 <h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
 <div class="pitfall">
+<p><strong>Letting it install into the system.</strong> Without limits,
+the agent may install packages with administrator privileges or change
+the system Python, leaving projects in conflict. Ask for a separate
+environment per project, an installation list first, and your OK before
+it proceeds.</p>
+</div>
+<div class="pitfall">
 <p><strong>Patching sentence by sentence, the paper keeps
 growing.</strong> Each round adds a clarification or a caveat to the
 sentence already there, and a few rounds later the paper is longer than
@@ -390,6 +480,54 @@ it with an editor’s eye; if the title and abstract don’t make it want to
 read on, the paper goes back for a rewrite, and only after three failed
 rounds does a person decide. Every pitfall in this session is one it has
 hit on real papers.</p>
+</div>
+<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<div class="bench">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python environment</td>
+<td>Rerun experiments, redraw figures from data files, run checking
+scripts</td>
+</tr>
+<tr>
+<td>LaTeX</td>
+<td>Compile straight after edits and see the actual page count</td>
+</tr>
+<tr>
+<td>PDF rendering</td>
+<td>Turn pages into images and inspect the layout itself rather than
+imagine it</td>
+</tr>
+<tr>
+<td>AGENTS.md</td>
+<td>Read project conventions and compilation instructions automatically
+at every start</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>Bring back a whole paper-revision workflow with one line</td>
+</tr>
+</tbody>
+</table>
+<p>The Python environment, PDF rendering and AGENTS.md are used in every
+later session. LaTeX and paper-retell are ready to call with one line
+when you write your next paper. Software stays on your computer, so
+changing sessions needs no reinstall. Each session’s opening
+installation card has the agent copy the previous
+<code>AGENTS.md</code>’s tool instructions into the new folder. Next
+session adds a browser and knowledge base, and the agent starts finding
+material itself.</p>
 </div>
 <h2 id="now-with-your-own-paper">Now with your own paper</h2>
 <p>Take a paper you are writing, and pick the paper you admire most from

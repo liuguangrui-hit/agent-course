@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent 实验 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html" class="cur"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="experiment-git.html" class="sub"><span class="num">3.1</span><span lang="zh">Git 与 GitHub</span><span lang="en">Git and GitHub</span></a>
+<a href="experiment-server.html" class="sub"><span class="num">3.2</span><span lang="zh">服务器与后台任务</span><span lang="en">Servers and background jobs</span></a>
+<a href="experiment-evidence.html" class="sub"><span class="num">3.3</span><span lang="zh">结果能说明什么</span><span lang="en">What a result shows</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip new">+ Git 与 GitHub</span><span class="chip new">+ SSH 与 Tailscale</span><span class="chip new">+ tmux 后台任务</span><span class="chip new">+ 监视器</span></div><h1 id="agent-实验">3 Agent 实验</h1>
+<div class="goal">
+<p>一小时后，你从第 2 课的三个问题里挑一个，先写下预测，再让 Agent
+改代码、在服务器上把实验跑完。代码的每个版本都在 GitHub
+上，结果文件注明是哪一版代码跑出来的，一页结果说明把预测和结果并排摆着，另一家
+Agent 已经审过结论和数字对不对得上。</p>
+</div>
+<p><span class="meta">课堂核心 60 分钟。课后深入 3.1 至 3.3
+共约一个半小时，按需选读。</span></p>
+<div class="download">
+<p><a href="downloads/lesson-3-zh.zip">下载第 3 课练习材料</a></p>
+</div>
+<p>练习材料是第 1 课的实验代码和数据，加上一份
+<code>questions.md</code>，里面是一个现成的问题，没做完第 2
+课也能直接开始：训练时拿出一部分同样带噪声的数据当验证集，按它早停，还能挡住网络记住错误标签吗。</p>
+<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<div class="install">
+<p><strong>本课暗线：让实验离开你的笔记本，并且每一步都留下版本。</strong>
+到第 2 课为止，Agent
+做的事都在你自己的电脑上，改了什么只能靠记。这一课添四样：Git 和 GitHub
+给代码留版本，SSH 和 Tailscale 让它登录实验室的服务器，tmux
+让实验在服务器上关了电脑也接着跑，监视器让 Agent
+盯着日志、跑完再自己醒来。</p>
+</div>
+<p>在 Claude 里打开 <code>lesson-3</code> 文件夹，先发：</p>
+<pre class="text"><code>先读 ../lesson-2/AGENTS.md，把里面的工具用法抄进本文件夹的 AGENTS.md。
+这个项目还要用 Git 管版本，推到我的 GitHub，并在服务器上跑实验。检查并补上：
+1. git 和 GitHub 命令行工具 gh；需要我登录 GitHub 时停下来，告诉我在浏览器里点哪里；
+2. 连服务器：我的服务器地址是 &lt;地址&gt;，用户名是 &lt;用户名&gt;。如果需要 Tailscale 才能连上，装好它并告诉我怎样登录；
+   给这台电脑生成 SSH 密钥，告诉我怎样把公钥加到服务器上，然后在 ~/.ssh/config 里给服务器起个短名字，每次连接设上超时；
+3. 服务器上有没有 tmux 和 uv，没有就装在我的用户目录下。
+装之前列出打算装什么、装在哪，等我同意。装完各用一次：gh 查我的用户名，SSH 到服务器跑一次 nvidia-smi 或者 uptime；
+再在服务器的 tmux 里跑一个 sleep 60 后写出 done 的小任务，设监视器盯着它，证明它结束时你会被叫醒。
+最后在 AGENTS.md 里补几行：服务器短名字，实验在服务器上的目录，长任务一律放进 tmux。</code></pre>
+<p>没有服务器的，跳过第 2、3
+项，实验和监视器测试都在本机后台跑，其余步骤一样。</p>
+<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
+<p>打开练习材料里的
+<code>preview/</code>，这是按本课流程真跑出来的一份成品。<code>prediction.md</code>
+写于写代码之前，四条预测，每条一个数字和推翻条件。<code>result.md</code>
+把预测和结果并排摆着：四条错了三条。原以为验证集带噪声会让网络晚停几轮，准确率掉三个点；实际上它平均早停
+2.6 轮，最终准确率 93.25%，和干净验证集的 92.26%
+差别不明显，两者都把不早停时的 68.37%
+拉了回来。错的预测比对的更有用：它说明带噪的验证集仍然看得出网络什么时候开始记错误标签。<code>review.md</code>
+是审查意见，<code>results/</code> 是全部原始结果和图。</p>
+<p>预览是在一台机器上直接做的，没有建 Git
+仓库，结果里的提交编号是占位值，审查也是同一家 Agent
+做的。你在课上做的时候，这三处都按任务卡来：先提交，填真实编号，换另一家审。</p>
+<h2 id="讲10-分钟">讲，10 分钟</h2>
+<p><strong>先写预测，再跑实验。</strong>
+结果出来后再解释，总能讲通。实验前把预测写下来并提交到
+Git，事后对照才有意义：猜对了，说明你对这个现象的理解是对的；猜错了，比猜对学到的更多。</p>
+<p><strong>每个结果对得上一版代码。</strong> Agent
+改代码很快，一下午改十几次，第三次跑出的好结果是哪一版代码，没人记得。规矩是跑之前先提交，结果文件里写上提交编号。</p>
+<p><strong>实验交给服务器，Agent 别守着。</strong> 长实验放进服务器上的
+tmux 会话里，SSH 连接立刻断开，实验照跑。Agent
+设一个监视器，几分钟看一次日志，跑完或者出错时再醒来，而不是开着连接一直等。</p>
+<p><strong>结论要另一个人审。</strong> 写结果的 Agent
+和跑实验的是同一个，它想让结果好看。另一家的 Agent
+只看预测、结果文件和结论，查三件事：数字对不对得上，结论有没有超出数字，结果对应的是不是那一版代码。</p>
+<h2 id="练习-1上-github10-分钟">练习 1：上 GitHub，10 分钟</h2>
+<pre class="text"><code>把这个文件夹建成 Git 仓库，写好 .gitignore：原始数据和大文件不进仓库；代码，文档和汇总后的小结果文件进仓库。
+第一次提交后，用 gh 在我的 GitHub 上建一个私有仓库，名字叫 label-noise-lab，推上去，给我链接。
+在 AGENTS.md 里补一条：每次跑实验前先提交，结果文件里写上当时的提交编号。</code></pre>
+<p>打开链接，在网页上看到自己的代码。</p>
+<h2 id="练习-2先写预测再到服务器上跑25-分钟">练习
+2：先写预测，再到服务器上跑，25 分钟</h2>
+<pre class="text"><code>读 questions.md 里的问题和 data/ 里第 1 课的结果。
+先写 prediction.md：对 CE 损失在 40% 噪声下五个种子的均值，预测按带噪验证集早停停在第几轮，最终准确率是多少，和用干净验证集早停差多少。
+每个预测给一个数字和一句理由，写明什么结果算预测错了。提交，提交说明写 prediction。
+然后改 code/run_experiment.py，加上按验证集早停：验证集从训练集里切出 10%，标签带同样的噪声；另加一个用干净验证集的对照。
+早停看验证集的交叉熵，连续 8 轮没有改善就停，恢复最好的那一轮的权重。加上 --seeds 和 --epochs 参数，结果写到 results/。
+先在本机用 1 个种子，5 轮跑一次冒烟测试，确认能跑通、结果文件格式对，再提交。</code></pre>
+<p>冒烟测试过了，再交给服务器：</p>
+<pre class="text"><code>在服务器上 clone 这个仓库，用 uv 装好环境，在一个名为 lab 的 tmux 会话里跑完整实验，日志写到 logs/run.log。
+启动后立刻返回，不要等它跑完。然后设一个监视器，每 5 分钟看一次日志的最后几行，跑完或者报错时告诉我。</code></pre>
+<p>没有服务器的，把第二段换成：在本机后台跑完整实验，日志写到
+logs/run.log，设监视器。</p>
+<p>实验跑的时候，你可以接着讲课，或者开个新对话做别的事。</p>
+<h2 id="练习-3对照预测请-codex-审10-分钟">练习 3：对照预测，请 Codex
+审，10 分钟</h2>
+<p>监视器报告跑完后：</p>
+<pre class="text"><code>只把服务器上的 results/ 拉回来，不拉别的。画一张图：两种早停和不早停在各噪声水平下的最终准确率。
+写 result.md：先把 prediction.md 的每条预测和实际结果并排列出，标明对还是错；
+再写这个结果说明了什么，没说明什么，一段即可。写明结果对应的提交编号。
+预测错了的条目，连同实际结果写进 ../lesson-2/vault/conflicts.md。提交并推到 GitHub。</code></pre>
+<p>在 Codex 里：</p>
+<pre class="text"><code>读 prediction.md，results/，result.md 和 Git 提交历史。检查三件事：
+result.md 里的每个数字能否在 results/ 里找到；结论有没有说出数字支持不了的话；结果文件里的提交编号在历史里能否找到，那一版代码的设置和结果是否一致。
+只给意见，写到 review.md，第一行注明你审的是哪个提交。除 review.md 外不改任何文件。</code></pre>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>SSH 卡住不返回。</strong>
+在服务器上用一般的后台方式启动实验，SSH
+连接有时会一直挂着等这个子进程，Agent 也跟着卡住。长任务一律放进
+tmux，或者用完全脱离终端的方式启动，启动命令要立刻返回；每次 SSH
+都设连接超时和心跳。</p>
+</div>
+<div class="pitfall">
+<p><strong>在电脑和服务器之间搬大文件。</strong>
+数据集从你的电脑传到服务器，或者把整个结果目录拉回来，经过中转网络时又慢又可能把连接堵死。数据在服务器上直接下载，只把小的结果文件拉回来，稍大的先压缩。</p>
+</div>
+<div class="pitfall">
+<p><strong>按名字杀进程把自己杀了。</strong> 让 Agent
+停掉一个实验，它用按命令名匹配的方式去杀，结果连自己这条 SSH
+会话也匹配上，一起断了。停实验按进程编号，或者直接关掉那个 tmux
+会话。</p>
+</div>
+<div class="pitfall">
+<p><strong>跑完再写预测。</strong>
+看过结果再写的预测都是对的，也就什么都没检验。预测先提交，先后顺序在提交记录里一查便知。</p>
+</div>
+<div class="pitfall">
+<p><strong>好结果不怀疑。</strong>
+坏结果大家都会查，好结果往往直接写进论文。好结果要同样怀疑：换一个种子，加一个本该没有效果的对照，看效果还在不在。很多漂亮的提升，加上对照后就消失了。</p>
+</div>
+<div class="pitfall">
+<p><strong>每隔几秒问一次跑完没有。</strong> Agent
+守着实验反复查看，每次查看都要重读整个对话，又慢又贵。设监视器，几分钟看一次，有事再醒。</p>
+</div>
+<div class="promo">
+<p><strong>在 AI 科学家里。</strong> <a
+href="https://github.com/liuguangrui-hit/ai-scientist">AI
+科学家</a>每跑一个实验之前，先把预测登记进假设森林，实验结果出来后自动对照。它的森林里只收自己实验验证过的东西，文献里的结论只能作为待检验的假设进来。本课先写预测再跑的做法，就是这条规矩的手动版。</p>
+</div>
+<h2 id="工作台多了什么">工作台多了什么</h2>
+<div class="bench">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git 与 GitHub</td>
+<td>每次改动留版本，结果对得上代码，随时能退回</td>
+</tr>
+<tr>
+<td>SSH 与 Tailscale</td>
+<td>登录实验室服务器，在校外也连得上</td>
+</tr>
+<tr>
+<td>tmux 后台任务</td>
+<td>实验在服务器上跑，断网关电脑都不停</td>
+</tr>
+<tr>
+<td>监视器</td>
+<td>不守着实验，跑完或出错时自己醒来接着干</td>
+</tr>
+</tbody>
+</table>
+<p>到这里，Agent
+已经能从找资料一路做到跑实验：提问题，写预测，跑，写结果，再换一家来审。下一课把这些连起来，让它在你睡觉时自己转。</p>
+</div>
+<h2 id="换成你自己的实验">换成你自己的实验</h2>
+<p>挑一个你组里正在做、跑一次不超过一小时的实验。让 Agent
+先读代码，写一份它理解的实验说明给你确认，再按本课的顺序走：建仓库，写预测，冒烟测试，服务器上跑，对照，另一家审。</p>
+<h2 id="课后深入">课后深入</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>节</th>
+<th>内容</th>
+<th>时长</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="experiment-git.html">3.1 Git 与 GitHub</a></td>
+<td>只需要会的五个动作；提交编号进结果；退回；多个对话同时改代码</td>
+<td>30 分钟</td>
+</tr>
+<tr>
+<td><a href="experiment-server.html">3.2 服务器与后台任务</a></td>
+<td>SSH 配置与超时；Tailscale；tmux
+与日志；监视器；连接卡住时怎么办</td>
+<td>30 分钟</td>
+</tr>
+<tr>
+<td><a href="experiment-evidence.html">3.3 结果能说明什么</a></td>
+<td>预测怎么写；对照与种子；怀疑好结果；结果说明与审查</td>
+<td>30 分钟</td>
+</tr>
+</tbody>
+</table>
+<section id="要点" class="keypoints">
+<h2>要点</h2>
+<ul>
+<li>先写预测并提交，再跑实验。</li>
+<li>跑之前先提交，结果里写提交编号。</li>
+<li>长实验放进服务器上的 tmux，Agent 设监视器，不守着。</li>
+<li>只把小的结果文件拉回来。</li>
+<li>结论交给另一家审，好结果同样要怀疑。</li>
+</ul>
+</section>
+</article>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip new">+ Git and GitHub</span><span class="chip new">+ SSH and Tailscale</span><span class="chip new">+ tmux jobs</span><span class="chip new">+ Monitors</span></div><h1 id="experimenting-with-agents">3 Experimenting with Agents</h1>
+<div class="goal">
+<p>In an hour you will have chosen one of Session 2’s three questions,
+written a prediction, and had the agent change the code and finish the
+experiment on a server. Every code version is on GitHub. Result files
+name the code version that produced them. A page of results puts
+predictions beside outcomes, and another vendor’s agent has checked
+whether the conclusions match the numbers.</p>
+</div>
+<p><span class="meta">Core class: 60 minutes. Self-study sections 3.1 to
+3.3 take about an hour and a half in total; read what you
+need.</span></p>
+<div class="download">
+<p><a href="downloads/lesson-3-en.zip">Download the Session 3
+materials</a></p>
+</div>
+<p>The materials contain Session 1’s experiment code and data, plus a
+<code>questions.md</code> with a ready-made question so you can start
+even without finishing Session 2: if you hold out some equally noisy
+training data for validation and use it for early stopping, can you
+still stop the network from memorizing wrong labels?</p>
+<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
+tools at the start: send the card in 1 minute</h2>
+<div class="install">
+<p><strong>This session’s hidden thread: move experiments off your
+laptop and keep a version at every step.</strong> Through Session 2, all
+the agent’s work was on your own computer, and you had to remember what
+changed. This session adds four things: Git and GitHub to version code,
+SSH and Tailscale to log in to a lab server, tmux to keep experiments
+running after you shut your computer, and a monitor to watch logs and
+wake the agent when a run ends.</p>
+</div>
+<p>Open the <code>lesson-3</code> folder in Claude and send:</p>
+<pre class="text"><code>First read ../lesson-2/AGENTS.md and copy its tool instructions into this folder&#39;s AGENTS.md.
+This project also needs Git for versioning, pushes to my GitHub, and experiments on a server. Check and set up:
+1. git and the GitHub CLI gh. When I need to sign in to GitHub, stop and tell me where to click in the browser;
+2. Server access: my server address is &lt;address&gt;, username &lt;username&gt;. If access needs Tailscale, install it and tell me how to sign in;
+   Generate an SSH key on this computer, tell me how to add the public key to the server, then give the server a short name in ~/.ssh/config and set timeouts for every connection;
+3. tmux and uv on the server; if missing, install them under my user directory.
+Before installing, list what you plan to install and where, and wait for my OK. Then try each: use gh to look up my username, and SSH to the server to run nvidia-smi or uptime.
+Also run a small task in tmux on the server that does sleep 60 then writes done. Set a monitor to watch it and show that you wake when it ends.
+Finally add a few lines to AGENTS.md: the server&#39;s short name, the experiment directory on the server, and that all long jobs go in tmux.</code></pre>
+<p>Without a server, skip items 2 and 3. Run the experiment and monitor
+test in the background locally. The other steps are the same.</p>
+<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
+minutes</h2>
+<p>Open <code>preview/</code> in the materials. This is a finished
+example actually run with this session’s workflow.
+<code>prediction.md</code> was written before the code, with four
+predictions, each giving a number and a condition that would refute it.
+<code>result.md</code> puts predictions beside results: three of four
+were wrong. The expectation was that noisy validation would delay
+stopping by a few epochs and cost three accuracy points. Instead it
+stopped 2.6 epochs earlier on average, with final accuracy of 93.25%,
+not clearly different from clean validation’s 92.26%. Both recovered
+from the 68.37% without early stopping. Wrong predictions are more
+useful than right ones: they show that noisy validation still reveals
+when the network starts memorizing wrong labels. <code>review.md</code>
+holds the review, and <code>results/</code> has all raw results and
+figures.</p>
+<p>The preview was made directly on one machine, without a Git
+repository. Its commit IDs are placeholders, and the same vendor’s agent
+reviewed it. In class, follow the task cards for these three parts:
+commit first, use real IDs, and have another vendor review.</p>
+<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
+<p><strong>Write predictions before running.</strong> After results
+arrive, you can always find an explanation. Writing predictions first
+and committing them to Git makes the comparison meaningful. A correct
+prediction shows you understood the phenomenon. A wrong one teaches you
+more.</p>
+<p><strong>Every result matches a code version.</strong> Agents change
+code quickly, perhaps a dozen times in an afternoon. Nobody remembers
+which version produced the good result on run three. Commit before
+running and put the commit ID in the result file.</p>
+<p><strong>Give experiments to the server; don’t have the agent sit
+waiting.</strong> Put long experiments in a tmux session on the server.
+Disconnect SSH at once; the experiment keeps running. The agent sets a
+monitor to check the log every few minutes and wakes when the run ends
+or fails, rather than holding the connection open and waiting.</p>
+<p><strong>Have someone else review the conclusion.</strong> The agent
+writing the results also ran the experiment, and wants them to look
+good. Another vendor’s agent reads only the predictions, result files
+and conclusion. It checks three things: whether the numbers match,
+whether the conclusion goes beyond them, and whether the results match
+that code version.</p>
+<h2 id="exercise-1-put-it-on-github-10-minutes">Exercise 1: put it on
+GitHub, 10 minutes</h2>
+<pre class="text"><code>Make this folder a Git repository and write .gitignore: keep raw data and large files out; include code, documents and small summarized result files.
+After the first commit, use gh to create a private repository on my GitHub called label-noise-lab. Push to it and give me the link.
+Add a rule to AGENTS.md: commit before each experiment and put that commit ID in the result files.</code></pre>
+<p>Open the link and see your code on the web.</p>
+<h2
+id="exercise-2-predict-first-then-run-on-the-server-25-minutes">Exercise
+2: predict first, then run on the server, 25 minutes</h2>
+<pre class="text"><code>Read the question in questions.md and Session 1&#39;s results in data/.
+First write prediction.md: for CE loss at 40% noise, predict the five-seed mean of the stopping epoch, final accuracy, and differences from clean-validation early stopping when using a noisy validation set.
+Give each prediction a number and a one-sentence reason. Say what result would make it wrong. Commit with the message prediction.
+Then change code/run_experiment.py to add validation-based early stopping: hold out 10% of the training set for validation, with the same label noise. Add a clean-validation control too.
+Use validation cross-entropy for early stopping: stop after 8 consecutive epochs without improvement and restore the best epoch&#39;s weights. Add --seeds and --epochs parameters and write results to results/.
+Run a local smoke test with 1 seed and 5 epochs. Check that it runs and the result file format is right, then commit.</code></pre>
+<p>Once the smoke test passes, hand it to the server:</p>
+<pre class="text"><code>Clone this repository on the server, set up the environment with uv, and run the full experiment in a tmux session called lab. Write the log to logs/run.log.
+Return as soon as it starts; don&#39;t wait for it to finish. Set a monitor to check the last few log lines every 5 minutes and tell me when it finishes or errors.</code></pre>
+<p>Without a server, replace the second card with: run the full
+experiment locally in the background, write the log to logs/run.log, and
+set a monitor.</p>
+<p>While the experiment runs, continue the class or start a new
+conversation for something else.</p>
+<h2
+id="exercise-3-compare-with-predictions-and-ask-codex-to-review-10-minutes">Exercise
+3: compare with predictions and ask Codex to review, 10 minutes</h2>
+<p>When the monitor reports completion:</p>
+<pre class="text"><code>Bring back only results/ from the server, nothing else. Draw one figure: final accuracy at each noise level for both early-stopping methods and no early stopping.
+Write result.md: first put every prediction from prediction.md beside the actual result and mark it right or wrong.
+Then give one paragraph on what this result shows and does not show. Name the commit ID that produced the results.
+Add wrong predictions and their actual results to ../lesson-2/vault/conflicts.md. Commit and push to GitHub.</code></pre>
+<p>In Codex:</p>
+<pre class="text"><code>Read prediction.md, results/, result.md and the Git history. Check three things:
+Can every number in result.md be found in results/? Do the conclusions say anything the numbers cannot support? Are the commit IDs in the result files in the history, and do that version&#39;s code settings match the results?
+Give only comments. Write them to review.md, with the first line naming the commit you reviewed. Change no files except review.md.</code></pre>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>SSH hangs instead of returning.</strong> Starting an
+experiment with ordinary backgrounding sometimes leaves SSH waiting for
+the child process, and the agent gets stuck too. Put all long jobs in
+tmux, or detach them fully from the terminal. The launch command must
+return at once. Set connection timeouts and keepalives for every SSH
+call.</p>
+</div>
+<div class="pitfall">
+<p><strong>Moving large files between computer and server.</strong>
+Uploading datasets from your computer or bringing back an entire results
+directory can be slow over a relay and may block the connection.
+Download data directly on the server. Bring back only small result
+files, compressing larger ones first.</p>
+</div>
+<div class="pitfall">
+<p><strong>Killing by name kills its own session.</strong> Asked to stop
+an experiment, the agent matches processes by command name and catches
+its own SSH session too. Stop by process ID or close that tmux
+session.</p>
+</div>
+<div class="pitfall">
+<p><strong>Predicting after the run.</strong> Predictions written after
+seeing results are always right and test nothing. Commit predictions
+first; the commit history shows the order.</p>
+</div>
+<div class="pitfall">
+<p><strong>Trusting good results.</strong> Everyone checks bad results;
+good ones often go straight into a paper. Question good results too.
+Change the seed and add a control that should have no effect. Does the
+effect remain? Many impressive gains disappear with a control.</p>
+</div>
+<div class="pitfall">
+<p><strong>Asking every few seconds whether it is done.</strong> The
+agent keeps checking the experiment, rereading the whole conversation
+each time. It is slow and expensive. Set a monitor to check every few
+minutes and wake only when something happens.</p>
+</div>
+<div class="promo">
+<p><strong>Inside the AI Scientist.</strong> Before each experiment, the
+<a href="https://github.com/liuguangrui-hit/ai-scientist">AI
+Scientist</a> records a prediction in its hypothesis forest, then
+compares it automatically with the result. The forest holds only things
+verified by its own experiments. Conclusions from papers enter only as
+hypotheses to test. This session’s predict-then-run method is the manual
+version of that rule.</p>
+</div>
+<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<div class="bench">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git and GitHub</td>
+<td>Version every change, match results to code, and go back at any
+time</td>
+</tr>
+<tr>
+<td>SSH and Tailscale</td>
+<td>Log in to a lab server, including from off campus</td>
+</tr>
+<tr>
+<td>tmux background jobs</td>
+<td>Keep experiments running on the server through lost connections and
+shutdowns of your computer</td>
+</tr>
+<tr>
+<td>Monitor</td>
+<td>Stop waiting over the experiment and wake to continue when it ends
+or fails</td>
+</tr>
+</tbody>
+</table>
+<p>The agent can now go from finding material to running experiments:
+ask a question, predict, run, write results, and have another vendor
+review. Next session connects these steps so they run while you
+sleep.</p>
+</div>
+<h2 id="now-with-your-own-experiment">Now with your own experiment</h2>
+<p>Pick an experiment your group is doing that takes at most an hour per
+run. Have the agent read the code and write its understanding of the
+experiment for you to confirm. Then follow this session’s order:
+repository, prediction, smoke test, server run, comparison, another
+vendor’s review.</p>
+<h2 id="self-study-sections">Self-study sections</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="experiment-git.html">3.1 Git and GitHub</a></td>
+<td>The five actions you need; commit IDs in results; restoring
+versions; parallel code edits</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="experiment-server.html">3.2 Servers and background
+jobs</a></td>
+<td>SSH configuration and timeouts; Tailscale; tmux and logs; monitors;
+stuck connections</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="experiment-evidence.html">3.3 What results show</a></td>
+<td>Writing predictions; controls and seeds; questioning good results;
+result reports and reviews</td>
+<td>30 minutes</td>
+</tr>
+</tbody>
+</table>
+<section id="key-points" class="keypoints">
+<h2>Key points</h2>
+<ul>
+<li>Write and commit predictions before running experiments.</li>
+<li>Commit before running and put the commit ID in results.</li>
+<li>Put long experiments in tmux on the server. The agent sets a monitor
+instead of waiting.</li>
+<li>Bring back only small result files.</li>
+<li>Have another vendor review conclusions, and question good results
+too.</li>
+</ul>
+</section>
+</article>
+<nav class="pager"><a class="prev" href="explore-parallel.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.3 并行复筛与提问</span><span lang="en">2.3 Parallel screening and questions</span></a><a class="next" href="experiment-git.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3.1 Git 与 GitHub</span><span lang="en">3.1 Git and GitHub</span></a></nav>
+</main>
+</div>
+</body>
+</html>

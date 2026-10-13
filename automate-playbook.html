@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>经验榜 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="automate-schedule.html" class="sub"><span class="num">4.1</span><span lang="zh">定时与无人值守</span><span lang="en">Scheduling and headless runs</span></a>
+<a href="automate-playbook.html" class="cur sub"><span class="num">4.2</span><span lang="zh">经验榜</span><span lang="en">Playbooks</span></a>
+<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果页</span><span lang="en">The results page</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="经验榜">4.2 经验榜</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>一个循环每晚跑同样的步骤，第一百轮和第一轮一样好，它就只是自动化。要让它越跑越好，得有地方存下它学到的东西，并且有办法判断学到的东西真的有用。经验榜就是这个地方。</p>
+<h2 id="一条经验的样子">一条经验的样子</h2>
+<pre class="text"><code>## 3. 冒烟测试要覆盖结果文件的写出
+做法：冒烟测试不只看程序能跑通，还要检查结果文件的每一列都有值。
+适用：改动了结果文件格式的轮次。
+来源：第 4 轮，提交编号列为空，整夜结果作废；第 6 轮，同类问题被提前发现。
+得分：用过 3 次，其中 2 次在冒烟测试里查出了这类问题。</code></pre>
+<p>四样东西缺一不可。做法写成下次能照着做的动作，不写感想。适用条件说明什么时候用，避免它被硬套到不相干的地方。来源指向具体的轮次，你随时能查它是从哪次教训里来的。得分记录它被用了几次、帮上忙几次。</p>
+<h2 id="写入合并上限">写入，合并，上限</h2>
+<p>每轮收工时：</p>
+<pre class="text"><code>回顾这一轮：哪一步出了问题，哪个做法帮了忙。最多写两条经验。
+写之前先读 playbook.md：如果和已有的某条相近，把那一条改写得同时覆盖两次的情况，在来源里加上本轮，不新增条目；
+改写后的这条不应比原来长多少，也不应宽泛到失去指导意义。经验榜最多 10 条，超出时把得分最低的移到 playbook-archive.md。</code></pre>
+<p>合并是经验榜最难的部分。只追加不合并，经验榜很快变成一本流水账；合并得太狠，每条都变成认真做事这种空话。判断标准：合并后的这一条，还能不能指出下一次具体该检查什么。</p>
+<h2 id="尺子不能跟着变">尺子不能跟着变</h2>
+<p>经验榜可以改的是做法。不能改的是评价它的标准：</p>
+<ul>
+<li>预测命中率：每轮实验前的预测，事后对照结果，对了几条；</li>
+<li>审查通过率：另一家 Agent 的审查是否通过。</li>
+</ul>
+<p>这两样写死在 <code>LOOP.md</code> 里，循环里的 Agent
+无权修改，只有你能改。原因很简单：如果经验榜里能出现一条预测写宽一点，命中率马上就会上升，循环看起来在进步，其实什么都没学会。</p>
+<p>评分标准和做评分的那个 Agent
+也不从经验榜里学，它们是尺子，尺子不该随被量的东西变。作预测的做法可以学，这正是经验榜要改进的东西之一。</p>
+<h2 id="经验榜真的有用吗">经验榜真的有用吗</h2>
+<p>经验榜里的条目都显得很有道理，但有道理不等于有用。判断它有没有用，要做对照：同样的问题，一组读经验榜，一组不读，比较两组的预测命中率或者审查通过率。</p>
+<p>还要加一个本该没用的对照：读一份长度相同、内容无关的文字。如果读无关文字的那组也变好了，说明提升来自提示变长，而不是经验本身。这种情况并不罕见。</p>
+<pre class="text"><code>从问题清单里预留 6 个循环还没做过的问题，免得经验榜里已经记着答案。每个问题分三组各跑一次开工到写预测为止：读经验榜，不读，读同样长度的无关文字。
+用固定的评分标准比较三组预测的质量，评分的 Agent 不知道哪组是哪组。</code></pre>
+<h2 id="不要因为一次小问题就改规则">不要因为一次小问题就改规则</h2>
+<p>循环跑了几轮，某一轮出了个小问题，很自然地想改一下
+<code>LOOP.md</code>
+或者经验榜的格式。忍住。规则频繁变动，前后几轮就没法比，你永远不知道是哪次改动起的作用。小问题记进经验榜，规则留到固定的检查点，比如每十轮一次，由你根据积累下来的记录统一改。</p>
+<h2 id="反思检查">反思检查</h2>
+<p>经验榜管的是做法，反思检查管的是方向。每三轮一次，一个独立的新对话读全部记录，回答：</p>
+<ul>
+<li>预测命中率的趋势；</li>
+<li>问题是不是越做越小、越来越像；</li>
+<li>有没有某个好结果其实缺了对照；</li>
+<li>经验榜里有没有哪条在掩盖问题。</li>
+</ul>
+<p>它有权写 <code>STOP</code>
+让循环停下等你。反思检查之所以要独立，是因为循环里的对话每轮只看到自己这一轮，看不到这些跨轮次的趋势。</p>
+<h2 id="练习">练习</h2>
+<p>在你的循环跑满六轮后，按上面的三组对照测一次经验榜。如果三组差别不明显，在反思记录里写下来，先不要急着改经验榜的格式。</p>
+<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<div class="pitfall">
+<p><strong>经验只追加不合并。</strong>
+一个月后六十条，下一轮读不完也用不上。限定条数，相近的合并。</p>
+</div>
+<div class="pitfall">
+<p><strong>合并成空话。</strong>
+每条都合并成仔细检查结果这种话，谁都同意，谁也用不上。合并后的条目要能指出下一次具体检查什么。</p>
+</div>
+<div class="pitfall">
+<p><strong>不做对照就说经验榜有用。</strong>
+命中率上升了，可能是问题变简单了，也可能是提示变长了。三组对照，评分盲评。</p>
+</div>
+<div class="pitfall">
+<p><strong>一出问题就改规则。</strong>
+规则天天变，前后没法比。小问题进经验榜，规则在固定检查点统一改。</p>
+</div>
+</article>
+<article lang="en"><h1 id="playbook">4.2 Playbook</h1>
+<p><span class="meta">Self-study, about 30 minutes.</span></p>
+<p>If a loop repeats the same steps every night and round one hundred is
+no better than round one, it is just automation. To improve, it needs
+somewhere to keep what it learns and a way to judge whether that
+learning helps. The playbook is that place.</p>
+<h2 id="what-an-entry-looks-like">What an entry looks like</h2>
+<pre class="text"><code>## 3. Smoke tests must check result file output
+Method: don&#39;t just check that the program runs; check that every column in the result file has a value.
+Applies to: rounds that change the result file format.
+Source: round 4, the commit ID column was empty and the whole night&#39;s results were invalid; round 6, the same kind of problem was caught early.
+Score: used 3 times, caught this kind of problem in the smoke test twice.</code></pre>
+<p>All four parts are needed. Write the method as an action you can
+follow next time, not an impression. Applicability says when to use it
+so it is not forced onto unrelated cases. The source points to specific
+rounds so you can trace the lesson. The score records uses and how often
+it helped.</p>
+<h2 id="write-merge-cap">Write, merge, cap</h2>
+<p>At the end of each round:</p>
+<pre class="text"><code>Look back over this round: which step failed, which method helped? Write at most two entries.
+Read playbook.md first. If an existing entry is similar, rewrite it to cover both cases and add this round to its sources, without creating a new entry.
+The rewrite should not be much longer or so broad that it stops guiding action. Keep at most 10 entries. Move the lowest-scoring extras to playbook-archive.md.</code></pre>
+<p>Merging is the hardest part. Append without merging and the playbook
+soon becomes a running log. Merge too aggressively and every entry
+becomes empty advice like “work carefully”. The test: does the merged
+entry still say exactly what to check next time?</p>
+<h2 id="the-yardstick-must-stay-fixed">The yardstick must stay
+fixed</h2>
+<p>The playbook can change methods. It cannot change the criteria used
+to evaluate them:</p>
+<ul>
+<li>Prediction accuracy: how many predictions written before each
+experiment matched the results;</li>
+<li>Review pass rate: whether the other vendor’s agent passed the
+review.</li>
+</ul>
+<p>Fix both in <code>LOOP.md</code>. The loop’s agent cannot change
+them; only you can. The reason is simple: if the playbook can say “make
+predictions broader”, accuracy rises immediately. The loop looks better
+but has learned nothing.</p>
+<p>The scoring criteria and the scoring agent do not learn from the
+playbook either. They are the yardstick and should not change with what
+they measure. Prediction methods can learn; improving them is one of the
+playbook’s jobs.</p>
+<h2 id="does-the-playbook-help">Does the playbook help?</h2>
+<p>Every entry sounds sensible, but sensible does not mean useful. Test
+with a control: use the same questions for a group that reads the
+playbook and one that does not, then compare prediction accuracy or
+review pass rate.</p>
+<p>Add a control that should not help: unrelated text of the same
+length. If that group improves too, the gain comes from a longer prompt
+rather than the experience itself. This is not rare.</p>
+<pre class="text"><code>Hold out 6 questions from the list that the loop has not tried, so their answers are not already in the playbook. For each, run three groups once, from startup through writing predictions: read the playbook, don&#39;t read it, and read unrelated text of the same length.
+Compare prediction quality using fixed scoring criteria. The scoring agent must not know which group is which.</code></pre>
+<h2 id="dont-change-rules-over-one-small-problem">Don’t change rules
+over one small problem</h2>
+<p>After a few rounds, one small problem makes you want to change
+<code>LOOP.md</code> or the playbook format. Resist. Frequent rule
+changes make rounds incomparable, and you never know which change
+helped. Put small problems in the playbook. Change rules at fixed
+checkpoints, such as every ten rounds, when you can review the
+accumulated records together.</p>
+<h2 id="reflection-checks">Reflection checks</h2>
+<p>The playbook handles methods; reflection handles direction. Every
+three rounds, an independent new conversation reads all records and
+answers:</p>
+<ul>
+<li>What is the trend in prediction accuracy?</li>
+<li>Are questions getting smaller and more alike?</li>
+<li>Does any good result lack a control?</li>
+<li>Does any playbook entry hide a problem?</li>
+</ul>
+<p>It can write <code>STOP</code> to halt the loop and wait for you.
+Independence matters because each conversation in the loop sees only its
+own round, not these trends across rounds.</p>
+<h2 id="exercise">Exercise</h2>
+<p>After six rounds of your loop, test the playbook with the three
+groups above. If the differences are not clear, record that in the
+reflection. Don’t rush to change the playbook format.</p>
+<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<div class="pitfall">
+<p><strong>Entries are appended, never merged.</strong> Sixty entries
+after a month are too many to read or use. Cap the count and merge
+similar entries.</p>
+</div>
+<div class="pitfall">
+<p><strong>Merging into empty advice.</strong> “Check results carefully”
+wins everyone’s agreement but helps nobody. A merged entry must say
+exactly what to check next time.</p>
+</div>
+<div class="pitfall">
+<p><strong>Calling the playbook useful without controls.</strong>
+Accuracy may rise because questions got easier or prompts got longer.
+Use three groups and blind scoring.</p>
+</div>
+<div class="pitfall">
+<p><strong>Changing rules whenever something goes wrong.</strong> Daily
+changes make rounds incomparable. Small problems go in the playbook;
+rules change together at fixed checkpoints.</p>
+</div>
+</article>
+<nav class="pager"><a class="prev" href="automate-schedule.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.1 定时与无人值守</span><span lang="en">4.1 Scheduling and headless runs</span></a><a class="next" href="automate-pages.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.3 结果页</span><span lang="en">4.3 The results page</span></a></nav>
+</main>
+</div>
+</body>
+</html>

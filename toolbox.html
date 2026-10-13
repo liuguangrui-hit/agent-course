@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工具箱 · 用 Agent 做科研</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
+</header>
+<div class="layout">
+<nav class="side">
+<a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
+<a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
+<a href="toolbox.html" class="cur"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+</nav>
+<main>
+<article lang="zh"><h1 id="工具箱">工具箱</h1>
+<p>这门课的暗线。每课一开始让 Agent
+自己装上这一课的工具，装好后验证一遍，把用法写进项目的
+<code>AGENTS.md</code>；之后每一课都接着用。这一页把全部工具按课列在一起，方便课后查。</p>
+<p>装工具的任务卡都是一个样子，换掉工具名就能用：</p>
+<pre class="text"><code>这个项目要用 &lt;工具&gt;，用来 &lt;让你能做的事&gt;。检查这台电脑有没有，没有就装上。
+装之前列出打算装什么，装在哪，要不要管理员权限，等我同意。
+装完实际用一次证明它能用，再在 AGENTS.md 里补一两行：这个工具在本项目里怎么用。</code></pre>
+<h2 id="第-0-课两家-agent">第 0 课：两家 Agent</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://code.claude.com/docs/en/desktop">Claude
+Code</a></td>
+<td>读写你电脑上的文件，运行命令</td>
+<td>一件事一个对话，一个文件夹</td>
+</tr>
+<tr>
+<td><a href="https://developers.openai.com/codex">Codex</a></td>
+<td>同上，另一家的模型</td>
+<td>和 Claude 互相审，品味不同才看得出问题</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-1-课能编译能画图能看页面">第 1
+课：能编译，能画图，能看页面</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python 环境：<a href="https://docs.astral.sh/uv/">uv</a></td>
+<td>跑实验，从数据重画图，跑核对脚本</td>
+<td>每个项目独立环境，不动系统 Python</td>
+</tr>
+<tr>
+<td>LaTeX：<a href="https://yihui.org/tinytex/">TinyTeX</a></td>
+<td>改完立刻编译，看到真实页数</td>
+<td>轻量发行版够用，缺宏包时让它按需补</td>
+</tr>
+<tr>
+<td>PDF 渲染：<a
+href="https://poppler.freedesktop.org/">poppler</a></td>
+<td>把编译后的页面转成图片，自己看排版</td>
+<td>要求它看页面，不只看单独导出的图</td>
+</tr>
+<tr>
+<td><a href="https://agents.md/">AGENTS.md</a></td>
+<td>每次开工自动读项目约定</td>
+<td>只放稳定约定，加新条前先删重</td>
+</tr>
+<tr>
+<td><a href="https://code.claude.com/docs/en/skills">Skill</a></td>
+<td>一句话调出一整套做法</td>
+<td>从一次真实的成功里提炼，不凭空写</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-2-课出门找资料回来存成知识库">第 2
+课：出门找资料，回来存成知识库</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://lite.ego.app/">Ego 浏览器</a></td>
+<td>用你已登录的图书馆账号打开出版社页面，下载订阅论文</td>
+<td>你登录一次，它沿用；真人验证码留给你点</td>
+</tr>
+<tr>
+<td><a href="https://obsidian.md/">Obsidian</a></td>
+<td>你和 Agent 共用一个文件夹形式的知识库，双链互相连接</td>
+<td>知识库就是普通 Markdown 文件，Agent 直接读写</td>
+</tr>
+<tr>
+<td>文献接口：<a href="https://openalex.org/">OpenAlex</a>，<a
+href="https://info.arxiv.org/help/api/">arXiv API</a></td>
+<td>按关键词和引用关系批量查论文，不靠网页搜索</td>
+<td>先查元数据定名单，再下载全文</td>
+</tr>
+<tr>
+<td><a
+href="https://code.claude.com/docs/en/sub-agents">Sub-agent</a></td>
+<td>把几十篇论文分给多个干净上下文的助手并行读</td>
+<td>每个只读自己那几篇，主对话只收结论</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-3-课让实验在别的机器上跑">第 3 课：让实验在别的机器上跑</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git 与 GitHub：<a href="https://cli.github.com/">gh</a></td>
+<td>每次改代码留版本，结果对得上是哪一版代码跑出来的</td>
+<td>数据和大文件不进仓库</td>
+</tr>
+<tr>
+<td>SSH 与 <a href="https://tailscale.com/">Tailscale</a></td>
+<td>从你的电脑登录实验室服务器，学校网络外也能连</td>
+<td>每次 SSH 设超时，不在两台机器之间搬大文件</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tmux/tmux">tmux</a> 后台任务</td>
+<td>实验在服务器上跑，断网关电脑也不停</td>
+<td>启动后立刻返回，日志写进文件</td>
+</tr>
+<tr>
+<td>监视器</td>
+<td>Agent 盯着日志，跑完或出错时自己醒来接着干</td>
+<td>隔几分钟看一次，不要每秒去问</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-4-课夜里自己跑">第 4 课：夜里自己跑</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定时任务：<a href="https://code.claude.com/docs/en/desktop">Claude
+桌面版</a>，Codex 自动化</td>
+<td>按时间表自己开工</td>
+<td>每次开新对话，从文件里接上次的进度</td>
+</tr>
+<tr>
+<td>无人值守调用：<code>claude -p</code>，<code>codex exec</code></td>
+<td>一个 Agent 用命令行把一件事交给另一家</td>
+<td>限定可写的文件夹，产物落到文件</td>
+</tr>
+<tr>
+<td>手机通知：<a href="https://ntfy.sh/">ntfy</a></td>
+<td>跑完或卡住时推到你手机上</td>
+<td>只推结论和链接，不推长日志</td>
+</tr>
+<tr>
+<td>经验榜</td>
+<td>每轮把有效和无效的做法记下来，下一轮先读</td>
+<td>每条带来源，旧条目会被新证据挤掉</td>
+</tr>
+<tr>
+<td><a href="https://pages.github.com/">GitHub Pages</a></td>
+<td>把结果做成网页，手机上就能看</td>
+<td>默认公开，未发表的结果放私有仓库或只放摘要</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-5-课选修给工作台装上锁">第 5 课选修：给工作台装上锁</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权限规则：<a
+href="https://code.claude.com/docs/en/settings">settings.json</a></td>
+<td>常用命令不再一次次问你，危险命令一律拒绝</td>
+<td>先拒绝表，再允许表</td>
+</tr>
+<tr>
+<td><a href="https://code.claude.com/docs/en/sandboxing">沙箱</a></td>
+<td>命令只能写项目文件夹，只能连你允许的网站</td>
+<td>放手让它跑久一点之前先开</td>
+</tr>
+<tr>
+<td><a href="https://code.claude.com/docs/en/hooks">Hooks</a>，<a
+href="https://github.com/gitleaks/gitleaks">gitleaks</a></td>
+<td>改完文件自动跑检查，推送前自动查密钥，不靠它记得</td>
+<td>检查要快，几秒内跑完</td>
+</tr>
+<tr>
+<td>密钥管理</td>
+<td>密码和 API Key 不进对话、不进仓库</td>
+<td>放系统钥匙串或不提交的 .env</td>
+</tr>
+</tbody>
+</table>
+<h2 id="第-6-课选修算账">第 6 课选修：算账</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>工具</th>
+<th>Agent 因此能做的事</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用量账本：<a
+href="https://github.com/ryoppippi/ccusage">ccusage</a></td>
+<td>每件事花了多少 token，多少钱，多长时间，一目了然</td>
+<td>按任务记，才比得出哪种编排划算</td>
+</tr>
+</tbody>
+</table>
+</article>
+<article lang="en"><h1 id="toolbox">Toolbox</h1>
+<p>The hidden thread of this course. At the start of each session, have
+the agent install the tools it needs, test them, and write their use
+into the project’s <code>AGENTS.md</code>. Each later session keeps
+using them. This page lists all the tools by session so you can look
+them up afterwards.</p>
+<p>The task cards for installing tools all follow the same pattern.
+Change the tool name and you can use it:</p>
+<pre class="text"><code>This project needs &lt;tool&gt; so you can &lt;what it lets you do&gt;. Check whether it is installed on this computer, and install it if it isn&#39;t.
+Before installing, list what you plan to install, where, and whether it needs administrator permissions. Wait for my OK.
+Use it once to show it works, then add a line or two to AGENTS.md explaining how to use it in this project.</code></pre>
+<h2 id="session-0-two-vendors-agents">Session 0: two vendors’
+agents</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://code.claude.com/docs/en/desktop">Claude
+Code</a></td>
+<td>Read and write files on your computer, run commands</td>
+<td>One task, one conversation, one folder</td>
+</tr>
+<tr>
+<td><a href="https://developers.openai.com/codex">Codex</a></td>
+<td>The same, with another vendor’s model</td>
+<td>Have it and Claude review each other; different tastes reveal
+problems</td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-1-compile-draw-figures-look-at-pages">Session 1:
+compile, draw figures, look at pages</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python environment: <a href="https://docs.astral.sh/uv/">uv</a></td>
+<td>Run experiments, redraw figures from data, run checking scripts</td>
+<td>A separate environment for each project; leave the system Python
+alone</td>
+</tr>
+<tr>
+<td>LaTeX: <a href="https://yihui.org/tinytex/">TinyTeX</a></td>
+<td>Compile straight after an edit and see the actual page count</td>
+<td>A lightweight distribution is enough; have it add missing packages
+as needed</td>
+</tr>
+<tr>
+<td>PDF rendering: <a
+href="https://poppler.freedesktop.org/">poppler</a></td>
+<td>Turn compiled pages into images and check the layout itself</td>
+<td>Ask it to look at the pages, not just figures exported on their
+own</td>
+</tr>
+<tr>
+<td><a href="https://agents.md/">AGENTS.md</a></td>
+<td>Read project conventions automatically each time it starts</td>
+<td>Keep only stable conventions; remove duplicates before adding a
+rule</td>
+</tr>
+<tr>
+<td><a href="https://code.claude.com/docs/en/skills">Skill</a></td>
+<td>Bring back a whole method with one line</td>
+<td>Extract it from a real success, rather than inventing it</td>
+</tr>
+</tbody>
+</table>
+<h2
+id="session-2-find-material-and-bring-it-back-as-a-knowledge-base">Session
+2: find material and bring it back as a knowledge base</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://lite.ego.app/">Ego browser</a></td>
+<td>Open publisher pages with your library login and download
+subscription papers</td>
+<td>You log in once; it reuses the session. Human verification is for
+you to click</td>
+</tr>
+<tr>
+<td><a href="https://obsidian.md/">Obsidian</a></td>
+<td>Share a folder-based knowledge base with you, with wikilinks
+connecting pages</td>
+<td>The knowledge base is plain Markdown; the agent reads and writes it
+directly</td>
+</tr>
+<tr>
+<td>Literature APIs: <a href="https://openalex.org/">OpenAlex</a>, <a
+href="https://info.arxiv.org/help/api/">arXiv API</a></td>
+<td>Find papers in batches by keywords and citations, without web
+search</td>
+<td>Use metadata to settle the list first, then download the full
+texts</td>
+</tr>
+<tr>
+<td><a
+href="https://code.claude.com/docs/en/sub-agents">Sub-agent</a></td>
+<td>Split dozens of papers among assistants with fresh contexts to read
+in parallel</td>
+<td>Each reads only its own papers; the main conversation gets only the
+conclusions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-3-run-experiments-on-another-machine">Session 3: run
+experiments on another machine</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git and GitHub: <a href="https://cli.github.com/">gh</a></td>
+<td>Keep a version for each code change and tie results to the code that
+produced them</td>
+<td>Keep data and large files out of the repository</td>
+</tr>
+<tr>
+<td>SSH and <a href="https://tailscale.com/">Tailscale</a></td>
+<td>Log in to a lab server from your computer, even off campus</td>
+<td>Set a timeout for every SSH call; don’t move large files between
+machines</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tmux/tmux">tmux</a> background jobs</td>
+<td>Run experiments on the server through lost connections and shutdowns
+of your computer</td>
+<td>Return as soon as the job starts; write logs to files</td>
+</tr>
+<tr>
+<td>Monitor</td>
+<td>Watch logs and wake the agent when a run finishes or fails</td>
+<td>Check every few minutes, not every second</td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-4-run-overnight">Session 4: run overnight</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scheduled tasks: <a
+href="https://code.claude.com/docs/en/desktop">Claude desktop</a>, Codex
+automations</td>
+<td>Start work on a schedule</td>
+<td>Start a new conversation each time and pick up progress from
+files</td>
+</tr>
+<tr>
+<td>Headless calls: <code>claude -p</code>, <code>codex exec</code></td>
+<td>Hand a task from one agent to another vendor through the command
+line</td>
+<td>Limit the writable folder and save outputs as files</td>
+</tr>
+<tr>
+<td>Phone notifications: <a href="https://ntfy.sh/">ntfy</a></td>
+<td>Notify your phone when work finishes or gets stuck</td>
+<td>Send only the conclusion and a link, not long logs</td>
+</tr>
+<tr>
+<td>Playbook</td>
+<td>Record what worked and what failed each round; read it before the
+next</td>
+<td>Give each entry a source; new evidence can displace old entries</td>
+</tr>
+<tr>
+<td><a href="https://pages.github.com/">GitHub Pages</a></td>
+<td>Make results into a web page you can read on your phone</td>
+<td>Public by default; put unpublished results in a private repository
+or publish only a summary</td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-5-elective-put-locks-on-the-workbench">Session 5
+elective: put locks on the workbench</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permission rules: <a
+href="https://code.claude.com/docs/en/settings">settings.json</a></td>
+<td>Run common commands without asking each time, and always reject
+dangerous ones</td>
+<td>Write the deny list before the allow list</td>
+</tr>
+<tr>
+<td><a
+href="https://code.claude.com/docs/en/sandboxing">Sandbox</a></td>
+<td>Write only inside the project folder and connect only to sites you
+allow</td>
+<td>Turn it on before leaving the agent to run for longer</td>
+</tr>
+<tr>
+<td><a href="https://code.claude.com/docs/en/hooks">Hooks</a>, <a
+href="https://github.com/gitleaks/gitleaks">gitleaks</a></td>
+<td>Check files automatically after edits and scan for secrets before
+pushing, without relying on memory</td>
+<td>Keep checks fast, within a few seconds</td>
+</tr>
+<tr>
+<td>Secret management</td>
+<td>Keep passwords and API keys out of conversations and
+repositories</td>
+<td>Use the system keychain or an uncommitted .env</td>
+</tr>
+</tbody>
+</table>
+<h2 id="session-6-elective-count-the-cost">Session 6 elective: count the
+cost</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it lets the agent do</th>
+<th>What to watch for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usage ledger: <a
+href="https://github.com/ryoppippi/ccusage">ccusage</a></td>
+<td>See each task’s tokens, cost and time at a glance</td>
+<td>Record by task so you can compare the cost of different
+arrangements</td>
+</tr>
+</tbody>
+</table>
+</article>
+<nav class="pager"><a class="prev" href="syllabus.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 课程大纲</span><span lang="en"> Syllabus</span></a><a class="next" href="setup.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">0 课前准备</span><span lang="en">0 Setup</span></a></nav>
+</main>
+</div>
+</body>
+</html>

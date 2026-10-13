@@ -83,3 +83,6 @@ details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
 .deep { border: 1px solid var(--line); border-radius: 10px; padding: 4px 18px; margin: 20px 0; }
 .deep p:first-child strong { color: var(--accent); }
 @media (max-width: 760px) { nav.side .sub { padding-left: 10px; } }
+.install { border: 1px solid #bfe0cf; background: #eefaf3; border-radius: 10px; padding: 4px 18px; margin: 16px 0; }
+.install p:first-child strong { color: #1f7a4d; }
+.bench { border-left: 4px solid #1f7a4d; padding: 2px 16px; margin: 24px 0; }
