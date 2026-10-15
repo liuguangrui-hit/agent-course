@@ -30,22 +30,30 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="git-与-github">3.1 Git 与 GitHub</h1>
-<p><span class="meta">课后深入，约 45 分钟。</span></p>
-<p>半年后拿到一个好结果，提交编号把你带回了代码。数据却已经重切，依赖也升级了。复现需要同时保存代码、数据与环境信息。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>说明复现一次运行所需的代码、数据、配置、环境与产物身份，并据此设计运行元数据。</li>
+<li>区分执行提交与分析提交，界定正式运行所需的代码状态，保证事前预测的时间顺序可核查。</li>
+<li>在不影响现有工作的前提下检出旧版本复现运行，并诊断复现结果不一致的来源。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 45 分钟。</span></p>
+<p>半年后得到一个好结果，提交编号可以把研究者带回当时的代码，但数据可能已经重新切分，依赖也可能已经升级。复现需要同时保存代码、数据与环境信息。</p>
 <h2 id="代码提交与版本记录">代码提交与版本记录</h2>
 <p>Git
-提交记录哪些受管理文件在那时是什么内容。先查看差异，再提交，正式运行从已提交代码启动。GitHub
-保存远端副本，便于合作和服务器取回。</p>
-<p>常用动作不多：看状态和差异，提交，再推送或取回。第一次在自己的账号建仓库时，先确认可见范围，取得链接后再让执行机器取代码。</p>
+提交记录受管理文件在某一时刻的内容。先查看差异再提交，正式运行从已提交的代码启动。GitHub
+保存远端副本，便于协作和服务器取回代码。</p>
+<p>常用操作不多：查看状态和差异，提交，推送或拉取。首次在自己的账号下建立仓库时，先确认可见范围，取得链接后再让执行机器获取代码。</p>
 <pre class="text"><code>建立本实验的 Git 仓库，先列出会纳入的文件。
 忽略环境目录，凭据，大型数据与下载全文。代码和小型配置保留。
 提交基线，记录完整提交号。若已有仓库，先查现状和未提交改动，再继续。</code></pre>
-<h2 id="运行所需的其他记录">运行所需的其他记录</h2>
+<h2 id="运行所需的其他记录">运行所需的其他身份记录</h2>
 <table>
 <thead>
 <tr>
 <th>身份</th>
-<th>要记录什么</th>
+<th>记录内容</th>
 </tr>
 </thead>
 <tbody>
@@ -67,57 +75,71 @@
 </tr>
 </tbody>
 </table>
-<p>配置文件中的默认值也会变化，所以保存实际解析值。运行编号指向一次执行，提交号指向代码；同一提交可以产生很多次运行。</p>
-<h2 id="干净状态与生成文件">干净状态与生成文件</h2>
-<p>启动器可以拒绝运行代码有未提交改动的正式实验。但结果目录写入后，仓库自然会变脏。检查范围要提前定义：执行代码和配置必须固定，输出写到独立运行目录，运行后的结果另行归档。</p>
-<p>如果提交包含预测和代码，事后分析另起提交，仍引用执行提交。给预测记录时间和输入版本，私有历史保留原件，不通过事后修改把它变成命中。</p>
+<p>配置文件中的默认值也可能变化，因此应保存实际解析后的值。运行编号指向一次执行，提交号指向代码；同一提交可以产生多次运行。</p>
+<h2 id="干净状态与生成文件">代码状态与生成文件</h2>
+<p>启动器可以拒绝在代码存在未提交改动时运行正式实验。但结果目录写入后，仓库自然会出现改动。因此须事先界定检查范围：执行代码和配置必须固定，输出写入独立的运行目录，运行后的结果另行归档。</p>
+<p>若某次提交同时包含预测和代码，事后分析另起提交，并引用执行提交。预测记录应带时间和输入版本，原件保留在私有历史中，不能通过事后修改把预测变成命中。</p>
 <pre class="text"><code>为本次运行生成 run_metadata.json，记录执行提交和已跟踪代码的改动状态。
 数据哈希按实际读入文件计算。记录完整命令、配置与种子。
 完成后生成产物清单。分析脚本若后来修改，保存新的分析提交。</code></pre>
-<h2 id="安全地回到旧版本">安全地回到旧版本</h2>
-<p>想比较旧代码时，在新目录建立独立检出或工作树。当前目录可能有别人的未提交文件，先看状态再决定恢复范围。</p>
-<p>并行实验各有自己的工作树和输出目录。合并代码由一个整合者负责，实验结果按运行身份并存。目录隔离减少覆盖，服务器数据目录与输出路径仍要检查。</p>
+<h2 id="安全地回到旧版本">旧版本的安全检出</h2>
+<p>需要比较旧代码时，在新目录中建立独立检出或工作树。当前目录可能有他人未提交的文件，应先查看状态再决定恢复范围。</p>
+<p>并行实验各自使用独立的工作树和输出目录。代码合并由一位整合者负责，实验结果按运行身份并存。目录隔离可以减少覆盖，服务器上的数据目录与输出路径仍需检查。</p>
 <h2 id="练习">练习</h2>
-<p>从同一执行提交取两份代码，用相同配置运行一项短实验。比较环境与输出清单。若结果不逐字相同，先判断是浮点差异、随机源未固定，还是实际输入已经不同。</p>
-<p>再只改变一个配置，确认新的运行能从元数据中被区分。最后写一段别人照着能重跑的说明。</p>
+<p>从同一执行提交取出两份代码，用相同配置运行一项短实验，比较环境与输出清单。若结果不完全相同，先判断原因是浮点差异、随机源未固定，还是实际输入已经不同。</p>
+<p>再只改变一个配置，确认新运行可以通过元数据区分。最后写一段说明，使他人能据此重新运行。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
 <p><strong>提交号指向分析完成后的代码。</strong>
 分别保存执行提交和分析提交，检查启动时的代码状态。</p>
 </div>
 <div class="pitfall">
-<p><strong>数据下载地址相同，就认为输入相同。</strong>
+<p><strong>数据下载地址相同，即认为输入相同。</strong>
 保存实际文件哈希和切分信息。</p>
 </div>
 <div class="pitfall">
-<p><strong>回退时覆盖同目录其他工作。</strong>
-在独立目录检出旧版，恢复前检查现有改动。</p>
+<p><strong>回退版本时覆盖同一目录中的其他工作。</strong>
+在独立目录检出旧版本，恢复前检查现有改动。</p>
 </div>
-<p>参考 <a href="https://git-scm.com/book/zh/v2">Pro Git</a> 与 <a
+<p>参考资料：<a href="https://git-scm.com/book/zh/v2">Pro Git</a> 与 <a
 href="https://cli.github.com/manual/">GitHub CLI 手册</a>。</p>
 </article>
 <article lang="en"><h1 id="git-and-github">3.1 Git and GitHub</h1>
-<p><span class="meta">After-class deep dive, about 45
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Specify the records of code, data, configuration, environment and
+outputs required to reproduce a computational result, and explain why a
+commit hash alone is insufficient.</li>
+<li>Separate execution commits from analysis commits and define the
+scope of clean-state checks so that the order of prediction, execution
+and analysis can be demonstrated.</li>
+<li>Reproduce a run from an independent checkout and diagnose the source
+of any difference between the two runs.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 45
 minutes.</span></p>
-<p>Six months later you get a good result, and the commit hash takes you
-back to the code. But the data have been re-split and the dependencies
-upgraded. Reproducibility requires recording the code, data and
-environment together.</p>
-<h2 id="record-code-versions-with-commits">Record code versions with
+<p>A commit hash can return a researcher to the code that produced a
+result months earlier, yet the data may since have been re-split and the
+dependencies upgraded. Reproducibility requires the code, data and
+environment to be recorded together.</p>
+<h2 id="record-code-versions-with-commits">Recording code versions with
 commits</h2>
-<p>A Git commit records what each tracked file contained at that time.
-Look at the diff first, then commit, and start full runs from committed
-code. GitHub keeps a remote copy, which makes collaboration and fetching
-onto servers easy.</p>
-<p>The common actions are just checking status, viewing diffs,
-committing, pushing and pulling. The first time you create a repository
-in your own account, confirm its visibility first, get the link, and
+<p>A Git commit records the content of each tracked file at that point.
+Review the diff before committing, and start full runs from committed
+code. GitHub keeps a remote copy, which supports collaboration and
+retrieval onto servers.</p>
+<p>The routine operations are checking status, viewing diffs,
+committing, pushing and pulling. When creating a repository in one’s own
+account for the first time, confirm its visibility, obtain the link and
 only then let the executing machine fetch the code.</p>
 <pre class="text"><code>Set up a Git repository for this experiment and first list the files that will be included.
 Ignore environment directories, credentials, large data and downloaded full texts. Keep code and small configuration files.
 Commit a baseline and record the full commit hash. If a repository already exists, check its current state and uncommitted changes first, then continue.</code></pre>
-<h2 id="record-four-other-aspects-of-each-run">Record four other aspects
-of each run</h2>
+<h2 id="record-four-other-aspects-of-each-run">Four further records for
+each run</h2>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -126,7 +148,7 @@ of each run</h2>
 <thead>
 <tr>
 <th>Record</th>
-<th>What to record</th>
+<th>Content</th>
 </tr>
 </thead>
 <tbody>
@@ -148,59 +170,61 @@ of each run</h2>
 </tr>
 </tbody>
 </table>
-<p>Default values in configuration files can also change, so save the
-actual parsed values. The run ID points to one execution and the commit
-hash points to code; one commit can produce many runs.</p>
+<p>Default values in configuration files can change, so the actual
+parsed values are saved. The run ID refers to one execution and the
+commit hash refers to code; one commit can produce many runs.</p>
 <h2 id="clean-state-and-generated-files">Clean state and generated
 files</h2>
 <p>A launcher can refuse to start a full experiment when the code has
-uncommitted changes. But once results are written, the repository
-naturally becomes dirty. Define the scope of the check in advance:
-executed code and configuration must be fixed, outputs go to a separate
-run directory, and results are archived separately after the run.</p>
+uncommitted changes. Once results are written, however, the repository
+necessarily becomes dirty. The scope of the check is therefore defined
+in advance: executed code and configuration must be fixed, outputs go to
+a separate run directory, and results are archived separately after the
+run.</p>
 <p>If a commit contains the prediction and the code, post-hoc analysis
-gets its own commit that still refers to the execution commit. Record
-the time and input version of the prediction, keep the original in
-private history, and do not edit it after the fact to make it look
+receives its own commit that still refers to the execution commit.
+Record the time and input version of the prediction, keep the original
+in private history, and do not edit it afterwards to make it appear
 correct.</p>
 <pre class="text"><code>Generate run_metadata.json for this run, recording the execution commit and the change status of tracked code.
 Compute data hashes from the files actually read. Record the full command, configuration and seeds.
 Generate an output list when done. If the analysis script is changed later, save a new analysis commit.</code></pre>
-<h2 id="going-back-to-an-old-version-safely">Going back to an old
+<h2 id="going-back-to-an-old-version-safely">Returning to an earlier
 version safely</h2>
-<p>To compare old code, create a separate checkout or worktree in a new
-directory. The current directory may hold someone else’s uncommitted
-files, so check status before deciding how much to restore.</p>
+<p>To compare earlier code, create a separate checkout or worktree in a
+new directory. The current directory may contain another person’s
+uncommitted files, so check its status before deciding how much to
+restore.</p>
 <p>Parallel experiments each have their own worktree and output
-directory. One integrator is responsible for merging code, and
-experiment results are stored separately by run ID. Separate directories
-reduce overwriting, but server data directories and output paths still
-need checking.</p>
+directory. A single integrator is responsible for merging code, and
+experimental results are stored separately by run ID. Separate
+directories reduce the risk of overwriting, but server data directories
+and output paths still need to be checked.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Take two copies of the code from the same execution commit and run a
 short experiment with the same configuration. Compare the environments
-and output lists. If the results are not byte-identical, first judge
-whether it is a floating-point difference, an unfixed source of
-randomness, or actual inputs that already differ.</p>
-<p>Then change just one configuration setting and confirm that the new
-run can be told apart from its metadata. Finally write a description
-others can follow to rerun it.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+and output lists. If the results are not byte-identical, determine
+whether the cause is a floating-point difference, an unfixed source of
+randomness, or inputs that already differ.</p>
+<p>Then change one configuration setting and confirm that the new run
+can be distinguished from its metadata. Finally, write a description
+that would allow another person to rerun it.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>The commit hash points to code from after the
-analysis.</strong> Save the execution commit and the analysis commit
+<p><strong>A commit hash that points to code written after the
+analysis.</strong> Record the execution commit and the analysis commit
 separately, and check the state of the code at launch.</p>
 </div>
 <div class="pitfall">
-<p><strong>Assuming the inputs are the same because the download address
-is the same.</strong> Save the hashes of the actual files and the split
+<p><strong>Assuming identical inputs because the download address is the
+same.</strong> Record the hashes of the actual files and the split
 information.</p>
 </div>
 <div class="pitfall">
 <p><strong>Overwriting other work in the same directory when rolling
-back.</strong> Check out the old version in a separate directory, and
-check existing changes before restoring.</p>
+back.</strong> Check out the earlier version in a separate directory,
+and check existing changes before restoring.</p>
 </div>
 <p>See <a href="https://git-scm.com/book/en/v2">Pro Git</a> and the <a
 href="https://cli.github.com/manual/">GitHub CLI manual</a>.</p>

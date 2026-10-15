@@ -31,96 +31,103 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 三组评估器</span><span class="chip new">+ 经验版本记录</span><span class="chip new">+ 用量账本</span></div><h1 id="编排理论">6 编排理论</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>把闭源 Agent
-作为不可改动的原点，定义它之外的可学习对象。写清策略、回报和更新规则，再设计能区分经验收益与提示效应的实验，给出下一批任务上的可检验预测。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>形式化定义原点、外部经验、策略、回报与更新器，其中原点指版本固定的完整
+Agent，并指出研究者能够控制的对象。</li>
+<li>区分单步与序贯两类学习问题，以及内环经验更新与外环规则更新两个层级的学习对象。</li>
+<li>设计三组比较与反馈打乱对照，分别检验总效应、内容效应和收益对正确反馈的依赖。</li>
+<li>分析经验收益成立的泛化条件，以及跨原点迁移、原点漂移和资源成本对结论的影响。</li>
+</ol>
+<p>课堂用合成演算数据练习分析流程；真实的学习效果须按冻结协议在新任务上测量，在课后完成。</p>
 </div>
-<p><span class="meta">选修课。课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">选修课。课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>第 4 课留下了一张经验榜。把它交给新会话，Agent 可能改变做法；换一家
-Agent，同一条经验又可能没有用。权重没有动，改变究竟发生在哪里？</p>
-<p>本课从这里讨论学习。Claude Code 和 Codex 这类完整 Agent
-由厂商提供，包含模型、工具接口与执行循环。研究者能控制的部分在它外面：给什么经验，怎样选择任务，怎样依据结果更新。</p>
+<p>本节讨论模型权重固定条件下的 Agent 学习。第 4
+课形成的经验榜可作为外部经验，影响 Agent 在新任务中的行为；其效果可能随
+Agent 或版本改变。分析重点是可学习对象、更新机制及学习收益的识别。</p>
+<p>Claude Code 和 Codex 这类完整 Agent
+由厂商提供，包含模型、工具接口与执行循环。研究者能够控制的对象包括外部经验、任务选择和依据结果更新经验的规则。</p>
 <div class="download">
 <p><a href="downloads/lesson-6-zh.zip">下载第 6 课材料</a></p>
 </div>
-<p>练习包有三组得分、学习协议和用量账本。得分与账本均为合成演算数据，用来练分析流程；真实效果由你按冻结协议调用自己的
+<p>练习包包含三组得分、学习协议和用量账本。得分与账本均为合成的演算数据，仅用于练习分析流程；真实效果须由学生按冻结协议调用自己的
 Agent 后测量。</p>
-<h2 id="课前预备">课前预备</h2>
+<h2 id="课前预备">课前准备</h2>
 <p><span class="meta">预留 10 至 20 分钟，沿用
 Python，无需新增软件包。</span></p>
 <div class="install">
 <p><strong>课前运行准备。</strong>
-下载三组数据与分析器，确认文件能读。三组各代表什么、怎样定义回报与更新，以及结果支持什么，都在课堂讨论。</p>
+下载三组数据与分析器，确认文件可以读取。三组各自代表什么，回报与更新怎样定义，以及结果支持什么结论，均在课堂中讨论。</p>
 </div>
 <pre class="text"><code>解压第 6 课材料，检查 Python 能启动，并能导入 csv、json 与 math。
 确认 experience_scores.csv，analyze_experience.py，protocol.md 和 theory_checks.py 均存在。
 只读 CSV 表头和 protocol.md 的栏目，列出不认识的字段，不先生成分析结论。
 带来第 4 课的一条候选经验；没有自己的条目时，用课堂的冒烟测试经验。
 把版本、材料位置和未解决项写到 preflight.md。</code></pre>
-<p>开课前能找到三组输入与一条经验即可。课堂先从这条经验走一遍输出、回报和更新，再解释记号；不用提前学完强化学习或读完五篇相关论文。</p>
-<p>Python
-尚未可用时，课堂先在白板上拆三组均值，用同桌的分析结果核对；记录本机运行待补，课后再亲自复算。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="从一条冒烟测试经验开始10-分钟">从一条冒烟测试经验开始，10
+<p>开课前能找到三组输入与一条经验即可。课堂先以这条经验为例走一遍输出、回报和更新，再引入记号；无需提前学完强化学习或读完五篇相关论文。</p>
+<p>若 Python
+尚不可用，课堂上先在白板上分解三组均值，用同组同学的分析结果核对；本机运行记为待补，课后亲自复算。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="从一条冒烟测试经验开始10-分钟">以一条冒烟测试经验为例，10
 分钟</h3>
-<p>先确认材料能读，把课前带来的经验放到白板上，再一起定义学习过程。</p>
+<p>先确认材料可以读取，把课前带来的经验写在白板上，再共同定义学习过程。</p>
 <p>回到第 4
-课那条经验：实验输出格式变了，短运行后检查每列和行数，再提交正式任务。</p>
-<p>让同一个 Agent
-接到一项新实验。它先读当前经验榜，写出测试程序，运行器检查结果文件。若漏掉了必需列，回报记零；结构检查全部通过，回报记一。更新器读这次失败，把经验改得更具体，例如要求同时核对列名与每列的有限值。</p>
-<p>下一项任务换了数据和输出格式，Agent
-再读修改后的榜。我们要测的是，这份经验能否让它在新任务上少犯同类错误。做事的
-Agent 保持不动，行为依据和更新规则保存在它外面。</p>
+课的那条经验：实验输出格式改变后，短运行结束时检查每一列和行数，再提交正式任务。</p>
+<p>设同一个 Agent
+接到一项新实验。它先读取当前经验榜，写出测试程序，运行器检查结果文件。若漏掉必需的列，回报记为零；结构检查全部通过，回报记为一。更新器读取这次失败，把经验改得更具体，例如要求同时核对列名与每列的有限值。</p>
+<p>下一项任务更换了数据和输出格式，Agent
+再读取修改后的经验榜。需要测量的是：这份经验能否使它在新任务上减少同类错误。执行任务的
+Agent 保持不变，行为依据和更新规则保存在它之外。</p>
 <h3 id="学习过程的形式化5-分钟">学习过程的形式化，5 分钟</h3>
 <p>把固定版本的闭源 Agent 记作
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><annotation encoding="application/x-tex">\mathcal A_v</annotation></semantics></math>，刚才那张经验榜记作
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>。新实验的材料是
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><annotation encoding="application/x-tex">\mathcal A_v</annotation></semantics></math>，上述经验榜记作
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>。新实验的材料为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>，Agent
-给出的测试程序是
+给出的测试程序为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo>∣</mo><mi>x</mi><mo>,</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">y\sim\mathcal A_v(\cdot\mid x,B).</annotation></semantics></math></p>
 <p>运行器给出回报
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>，更新器
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">U_\phi</annotation></semantics></math>
-把榜改为下一版：</p>
+把经验榜改为下一版：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>U</mi><mi>ϕ</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>B</mi><mi>t</mi></msub><mo>,</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><msub><mi>y</mi><mi>t</mi></msub><mo>,</mo><msub><mi>r</mi><mi>t</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">B_{t+1}=U_\phi(B_t,x_t,y_t,r_t).</annotation></semantics></math></p>
 <p>不同的
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-让同一原点形成不同策略。经验独立保存，就能交给另一家 Agent
-再测。原点在两个地方都作参照：它是系统不修改的执行单元，无经验时的表现又是测量学习增量的零点。</p>
+使同一原点形成不同的策略。经验独立保存，因此可以交给另一家 Agent
+再次测试。原点在两处充当参照：它是系统不作修改的执行单元，它在无经验条件下的表现又是测量学习增量的零点。</p>
 <h3 id="内环与外环5-分钟">内环与外环，5 分钟</h3>
-<p>内环根据回报改这条经验，目标是减少以后任务的漏检。策略参数是一份离散文本，更新器在文本空间搜索。这个问题可以表述为强化学习，回报怎样影响更新是检验的重点。</p>
-<p>外环改的是合并与淘汰经验的规则。例如原先每次失败都加一条，现在改成先合并相近条目，再用验证任务决定保留。这一层在改变学习算法，对应自进化。评价器继续使用同一套检查和最终确认任务，改进才有共同参照。</p>
-<p>刚才每项格式检查只给一次回报，下一项任务由外部给定，最小结构接近情境老虎机。真正研究里，选实验会改变已知证据，后续动作也随之改变，这时进入序贯决策与延迟回报。深入页会把两种目标分别写出来。</p>
+<p>内环依据回报修改经验，目标是减少以后任务中的漏检。此时策略参数是一份离散文本，更新器在文本空间中搜索。这一问题可以表述为强化学习，检验的重点是回报怎样影响更新。</p>
+<p>外环修改的是合并与淘汰经验的规则。例如，原先每次失败都新增一条，现在改为先合并相近条目，再用验证任务决定保留与否。这一层改变的是学习算法本身，对应自进化。评价器继续使用同一套检查和最终确认任务，改进才有共同的参照。</p>
+<p>在上例中，每项格式检查只给出一次回报，下一项任务由外部给定，最小结构接近情境老虎机。在实际研究中，实验的选择会改变已知证据，后续动作也随之改变，问题便进入序贯决策与延迟回报。深入专题将分别写出两种目标。</p>
 <h3 id="三组比较与效应分解10-分钟">三组比较与效应分解，10 分钟</h3>
-<p>每个未见任务分别运行目标经验，匹配安慰剂和无经验三组。记平均回报为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(B)</annotation></semantics></math>，<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(P)</annotation></semantics></math>
+<p>每个未见任务分别在目标经验、匹配安慰剂和无经验三组条件下运行。三组的平均回报记为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(B)</annotation></semantics></math>、<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(P)</annotation></semantics></math>
 与
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(\varnothing)</annotation></semantics></math>：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mo>+</mo><mo stretchy="false" form="prefix">[</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">J(B)-J(\varnothing)
 =[J(B)-J(P)]+[J(P)-J(\varnothing)].</annotation></semantics></math></p>
-<p>总效应回答带这张榜比原点自身高多少。第一项比较内容，第二项呈现匹配安慰剂带来的变化。等式总成立；第一项能否解释为学到的知识，取决于安慰剂是否配平了格式、篇幅和其他非特异作用。</p>
-<p>还要检查学习信号。另学一张榜，训练时打乱任务与回报的对应，其他预算相同。两张榜都在正常未见任务上评估，才能判断改进是否依赖正确反馈。</p>
-<h3 id="练习一写出自己的学习对象10-分钟">练习一，写出自己的学习对象，10
+<p>总效应回答带有这张经验榜比原点自身高出多少。右侧第一项比较内容，第二项反映匹配安慰剂带来的变化。这一等式恒成立；第一项能否解释为学到的知识，取决于安慰剂是否配平了格式、篇幅和其他非特异作用。</p>
+<p>还需检验学习信号。另学一张经验榜，训练时打乱任务与回报的对应关系，其余预算相同。两张榜都在正常的未见任务上评估，才能判断改进是否依赖正确的反馈。</p>
+<h3 id="练习一写出自己的学习对象10-分钟">练习一：定义学习对象，10
 分钟</h3>
 <pre class="text"><code>选一个科研行为，例如根据实验设置提出可区分的假设。
 定义任务输入，原点版本，可改经验与不可改评价规则。
 写一次输出、一次回报和一次经验更新的例子，只引用文件与指标。
 判断任务属于单步还是序贯，并说明回报怎样指向前面的选择。</code></pre>
-<h3
-id="练习二实际分析一份三组数据10-分钟">练习二，实际分析一份三组数据，10
+<h3 id="练习二实际分析一份三组数据10-分钟">练习二：三组数据的分析，10
 分钟</h3>
 <pre class="text"><code>运行 analyze_experience.py，逐项解释三组均值、配对内容差和总效应。
 指出哪项比较支持什么判断，再检查原点版本改变后方向是否一致。
 按 protocol.md 设计自己的小规模试验，固定任务、预算和失败处理。
 把内容收益、回报依赖和迁移分别写成预测，各列一个能推翻它的结果。</code></pre>
-<h3 id="练习三找出最接近的先例5-分钟">练习三，找出最接近的先例，5
+<h3 id="练习三找出最接近的先例5-分钟">练习三：最接近的先例比较，5
 分钟</h3>
 <table>
 <colgroup>
@@ -132,7 +139,7 @@ id="练习二实际分析一份三组数据10-分钟">练习二，实际分析�
 <tr>
 <th>工作</th>
 <th>可学对象</th>
-<th>对本课的启发</th>
+<th>与本课的关系</th>
 </tr>
 </thead>
 <tbody>
@@ -163,47 +170,55 @@ id="练习二实际分析一份三组数据10-分钟">练习二，实际分析�
 </tr>
 </tbody>
 </table>
-<p>选一个先例，对比原点边界、更新信号与评估设计。已有人做过冻结模型外的学习，对比时重点看它怎样识别内容收益，以及收益能否跨原点保持。</p>
-<h3 id="检查与小结5-分钟">检查与小结，5 分钟</h3>
+<p>选择一个先例，比较原点边界、更新信号与评估设计。冻结模型之外的学习已有先例，比较时重点关注它怎样识别内容收益，以及收益能否在更换原点后保持。</p>
+<h3 id="检查与小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>写了更新公式，就认为收益必然上升。</strong>
-给出更新器的选择依据，在未见任务上比较，收敛另需假设。</p>
+<p><strong>写出更新公式即认为收益必然上升。</strong>
+说明更新器的选择依据，在未见任务上比较；收敛性另需假设。</p>
 </div>
 <div class="pitfall">
 <p><strong>把使用声明当作条目贡献。</strong>
 声明用于提出候选，贡献用消融或随机化干预检验。</p>
 </div>
 <div class="pitfall">
-<p><strong>同一张榜换版本，成绩直接并到一条曲线。</strong>
-新版本另起统计段，保留桥接任务测漂移。</p>
+<p><strong>同一张榜更换版本后，成绩直接并入同一条曲线。</strong>
+新版本另起统计段，保留桥接任务以测量漂移。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
-<p>现在可改对象、更新器和评估器都有身份。工作台能提出一种学习办法，也能说清它怎样被否定。账本在最后衡量取得这些收益花了多少资源。</p>
+<p>可修改对象、更新器和评估器现在都有明确身份。这一框架既能提出一种学习方法，也能说明它在何种结果下会被否定。用量账本最终衡量取得这些收益所消耗的资源。</p>
 </div>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
-<p>不看公式，用自己的经验条目，讲清输入怎样变成输出，回报又怎样推动更新。再画出固定原点与可改经验，把更新器和评价器接到图里，指出哪项改变属于内环，哪项改变了学习规则。把仍说不清的地方写到
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
+<p>不看公式，以自己的经验条目为例，说明输入怎样变成输出，回报又怎样推动更新。再画出固定原点与可修改经验，把更新器和评价器接入图中，指出哪项改变属于内环，哪项改变了学习规则。把仍说不清楚的地方写入
 <code>review-after-class.md</code>。</p>
 <h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
 <p>先看一组假设数字：目标经验 0.64，匹配安慰剂 0.62，无经验
-0.50。甲把全部 0.14 增量称为学到的知识。乙同时报告内容差 0.02 和安慰剂差
-0.12，再检查配平、区间和正确反馈的作用。判断两种解读各需要哪些证据。再打开课堂
+0.50。甲把全部 0.14 的增量称为学到的知识。乙同时报告内容差 0.02
+和安慰剂差
+0.12，并检查配平、区间和正确反馈的作用。判断两种解读各需要哪些证据。再打开课堂上
 analyze_experience.py 的输出，用同一分解解释 design 行为在 origin-v2
-下的结果，说明目标经验低于安慰剂时，甲的解释哪里不成立。若换原点后三组都提高，写出怎样比较旧经验是否仍有增量。</p>
+下的结果，说明目标经验低于安慰剂时，甲的解释哪里不成立。若更换原点后三组都提高，写出怎样比较旧经验是否仍有增量。</p>
 <details>
 <summary>
-自己拆完三组，再看对照思路
+自行分解三组后，再查看参考思路
 </summary>
 <p>0.14 是总效应，恒等分解给出 0.02 与
-0.12。内容差要解释为知识收益，还要检查安慰剂是否配平，并估计不确定性与反馈依赖。课堂演算中
-design 在 origin-v2
-下的目标经验低于安慰剂，提示总效应不能代替内容差。跨原点分别用各自无经验和安慰剂组作参照，不能只比较目标经验的绝对分数。</p>
+0.12。要把内容差解释为知识收益，还须检查安慰剂是否配平，并估计不确定性与对反馈的依赖。课堂演算中，design
+行为在 origin-v2
+下的目标经验低于安慰剂，说明总效应不能代替内容差。跨原点比较时，分别以各自的无经验组和安慰剂组作参照，不能只比较目标经验的绝对分数。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>先补完课堂的小规模协议，再选一条理论路径。推导之后回到同一个科研行为，说明公式改变了哪项实验设计。真实
-Agent 调用按协议在课后执行，演算数据继续保留其合成标记。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>为达成第四项目标，本节必读片段为 6.1 的<a
+href="theory-learning.html#有限候选集能给出什么保证">有限候选集的保证</a>、6.3
+的<a href="theory-transfer.html#建一张迁移矩阵">迁移矩阵</a>与<a
+href="theory-transfer.html#漂移对收益的影响可以界定">漂移对收益的影响界</a>，以及
+6.4 的<a
+href="theory-usage.html#学习方案的部署目标">学习方案的部署目标</a>。学生须据此说明独立评估的条件、跨原点比较的基线、漂移影响及资源取舍。其余推导和扩展练习按需选做。</p>
+<p>先补完课堂上的小规模协议，再选择一条理论专题。完成推导后回到同一个科研行为，说明公式改变了哪项实验设计。真实
+Agent 调用按协议在课后执行，演算数据继续保留合成标记。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -212,20 +227,20 @@ Agent 调用按协议在课后执行，演算数据继续保留其合成标记�
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="theory-learning.html">6.1 经验学习与策略表示</a></td>
-<td>75 分钟，从文本策略走到回报与信用分配</td>
+<td>75 分钟，从文本策略推进到回报与信用分配</td>
 <td>可学习对象、样本量复算与消融</td>
 </tr>
 <tr>
 <td><a href="theory-evaluation.html">6.2 学习收益评估</a></td>
-<td>75 分钟，把总收益拆成可识别效应</td>
+<td>75 分钟，把总收益分解为可识别的效应</td>
 <td>配平、留出与反馈打乱方案</td>
 </tr>
 <tr>
@@ -235,104 +250,127 @@ Agent 调用按协议在课后执行，演算数据继续保留其合成标记�
 </tr>
 <tr>
 <td><a href="theory-usage.html">6.4 用量与成本核算</a></td>
-<td>40 分钟，把学习收益与成本接起来</td>
+<td>40 分钟，把学习收益与成本联系起来</td>
 <td>一项有资源依据的部署决定</td>
 </tr>
 </tbody>
 </table>
 <p>6.1 可先读策略与更新，再读有限候选界和信用分配；6.2
-可先做三组辨析，再做时间留出。最后换自己的科研行为，列出一个能推翻学习收益判断的结果。</p>
+可先做三组辨析，再做时间留出。最后换用自己的科研行为，列出一个能够推翻学习收益判断的结果。</p>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查学生能否为一个科研行为写出原点、可修改经验、回报和更新器，判断其属于单步还是序贯问题，并正确分解三组演算结果。课后独立完成层面，学生按冻结协议在新任务上运行自己的
+Agent，报告总效应、内容差及其区间，并设计反馈打乱对照。迁移层面，学生更换科研行为或原点版本，说明哪些结论需要重新测量，给出一个会推翻学习收益判断的结果，并结合用量说明是否值得部署。合成数据上的演算只用于检查分析方法，不作为学习效果的证据；评价依据是识别条件与证据的对应关系。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Three-arm evaluator</span><span class="chip new">+ Experience versions</span><span class="chip new">+ Usage ledger</span></div><h1 id="orchestration-theory">6 Orchestration theory</h1>
-<p><span class="subtitle">How a system learns while the weights stay
-fixed</span></p>
+<p><span class="subtitle">How a system can learn while the model weights
+remain fixed</span></p>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Treat a closed-source agent as a fixed origin, and define what the
-surrounding system can learn. Write out the policy, the reward and the
-update rule, then design an experiment that separates the gain from
-experience from prompt effects, and give a testable prediction on the
-next batch of tasks.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Formally define the fixed agent (the origin), the external
+experience, the induced policy, the reward and the updater of an
+agent-based learning system.</li>
+<li>Distinguish single-step from sequential learning problems, and the
+inner loop that updates experience from the outer loop that changes the
+learning rule.</li>
+<li>Design tests that separate the total effect of experience from the
+effect of its content and from its dependence on correct feedback.</li>
+<li>Analyze the conditions under which a learning gain generalizes,
+including transfer across origins, origin drift and resource cost.</li>
+</ol>
 </div>
-<p><span class="meta">Elective. Prepare before class, spend 60 minutes
-in class, then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels. In class, students
+formalize one research behavior and analyze a synthetic three-group
+dataset; the synthetic data serve only for practicing the calculation
+and carry no evidence about real agents. After class, students design a
+frozen protocol, and the real learning effect is measured on new tasks
+run under that protocol. The extension paths develop the derivations on
+policy and credit assignment, effect identification, transfer and
+cost.</p>
+<p><span class="meta">Elective. Preparation before class, a 60-minute
+class session, then required review, independent work and transfer
+assessment, with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>Lesson 4 left you a playbook. Give it to a new session and the agent
-may change how it works; switch to another vendor’s agent and the same
-entry may be of no use. The weights did not move, so where did the
-change happen?</p>
-<p>This is the starting point for the lesson’s account of learning.
-Complete agents such as Claude Code and Codex are provided by vendors
-and include the model, the tool interfaces and the execution loop. The
-part researchers can control lies outside: which experience to provide,
-how to choose tasks, and how to update from results.</p>
+<p>This session examines agent learning with fixed model weights. The
+playbook developed in Session 4 provides external experience that may
+change an agent’s behavior on new tasks; its effect may vary across
+agents or versions. The analysis focuses on the object of learning, the
+update mechanism and the identification of learning gains.</p>
+<p>Complete agents such as Claude Code and Codex are supplied by vendors
+and comprise the model, the tool interfaces and the execution loop.
+Researchers can control the external experience, task selection and the
+rules for updating experience from results. The fixed complete agent is
+called the origin.</p>
 <div class="download">
 <p><a href="downloads/lesson-6-en.zip">Download the Lesson 6
 materials</a></p>
 </div>
-<p>The exercise package has three groups of scores, a learning protocol
-and a usage ledger. The scores and the ledger are both synthetic
+<p>The exercise package contains three groups of scores, a learning
+protocol and a usage ledger. The scores and the ledger are synthetic
 worked-example data for practicing the analysis; real effects are
-measured by you, calling your own agent under the frozen protocol.</p>
-<h2 id="before-class">Before class</h2>
-<p><span class="meta">Allow 10 to 20 minutes, reusing Python with no new
-packages.</span></p>
+measured by the students themselves, calling their own agent under the
+frozen protocol.</p>
+<h2 id="before-class">Preparation</h2>
+<p><span class="meta">Allow 10 to 20 minutes; Python is reused and no
+new packages are required.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> Download the three groups of
-data and the analyzer, and confirm the files can be read. What each of
-the three groups stands for, how to define reward and update, and what
-the results support are all discussed in class.</p>
+<p><strong>Preparation.</strong> Download the three groups of data and
+the analyzer, and confirm that the files can be read. What each of the
+three groups represents, how reward and update are defined, and what the
+results support are discussed in class.</p>
 </div>
 <pre class="text"><code>Unzip the Lesson 6 materials and check that Python starts and can import csv, json and math.
 Confirm that experience_scores.csv, analyze_experience.py, protocol.md and theory_checks.py all exist.
 Read only the CSV header and the sections of protocol.md, and list fields I do not recognize. Do not generate analysis conclusions yet.
 Bring one candidate playbook entry from Lesson 4; if I have no entry of my own, use the smoke-test entry from class.
 Write the versions, material locations and unresolved items into preflight.md.</code></pre>
-<p>Before class, it is enough to find the inputs for all three groups
-and one playbook entry. In class we first work through an output, a
-reward and an update using this entry, then explain the notation; you do
-not need to learn reinforcement learning or read the five related papers
-in advance.</p>
-<p>If Python is not working yet, in class you first break down the three
-group means on the whiteboard and check against your neighbor’s analysis
-results; record that the local run is still to do, and recompute it
-yourself after class.</p>
-<h2 id="in-class">In class</h2>
-<h3 id="start-with-a-playbook-entry-from-a-smoke-test-10-minutes">Start
-with a playbook entry from a smoke test, 10 minutes</h3>
-<p>First confirm that the materials can be read, put the entry you
-brought on the whiteboard, then define the learning process
-together.</p>
-<p>Go back to the entry from Lesson 4: when the experiment output format
-changes, check every column and the number of rows after a short run,
-then submit the real job.</p>
-<p>Give the same agent a new experiment. It first reads the current
+<p>Before class, it is sufficient to locate the inputs for all three
+groups and one playbook entry. In class, an output, a reward and an
+update are first worked through with this entry before the notation is
+introduced; prior study of reinforcement learning or of the five related
+papers is not required.</p>
+<p>If Python is not yet working, the three group means are decomposed on
+the whiteboard in class and checked against a neighbor’s analysis
+results; the local run is recorded as outstanding and recomputed after
+class.</p>
+<h2 id="in-class">Class session</h2>
+<h3 id="start-with-a-playbook-entry-from-a-smoke-test-10-minutes">A
+playbook entry from a smoke test, 10 minutes</h3>
+<p>Confirm that the materials can be read and put the entry brought to
+class on the whiteboard; the learning process is then defined
+jointly.</p>
+<p>Return to the entry from Session 4: when the format of experiment
+output changes, check every column and the number of rows after a short
+run, then submit the real job.</p>
+<p>The same agent is given a new experiment. It first reads the current
 playbook and writes a test program, and the runner checks the result
 file. If a required column is missing, the reward is zero; if the
 structure check passes entirely, the reward is one. The updater reads
 this failure and makes the entry more specific, for example by requiring
 both the column names and the finite values in each column to be
 checked.</p>
-<p>The next task changes the data and output format, and the agent reads
-the revised playbook again. What we want to measure is whether this
-entry makes it commit fewer errors of the same kind on new tasks. The
-agent doing the work stays fixed; the basis for its behavior and the
-update rule are kept outside it.</p>
-<h3 id="formalize-the-learning-process-5-minutes">Formalize the learning
-process, 5 minutes</h3>
+<p>The next task changes the data and the output format, and the agent
+reads the revised playbook again. The quantity of interest is whether
+this entry reduces errors of the same kind on new tasks. The agent doing
+the work remains fixed; the basis for its behavior and the update rule
+are kept outside it.</p>
+<h3 id="formalize-the-learning-process-5-minutes">Formalizing the
+learning process, 5 minutes</h3>
 <p>Write the fixed-version closed-source agent as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><annotation encoding="application/x-tex">\mathcal A_v</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><annotation encoding="application/x-tex">\mathcal A_v</annotation></semantics></math>
 and the playbook as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>.
 The material of the new experiment is
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>,
-and the test program the agent gives is
+and the test program the agent produces is
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⋅</mi><mo>∣</mo><mi>x</mi><mo>,</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">y\sim\mathcal A_v(\cdot\mid x,B).</annotation></semantics></math></p>
-<p>The runner gives a reward
+<p>The runner returns a reward
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>,
 and the updater
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">U_\phi</annotation></semantics></math>
@@ -341,65 +379,66 @@ changes the playbook into the next version:</p>
 <p>Different choices of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
 induce different policies from the same origin. Because experience is
-kept separately, it can be handed to another vendor’s agent and tested
-again. The origin serves as the reference in two places: it is the
+kept separately, it can be given to another vendor’s agent and tested
+again. The origin serves as the reference in two respects: it is the
 execution unit the system does not modify, and its performance without
 experience is the baseline for measuring learning gains.</p>
 <h3 id="the-inner-and-outer-loops-5-minutes">The inner and outer loops,
 5 minutes</h3>
-<p>The inner loop changes this entry according to the reward, aiming to
-reduce misses on later tasks. The policy parameter is a discrete piece
-of text, and the updater searches in text space. This problem can be
-stated as reinforcement learning, and how the reward affects the update
-is the focus of testing.</p>
+<p>The inner loop changes the entry according to the reward, with the
+aim of reducing misses on later tasks. The policy parameter is a
+discrete piece of text, and the updater searches in text space. The
+problem can be stated as reinforcement learning, and how the reward
+affects the update is the focus of testing.</p>
 <p>The outer loop changes the rules for merging and retiring entries.
-For example, instead of adding an entry for every failure, first merge
-similar entries, then let validation tasks decide what to keep. This
-layer changes the learning algorithm, which is what self-evolution means
-here. The evaluator keeps using the same checks and final confirmation
-tasks, so improvements have a common reference.</p>
-<p>Just now, each format check gave a single reward and the next task
-was given from outside, so the minimal structure is close to a
-contextual bandit. In real research, choosing an experiment changes the
-known evidence and the later actions change with it; this is where
-sequential decision-making and delayed reward come in. The deeper pages
-write out the two objectives separately.</p>
-<h3 id="decompose-the-effects-with-three-groups-10-minutes">Decompose
+For example, instead of adding an entry for every failure, similar
+entries are first merged and validation tasks then decide what is kept.
+This layer changes the learning algorithm, which is what self-evolution
+means in this course. The evaluator continues to use the same checks and
+final confirmation tasks, so that improvements have a common
+reference.</p>
+<p>In the example above, each format check gave a single reward and the
+next task was supplied externally, so the minimal structure is close to
+a contextual bandit. In real research, choosing an experiment changes
+the available evidence, and later actions change accordingly; this
+introduces sequential decision-making and delayed reward. The extension
+pages state the two objectives separately.</p>
+<h3 id="decompose-the-effects-with-three-groups-10-minutes">Decomposing
 the effects with three groups, 10 minutes</h3>
 <p>Each unseen task is run in three groups: target playbook, matched
-placebo and no playbook. Write their average rewards as
+placebo and no playbook. Writing their average rewards as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(B)</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(P)</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J(\varnothing)</annotation></semantics></math>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mo>+</mo><mo stretchy="false" form="prefix">[</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">J(B)-J(\varnothing)
 =[J(B)-J(P)]+[J(P)-J(\varnothing)].</annotation></semantics></math></p>
-<p>The total effect answers how much higher it scores with this playbook
-than the origin on its own. The first term compares content; the second
-shows the change brought by the matched placebo. The identity always
+<p>The total effect measures how much higher the origin scores with this
+playbook than without it. The first term compares content; the second
+shows the change produced by the matched placebo. The identity always
 holds; whether the first term can be interpreted as learned knowledge
 depends on whether the placebo balances format, length and other
 non-specific effects.</p>
-<p>The learning signal also needs checking. Train another playbook with
-shuffled task–reward pairings during training, keeping the rest of the
-budget unchanged. Only when both playbooks are evaluated on normal
-unseen tasks can you judge whether the improvement depends on correct
-feedback.</p>
+<p>The learning signal also requires a test. A second playbook is
+trained with shuffled task–reward pairings during training, keeping the
+rest of the budget unchanged. Only when both playbooks are evaluated on
+normal unseen tasks can one judge whether the improvement depends on
+correct feedback.</p>
 <h3
 id="exercise-1-define-what-your-system-can-learn-10-minutes">Exercise 1:
-define what your system can learn, 10 minutes</h3>
+defining what the system can learn, 10 minutes</h3>
 <pre class="text"><code>Choose one research behavior, for example proposing distinguishable hypotheses from an experimental setting.
 Define the task input, the origin version, the experience that can change and the evaluation rules that cannot.
 Write an example of one output, one reward and one experience update, referring only to files and metrics.
 Judge whether the task is single-step or sequential, and explain how the reward points back to earlier choices.</code></pre>
 <h3 id="exercise-2-analyze-the-three-group-data-10-minutes">Exercise 2:
-analyze the three-group data, 10 minutes</h3>
+analyzing the three-group data, 10 minutes</h3>
 <pre class="text"><code>Run analyze_experience.py and explain, item by item, the three group means, the paired content difference and the total effect.
 Say which comparison supports which judgment, then check whether the direction stays the same after the origin version changes.
 Following protocol.md, design my own small-scale trial, fixing tasks, budget and failure handling.
 Write content gain, reward dependence and transfer as separate predictions, each with one result that would refute it.</code></pre>
 <h3 id="exercise-3-find-the-closest-precedents-5-minutes">Exercise 3:
-find the closest precedents, 5 minutes</h3>
+identifying the closest precedents, 5 minutes</h3>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -410,7 +449,7 @@ find the closest precedents, 5 minutes</h3>
 <tr>
 <th>Work</th>
 <th>Learnable object</th>
-<th>What it suggests for this lesson</th>
+<th>Relevance to this session</th>
 </tr>
 </thead>
 <tbody>
@@ -442,20 +481,22 @@ find the closest precedents, 5 minutes</h3>
 </tbody>
 </table>
 <p>Choose one precedent and compare the origin boundary, the update
-signal and the evaluation design. Others have already done learning
-outside a frozen model; when comparing, focus on how it identifies
-content gain, and whether the gain holds across origins.</p>
-<h3 id="check-and-summary-5-minutes">Check and summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+signal and the evaluation design. Learning outside a frozen model has
+been studied before; the comparison concentrates on how each work
+identifies the content gain and whether the gain holds across
+origins.</p>
+<h3 id="check-and-summary-5-minutes">Common errors and summary, 5
+minutes</h3>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
-<p><strong>Assuming the gain must rise because an update formula has
-been written.</strong> Give the updater’s basis for selection and
-compare on unseen tasks; convergence needs further assumptions.</p>
+<p><strong>Assuming the gain must increase because an update formula has
+been written.</strong> State the updater’s basis for selection and
+compare on unseen tasks; convergence requires further assumptions.</p>
 </div>
 <div class="pitfall">
 <p><strong>Taking a usage claim as an entry’s contribution.</strong>
-Claims are for proposing candidates; contribution is tested with
+Usage claims are used to propose candidates; contribution is tested with
 ablations or randomized interventions.</p>
 </div>
 <div class="pitfall">
@@ -463,54 +504,70 @@ ablations or randomized interventions.</p>
 into one curve.</strong> Start a new statistical segment for each new
 version, and keep bridging tasks to measure drift.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
-<p>The learnable object, updater and evaluator are now explicitly
-defined. The workbench can propose a way of learning, and can also state
-how it could be refuted. The final ledger exercise measures the
-resources required to obtain these gains.</p>
+<p>The learnable object, the updater and the evaluator are now
+explicitly defined. The system can propose a way of learning and can
+also state how that proposal could be refuted. The final ledger exercise
+measures the resources required to obtain these gains.</p>
 </div>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
-<p>Without looking at the formulas, use your own playbook entry to
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
+<p>Without consulting the formulas, use your own playbook entry to
 explain how input becomes output and how reward drives the update. Then
 draw the fixed origin and the changeable experience, connect the updater
-and the evaluator to the diagram, and point out which change belongs to
-the inner loop and which changes the learning rule. Write what you still
-cannot explain into <code>review-after-class.md</code>.</p>
-<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
-minutes</h3>
-<p>First look at a set of hypothetical numbers: target playbook 0.64,
-matched placebo 0.62, no playbook 0.50. A calls the whole 0.14 gain
-learned knowledge. B reports both the content difference of 0.02 and the
-placebo difference of 0.12, then checks balancing, intervals and the
-role of correct feedback. Judge which evidence each reading needs. Then
-open the output of analyze_experience.py from class, use the same
-decomposition to explain the result for the behavior labeled design
-under origin-v2, and say where A’s interpretation fails when the target
-playbook scores below the placebo. If all three groups improve after
-changing the origin, write how to compare whether the old playbook still
-adds anything.</p>
+and the evaluator to the diagram, and indicate which change belongs to
+the inner loop and which changes the learning rule. Record what you
+cannot yet explain in <code>review-after-class.md</code>.</p>
+<h3 id="compare-the-examples-20-minutes">Analysis of contrasting
+examples, 20 minutes</h3>
+<p>Consider a set of hypothetical numbers: target playbook 0.64, matched
+placebo 0.62, no playbook 0.50. Interpretation A attributes the whole
+gain of 0.14 to learned knowledge. Interpretation B reports both the
+content difference of 0.02 and the placebo difference of 0.12, then
+checks balancing, intervals and the role of correct feedback. Judge
+which evidence each interpretation requires. Then open the output of
+analyze_experience.py from class, use the same decomposition to explain
+the result for the behavior labeled design under origin-v2, and state
+where A’s interpretation fails when the target playbook scores below the
+placebo. If all three groups improve after the origin changes, state how
+one would determine whether the old playbook still adds anything.</p>
 <details>
 <summary>
-Break down the three groups yourself, then see the comparison notes
+Decompose the three groups before reading the commentary
 </summary>
-<p>0.14 is the total effect, and the identity splits it into 0.02 and
-0.12. To interpret the content difference as a knowledge gain, you still
-have to check that the placebo is balanced and estimate the uncertainty
-and the dependence on feedback. In the class worked example, the target
-playbook for design under origin-v2 scores below the placebo, a reminder
-that the total effect cannot stand in for the content difference. Across
-origins, use each origin’s own no-playbook and placebo groups as
-references, rather than comparing only the absolute scores of the target
-playbook.</p>
+<p>0.14 is the total effect, and the identity divides it into 0.02 and
+0.12. Interpreting the content difference as a knowledge gain still
+requires checking that the placebo is balanced and estimating the
+uncertainty and the dependence on feedback. In the class worked example,
+the target playbook for design under origin-v2 scores below the placebo,
+which shows that the total effect cannot stand in for the content
+difference. Across origins, each origin’s own no-playbook and placebo
+groups serve as references, rather than the absolute scores of the
+target playbook alone.</p>
 </details>
 <h3 id="further-study">Further study</h3>
+<p>The required reading for the fourth outcome comprises the <a
+href="theory-learning.html#what-a-finite-candidate-set-can-guarantee">finite-candidate
+guarantee</a> in 6.1, the <a
+href="theory-transfer.html#build-a-transfer-matrix">transfer matrix</a>
+and <a
+href="theory-transfer.html#the-effect-of-drift-on-gains-can-be-bounded">drift
+bound</a> in 6.3, and the <a
+href="theory-usage.html#define-the-deployment-objective">deployment
+objective</a> in 6.4. Students must use these sections to explain the
+conditions for independent evaluation, the baselines for transfer
+comparisons, the effect of drift, and resource trade-offs. Remaining
+derivations and extension exercises are optional.</p>
 <p>First complete the small-scale protocol from class, then choose one
 theory path. After the derivation, return to the same research behavior
-and say which part of the experimental design the formula changed. Real
-agent calls are made after class according to the protocol, and the
-worked-example data keep their synthetic label.</p>
+and state which part of the experimental design the formula changed.
+Real agent calls are made after class according to the protocol, and the
+worked-example data retain their synthetic label.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -550,11 +607,29 @@ transfer</a></td>
 </tr>
 </tbody>
 </table>
-<p>For 6.1 you can read policy and update first, then the
-finite-candidate bound and credit assignment; for 6.2 you can do the
-three-group analysis first, then a temporal holdout. Finally switch to
-your own research behavior and list one result that would overturn your
-judgment of the learning gain.</p>
+<p>For 6.1, policy and update can be read first, followed by the
+finite-candidate bound and credit assignment; for 6.2, the three-group
+analysis can come first, followed by a temporal holdout. Finally, turn
+to a research behavior from your own work and state one result that
+would overturn your judgment of the learning gain.</p>
+<h3 id="assessment">Assessment</h3>
+<p>Attainment of the outcomes is judged from the student’s formal
+definitions and the reasoning attached to them. Students should be able
+to state, for their chosen behavior, what the origin is, what experience
+may change, how reward is computed and what the updater does; classify
+the task as single-step or sequential and justify the classification;
+explain which comparison identifies the total effect, the content
+difference and the dependence on correct feedback, and what each
+requires; and state why the synthetic class data support only the
+calculation, while a real learning effect must be established on new
+tasks under the frozen protocol. Transfer is assessed by applying the
+same definitions to a different research behavior or origin and
+identifying which assumption the new setting puts at risk.</p>
+<p>Independent assessment requires the planned evaluation on new tasks
+under the frozen protocol, with effect estimates, uncertainty and
+limitations reported. The transfer task must explain which results need
+to be remeasured when the research behavior or origin changes, and how
+usage affects the deployment decision.</p>
 </article>
 <nav class="pager"><a class="prev" href="safety-hooks.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5.2 Hooks 与密钥管理</span><span lang="en">5.2 Hooks and secret management</span></a><a class="next" href="theory-learning.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6.1 经验学习与策略表示</span><span lang="en">6.1 Learning through experience</span></a></nav>
 </main>

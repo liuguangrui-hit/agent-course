@@ -30,31 +30,38 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip new">+ Ego 浏览器</span><span class="chip new">+ Obsidian</span><span class="chip new">+ 文献接口</span><span class="chip new">+ Sub-agent</span></div><h1 id="知识库">2 知识库</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>把文献中的分歧转化为可用实验检验的问题。课堂完成三篇论文的证据链，写出一个带竞争解释的研究问题；课后扩到材料清单中的十四篇，再留下三个候选问题。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>核验文献及其版本身份，记录来源、校验值与页码口径，区分已读原件与待核材料。</li>
+<li>区分原文观察、跨文献归纳与研究假设，并使每项归纳都能追溯到具体证据。</li>
+<li>比较不同研究的实验条件，判断表面冲突属于条件差异还是机制分歧。</li>
+<li>将文献分歧转化为带竞争解释、可区分预测和事前判据的研究问题。</li>
+<li>通过抽查原文和检查合并过程，评价分工阅读与知识整理的质量。</li>
+</ol>
+<p>课堂以三篇论文训练上述方法；扩展到十四篇论文、处理反例与校准并行复筛，在课后独立完成。</p>
 </div>
-<p><span class="meta">课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>两篇论文都在带噪标签下比较鲁棒损失，方法的排名却反过来了。Agent
-很容易把它们压成一句各有优劣。研究从追问开始：数据相同吗，学习率日程相同吗，取的是最后一轮还是最好一轮？</p>
-<p>你需要一个能把这些问题追回原文的知识库。关系图帮助查找材料，证据表则说明材料能支持哪些判断。</p>
+<p>本节的分析材料是一组关于带噪标签下鲁棒损失的文献。其中两篇论文都比较鲁棒损失，方法排名却相反。若只作摘要式归纳，容易得出各有优劣的结论。研究性阅读应当继续追问：两篇论文的数据是否相同，学习率日程是否相同，报告的是最后一轮还是最好一轮的结果。</p>
+<p>回答这些问题，需要一个能把每项判断追溯到原文的知识库。关系图帮助查找材料，证据表则说明材料能支持哪些判断。</p>
 <div class="download">
 <p><a href="downloads/lesson-2-zh.zip">下载第 2 课材料</a></p>
 </div>
 <p><code>papers.md</code>
-给出十四篇核对过身份的论文。<code>preview/</code>
-是六篇实读笔记组成的示例库，未包含受限全文。课堂选三篇，全文在课前取得；缺失项提前报告。预览可用于证据组织演练，原件核查另记待补。</p>
-<h2 id="课前预备">课前预备</h2>
+列出十四篇已核对身份的论文。<code>preview/</code>
+是由六篇论文的阅读笔记组成的示例库，不含受限全文。课堂选读三篇，全文在课前取得；缺失的全文应提前报告。预览材料可用于演练证据组织，原件核查另记为待补。</p>
+<h2 id="课前预备">课前准备</h2>
 <p><span class="meta">预留 20 至 45
-分钟；机构登录或全文下载可能需要更久，提前一天检查。</span></p>
+分钟；机构登录或全文下载可能耗时更长，建议提前一天检查。</span></p>
 <div class="install">
-<p><strong>课前工具准备。</strong> 装好浏览器与
-Obsidian，完成所需登录，把三份原件下载到本地。怎样核对版本、分工阅读和处理分歧，留在课堂一起做。</p>
+<p><strong>课前工具准备。</strong> 安装浏览器与
+Obsidian，完成所需登录，把三份原件下载到本地。版本核对、分工阅读和分歧处理在课堂中进行。</p>
 </div>
 <pre class="text"><code>读上一课 AGENTS.md，保留 Python 与 PDF 工具入口。
 检查已授权浏览器和 Obsidian，安装缺项并由我完成登录。
@@ -62,83 +69,83 @@ Obsidian，完成所需登录，把三份原件下载到本地。怎样核对版
 从 papers.md 取编号 2，5，11 的全文到 vault/sources/，先检查能打开和标题相符，不提前写论文页。
 确认当前 Agent 有独立助手入口；没有时记下，课堂改用三个独立新会话分工。
 把文件位置、可用入口和未解决项写到 preflight.md，不保存登录凭据。</code></pre>
-<p>开课前应能打开三份 PDF，空知识库和
-<code>preview/vault/</code>。原件的版本身份，关键数字与解释仍由课堂核查。</p>
-<p>若缺全文，提前说明缺哪一份。课堂先用包内实读笔记练证据组织，原件核查记为待补；课后拿到全文再完成对应检查。现场不等待登录页、下载队列或整批接口查询。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="查看分歧记录5-分钟">查看分歧记录，5 分钟</h3>
-<p>先看
-preflight.md，说明用自己的原件还是用预览演练，再进入同一条分歧。</p>
-<p>示例库的 <code>conflicts.md</code> 记录 SCE 与 GCE
-的排序反转，也保留了两篇论文各自的设置和页码。它没有把一切差异归到某一个原因：学习率和其他训练参数也变了。</p>
-<p>这张表提供一个实验入口。在同一实现里固定其他设置，只改日程，看看排序是否随之变化。相比摘要里一句性能优越，这个问题能直接决定下一项工作。</p>
-<h3 id="论文页概念页与问题页10-分钟">论文页、概念页与问题页，10
+<p>开课前应能打开三份 PDF、空知识库和
+<code>preview/vault/</code>。原件的版本身份、关键数字与解释留待课堂核查。</p>
+<p>若缺少全文，应提前说明缺哪一份。课堂先用包内阅读笔记练习证据组织，原件核查记为待补；课后取得全文后再完成相应检查。课堂中不等待登录页面、下载队列或批量接口查询。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="查看分歧记录5-分钟">文献分歧记录的分析，5 分钟</h3>
+<p>先查看
+preflight.md，说明本次使用自己的原件还是预览材料，再进入同一条分歧。</p>
+<p>示例库的 <code>conflicts.md</code> 记录了 SCE 与 GCE
+的排序反转，并保留两篇论文各自的设置和页码。它没有把全部差异归于单一原因，因为学习率和其他训练参数也同时改变。</p>
+<p>这张表提供了一个实验入口：在同一实现中固定其他设置，只改变学习率日程，观察排序是否随之变化。与摘要中的一句性能优越相比，这样的问题能够直接决定下一项工作。</p>
+<h3 id="论文页概念页与问题页10-分钟">论文页、概念页与问题页的分层，10
 分钟</h3>
-<p>论文页记录原作者在具体设置下观察到什么。概念页综合多篇论文，说明哪些认识已经相互支持，哪些依赖条件。问题页再提出你的解释，并写出能区分它与另一种解释的实验。</p>
-<p>三层用链接连接。原文观察、跨论文归纳和自己的推测各有身份，更新时就知道该动哪一层。一个概念页写得流畅，还需要逐条能追到论文页。</p>
-<h3 id="练习一核对三份原件10-分钟">练习一，核对三份原件，10 分钟</h3>
+<p>论文页记录原作者在具体设置下观察到的结果。概念页综合多篇论文，说明哪些认识已经相互印证，哪些依赖特定条件。问题页提出研究者自己的解释，并写出能区分它与另一种解释的实验。</p>
+<p>三层之间用链接连接。原文观察、跨文献归纳和研究者的推测各有明确身份，更新时便知道应修改哪一层。概念页即使写得流畅，也须能逐条追溯到论文页。</p>
+<h3 id="练习一核对三份原件10-分钟">练习一：核验三份原件，10 分钟</h3>
 <pre class="text"><code>从 papers.md 选编号 2，5，11，核对对应 PDF 的标题，作者与版本。
 保存到 vault/sources/，记录来源 URL，取得时间，SHA-256 和 PDF 页数。
 标明后面页码按 PDF 顺序页还是印刷页计。
 若缺全文，记录可用入口与当前原因，先用 preview/ 中对应笔记练习，不冒充已读全文。</code></pre>
-<p>同一篇论文的不同版本可以共存，记录各自身份。版本不同，表号和数字也可能不同。</p>
-<h3
-id="练习二分工阅读并建立证据表20-分钟">练习二，分工阅读并建立证据表，20
+<p>同一篇论文的不同版本可以并存，但须分别记录身份。版本不同时，表号和数字也可能不同。</p>
+<h3 id="练习二分工阅读并建立证据表20-分钟">练习二：分工阅读与证据表，20
 分钟</h3>
 <pre class="text"><code>三篇论文分给独立阅读助手，每个只读指定文件，写一份论文页。
 每项结果记录设置，指标，数值与原文位置。原作者解释单独写，自己的推测另列。
 主会话抽查一条核心结果与一条方法条件，再合并为一个鲁棒损失概念页。
 把不能直接比较的条件列入 conflicts.md，说明需要怎样的同条件实验。</code></pre>
-<p>助手只交文件位置和未解决项。主会话遇到关键矛盾，回读相关原文。最后由一个会话负责合并概念页，避免多个写作者覆盖同一结论。</p>
+<p>阅读助手只提交文件位置和未解决项。主会话遇到关键矛盾时回读相关原文。概念页最后由一个会话负责合并，避免多个写作者相互覆盖同一结论。</p>
 <h3
-id="练习三从分歧走到可检验问题10-分钟">练习三，从分歧走到可检验问题，10
+id="练习三从分歧走到可检验问题10-分钟">练习三：由分歧提出可检验问题，10
 分钟</h3>
 <pre class="text"><code>只读当前知识库，提出一个研究问题。
 写两种竞争解释，分别预测哪项可测结果会不同。
 给出最小实验、主要指标和事前判据，注明来自哪些证据行。
 另请一个新会话先找最近的一项先例，分别比较问题与干预，再核对指标和结论，其余查新留到 2.3。
 存为 questions.md 和 novelty.md。</code></pre>
-<p>课堂结束时看一件事：若实验结果呈现 A 的预测，你会更新哪条认识；若呈现
-B
-的预测，又会更新哪条。两种结果都能更新知识库，问题就有继续做的价值。</p>
-<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<p>评价这一问题的标准是：若实验结果符合解释 A
+的预测，会更新哪条认识；若符合解释 B
+的预测，又会更新哪条。两种结果都能更新知识库，问题才有继续研究的价值。</p>
+<h3 id="检查与工作台小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>把设置不同的结果叫矛盾。</strong>
-先把比较单位对齐。暂时无法对齐的，记录为条件差异，再设计同条件实验。</p>
+<p><strong>把设置不同的结果称为矛盾。</strong>
+先对齐比较单位。暂时无法对齐的，记录为条件差异，再设计同条件实验。</p>
 </div>
 <div class="pitfall">
-<p><strong>把笔记写成结论的二次来源。</strong>
-概念页保留通向原文的链，关键判断回读原文抽查。</p>
+<p><strong>把笔记当作结论的二手来源。</strong>
+概念页保留通向原文的链接，关键判断回读原文抽查。</p>
 </div>
 <div class="pitfall">
-<p><strong>让引用数决定全部阅读名单。</strong>
-先按问题覆盖方法与负结果，再看引用关系补漏，新工作另开一轮检索。</p>
+<p><strong>完全依据引用数确定阅读名单。</strong>
+先按研究问题覆盖不同方法与负结果，再借助引用关系补漏，新近工作另行检索。</p>
 </div>
 <div class="pitfall">
-<p><strong>查新后只说没有完全一样的工作。</strong>
-给出最近先例的逐项对照，说明新实验会多回答哪一问。</p>
+<p><strong>查新后只说明没有完全相同的工作。</strong>
+给出与最近先例的逐项对照，说明新实验能多回答哪个问题。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
-<p>浏览器用于获取外部原件，文献接口提供可复查标识，Obsidian 让你与 Agent
-共读同一批文件，Sub-agent
-让独立阅读可以扩展。现在可追溯的单位是一条带设置的证据，下一课据此设计实验。</p>
+<p>浏览器用于获取外部原件，文献接口提供可复查的标识，Obsidian 使研究者与
+Agent 共读同一批文件，Sub-agent
+使独立阅读可以扩展。知识库中可追溯的基本单位是一条带实验设置的证据，下一课据此设计实验。</p>
 </div>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
-<p>关掉概念页，画出课堂的一条证据链：从原件到论文页，再到概念页与问题页。凭记忆写每一步负责什么，再打开文件核对。抽一条结果回到原文，检查版本、页码和设置，补完课堂标为待核的项目，写入
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
+<p>关闭概念页，画出课堂上的一条证据链：从原件到论文页，再到概念页与问题页。凭记忆写出每一层的职责，再打开文件核对。选一条结果回到原文，检查版本、页码和设置，补完课堂标为待核的项目，写入
 <code>review-after-class.md</code>。</p>
 <h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
-<p>甲笔记写两篇论文排名相反，所以机制互相否定。乙笔记把日程、噪声和选择轮次分别列出，提出固定其他设置只改日程的实验。判断两份笔记各能支持哪一层结论。再给乙增加一篇反例，沿链接列出哪些页面需要重新判断，哪些原文记录应当保留。</p>
+<p>笔记甲写道：两篇论文排名相反，因此两者的机制互相否定。笔记乙分别列出学习率日程、噪声和选择轮次，并提出固定其他设置、只改变日程的实验。判断两份笔记各能支持哪一层结论。再为笔记乙加入一篇反例文献，沿链接列出哪些页面需要重新判断，哪些原文记录应当保留。</p>
 <details>
 <summary>
-写完更新清单，再看对照思路
+写完更新清单后，再查看参考思路
 </summary>
-<p>甲把条件差异直接当成机制冲突。乙先记录观察，再提出可区分的解释。反例进入后，原件和历史观察保留，当前概念、竞争解释与实验问题按依赖关系复查；改了一个概念标题不算完成更新。</p>
+<p>甲把条件差异直接当作机制冲突。乙先记录观察，再提出可区分的解释。反例加入后，原件和历史观察保留不变，当前概念、竞争解释与实验问题按依赖关系复查；只修改概念页标题不算完成更新。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>先把课堂三篇补成完整证据链，再选一条路径。扩到十四篇时沿用同一模板，在自己的方向上最后留下三个各有竞争解释和判别指标的问题。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>先把课堂上的三篇论文补成完整证据链，再选择一个专题。扩展到十四篇论文时沿用同一模板，最终在自己的研究方向上提出三个各有竞争解释和判别指标的问题。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -147,21 +154,21 @@ B
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="explore-fulltext.html">2.1 文献获取</a></td>
-<td>45 分钟，比较预印本与正式版的一条结果</td>
+<td>45 分钟，比较预印本与正式版中的一条结果</td>
 <td>两份身份记录与差异说明</td>
 </tr>
 <tr>
 <td><a href="explore-vault.html">2.2 知识库搭建</a></td>
-<td>55 分钟，用反例追踪一条认识怎样更新</td>
-<td>更新前后链接与受影响问题</td>
+<td>55 分钟，用反例追踪一条认识的更新过程</td>
+<td>更新前后的链接与受影响问题</td>
 </tr>
 <tr>
 <td><a href="explore-parallel.html">2.3 并行复筛与选题</a></td>
@@ -170,49 +177,78 @@ B
 </tr>
 </tbody>
 </table>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查三篇原件的身份记录是否完整，论文页是否区分观察、作者解释与推测，研究问题是否给出两种解释的不同预测。课后独立完成层面，学生把知识库扩展到十四篇论文，加入一篇反例，并说明哪些判断因此改变、依据是哪几条证据。迁移层面，学生在自己的研究领域选取一组结论不一致的文献，独立判断分歧来源，提出三个可检验问题，并为每个问题说明两种可能结果分别会怎样更新现有认识。评价重点为证据追溯、比较条件及研究问题的推理依据。</p>
+<p>归因判断须区分已排除与尚未排除的解释。学生应列明当前证据能否支持归因，并提出完成归因所需的同条件判别对照；证据不足时，明确判定为尚不可确定。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip new">+ Ego browser</span><span class="chip new">+ Obsidian</span><span class="chip new">+ Literature APIs</span><span class="chip new">+ Sub-agents</span></div><h1 id="research-knowledge-bases">2 Research knowledge bases</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Turn a disagreement in the literature into a question you can test
-with an experiment. In class you build the evidence chain for three
-papers and write one research question with competing explanations;
-after class you extend to the fourteen papers in the materials list and
-develop three candidate questions.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Verify the identity and version of literature sources, and record
+the location in the source of every result they use.</li>
+<li>Distinguish original observations, cross-study generalizations and
+research hypotheses, and maintain the links between these layers.</li>
+<li>Compare the experimental conditions of conflicting studies and
+determine whether a disagreement reflects competing mechanisms or
+differences in conditions.</li>
+<li>Convert a disagreement into a testable research question with
+competing explanations, distinguishing predictions and a comparison with
+the nearest precedent.</li>
+<li>Evaluate the quality of a knowledge base or of parallel reading by
+its traceability to sources and the conditions it omits.</li>
+</ol>
 </div>
-<p><span class="meta">Prepare before class, spend 60 minutes in class,
-then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels. In class, students build
+an evidence chain for three papers. For independent work after class,
+they extend the knowledge base to fourteen papers, add a counterexample
+and explain how it changes their judgments. For transfer assessment,
+they analyze conflicting conclusions in their own research field and
+propose three questions, each with competing explanations,
+discriminating predictions and an account of how the possible results
+would update the knowledge base.</p>
+<p><span class="meta">Preparation before class, a 60-minute class
+session, then required review, independent work and transfer assessment,
+with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>Two papers both compare robust losses under noisy labels, yet their
-rankings of the methods are reversed. An agent may reduce this to a
-vague summary: each has strengths and weaknesses. Research starts by
-asking further: were the data the same, was the learning-rate schedule
-the same, did they take the last epoch or the best one?</p>
-<p>You need a knowledge base that traces these questions back to the
-originals. The graph helps you find related material; the evidence table
-shows which conclusions it can support.</p>
+<p>A research knowledge base is useful when it allows each conclusion to
+be traced to the observations that support it and the conditions under
+which they were obtained. Summaries that omit conditions tend to reduce
+real disagreements to statements that each method has strengths and
+weaknesses. Research requires further questions: whether the data were
+the same, whether the learning-rate schedule was the same, and whether
+results were taken from the last epoch or the best one.</p>
+<p>The case material for this session consists of two papers that
+compare robust losses under noisy labels and report reversed rankings of
+the methods. The session builds a knowledge base that traces such
+questions back to the originals. The link graph helps locate related
+material; the evidence table shows which conclusions that material can
+support.</p>
 <div class="download">
 <p><a href="downloads/lesson-2-en.zip">Download the Lesson 2
 materials</a></p>
 </div>
 <p><code>papers.md</code> lists fourteen papers whose identities have
 been checked. <code>preview/</code> is a sample knowledge base
-containing notes from six papers read in full, and it contains no
-restricted full texts. The class chooses three papers whose full texts
-you get before class; report anything missing in advance. The preview
-can be used to rehearse organizing evidence, with checks against the
-originals recorded as still to be done.</p>
-<h2 id="before-class">Before class</h2>
-<p><span class="meta">Allow 20 to 45 minutes; institutional login or
-full-text downloads may take longer, so check a day early.</span></p>
+containing notes on six papers read in full, and it contains no
+restricted full texts. The class uses three papers whose full texts
+students obtain before class; any missing text should be reported in
+advance. The preview can be used to rehearse the organization of
+evidence, with checks against the originals recorded as outstanding.</p>
+<h2 id="before-class">Preparation</h2>
+<p><span class="meta">Allow 20 to 45 minutes; institutional sign-in or
+full-text downloads may take longer, so check a day in
+advance.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> Install the browser and
-Obsidian, complete the necessary logins, and download the three
-originals locally. How to check versions, split the reading and handle
-disagreements is left for class.</p>
+<p><strong>Preparation.</strong> Install the browser and Obsidian,
+complete the necessary sign-ins and download the three originals
+locally. Version checks, the division of reading and the treatment of
+disagreements are taught in class.</p>
 </div>
 <pre class="text"><code>Read the previous lesson&#39;s AGENTS.md and keep the Python and PDF tool entries.
 Check the authorized browser and Obsidian, install what is missing, and let me do the logins.
@@ -220,64 +256,62 @@ Open this lesson&#39;s vault/ in Obsidian and confirm this machine can read one 
 Get the full texts of items 2, 5 and 11 in papers.md into vault/sources/. First check that they open and their titles match; do not write paper pages yet.
 Confirm whether the current agent has an entry for independent helpers; if not, note it, and in class we will split the work across three separate new sessions.
 Write file locations, available entry points and unresolved items into preflight.md. Do not save login credentials.</code></pre>
-<p>Before class you should be able to open the three PDFs, the empty
-knowledge base and <code>preview/vault/</code>. The version identity of
-the originals, key numbers and interpretations are still checked in
+<p>Before class, the three PDFs, the empty knowledge base and
+<code>preview/vault/</code> should open. The version identity of the
+originals, the key numbers and their interpretation are checked in
 class.</p>
-<p>If a full text is missing, say which one in advance. In class you
-first practice organizing evidence with the packaged reading notes,
-recording the check against the original as still to be done; after
-class, once you have the full text, finish the corresponding check. In
-class, nobody waits for login pages, download queues or bulk API
-queries.</p>
-<h2 id="in-class">In class</h2>
+<p>If a full text is missing, report which one in advance. In class,
+organize evidence with the packaged reading notes and record the check
+against the original as outstanding; once the full text is available
+after class, complete the corresponding check. Class time is not spent
+waiting for sign-in pages, download queues or bulk API queries.</p>
+<h2 id="in-class">Class session</h2>
 <h3 id="documenting-a-disagreement-5-minutes">Documenting a
 disagreement, 5 minutes</h3>
-<p>First look at preflight.md and say whether you are using your own
-originals or rehearsing with the preview, then move to the same
-disagreement.</p>
+<p>Confirm from preflight.md whether the class work uses the student’s
+own originals or the preview, then examine the disagreement.</p>
 <p>The sample knowledge base’s <code>conflicts.md</code> records the
 reversed ranking of SCE and GCE and keeps each paper’s settings and page
-numbers. It does not attribute every difference to a single cause: the
-learning rate and other training parameters also changed.</p>
-<p>This table offers an entry point for an experiment. In one
-implementation, fix the other settings, change only the schedule, and
-see whether the ranking changes with it. Compared with “superior
-performance” in an abstract, this question directly decides the next
+numbers. It does not attribute the difference to a single cause, because
+the learning rate and other training parameters also changed.</p>
+<p>The table provides a starting point for an experiment: in one
+implementation, fix the other settings, change only the schedule and
+observe whether the ranking changes. Unlike a claim of superior
+performance in an abstract, this question directly determines the next
 piece of work.</p>
-<h3 id="separate-evidence-into-three-layers-10-minutes">Separate
-evidence into three layers, 10 minutes</h3>
+<h3 id="separate-evidence-into-three-layers-10-minutes">Three layers of
+evidence, 10 minutes</h3>
 <p>A paper page records what the original authors observed under
-specific settings. A concept page synthesizes several papers,
-identifying conclusions supported across studies and those that depend
-on particular conditions. A question page then proposes your explanation
-and describes an experiment that can distinguish it from another
-explanation.</p>
+specific settings. A concept page synthesizes several papers and
+identifies conclusions supported across studies and those that depend on
+particular conditions. A question page states the student’s own
+explanation and describes an experiment that can distinguish it from an
+alternative.</p>
 <p>The three layers are connected by links. Original observations,
-cross-paper generalizations and your own speculation are recorded
-separately, so when something is updated you know which layer to touch.
-A concept page that reads smoothly still has to trace back, line by
+cross-study generalizations and the student’s own speculation are
+recorded separately, so that an update can be applied to the correct
+layer. A concept page that reads fluently must still trace back, line by
 line, to paper pages.</p>
 <h3 id="exercise-1-check-the-three-originals-10-minutes">Exercise 1:
-check the three originals, 10 minutes</h3>
+verifying the three originals, 10 minutes</h3>
 <pre class="text"><code>From papers.md, choose items 2, 5 and 11 and check the title, authors and version of each corresponding PDF.
 Save them to vault/sources/, recording the source URL, time obtained, SHA-256 and PDF page count.
 State whether later page numbers follow the PDF page order or the printed page numbers.
 If a full text is missing, record the available entry point and the current reason, and practice first with the corresponding note in preview/, without pretending the full text has been read.</code></pre>
 <p>Different versions of the same paper can coexist, each with its own
 recorded identity. When versions differ, table numbers and values may
-differ too.</p>
+differ as well.</p>
 <h3
 id="exercise-2-split-the-reading-and-build-the-evidence-table-20-minutes">Exercise
-2: split the reading and build the evidence table, 20 minutes</h3>
+2: dividing the reading and building the evidence table, 20 minutes</h3>
 <pre class="text"><code>Give the three papers to independent reading helpers. Each reads only its assigned file and writes one paper page.
 For each result, record the setting, metric, value and location in the original. Write the original authors&#39; explanation separately, and list my own speculation separately again.
 The main session spot-checks one core result and one method condition, then merges them into a single concept page on robust losses.
 List conditions that cannot be compared directly in conflicts.md, stating what experiment under matched conditions is needed.</code></pre>
-<p>Helpers hand in only file locations and unresolved items. When the
-main session meets a key contradiction, it rereads the relevant
-original. In the end one session is responsible for merging the concept
-page, so several writers do not overwrite the same conclusion.</p>
+<p>Helpers return only file locations and unresolved items. When the
+main session encounters a key contradiction, it rereads the relevant
+original. A single session is responsible for merging the concept page,
+so that several writers do not overwrite the same conclusion.</p>
 <h3
 id="exercise-3-from-disagreement-to-a-testable-question-10-minutes">Exercise
 3: from disagreement to a testable question, 10 minutes</h3>
@@ -286,79 +320,87 @@ Write two competing explanations, and for each predict which measurable result w
 Give the minimal experiment, the main metric and the criteria set in advance, noting which evidence rows they come from.
 Also ask a new session to find the single nearest precedent and compare it item by item on question, intervention, metric and conclusion; leave the rest of the novelty search for 2.3.
 Save as questions.md and novelty.md.</code></pre>
-<p>At the end of class, look at one thing: if the experiment shows A’s
-prediction, which conclusion would you update; if it shows B’s
-prediction, what would change? If either result would change the
-knowledge base, the question is worth pursuing.</p>
-<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+<p>The test of the question at the end of class is this: if the
+experiment shows A’s prediction, which conclusion would be updated, and
+if it shows B’s prediction, what would change? A question is worth
+pursuing if either result would change the knowledge base.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Common errors and
 summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
 <p><strong>Calling results from different settings a
-contradiction.</strong> Align the unit of comparison first. What cannot
-be aligned yet is recorded as a difference in conditions, then design an
-experiment under matched conditions.</p>
+contradiction.</strong> Align the unit of comparison first. Differences
+that cannot yet be aligned are recorded as differences in conditions,
+and an experiment under matched conditions is then designed.</p>
 </div>
 <div class="pitfall">
-<p><strong>Writing notes as a secondary source of conclusions.</strong>
+<p><strong>Treating notes as a secondary source of conclusions.</strong>
 Concept pages keep the chain to the originals, and key judgments are
 spot-checked by rereading the original.</p>
 </div>
 <div class="pitfall">
-<p><strong>Letting citation counts decide the whole reading
+<p><strong>Letting citation counts determine the whole reading
 list.</strong> First cover methods and negative results by question,
 then fill gaps through citation relations, and run a separate search for
-new work.</p>
+recent work.</p>
 </div>
 <div class="pitfall">
-<p><strong>Saying only “no identical work exists” after a novelty
-search.</strong> Give an item-by-item comparison with the nearest
-precedent and say which extra question the new experiment answers.</p>
+<p><strong>Concluding a novelty search with the statement that no
+identical work exists.</strong> Give an item-by-item comparison with the
+nearest precedent and state which additional question the new experiment
+answers.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
-<p>The browser connects you to external originals, literature APIs leave
-identifiers that can be rechecked, Obsidian lets you and the agent read
-the same files, and Sub-agents let independent reading scale. The
-traceable unit is now a piece of evidence with its setting, and the next
-lesson turns it into an experiment.</p>
+<p>The browser provides access to external originals, literature APIs
+leave identifiers that can be rechecked, Obsidian lets the student and
+the agent read the same files, and Sub-agents allow independent reading
+to scale. The traceable unit is now a piece of evidence together with
+its setting; Session 3 turns such evidence into an experiment.</p>
 </div>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
-<p>Close the concept page and draw one evidence chain from class: from
-the original to the paper page, then to the concept page and the
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
+<p>With the concept page closed, draw one evidence chain from class:
+from the original to the paper page, then to the concept page and the
 question page. From memory, write what each step is responsible for,
 then open the files and check. Take one result back to the original,
-check the version, page and setting, finish the items marked as pending
-in class, and write it all into <code>review-after-class.md</code>.</p>
-<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
-minutes</h3>
-<p>Note A says the two papers rank the methods in opposite order, so the
-papers’ proposed mechanisms contradict each other. Note B lists the
-schedule, the noise and the selected epoch separately, and proposes an
-experiment that fixes the other settings and changes only the schedule.
-Judge which level of conclusion each note can support. Then add a
-counterexample paper to B, and following the links, list which pages
-need to be judged again and which records of the originals should be
-kept.</p>
+check the version, page and setting, complete the items marked as
+outstanding in class, and record everything in
+<code>review-after-class.md</code>.</p>
+<h3 id="compare-the-examples-20-minutes">Analysis of contrasting
+examples, 20 minutes</h3>
+<p>Note A states that the two papers rank the methods in opposite order
+and concludes that the mechanisms the papers propose contradict each
+other. Note B lists the schedule, the noise and the selected epoch
+separately, and proposes an experiment that fixes the other settings and
+changes only the schedule. Judge which level of conclusion each note can
+support. Then add a counterexample paper to B and, following the links,
+list which pages must be reassessed and which records of the originals
+must be kept.</p>
 <details>
 <summary>
-Write your update list first, then see the comparison notes
+Record your update list before reading the commentary
 </summary>
 <p>A treats a difference in conditions directly as a conflict between
-mechanisms. B records observations first, then proposes explanations
-that can be told apart. When the counterexample comes in, the originals
-and past observations are kept, and the current synthesis, competing
-explanations and experiment questions are rechecked along their
-dependencies; changing one concept title does not count as finishing the
-update.</p>
+mechanisms. B records observations first and then proposes explanations
+that can be distinguished. When the counterexample is added, the
+originals and earlier observations are kept, and the current synthesis,
+the competing explanations and the experimental questions are rechecked
+along their dependencies; renaming one concept page does not complete
+the update.</p>
 </details>
 <h3 id="further-study">Further study</h3>
-<p>First complete the evidence chain for the three class papers, then
-choose one path. When extending to fourteen papers, use the same
-template, and in your own field end with three questions, each with
-competing explanations and a discriminating metric.</p>
+<p>First complete the evidence chain for the three class papers. The
+required independent extension and transfer tasks are specified in
+Assessment below. The optional paths in this table provide further
+study; they supplement those tasks and do not replace them. Use the same
+evidence template when extending the reading and working with literature
+from your own field.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -395,6 +437,25 @@ closely related work</td>
 </tr>
 </tbody>
 </table>
+<h3 id="assessment">Assessment</h3>
+<p>Assessment has three levels. In class, students establish the
+identity of the three originals, distinguish observations, authors’
+interpretations and conjectures in their paper notes, and specify the
+different predictions of two explanations for a research question. For
+independent work, students extend the knowledge base to fourteen papers,
+add a counterexample, and explain which judgments change and which
+evidence supports the changes. For transfer assessment, students select
+a set of papers with conflicting conclusions in their own field,
+independently analyze the sources of disagreement, and formulate three
+testable questions. For each question, they explain how two possible
+results would update the current understanding. Assessment focuses on
+evidence traceability, comparability of conditions and the reasoning
+behind each research question.</p>
+<p>Attribution must distinguish explanations that have been ruled out
+from those that remain possible. Students must state whether the
+evidence supports an attribution and specify the controlled comparison
+needed to establish it. Where the evidence is insufficient, an explicit
+judgment that the cause remains undetermined is appropriate.</p>
 </article>
 <nav class="pager"><a class="prev" href="writing-submit.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.6 文献引用与刊会投稿</span><span lang="en">1.6 Citations and submission</span></a><a class="next" href="explore-fulltext.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.1 文献获取</span><span lang="en">2.1 Finding full texts</span></a></nav>
 </main>

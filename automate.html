@@ -30,27 +30,35 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip new">+ 定时任务</span><span class="chip new">+ 无人值守调用</span><span class="chip new">+ 手机通知</span><span class="chip new">+ 经验榜</span><span class="chip new">+ GitHub Pages</span></div><h1 id="自动化">4 自动化</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>让一轮研究在新会话里接得上，中断后能恢复，失败后留下原因。再从运行中提炼一条候选经验，设计它怎样在下一批任务上接受检验。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>把一轮研究表达为输入、输出、状态与完成条件明确的状态转移，并区分程序执行失败与科学负结果。</li>
+<li>设计可恢复的执行机制，使重复请求不产生重复效果，并在指定故障点验证恢复行为。</li>
+<li>为调度任务规定执行环境、完成判据与停止条件，依据执行记录核查一次触发的实际结果。</li>
+<li>把运行中的经验整理为带适用条件与来源的候选条目，设计在未见任务上的对照检验，评价其对后续任务的作用。</li>
+</ol>
+<p>课堂完成一次故障恢复和一次单次调度；这不足以验证长期运行行为。更换故障位置、少量周期调度和经验的三组检验在课后完成。</p>
 </div>
-<p><span class="meta">课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>凌晨实验已经启动，写状态时连接断了。早上的 Agent
-读到未完成，是否会再启动一份？夜间运行最需要先解决的，是它醒来时怎样知道已经发生了什么。</p>
-<p>研究循环还有第二个问题。它每天完成一轮，产物越来越多，能力是否也在提高？把流程接起来以后，再给经验设置独立的检验。</p>
+<p>本节讨论无人值守研究流程中的两个问题。第一个是恢复：夜间实验已经启动，写入状态时连接中断，之后接手的
+Agent
+读到的状态是未完成，它可能再启动一份。夜间运行首先要解决的，是恢复时怎样确认已经发生了什么。</p>
+<p>第二个是学习：研究循环每天完成一轮，产物不断增加，但系统的能力是否随之提高，需要单独检验。流程衔接完成后，还要为经验设置独立的检验。</p>
 <div class="download">
 <p><a href="downloads/lesson-4-zh.zip">下载第 4 课材料</a></p>
 </div>
-<h2 id="课前预备">课前预备</h2>
-<p><span class="meta">预留 15 至 30 分钟，沿用前几课环境。</span></p>
+<h2 id="课前预备">课前准备</h2>
+<p><span class="meta">预留 15 至 30 分钟，沿用前几课的环境。</span></p>
 <div class="install">
 <p><strong>课前工具准备。</strong>
-下载材料并补齐依赖，准备本地结果页和命令行入口。恢复逻辑、状态转移和经验检验都在课堂里做。</p>
+下载材料，补齐依赖，准备本地结果页和命令行入口。恢复逻辑、状态转移和经验检验均在课堂中进行。</p>
 </div>
 <pre class="text"><code>把 lesson-2，lesson-3，lesson-4 放成相邻目录，确认自己的问题清单和上一课结果能找到。
 按 README.md 准备锁定环境与 logs/，保留第 3 课可运行实现；没有完成时记下，使用包内预览作课堂起点。
@@ -59,88 +67,89 @@ href="#课后复习与拔高">课后复习与拔高</a></p>
 打开 preview/site/index.html 和 preview/internal/round-1.html，只确认页面可读。
 列出已有调度器和通知渠道，不新增频道，不发送消息，不进行部署。
 把实际命令、文件位置和未解决项写入 preflight.md，稳定入口写入 AGENTS.md。</code></pre>
-<p>开课前应能找到 <code>LOOP.md</code> 与
-<code>STATE.md</code>，恢复演示和本地预览。这里不提前运行故障演示，也不填写恢复结论，故障会怎样影响下一步要在课堂观察。</p>
-<p>课堂一起接一次真实的短延迟唤醒，核对机器、时区与执行状态。定时器只触发一次，进程退出便停止；课后再扩到少量周期运行。外部通知和发布另选具体目标与范围。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="先看一轮的记录与交接5-分钟">先看一轮的记录与交接，5 分钟</h3>
+<p>开课前应能找到
+<code>LOOP.md</code>、<code>STATE.md</code>、恢复演示和本地预览。课前不运行故障演示，也不填写恢复结论；故障对后续步骤的影响在课堂上观察。</p>
+<p>课堂共同完成一次真实的短延迟唤醒，核对机器、时区与执行状态。定时器只触发一次，进程退出后即停止；课后再扩展为少量周期运行。外部通知和发布须另行确定目标与范围。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="先看一轮的记录与交接5-分钟">一轮研究的记录与交接，5 分钟</h3>
 <p>先核对
 preflight.md，确认本课的本地演练条件，再查看上一轮留下的状态。</p>
-<p>练习材料的 <code>LOOP.md</code> 是交接规则，<code>STATE.md</code>
-记当前步骤，每轮在自己的目录留下预测、结果与审阅。预览网页使用第 3
-课的实跑结果生成，打开内部页可以追回原始数字。</p>
-<p>恢复演示把一个故障做给你看：产物已写出，状态还没来得及提交，程序退出。再次执行时先核查产物，再补状态，输出数量仍然是一份。你会看到它怎样从已存在的产物接上状态。</p>
+<p>练习材料中，<code>LOOP.md</code> 规定交接规则，<code>STATE.md</code>
+记录当前步骤，每轮在自己的目录中保存预测、结果与审阅。预览网页由第 3
+课的实际运行结果生成，从内部页可以追溯到原始数字。</p>
+<p>恢复演示呈现一种故障：产物已经写出，状态尚未提交，程序即退出。再次执行时，程序先核查产物，再补写状态，输出仍然只有一份。课堂据此分析它怎样依据已存在的产物恢复状态。</p>
 <h3 id="研究循环的状态转移10-分钟">研究循环的状态转移，10 分钟</h3>
-<p>一轮研究先选题并冻结预测，再执行与校验，最后审阅并归档。每条转移都要有完成条件，例如执行转到校验时，退出码和产物清单都要满足要求。</p>
-<p>状态未知要先查询，运行失败按原因恢复，研究假设被否定则正常进入结论。程序失败与科学负结果分开，循环才知道该修代码还是改理解。</p>
-<p>自动化固定了这些转移。系统学习则改变以后的选择或做法，并要在未见任务上测出改进。两者在记录里分别展示。</p>
-<h3 id="练习一做一次中断恢复15-分钟">练习一，做一次中断恢复，15
-分钟</h3>
+<p>一轮研究依次为：选题并冻结预测，执行与校验，审阅并归档。每一次转移都须有完成条件，例如从执行转入校验时，退出码和产物清单都须满足要求。</p>
+<p>状态未知时先查询，运行失败时按原因恢复，研究假设被否定时正常进入结论。程序失败与科学负结果分开处理，循环才能判断下一步应修改代码还是修正认识。</p>
+<p>自动化固定了这些转移。系统学习则改变以后的选择或做法，并须在未见任务上测得改进。两者在记录中分别呈现。</p>
+<h3 id="练习一做一次中断恢复15-分钟">练习一：中断恢复，15 分钟</h3>
 <pre class="text"><code>先读 recovery_demo.py，说明它模拟的动作与故障点。
 按 README 在独立演示目录运行，模拟产物写出后退出，再重新运行。
 核对输出数量、事件记录与最终状态，解释它怎样识别同一动作。
 随后用同样思路检查 LOOP.md：找出启动实验与写状态之间的空档。</code></pre>
-<p>同一动作重复请求后，只产生一次预定效果，叫作幂等。一次网络超时不告诉你动作有没有发生，所以恢复时要能查询已知身份，或在本地核对对应产物。</p>
-<h3 id="练习二定时审阅与收工交接15-分钟">练习二，定时审阅与收工交接，15
+<p>同一动作被重复请求后只产生一次预定效果，称为幂等。一次网络超时并不能说明动作是否已经发生，因此恢复时须能按已知身份查询，或在本地核对对应产物。</p>
+<h3 id="练习二定时审阅与收工交接15-分钟">练习二：定时审阅与收工交接，15
 分钟</h3>
 <pre class="text"><code>沿用第 3 课已完成的一轮，或从包内预览复制为演练起点，标明来源。
 把本轮 result.md 交给 wake_review.py，设五秒后触发一次，调用最长九十秒，输出到新的 one-shot-review/。
 一起检查 run.json 中的主机与时区、计划时间与实际时间，再核对输入哈希和退出码，并查看最终的 review.md。
 只有 completed 才把审阅意见交给新会话；超时、失败和空输出先记录原因，不推进审阅完成状态。
 新会话只读 LOOP.md、STATE.md 与本轮记录，核查后接手收工，生成本地页并检查重复效果。</code></pre>
-<p>命令由老师和学员一起核对后运行。路径换成这一轮实际记录，输出目录每次另起：</p>
+<p>命令由教师和学生共同核对后运行。路径替换为本轮的实际记录，每次使用新的输出目录：</p>
 <pre class="bash"><code>python3 wake_review.py --input preview/runs/1/result.md --out one-shot-review --delay-seconds 5 --timeout-seconds 90</code></pre>
-<p>计划等待时按 Ctrl+C，再检查 cancelled 与 calls_started
-为零，可验证尚未发起调用。运行中按 Ctrl+C
-会停止本次子进程。最后确认进程已退出，没有留下周期唤醒。</p>
-<p>任务锁决定哪个会话能写，运行身份决定它写的是哪次动作。锁超时需要核查持有者与进程；旧会话仍能恢复写入时，仅按时间删锁会制造两个写作者。</p>
-<h3 id="练习三留下候选经验和测试10-分钟">练习三，留下候选经验和测试，10
+<p>在计划等待期间按 Ctrl+C，再检查 cancelled 与 calls_started
+为零，可以验证调用尚未发起。运行期间按 Ctrl+C
+会停止本次子进程。最后确认进程已经退出，没有遗留周期唤醒。</p>
+<p>任务锁决定哪个会话可以写入，运行身份决定写入对应哪一次动作。锁超时须核查持有者与进程；若旧会话恢复后仍能写入，仅凭时间删除锁会产生两个写入者。</p>
+<h3
+id="练习三留下候选经验和测试10-分钟">练习三：候选经验及其检验方案，10
 分钟</h3>
 <pre class="text"><code>从本轮失败或成功里提炼至多一条经验，写适用条件、具体动作和来源。
 列出它预期会改变哪类未见任务，主要评估指标是什么。
 保留一份无经验对照，再设计同格式近似长度的安慰剂对照。
 经验先标为候选，测试方案放入下一批任务，不把本次成功直接当成有效性证明。</code></pre>
-<p>当前循环完成后，课后再设置少量定时运行。先确认停止条件、恢复方法和额度耗尽的行为，再延长无人值守时间。</p>
-<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<p>当前循环完成后，课后再设置少量定时运行。先确认停止条件、恢复方法和额度耗尽时的行为，再延长无人值守的时间。</p>
+<h3 id="检查与工作台小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>每次醒来都从第一步重做。</strong>
-状态指向产物与动作身份，恢复先核查已发生的效果。</p>
+<p><strong>每次恢复都从第一步重做。</strong>
+状态应指向产物与动作身份，恢复时先核查已经发生的效果。</p>
 </div>
 <div class="pitfall">
-<p><strong>有锁就认为没有并发。</strong>
-核查锁由谁持有、接管后旧会话能否继续写，所有共享写入走同一入口。</p>
+<p><strong>有锁即认为不存在并发。</strong>
+核查锁的持有者，以及接管后旧会话能否继续写入；所有共享写入经由同一入口。</p>
 </div>
 <div class="pitfall">
-<p><strong>轮数增加就说系统进化。</strong>
-固定未见任务和评分标准，比较是否产生可重复收益。</p>
+<p><strong>轮数增加即宣称系统在进化。</strong>
+固定未见任务和评分标准，比较是否产生可重复的收益。</p>
 </div>
 <div class="pitfall">
-<p><strong>把运行失败丢掉，结果页只留成功。</strong>
-失败轮次保留状态与原因，才能判断改进作用在哪一环。</p>
+<p><strong>丢弃运行失败的记录，结果页只保留成功轮次。</strong>
+失败轮次保留状态与原因，才能判断改进作用于哪个环节。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
-<p>前几课的文件现在被状态转移连接起来。课堂的单次定时器按时触发任务，运行器记录执行身份。审阅给出结论判定，经验榜提出下一次的做法。结果页把它们汇到同一个入口，帮助你决定下一步工作。</p>
+<p>前几课的文件现在由状态转移连接起来。课堂上的单次定时器按时触发任务，运行器记录执行身份。审阅给出结论判定，经验榜提出下一次的做法。结果页把这些内容汇总到同一入口，供研究者决定下一步工作。</p>
 </div>
 <p><a href="https://github.com/liuguangrui-hit/ai-scientist">AI
-科学家</a>把类似职责分给独立模块。本课先用自己的一个问题把最小循环走通，再考虑扩大任务量。</p>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
+科学家</a>把类似职责分配给独立模块。本课先用一个自己的研究问题跑通最小循环，再考虑扩大任务规模。</p>
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
 <p>只读课堂的 <code>STATE.md</code>
-和本轮文件，列出下一位接手者应先查询什么。再关掉
-Agent，从状态图走一遍失败恢复，区别程序执行失败和科学负结果。把仍靠猜测的转移写到
-<code>review-after-class.md</code>，补上可核查的完成条件。</p>
+和本轮文件，列出下一位接手者应首先查询的内容。再关闭
+Agent，沿状态图走一遍失败恢复，区分程序执行失败和科学负结果。把仍依赖猜测的转移写入
+<code>review-after-class.md</code>，并补上可核查的完成条件。</p>
 <h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
-<p>甲看到状态仍是未启动，直接重发实验。乙先用已记任务标识查询，发现产物已生成，只补状态。分别指出二者在断连窗口中可能造成的效果。再看一轮正常执行但否定了预测的实验：它该重试程序，还是进入结论与经验候选？写出理由。</p>
+<p>甲看到状态仍为未启动，直接重新提交实验。乙先用已记录的任务标识查询，发现产物已经生成，只补写状态。分别指出两种做法在断连窗口中可能造成的后果。再看一轮正常执行但否定了预测的实验：它应当重试程序，还是进入结论与经验候选？写出理由。</p>
 <details>
 <summary>
-先画恢复路径，再看对照思路
+先画出恢复路径，再查看参考思路
 </summary>
-<p>状态落后于实际动作时，甲可能重复执行。乙依据动作身份核查效果，恢复才有依据。程序成功且产物完整的科学负结果可以正常归档；经验是否有效继续交给未见任务测试。</p>
+<p>状态落后于实际动作时，甲可能重复执行。乙依据动作身份核查效果，恢复才有依据。程序成功且产物完整的科学负结果可以正常归档；经验是否有效，继续交由未见任务检验。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>先重做一次中断恢复，再从课堂单次唤醒选一条路径。周期调度先安排少量运行，核对暂停与删除入口；外部通知和部署沿用已经明确的目标与授权范围。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>先重做一次中断恢复，并把故障设在与课堂不同的位置，例如启动成功但回执丢失，或结果页已生成而归档状态未更新。然后从课堂上的单次唤醒出发选择一个专题。周期调度先安排少量运行，核对暂停与删除入口；外部通知和部署沿用已经明确的目标与授权范围。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -149,15 +158,15 @@ Agent，从状态图走一遍失败恢复，区别程序执行失败和科学负
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="automate-schedule.html">4.1 定时调度与无人值守</a></td>
-<td>65 分钟，把课堂恢复接到调度与接管</td>
+<td>65 分钟，把课堂上的恢复机制接入调度与接管</td>
 <td>状态转移、锁归属和停止演示</td>
 </tr>
 <tr>
@@ -167,48 +176,76 @@ Agent，从状态图走一遍失败恢复，区别程序执行失败和科学负
 </tr>
 <tr>
 <td><a href="automate-pages.html">4.3 结果展示</a></td>
-<td>45 分钟，让失败与未知状态也进入页面</td>
+<td>45 分钟，使失败与未知状态也进入页面</td>
 <td>本地完整页与待发布投影</td>
 </tr>
 </tbody>
 </table>
-<p>换自己的课题时，故意选一个可以安全中断的步骤。先让恢复规则经受一次实际失败，再延长无人值守时间。</p>
+<p>换用自己的课题时，有意选择一个可以安全中断的步骤。先让恢复规则经受一次实际失败，再延长无人值守的时间。</p>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查学生能否解释恢复演示怎样识别同一动作，单次唤醒的
+run.json
+是否与计划一致，候选经验是否写明条件、来源和检验方案。课后独立完成层面，学生在另一故障位置重做恢复，说明恢复查询所依据的身份键，并在少量周期运行中演示暂停与停止。迁移层面，学生为自己研究流程中的一个有副作用的步骤画出状态转移，指出状态未知时的查询方式和完成判据，并说明一条经验需要哪些未见任务和对照才能判定有效。评价依据为恢复机制的正确性、停止条件的有效性及经验检验设计。</p>
+<p>课后独立实践还须在未见任务上，按匹配预算完成目标经验、匹配安慰剂与无经验三组检验，报告各组结果、效应比较及不确定性，说明适用条件。尚未完成的检验标为待验证；候选经验的作用须依据实际比较结果评价。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip new">+ Scheduled tasks</span><span class="chip new">+ Headless runs</span><span class="chip new">+ Phone alerts</span><span class="chip new">+ Playbooks</span><span class="chip new">+ GitHub Pages</span></div><h1 id="research-automation">4 Research automation</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Build a research loop that a new session can resume, that recovers
-from interruptions and records the reasons for failures. Extract one
-candidate playbook entry from a run and design a test on the next batch
-of tasks.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Represent a research process as a sequence of states with explicit
+inputs, outputs and completion conditions.</li>
+<li>Design execution and recovery mechanisms that determine what has
+already happened after an interruption and avoid duplicated
+effects.</li>
+<li>Plan scheduled execution with completion criteria, stop conditions
+and a defined response to failure.</li>
+<li>Distinguish program failures from negative scientific results in the
+record of a research loop.</li>
+<li>Evaluate a playbook entry by its effect on unseen tasks against
+matched controls, rather than by its use in the round that produced
+it.</li>
+</ol>
 </div>
-<p><span class="meta">Prepare before class, spend 60 minutes in class,
-then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels. In class, students observe
+recovery from one failure point, run one scheduled read-only review with
+a handover to a new session, and design a test for one candidate
+playbook entry. These observations do not establish the long-term
+behavior of the loop. After class, students repeat recovery at a
+different failure point and extend the schedule to a small number of
+periodic runs; the extension paths apply the same mechanisms to the
+evaluation of playbook entries or to the presentation of results.</p>
+<p><span class="meta">Preparation before class, a 60-minute class
+session, then required review, independent work and transfer assessment,
+with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>An experiment started in the early morning, and the connection
-dropped while the status was being written. Will the morning agent read
-“not finished” and start another copy? An overnight workflow needs a
-reliable way to determine what has already happened when a session
-resumes.</p>
-<p>A research loop has a second problem. It finishes one round a day and
-produces more and more, but is its capability improving too? Once the
-process is connected, give the lessons it learns an independent
-test.</p>
+<p>An automated research workflow must be able to determine, when a
+session resumes, which actions have already taken effect. Consider an
+experiment launched overnight in which the connection drops while the
+status is being written. If the next session reads “not finished”, it
+may start a second copy. The workflow therefore needs a reliable record
+of state and a recovery procedure that checks effects rather than
+relying on the last message.</p>
+<p>A research loop raises a second question. It may complete one round a
+day and produce an increasing volume of output without any improvement
+in capability. Once the process is connected, the methods it records for
+future use require an independent test.</p>
 <div class="download">
 <p><a href="downloads/lesson-4-en.zip">Download the Lesson 4
 materials</a></p>
 </div>
-<h2 id="before-class">Before class</h2>
-<p><span class="meta">Allow 15 to 30 minutes, reusing the environment
-from earlier lessons.</span></p>
+<h2 id="before-class">Preparation</h2>
+<p><span class="meta">Allow 15 to 30 minutes; the environment from
+earlier sessions is reused.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> Download the materials and
-install missing dependencies, and prepare a local results page and a
-command-line entry point. Recovery logic, state transitions and testing
-playbook entries are all done in class.</p>
+<p><strong>Preparation.</strong> Download the materials, install missing
+dependencies, and prepare a local results page and a command-line entry
+point. Recovery logic, state transitions and the testing of playbook
+entries are all taught in class.</p>
 </div>
 <pre class="text"><code>Place lesson-2, lesson-3 and lesson-4 as neighboring directories, and confirm that my question list and the previous lesson&#39;s results can be found.
 Prepare the locked environment and logs/ as README.md says, keeping the runnable implementation from Lesson 3; if it was not finished, note that and use the packaged preview as the starting point in class.
@@ -217,159 +254,166 @@ This example uses a restricted, tool-free Claude call, with input supplied by th
 Open preview/site/index.html and preview/internal/round-1.html, and only confirm that the pages are readable.
 List the existing schedulers and notification channels. Do not add channels, send messages or deploy anything.
 Write the actual commands, file locations and unresolved items into preflight.md, and the stable entry points into AGENTS.md.</code></pre>
-<p>Before class you should be able to find <code>LOOP.md</code> and
-<code>STATE.md</code>, the recovery demonstration and the local preview.
-Do not run the failure demonstration in advance or fill in the recovery
-conclusion; how a failure affects the next step is observed in
+<p>Before class, <code>LOOP.md</code> and <code>STATE.md</code>, the
+recovery demonstration and the local preview should all be accessible.
+Do not run the failure demonstration in advance or record a recovery
+conclusion; the effect of a failure on the next step is observed in
 class.</p>
-<p>In class we connect one real short-delay wake-up together and check
-the machine, time zone and execution status. The timer fires only once
-and stops when the process exits; after class it is extended to a few
-periodic runs. External notifications and publishing each need a
-specific target and scope chosen separately.</p>
-<h2 id="in-class">In class</h2>
+<p>In class, one real short-delay wake-up is configured jointly, and the
+machine, time zone and execution status are checked. The timer fires
+once and stops when the process exits; after class it is extended to a
+small number of periodic runs. External notifications and publishing
+each require a specific target and scope chosen separately.</p>
+<h2 id="in-class">Class session</h2>
 <h3 id="records-and-handoff-between-rounds-5-minutes">Records and
-handoff between rounds, 5 minutes</h3>
-<p>First check preflight.md and confirm that this lesson only needs a
-local rehearsal, then look at the state left by the previous round.</p>
-<p>In the exercise materials, <code>LOOP.md</code> holds the handover
+handover between rounds, 5 minutes</h3>
+<p>Confirm from preflight.md that this session requires only a local
+rehearsal, then examine the state left by the previous round.</p>
+<p>In the exercise materials, <code>LOOP.md</code> contains the handover
 rules and <code>STATE.md</code> records the current step; each round
 leaves its prediction, result and review in its own directory. The
-preview pages are generated from the actual runs of Lesson 3, and
-opening the internal page traces back to the raw numbers.</p>
-<p>The recovery demonstration shows you a failure: the output has been
-written, the status has not yet been committed, and the program exits.
-On the next run it checks the output first, then fills in the status,
-and the number of outputs is still one. You will see how it picks up the
-status from an output that already exists.</p>
-<h3 id="draw-the-loop-as-state-transitions-10-minutes">Draw the loop as
-state transitions, 10 minutes</h3>
-<p>A round of research goes through topic selection, prediction freeze,
-execution, verification, review and archiving. Every transition needs a
-completion condition; for example, moving from execution to verification
-requires both the exit code and the product list to meet their
-requirements.</p>
+preview pages are generated from the actual runs of Session 3, and the
+internal page traces back to the raw numbers.</p>
+<p>The recovery demonstration presents a failure in which the output has
+been written, the status has not yet been committed and the program
+exits. On the next run, the program checks the output first, then
+completes the status, and the number of outputs remains one. The
+demonstration shows how the status is recovered from an output that
+already exists.</p>
+<h3 id="draw-the-loop-as-state-transitions-10-minutes">Representing the
+loop as state transitions, 10 minutes</h3>
+<p>A round of research passes through topic selection, prediction
+freeze, execution, verification, review and archiving. Every transition
+requires a completion condition; for example, moving from execution to
+verification requires that both the exit code and the product list meet
+their requirements.</p>
 <p>An unknown status is queried first, a failed run is recovered
-according to its cause, and a refuted research hypothesis moves normally
-into the conclusion. Only when program failures and negative scientific
-results are kept apart does the loop know whether to fix the code or
-change its understanding.</p>
-<p>Automation implements these transitions. System learning changes
-later choices or methods, and the improvement has to be measured on
-unseen tasks. The two are shown separately in the record.</p>
+according to its cause, and a refuted research hypothesis proceeds
+normally to the conclusion. Only when program failures and negative
+scientific results are kept apart can the loop determine whether to
+correct the code or revise its understanding.</p>
+<p>Automation implements these transitions. Learning by the system
+changes later choices or methods, and any improvement must be measured
+on unseen tasks. The two are recorded separately.</p>
 <h3 id="exercise-1-recover-from-one-interruption-15-minutes">Exercise 1:
-recover from one interruption, 15 minutes</h3>
+recovering from one interruption, 15 minutes</h3>
 <pre class="text"><code>First read recovery_demo.py and explain which action and which failure point it simulates.
 Run it in a separate demonstration directory as the README says, simulating an exit after the product is written, then run it again.
 Check the number of outputs, the event record and the final state, and explain how it recognizes the same action.
 Then use the same idea to check LOOP.md: find the gap between starting the experiment and writing the state.</code></pre>
-<p>When repeated requests for the same action produce the intended
-effect only once, the action is idempotent. A network timeout does not
-tell you whether the action happened, so recovery must be able to query
-a known action ID, or check the corresponding output locally.</p>
+<p>An action is idempotent when repeated requests for it produce the
+intended effect only once. A network timeout does not reveal whether the
+action took place, so recovery must be able to query a known action ID
+or check the corresponding output locally.</p>
 <h3
 id="exercise-2-schedule-a-read-only-review-and-hand-the-wrap-up-to-a-new-session-15-minutes">Exercise
-2: schedule a read-only review and hand the wrap-up to a new session, 15
+2: a scheduled read-only review and handover to a new session, 15
 minutes</h3>
 <pre class="text"><code>Reuse a round completed in Lesson 3, or copy the packaged preview as a rehearsal starting point, and state its source.
 Give this round&#39;s result.md to wake_review.py, set to fire once after five seconds with a maximum call time of ninety seconds, writing to a new one-shot-review/.
 Together check the host and time zone in run.json, the planned and actual times, the input hash, the exit code and the final review.md.
 Only a completed run hands its review comments to a new session; for a timeout, failure or empty output, record the reason first and do not advance the review to completed.
 The new session reads only LOOP.md, STATE.md and this round&#39;s records, checks them, then takes over and finishes the round, generating the local page and checking for duplicated effects.</code></pre>
-<p>The teacher and students check the command together before running
+<p>The instructor and students check the command together before running
 it. Replace the path with this round’s actual record, and use a new
 output directory each time:</p>
 <pre class="bash"><code>python3 wake_review.py --input preview/runs/1/result.md --out one-shot-review --delay-seconds 5 --timeout-seconds 90</code></pre>
-<p>Pressing Ctrl+C during the planned wait, then checking that it shows
-cancelled and calls_started is zero, verifies that no call was made.
-Pressing Ctrl+C during the run stops this subprocess. Finally confirm
-that the process has exited and no periodic wake-up was left behind.</p>
+<p>Pressing Ctrl+C during the planned wait and then confirming that the
+status is cancelled and calls_started is zero verifies that no call was
+made. Pressing Ctrl+C during the run stops this subprocess. Finally,
+confirm that the process has exited and that no periodic wake-up
+remains.</p>
 <p>The task lock determines which session may write; the run ID
-identifies the action being recorded. A lock timeout needs a check of
+identifies the action being recorded. A lock timeout requires a check of
 the holder and its process; if the old session can still resume writing,
-deleting the lock by time alone creates two writers.</p>
+deleting the lock on the basis of time alone creates two writers.</p>
 <h3
 id="exercise-3-record-a-candidate-playbook-entry-and-its-test-10-minutes">Exercise
-3: record a candidate playbook entry and its test, 10 minutes</h3>
+3: recording a candidate playbook entry and its test, 10 minutes</h3>
 <pre class="text"><code>Distill at most one playbook entry from this round&#39;s failure or success, writing its conditions of use, the concrete action and its source.
 List which kind of unseen task it is expected to change, and the main evaluation metric.
 Keep a no-playbook control, then design a placebo control in the same format and of similar length.
 Mark the entry as a candidate first and put the test plan into the next batch of tasks; do not take this round&#39;s success as proof that it works.</code></pre>
-<p>Once the current loop is complete, set up a few timed runs after
-class. First confirm the stop conditions, the recovery method and what
-happens when quota runs out, and only then extend the unattended
-time.</p>
-<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+<p>Once the current loop is complete, a small number of timed runs are
+configured after class. The stop conditions, the recovery method and the
+response to exhausted quota are confirmed before the unattended period
+is extended.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Common errors and
 summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
-<p><strong>Redoing everything from step one on every wake-up.</strong>
-The state points to products and action identities, and recovery first
-checks which effects have already happened.</p>
+<p><strong>Restarting from the first step at every wake-up.</strong> The
+state refers to products and action identities, and recovery first
+checks which effects have already occurred.</p>
 </div>
 <div class="pitfall">
-<p><strong>Assuming there is no concurrency because there is a
-lock.</strong> Check who holds the lock and whether the old session can
-keep writing after a takeover; all shared writes go through the same
-entry point.</p>
+<p><strong>Assuming that a lock rules out concurrency.</strong> Check
+who holds the lock and whether the old session can still write after a
+takeover; all shared writes go through the same entry point.</p>
 </div>
 <div class="pitfall">
-<p><strong>Saying the system evolved because the number of rounds went
-up.</strong> Fix the unseen tasks and the scoring standard, and compare
-whether a repeatable gain appears.</p>
+<p><strong>Concluding that the system has improved because the number of
+rounds has increased.</strong> Fix the unseen tasks and the scoring
+standard, and compare whether a repeatable gain appears.</p>
 </div>
 <div class="pitfall">
-<p><strong>Discarding failed runs so the results page shows only
+<p><strong>Discarding failed runs so that the results page shows only
 successes.</strong> Only when failed rounds retain their status and
-cause can you judge which stage an improvement affects.</p>
+cause is it possible to judge which stage an improvement affects.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
-<p>The files from earlier lessons are now connected by state
+<p>The files from earlier sessions are now connected by state
 transitions. The one-shot timer starts the session, the runner records
 run details, the reviewer assesses the conclusions, and the playbook
-suggests methods for future tasks. The results page gathers them into
-one entry point, so you can decide what to continue.</p>
+proposes methods for future tasks. The results page brings these
+together in one place, from which the next step can be decided.</p>
 </div>
 <p><a href="https://github.com/liuguangrui-hit/ai-scientist">AI
-Scientist</a> divides similar responsibilities among separate modules.
-In this lesson, first get the minimal loop working with one question of
-your own, then consider scaling up the workload.</p>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
+Scientist</a> assigns similar responsibilities to separate modules. In
+this course, the minimal loop is first established with a single
+research question before the workload is scaled up.</p>
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
 <p>Reading only the class <code>STATE.md</code> and this round’s files,
-list what the next person to take over should query first. Then close
-the agent and walk through failure recovery on the state diagram,
-separating a failed program execution from a negative scientific result.
-Write the transitions that still rely on guessing into
-<code>review-after-class.md</code>, and add completion conditions that
-can be checked.</p>
-<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
-minutes</h3>
-<p>A sees that the status is still “not started” and resends the
-experiment straight away. B first queries with the recorded job
-identifier, finds the product already generated, and only fills in the
-status. Say what effect each could have in the disconnection window.
-Then look at an experiment that ran normally but refuted its prediction:
-should it retry the program, or move into the conclusion and a candidate
-playbook entry? Write your reasons.</p>
+list what the next person to take over should query first. Then, without
+the agent, trace failure recovery through the state diagram, separating
+a failed program execution from a negative scientific result. Record in
+<code>review-after-class.md</code> any transitions that still rely on
+guesswork, and add completion conditions that can be checked.</p>
+<h3 id="compare-the-examples-20-minutes">Analysis of contrasting
+examples, 20 minutes</h3>
+<p>Procedure A sees that the status is still “not started” and
+immediately resends the experiment. Procedure B first queries with the
+recorded job identifier, finds that the product has already been
+generated, and only completes the status. State the possible effect of
+each within the disconnection window. Then consider an experiment that
+ran normally but refuted its prediction: should the program be retried,
+or should the round proceed to the conclusion and a candidate playbook
+entry? Give reasons.</p>
 <details>
 <summary>
-Draw the recovery path first, then see the comparison notes
+Draw the recovery path before reading the commentary
 </summary>
-<p>When the status lags behind the actual action, A may execute twice. B
-checks the effect from the action identity, so its recovery has a basis.
-A negative scientific result from a successful program with complete
-products can be archived normally; whether an entry works is still left
-to testing on unseen tasks.</p>
+<p>When the status lags behind the actual action, A may execute the
+action twice. B checks the effect through the action identity, so its
+recovery has a basis. A negative scientific result from a program that
+succeeded with complete products can be archived normally; whether a
+playbook entry is effective is still left to testing on unseen
+tasks.</p>
 </details>
 <h3 id="further-study">Further study</h3>
-<p>First redo one interruption recovery, then choose one path that
-builds on the single wake-up from class. Start periodic scheduling with
-a few runs and check the controls for pausing and deleting the schedule;
-external notification and deployment keep to targets and authorization
-already made clear.</p>
+<p>First repeat interruption recovery once, choosing a failure point
+different from the one used in class, then choose one path that builds
+on the single wake-up from class. Periodic scheduling begins with a
+small number of runs, and the controls for pausing and deleting the
+schedule are checked; external notification and deployment are limited
+to targets and authorizations already established.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -405,9 +449,27 @@ publication</td>
 </tr>
 </tbody>
 </table>
-<p>When you switch to your own topic, deliberately choose a step that
-can be interrupted safely. Let the recovery rules survive one actual
-failure first, then extend the unattended time.</p>
+<p>When the exercise is repeated with a student’s own topic, choose a
+step that can be interrupted safely. The recovery rules should survive
+one actual failure before the unattended period is extended.</p>
+<h3 id="assessment">Assessment</h3>
+<p>Attainment of the outcomes is judged from the student’s explanation
+of the loop’s behavior, not from a single successful run. Students
+should be able to state the completion condition of each transition;
+explain, for a chosen failure point, which record allows recovery to
+determine whether the action took effect; show that a second failure
+point, different from the one demonstrated in class, is recovered
+without duplicated effects; and justify why one round’s success does not
+establish the value of a playbook entry. Transfer is assessed by
+applying the same state model to another step or to the student’s own
+workflow and identifying where its recovery rules would need to
+change.</p>
+<p>Independent work must also complete the target-playbook,
+matched-placebo and no-playbook comparison on unseen tasks under matched
+budgets. Students must report the group results, effect comparisons and
+uncertainty, and explain the conditions to which the findings apply.
+Unfinished tests remain pending; evaluation of an entry rests on the
+observed comparison.</p>
 </article>
 <nav class="pager"><a class="prev" href="experiment-evidence.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.3 结果判读</span><span lang="en">3.3 Interpreting results</span></a><a class="next" href="automate-schedule.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.1 定时调度与无人值守</span><span lang="en">4.1 Scheduling and unattended runs</span></a></nav>
 </main>

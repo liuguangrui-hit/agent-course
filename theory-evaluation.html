@@ -31,53 +31,61 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="学习收益评估">6.2 学习收益评估</h1>
-<p><span class="meta">课后深入，约 75 分钟。</span></p>
-<p>带经验组比无经验组高了十分。这十分可能来自条目内容，也可能来自更长的输入、更完整的答题格式，或评审偏爱更长的回答。评估学习系统时，需要区分这些影响来源。</p>
-<h2 id="先明确要估计的干预">先明确要估计的干预</h2>
-<p>冻结原点，工具，预算与任务分布，随机分配所带经验。每个任务都独立运行三组，顺序随机，输出匿名后评分。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>明确评估所估计的干预，并用简化分解说明安慰剂对照在何种条件下能分离内容作用与非特异作用。</li>
+<li>设计配平输入与输出、先考后学、时间留出与前瞻任务，以控制评审偏好与数据污染。</li>
+<li>分析外环选择造成的验证偏差，为内容收益、反馈依赖与规则改进分别设计可检验预测。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 75 分钟。</span></p>
+<p>带经验组比无经验组高出十分。这十分可能来自条目内容，也可能来自更长的输入、更完整的答题格式，或评审对较长回答的偏好。评估学习系统时，需要区分这些影响来源。</p>
+<h2 id="先明确要估计的干预">待估计的干预</h2>
+<p>冻结原点、工具、预算与任务分布，随机分配所带的经验。每个任务都独立运行三组，顺序随机，输出匿名后评分。</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>d</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo stretchy="false" form="prefix">(</mo><msubsup><mi>r</mi><mi>i</mi><mi>B</mi></msubsup><mo>−</mo><msubsup><mi>r</mi><mi>i</mi><mi>P</mi></msubsup><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mspace width="2.0em"></mspace><mover><mi>g</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo stretchy="false" form="prefix">(</mo><msubsup><mi>r</mi><mi>i</mi><mi>B</mi></msubsup><mo>−</mo><msubsup><mi>r</mi><mi>i</mi><mn>0</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\widehat d=\frac1n\sum_i(r_i^B-r_i^P),\qquad
 \widehat g=\frac1n\sum_i(r_i^B-r_i^0).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>
 比较目标经验与安慰剂，<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>
-比较目标经验与无经验。按任务配对保留相关性，重复采样时把同一任务当作一个簇。</p>
-<p>这项随机化首先估计换一份输入文本对回报的作用。进一步把
+比较目标经验与无经验。按任务配对以保留相关性；重复采样时，把同一任务视为一个簇。</p>
+<p>这种随机化首先估计的是更换一份输入文本对回报的作用。要进一步把
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>
 解释为学到的知识，还需要安慰剂隔离非特异影响。</p>
-<h2 id="安慰剂的要求写进模型">安慰剂的要求写进模型</h2>
-<p>用一个简化分解说明混淆。设目标经验得分由任务基线，内容作用
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>B</mi></msub><annotation encoding="application/x-tex">k_B</annotation></semantics></math>，非特异作用
+<h2 id="安慰剂的要求写进模型">安慰剂条件的形式化</h2>
+<p>用一个简化分解说明混淆。设目标经验的得分由任务基线、内容作用
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>B</mi></msub><annotation encoding="application/x-tex">k_B</annotation></semantics></math>、非特异作用
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>B</mi></msub><annotation encoding="application/x-tex">h_B</annotation></semantics></math>
-与噪声组成；安慰剂有对应的
+与噪声组成；安慰剂有相应的
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>P</mi></msub><annotation encoding="application/x-tex">k_P</annotation></semantics></math>
 和
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>P</mi></msub><annotation encoding="application/x-tex">h_P</annotation></semantics></math>。于是：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">𝔼</mi><mo stretchy="false" form="prefix">[</mo><msup><mi>r</mi><mi>B</mi></msup><mo>−</mo><msup><mi>r</mi><mi>P</mi></msup><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>k</mi><mi>B</mi></msub><mo>−</mo><msub><mi>k</mi><mi>P</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>h</mi><mi>B</mi></msub><mo>−</mo><msub><mi>h</mi><mi>P</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbb E[r^B-r^P]=(k_B-k_P)+(h_B-h_P).</annotation></semantics></math></p>
-<p>当两组非特异作用一致，差值才消去这一项。安慰剂若带有可用知识，比较对象也会随之改变；若安慰剂造成干扰，目标经验的相对优势会被抬高。</p>
-<p>因此同时报告三组，检查安慰剂对无经验的差，再尝试另一份匹配安慰剂。必要时增加格式骨架对照，把格式与内容分得更细。</p>
-<h2 id="篇幅配平不止输入长度">篇幅配平不止输入长度</h2>
-<p>匹配结构、语气和领域相关程度，记录输入
-token。输出长度也要看：长答案可能有更多正确内容，也可能只得到评审偏好。</p>
-<p>优先用可执行结果、固定字段或明确评分规则。若模型评审不可避免，冻结规则与评审版本，随机交换位置，盲化组别，抽查不同厂商的复核分歧。</p>
-<p>不能为了配平输出，把正确论证任意截掉。可以事前规定共同输出预算，再报告评分对长度的敏感性。</p>
+<p>只有两组的非特异作用相同时，差值中的这一项才会消去。若安慰剂含有可用的知识，比较对象也随之改变；若安慰剂造成干扰，目标经验的相对优势会被抬高。</p>
+<p>因此应同时报告三组结果，检查安慰剂相对无经验的差，再尝试另一份匹配安慰剂。必要时增加格式骨架对照，把格式与内容的作用分得更细。</p>
+<h2 id="篇幅配平不止输入长度">篇幅配平不限于输入长度</h2>
+<p>安慰剂须匹配结构、语气和领域相关程度，并记录输入
+token。输出长度也要检查：较长的回答可能包含更多正确内容，也可能只是得到了评审的偏好。</p>
+<p>优先使用可执行的结果、固定字段或明确的评分规则。若无法避免模型评审，应冻结规则与评审版本，随机交换位置，盲化组别，并抽查不同厂商复核之间的分歧。</p>
+<p>不能为配平输出而任意截掉正确的论证。可以事先规定共同的输出预算，再报告评分对长度的敏感性。</p>
 <h2 id="先考后学与数据污染">先考后学与数据污染</h2>
 <p>第
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
 个任务先用
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>
-作答，评分以后才用这份反馈生成
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">B_{t+1}</annotation></semantics></math>。这阻止更新器从本题答案直接获益于本题成绩。</p>
-<p>它仍有两个前提要处理。任务流变化时，累计成绩描述的是这条流上的在线表现；原点预训练见过旧论文时，遮住结果不等于抹去模型记忆。</p>
-<p>把学习期、选榜验证期和最终确认期分开。论文按时间回放，保存日期口径，尽量增加可验证晚于原点训练材料的任务。商业模型训练截止若无法确认，就保留污染诊断，并加入前瞻性新实验。</p>
-<p>论文发表本身也携带成功线索。加入失败复现、被拒工作或自己新做的实验，检查经验是否仍能识别失败。</p>
+作答，评分完成后才用这份反馈生成
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">B_{t+1}</annotation></semantics></math>。这样可以阻止更新器利用本题答案提高本题成绩。</p>
+<p>此设计仍有两个前提需要处理。任务流发生变化时，累计成绩描述的是这条任务流上的在线表现；原点在预训练中可能见过旧论文，遮住结果并不等于消除模型记忆。</p>
+<p>把学习期、选榜验证期和最终确认期分开。论文按时间回放，保存日期口径，并尽量增加可证实晚于原点训练材料的任务。商业模型的训练截止时间若无法确认，应保留污染诊断，并加入前瞻性的新实验。</p>
+<p>论文发表本身也带有成功的线索。应加入失败的复现、被拒的工作或自己新做的实验，检验经验是否仍能识别失败。</p>
 <h2 id="外环选择与验证偏差">外环选择与验证偏差</h2>
-<p>外环看过一次成绩，再改规则，这次成绩就进入选择。试很多规则再报最好的，会放大噪声。固定
+<p>外环一旦看过某次成绩再修改规则，这次成绩就参与了选择。尝试许多规则后只报告最好的一个，会放大噪声。固定
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
-个同等真值候选、每个估计由
+个真值相同的候选、每个估计由
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-个独立有界回报组成时，最佳估计的噪声乐观偏差可用随
+个独立有界回报构成时，最佳估计的噪声乐观偏差可以用随
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>M</mi><mi>/</mi><mi>n</mi></mrow></msqrt><annotation encoding="application/x-tex">\sqrt{\log M/n}</annotation></semantics></math>
 增长的界描述。</p>
-<p>实际外环还会自适应地产生候选，简单固定候选界不足以覆盖全部过程。保留尝试总数和版本树，预先登记评估点，最后用从未反馈给更新器的任务确认。</p>
+<p>实际的外环还会自适应地产生候选，简单的固定候选界不足以覆盖全过程。应保留尝试总数和版本树，预先登记评估点，最后用从未反馈给更新器的任务确认。</p>
 <h2 id="三种可检验预测">三种可检验预测</h2>
 <table>
 <colgroup>
@@ -111,37 +119,52 @@ token。输出长度也要看：长答案可能有更多正确内容，也可能
 </tbody>
 </table>
 <h2 id="练习">练习</h2>
-<p>读
-<code>protocol.md</code>，为自己的任务填一份冻结协议。至少写明原点与任务身份，再确定三组构造和输出预算。评分规则、失败处理与分析单位也要事先规定。再运行
-<code>analyze_experience.py</code>，解释为什么缺一组数据时脚本拒绝继续。</p>
+<p>阅读
+<code>protocol.md</code>，为自己的任务填写一份冻结协议。至少写明原点与任务身份，再确定三组的构造和输出预算；评分规则、失败处理与分析单位也须事先规定。然后运行
+<code>analyze_experience.py</code>，解释为何缺少一组数据时脚本拒绝继续运行。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>安慰剂写得明显无用且干扰任务。</strong>
+<p><strong>安慰剂写得明显无用，且干扰任务。</strong>
 匹配结构与相关程度，报告它相对无经验的作用，再换一份检验敏感性。</p>
 </div>
 <div class="pitfall">
-<p><strong>先考后学就宣布排除了记忆。</strong>
-增加时间外与前瞻任务，记录训练截止的不确定性。</p>
+<p><strong>采用先考后学即宣称排除了记忆。</strong>
+增加时间外与前瞻性任务，记录训练截止时间的不确定性。</p>
 </div>
 <div class="pitfall">
-<p><strong>评审也读目标经验，评分一起变。</strong>
-评审输入与规则冻结，学习对象只在被评系统中更新。</p>
+<p><strong>评审也读取目标经验，评分随之改变。</strong>
+冻结评审的输入与规则，学习对象只在被评系统中更新。</p>
 </div>
 <p>近邻工作可对照 <a href="https://arxiv.org/abs/2308.10144">ExpeL</a>
 与 <a href="https://arxiv.org/abs/2510.04618">ACE</a>。<a
 href="https://www.deeplearning.ai/courses/evaluating-ai-agents">DeepLearning.AI
 Evaluating AI
-Agents</a>可继续看怎样选择组件指标，并把它们接到端到端评价。</p>
+Agents</a>进一步讨论怎样选择组件指标，并把它们与端到端评价联系起来。</p>
 </article>
 <article lang="en"><h1 id="evaluating-learning-gains">6.2 Evaluating learning gains</h1>
-<p><span class="meta">After-class deep dive, about 75
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Define the intervention and estimands of a learning evaluation, and
+state the assumptions under which a placebo comparison identifies a
+content effect.</li>
+<li>Design an evaluation protocol that controls for length and format,
+reviewer preference, data contamination and validation bias in the outer
+loop.</li>
+<li>Formulate claims about content gain, reward dependence and rule
+improvement as testable predictions with a main comparison and a plan
+for further evidence.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 75
 minutes.</span></p>
-<p>The group with experience scores ten points higher than the group
-without. Those ten points may come from the content of the entries, or
-from longer input, a more complete answer format, or a reviewer who
-prefers longer answers. A learning system needs to distinguish these
-sources of improvement.</p>
-<h2 id="define-the-intervention-and-estimand">Define the intervention
+<p>Suppose the group with experience scores ten points higher than the
+group without. Those ten points may come from the content of the
+entries, or from longer input, a more complete answer format or a
+reviewer who prefers longer answers. Evaluation of a learning system
+must distinguish these sources of improvement.</p>
+<h2 id="define-the-intervention-and-estimand">Defining the intervention
 and estimand</h2>
 <p>Freeze the origin, tools, budget and task distribution, and randomly
 assign which experience is supplied. Every task runs the three groups
@@ -153,17 +176,17 @@ scoring.</p>
 compares the target playbook with the placebo, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>
 compares the target playbook with no playbook. Pairing by task preserves
-within-task correlation, and with repeated sampling the same task is
+within-task correlation, and under repeated sampling the same task is
 treated as one cluster.</p>
-<p>This randomization first estimates the effect on reward of switching
+<p>This randomization first estimates the effect on reward of replacing
 one piece of input text. Interpreting
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>
-further as learned knowledge also needs a placebo that isolates
+further as learned knowledge also requires a placebo that isolates
 non-specific effects.</p>
-<h2 id="model-the-placebos-assumptions">Model the placebo’s
+<h2 id="model-the-placebos-assumptions">Modeling the placebo’s
 assumptions</h2>
 <p>A simplified decomposition shows the confounding. Suppose the score
-with the target playbook is made of a task baseline, a content effect
+with the target playbook consists of a task baseline, a content effect
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mi>B</mi></msub><annotation encoding="application/x-tex">k_B</annotation></semantics></math>,
 a non-specific effect
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>B</mi></msub><annotation encoding="application/x-tex">h_B</annotation></semantics></math>
@@ -173,25 +196,27 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>P</mi></msub><annotation encoding="application/x-tex">h_P</annotation></semantics></math>.
 Then:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">𝔼</mi><mo stretchy="false" form="prefix">[</mo><msup><mi>r</mi><mi>B</mi></msup><mo>−</mo><msup><mi>r</mi><mi>P</mi></msup><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>k</mi><mi>B</mi></msub><mo>−</mo><msub><mi>k</mi><mi>P</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>h</mi><mi>B</mi></msub><mo>−</mo><msub><mi>h</mi><mi>P</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbb E[r^B-r^P]=(k_B-k_P)+(h_B-h_P).</annotation></semantics></math></p>
-<p>Only when the two groups’ non-specific effects are equal does the
-difference cancel this term. If the placebo carries usable knowledge,
-the object of comparison changes with it; if the placebo interferes, the
-target playbook’s relative advantage is inflated.</p>
-<p>So report all three groups, check the placebo’s difference from no
-playbook, and then try another matched placebo. Where needed, add a
-format-only control to separate format from content more finely.</p>
-<h2 id="balancing-length-is-more-than-input-length">Balancing length is
+<p>The difference cancels the non-specific term only when the two
+groups’ non-specific effects are equal. If the placebo carries usable
+knowledge, the object of comparison changes with it; if the placebo
+interferes, the target playbook’s relative advantage is inflated.</p>
+<p>All three groups are therefore reported, the placebo’s difference
+from no playbook is checked, and a second matched placebo is then tried.
+Where needed, a format-only control separates format from content more
+finely.</p>
+<h2 id="balancing-length-is-more-than-input-length">Balancing involves
 more than input length</h2>
 <p>Match structure, tone and degree of domain relevance, and record
-input tokens. Look at output length too: a long answer may contain more
-correct content, or may only win the reviewer’s preference.</p>
-<p>Prefer executable results, fixed fields or explicit scoring rules. If
-a model reviewer is unavoidable, freeze the rules and the reviewer
-version, randomly swap positions, conceal group labels, and spot-check
-disagreements with a re-review from another vendor.</p>
-<p>Do not cut correct reasoning arbitrarily to balance outputs. You can
-set a shared output budget in advance, then report how sensitive scoring
-is to length.</p>
+input tokens. Output length must also be examined: a long answer may
+contain more correct content, or may merely win the reviewer’s
+preference.</p>
+<p>Executable results, fixed fields or explicit scoring rules are
+preferred. If a model reviewer is unavoidable, freeze the rules and the
+reviewer version, randomly swap positions, conceal group labels, and
+spot-check disagreements with a re-review from another vendor.</p>
+<p>Correct reasoning is not truncated arbitrarily to balance outputs. A
+shared output budget can be set in advance, and the sensitivity of
+scoring to length is then reported.</p>
 <h2 id="test-then-learn-and-data-contamination">Test-then-learn and data
 contamination</h2>
 <p>Task
@@ -200,21 +225,21 @@ is first answered with
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>t</mi></msub><annotation encoding="application/x-tex">B_t</annotation></semantics></math>,
 and only after scoring is this feedback used to generate
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">B_{t+1}</annotation></semantics></math>.
-This keeps the updater from turning the answer to a question directly
+This prevents the updater from turning the answer to a question directly
 into a better score on that same question.</p>
 <p>Two issues remain. When the task stream changes, the cumulative score
-describes online performance on this stream; when the origin saw old
-papers in pretraining, hiding the results does not erase the model’s
+describes online performance on this stream; when the origin saw older
+papers in pretraining, concealing the results does not erase the model’s
 memory.</p>
-<p>Keep the learning period, the playbook-selection validation period
-and the final confirmation period separate. Replay papers in time order,
-save how dates are defined, and add as many tasks as possible that can
-be verified to come after the origin’s training material. If a
-commercial model’s training cutoff cannot be confirmed, keep
-contamination diagnostics and add prospective new experiments.</p>
-<p>Paper publication itself also carries a clue of success. Add failed
-replications, rejected work or experiments you have newly run yourself,
-and check whether experience can still recognize failure.</p>
+<p>Keep the learning period, the validation period for playbook
+selection and the final confirmation period separate. Replay papers in
+chronological order, record how dates are defined, and include as many
+tasks as possible that can be verified to postdate the origin’s training
+material. If a commercial model’s training cutoff cannot be confirmed,
+keep contamination diagnostics and add prospective new experiments.</p>
+<p>Publication itself also signals success. Include failed replications,
+rejected work or newly run experiments, and check whether experience can
+still recognize failure.</p>
 <h2 id="validation-bias-in-the-outer-loop">Validation bias in the outer
 loop</h2>
 <p>Once the outer loop has seen a score and then changes a rule, that
@@ -227,10 +252,9 @@ independent bounded rewards, the optimistic noise bias of the best
 estimate can be described by a bound that grows like
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>M</mi><mi>/</mi><mi>n</mi></mrow></msqrt><annotation encoding="application/x-tex">\sqrt{\log M/n}</annotation></semantics></math>.</p>
 <p>A real outer loop also generates candidates adaptively, and a simple
-fixed-candidate bound is not enough to cover the whole process. Keep the
-total number of attempts and the version tree, register evaluation
-points in advance, and finally confirm on tasks never fed back to the
-updater.</p>
+fixed-candidate bound does not cover the whole process. Keep the total
+number of attempts and the version tree, register evaluation points in
+advance, and finally confirm on tasks never fed back to the updater.</p>
 <h2 id="three-testable-predictions">Three testable predictions</h2>
 <table>
 <colgroup>
@@ -261,7 +285,7 @@ shuffled reward</td>
 reward-sensitivity ablations</td>
 </tr>
 <tr>
-<td>Changing the rule brings lasting improvement</td>
+<td>Changing the rule produces lasting improvement</td>
 <td>New update rule against the old, measuring learning curves on a
 shared confirmation set</td>
 <td>Expand the same-budget comparison, keeping all candidates and
@@ -270,34 +294,35 @@ failures</td>
 </tbody>
 </table>
 <h2 id="exercise">Exercise</h2>
-<p>Read <code>protocol.md</code> and fill in a frozen protocol for your
+<p>Read <code>protocol.md</code> and complete a frozen protocol for your
 own task. At minimum, specify the origin, task identity, construction of
 the three groups, output budget, scoring, failure handling and unit of
 analysis. Then run <code>analyze_experience.py</code> and explain why
 the script refuses to continue when one group’s data are missing.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
 <p><strong>A placebo written to be obviously useless that interferes
 with the task.</strong> Match structure and degree of relevance, report
-its effect relative to no playbook, then switch to another to test
-sensitivity.</p>
+its effect relative to no playbook, then substitute another placebo to
+test sensitivity.</p>
 </div>
 <div class="pitfall">
-<p><strong>Declaring memory ruled out because of
+<p><strong>Concluding that memory is ruled out because of
 test-then-learn.</strong> Add out-of-time and prospective tasks, and
 record the uncertainty about the training cutoff.</p>
 </div>
 <div class="pitfall">
-<p><strong>The reviewer also reads the target playbook, so scoring
-shifts with it.</strong> Freeze the reviewer’s input and rules, and
-update the learnable component only in the system being evaluated.</p>
+<p><strong>A reviewer that also reads the target playbook, so that
+scoring shifts with it.</strong> Freeze the reviewer’s input and rules,
+and update the learnable component only in the system being
+evaluated.</p>
 </div>
 <p>For closely related work, compare <a
 href="https://arxiv.org/abs/2308.10144">ExpeL</a> and <a
 href="https://arxiv.org/abs/2510.04618">ACE</a>. <a
 href="https://www.deeplearning.ai/courses/evaluating-ai-agents">DeepLearning.AI
-Evaluating AI Agents</a> goes on to how to choose component metrics and
+Evaluating AI Agents</a> discusses how to choose component metrics and
 connect them to end-to-end evaluation.</p>
 </article>
 <nav class="pager"><a class="prev" href="theory-learning.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6.1 经验学习与策略表示</span><span lang="en">6.1 Learning through experience</span></a><a class="next" href="theory-transfer.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6.3 原点漂移与迁移</span><span lang="en">6.3 Origin drift and transfer</span></a></nav>

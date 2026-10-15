@@ -29,27 +29,35 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 权限规则</span><span class="chip new">+ 沙箱</span><span class="chip new">+ Hooks</span><span class="chip new">+ 密钥管理</span></div><h1 id="安全控制">5 安全控制</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>给工作台画清信息流和权限边界，用无害测试验证它。完成一张能力表、一次允许与拒绝测试，以及两道有明确覆盖范围的自动检查。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>沿信息流识别外部内容、工具调用与持久记录之间的信任边界，说明格式整理不会改变来源的可信度。</li>
+<li>按任务角色设计文件、网络与凭据权限，说明权限规则、进程隔离与凭据控制三层各自限制的对象。</li>
+<li>设计允许、拒绝及跨入口测试，说明每类测试结果能够支持何种边界判断，以及不能支持何种判断。</li>
+<li>评价 Hook 与权限策略的事件覆盖、失败时的行为及其局限。</li>
+</ol>
+<p>课堂在一次性演示目录中完成角色能力表、一组允许与拒绝测试和 Hook
+分支检查；更换入口与执行端后的复测在课后完成。</p>
 </div>
-<p><span class="meta">选修课。课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">选修课。课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>同一个 Agent
-能读网页、改代码，还能登录服务器。它从网页里读到的内容，怎样才不会获得执行任务的权力？需要通过实际动作与凭据权限限制这种影响。</p>
-<p>本课使用普通测试文件和空凭据样例验证权限。涉及攻击评测时，攻击样本在专门服务器环境中生成与运行，课程页面只讲威胁模型和防御指标。</p>
+<p>本节讨论的问题是：同一个 Agent
+既能读取网页、修改代码，又能登录服务器时，它从网页中读到的内容怎样才不会获得执行任务的权力。这种影响需要通过实际动作与凭据权限加以限制。</p>
+<p>本节使用普通测试文件和空凭据样例验证权限。涉及攻击评测时，攻击样本只在专门的服务器环境中生成与运行，课程页面只讨论威胁模型和防御指标。</p>
 <div class="download">
 <p><a href="downloads/lesson-5-zh.zip">下载第 5 课材料</a></p>
 </div>
-<h2 id="课前预备">课前预备</h2>
+<h2 id="课前预备">课前准备</h2>
 <p><span class="meta">预留 20 至 40 分钟，提前处理组件下载。</span></p>
 <div class="install">
 <p><strong>课前工具准备。</strong> 检查 Python 与 Git，确认 Bash
-和扫描器可用，备份现有配置。角色权限怎样划分，配置怎样合并，沙箱怎样实测，课堂一起处理。</p>
+和扫描器可用，备份现有配置。角色权限的划分、配置合并和沙箱实测均在课堂中进行。</p>
 </div>
 <pre class="text"><code>解压本课材料，只读 settings.example.json、config.example.toml 与 README.md，先不复制到生效位置。
 核对 Python，Git，Bash 与 gitleaks 是否能返回版本；缺项按官方入口安装。
@@ -57,7 +65,7 @@ href="#课后复习与拔高">课后复习与拔高</a></p>
 备份现有项目配置到自己的课前目录，准备一个无真实凭据的一次性演示目录。
 把系统，Agent 版本，组件状态和错误信息写到 preflight.md，不填写任何密钥值。</code></pre>
 <p>Claude 的 shell
-沙箱按系统分路线，组件检查只确认是否存在，实际隔离在课上测试。下表依据<a
+沙箱因操作系统而采用不同实现。课前的组件检查只确认组件存在，实际隔离效果在课堂上测试。下表依据<a
 href="https://code.claude.com/docs/en/sandboxing">官方沙箱说明</a>。</p>
 <table>
 <colgroup>
@@ -94,85 +102,86 @@ socat，涉及系统策略时交老师或管理员处理</td>
 </tr>
 </tbody>
 </table>
-<p>带到课堂的是可调用的检查器、空配置起点和普通测试目录。不要在课前照抄成品权限表，也不提前改系统安全策略。</p>
-<p>本机不支持某项隔离时，提前告诉老师。课堂用受支持的演示环境观察该边界，个人记录标明观察环境；自己的设备只记录实际测到的能力，课后再补迁移测试。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="先看一条数据怎样流动5-分钟">先看一条数据怎样流动，5 分钟</h3>
+<p>带到课堂的应是可调用的检查器、空配置起点和普通测试目录。课前不要照抄成品权限表，也不要提前修改系统安全策略。</p>
+<p>若本机不支持某项隔离，应提前告知授课教师。课堂上可在受支持的演示环境中观察该边界，个人记录注明观察环境；自己的设备只记录实际测得的能力，迁移测试在课后补做。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="先看一条数据怎样流动5-分钟">数据流与信任边界，5 分钟</h3>
 <p>先核对 preflight.md
-的组件与备份记录，再沿一条资料流动找权限边界。</p>
+中的组件与备份记录，再沿一条数据流识别权限边界。</p>
 <p>第 2
-课取回的论文经阅读助手变成笔记，再进入写作助手，最后到发布任务。若笔记保留了外部操作要求，换成内部文件也没有自动变可信。</p>
-<p>所以资料要带来源，进入可执行任务前再检查动作是否由用户任务授权。读取外部资料的进程尽量没有发布凭据，发布器只接收经过选取的产物与固定目标。</p>
+课取回的论文经阅读助手整理为笔记，再进入写作助手，最后到达发布任务。若笔记中保留了外部内容提出的操作要求，即使它已成为内部文件，也不会因此变得可信。</p>
+<p>因此资料须带有来源标记，进入可执行任务之前，还要检查相应动作是否由用户任务授权。读取外部资料的进程尽量不持有发布凭据，发布器只接收经过选取的产物和固定目标。</p>
 <h3 id="三层权限控制10-分钟">三层权限控制，10 分钟</h3>
 <p>权限规则决定 Agent
-能调用哪项工具。进程隔离限制被运行的代码能接触哪些文件和网络。凭据服务或远端账号限制最终能做什么。</p>
-<p>其中任何一层放得很宽，其他层都要承担更大负担。允许运行任意 Python
-脚本，意味着被允许的脚本也能做文件与网络操作；仅禁止 Agent
-的直接读取工具还管不到这些路径。</p>
+能调用哪些工具。进程隔离限制被运行的代码能接触哪些文件和网络。凭据服务或远端账号限制最终能产生哪些效果。</p>
+<p>任何一层放得过宽，其他各层都要承担更大的负担。允许运行任意 Python
+脚本，意味着被允许的脚本也能进行文件与网络操作；仅禁止 Agent
+直接读取文件的工具，无法限制这些路径。</p>
 <p>Hooks
-可在特定入口加检查。它的能力取决于挂在哪个事件，失败时是否阻断，执行者能否绕过。先说覆盖范围，再测真实行为。</p>
-<h3 id="练习一按角色配权限15-分钟">练习一，按角色配权限，15 分钟</h3>
+可在特定入口增加检查。其能力取决于挂接在哪个事件上、失败时是否阻断，以及执行者能否绕过。应先说明覆盖范围，再测试实际行为。</p>
+<h3 id="练习一按角色配权限15-分钟">练习一：按角色配置权限，15 分钟</h3>
 <pre class="text"><code>为阅读，实验，审阅和发布分别写能力表。
 阅读者只向自己的笔记目录输出，实验者只在执行目录和已分配资源内运行。
 审阅者只读冻结版本并输出意见，发布者只接收批准的产物和目标。
 逐项说明文件范围、网络范围与凭据来源，再对照当前官方配置生成候选设置。</code></pre>
-<p>模型名称可以替换，权限跟任务角色走。共享写入仍指定一个整合者。</p>
+<p>模型名称可以替换，权限随任务角色而定。共享写入仍指定一位整合者。</p>
 <h3
-id="练习二实测一条允许和一条拒绝10-分钟">练习二，实测一条允许和一条拒绝，10
+id="练习二实测一条允许和一条拒绝10-分钟">练习二：允许与拒绝行为的实测，10
 分钟</h3>
 <pre class="text"><code>在一次性演示目录内准备普通测试文件，列出预期允许和拒绝的动作。
 使用当前生效的权限和沙箱分别执行，记录实际结果、错误码与配置来源。
 再从另一个受控入口测试同一边界，例如直接文件工具与子进程读取。
 若某项没有真正隔离，写明缺口，修正后重测。</code></pre>
-<p>测试内容保持无害，越界目标由自己预先创建。系统权限、联网隔离和远端账号分别测试，不能从其中一项推断全部已生效。</p>
+<p>三类测试支持的判断各不相同。允许测试成功，说明合法任务在当前配置下可以完成，即限制没有妨碍正常工作，但不说明边界存在。拒绝测试成功，说明预定的越界动作在这一入口、这一路径和这一配置版本下被阻止，不能推广到其他入口。跨入口测试检验同一边界在另一条路径上是否仍然成立，例如文件工具被拒绝后，子进程是否也无法读取同一文件。</p>
+<p>测试内容须保持无害，越界目标由自己预先创建。系统权限、联网隔离和远端账号分别测试，不能从其中一项推断全部已经生效。</p>
 <h3
-id="练习三两道自动检查的覆盖范围15-分钟">练习三，两道自动检查的覆盖范围，15
+id="练习三两道自动检查的覆盖范围15-分钟">练习三：自动检查的覆盖范围，15
 分钟</h3>
 <pre class="text"><code>运行包内 Hook 验证，再查看数字核查与推送前扫描各由哪个事件触发。
 用普通测试输入分别触发成功，发现问题，检查器失败三种分支。
 确认修改后检查能反馈问题，发布前检查失败会阻断。
 把未覆盖的入口与最后一道全量检查写进运行说明。</code></pre>
-<p>扫描器测试使用失效样例或替身，输出隐藏疑似值。真实凭据由本地或服务端设施管理，Agent
-只拿到完成任务所需的权限。</p>
-<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<p>扫描器测试使用失效样例或替身，输出时隐藏疑似值。真实凭据由本地或服务端设施管理，Agent
+只获得完成任务所需的权限。</p>
+<h3 id="检查与工作台小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>笔记由自己写，就认为可信。</strong>
-来源标签保留到后续步骤，执行动作重新核对任务授权。</p>
+<p><strong>笔记由自己生成，即认为内容可信。</strong>
+来源标记保留到后续步骤，执行动作前重新核对任务授权。</p>
 </div>
 <div class="pitfall">
-<p><strong>拒绝读取文件，却允许同进程任意脚本。</strong>
-检查子进程、网络和凭据边界，必要时换隔离用户或容器。</p>
+<p><strong>拒绝了文件读取工具，却允许同一进程运行任意脚本。</strong>
+检查子进程、网络和凭据边界，必要时改用隔离用户或容器。</p>
 </div>
 <div class="pitfall">
-<p><strong>Hook 单元测试通过，就宣布沙箱安全。</strong>
-分别记录脚本分支测试和实际系统边界测试。</p>
+<p><strong>Hook 单元测试通过，即宣布沙箱安全。</strong>
+脚本分支测试与实际系统边界测试分别记录。</p>
 </div>
 <div class="pitfall">
-<p><strong>沙箱外的 SSH 例外没有另管。</strong>
-本机限制到不了服务器，远端账号与作业权限单独配置。</p>
+<p><strong>沙箱外的 SSH 例外未单独管理。</strong>
+本机限制无法作用于服务器，远端账号与作业权限须单独配置。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
-<p>安全配置现在有可观察的含义：哪项任务能读什么，哪个进程持有什么凭据，哪些动作实际被拒绝。扩展工具以后重新沿信息流检查，测试记录跟配置版本一起保存。</p>
+<p>安全配置现在有了可观察的含义：哪项任务能读取什么，哪个进程持有什么凭据，哪些动作被实际拒绝。增加工具后应重新沿信息流检查，测试记录与配置版本一并保存。</p>
 </div>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
-<p>从课堂实际配置重画信息流：外部材料怎样进入笔记，哪个进程能调用工具，哪里持有凭据。给每条边标上控制与一次测试结果，把尚未测试的边写到
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
+<p>根据课堂的实际配置重新画出信息流：外部材料怎样进入笔记，哪个进程能调用工具，凭据保存在何处。为每条边标注控制方式和一次测试结果，把尚未测试的边写入
 <code>review-after-class.md</code>。</p>
 <h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
-<p>甲记录文件读取工具拒绝访问，于是宣称该文件已隔离；同一进程却仍能运行任意脚本。乙分别测试文件工具和受控子进程，并记录配置版本与实际拒绝结果。指出两份记录各证明了什么。再判断
-Hook 分支测试全部通过，是否已经证明本机沙箱与远端 SSH
-都执行了同一边界。</p>
+<p>记录甲：文件读取工具被拒绝访问，因此宣称该文件已被隔离；但同一进程仍能运行任意脚本。记录乙：分别测试文件工具和受控子进程，并记录配置版本与实际拒绝结果。指出两份记录各自证明了什么。再判断：Hook
+分支测试全部通过，是否已经证明本机沙箱与远端 SSH 都执行了同一边界。</p>
 <details>
 <summary>
-先写覆盖范围，再看对照思路
+先写出覆盖范围，再查看参考思路
 </summary>
-<p>甲只测到一个入口。乙把进程路径也纳入观察，仍需按实际控制逐项验证。Hook
-分支、系统隔离和远端账号是不同测试对象，应各留有效配置与行为证据。</p>
+<p>甲只测试了一个入口。乙把进程路径也纳入观察，但仍需按实际控制逐项验证。Hook
+分支、系统隔离和远端账号是不同的测试对象，应分别保留有效配置与行为证据。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>先在自己的练习环境补齐允许与拒绝测试，再选一条路径。复杂配置有不明处时保留最小复现，在后续答疑中共同检查。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>先在自己的练习环境中补齐允许与拒绝测试，再选择一个专题。复杂配置中有不明之处时，保留最小复现，在后续答疑中共同检查。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -181,15 +190,15 @@ Hook 分支测试全部通过，是否已经证明本机沙箱与远端 SSH
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="safety-sandbox.html">5.1 权限与沙箱</a></td>
-<td>60 分钟，换入口和执行端后重测</td>
+<td>60 分钟，更换入口和执行端后重测</td>
 <td>能力表、配置版本与行为矩阵</td>
 </tr>
 <tr>
@@ -199,27 +208,50 @@ Hook 分支测试全部通过，是否已经证明本机沙箱与远端 SSH
 </tr>
 </tbody>
 </table>
-<p>最后用一次普通任务验证合法工作仍可完成，再尝试一次预先定义的越界动作。两种结果一起构成验收。</p>
+<p>最后用一次普通任务验证合法工作仍可完成，再尝试一次预先定义的越界动作。两种结果共同构成验收。</p>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查角色能力表是否逐项写明文件、网络与凭据范围，测试记录是否注明入口、配置版本和实际结果，学生能否说明每条允许或拒绝结果支持的具体判断。课后独立完成层面，学生在另一入口或执行端复测同一边界，并说明结果相同或不同的原因。迁移层面，学生为自己研究中的一个工具链画出信息流，指出未经测试的边，设计相应的允许、拒绝和跨入口测试，并说明
+Hook
+在其中覆盖哪些事件、无法覆盖哪些路径。评价依据为权限范围的合理性、测试覆盖及边界判断与测试证据的对应关系。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Permission rules</span><span class="chip new">+ Sandbox</span><span class="chip new">+ Hooks</span><span class="chip new">+ Secrets</span></div><h1 id="safety-controls">5 Safety controls</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Map the information flow and permission boundaries of your workbench,
-and verify them with harmless tests. Complete a capability table, one
-test of an allowed and a denied action, and two automatic checks with a
-clear scope of coverage.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Identify the trust boundaries between external content, tools,
+credentials and persistent records in an agent-based research
+workflow.</li>
+<li>Design permissions and isolation for each role according to its
+responsibilities, specifying file, network and credential scope.</li>
+<li>Verify a boundary through paired allowed and denied tests, and
+through tests at more than one entry point, stating which conclusion
+each test supports.</li>
+<li>Evaluate the coverage and limitations of Hooks and permission
+policies, distinguishing tests of script logic from tests of the actual
+system boundary.</li>
+</ol>
 </div>
-<p><span class="meta">Elective. Prepare before class, spend 60 minutes
-in class, then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels. In class, students build a
+role capability table, test one allowed and one denied action, and test
+the branches of two automatic checks. After class, they retest the same
+boundary through a different entry point or execution environment. The
+extension paths apply the same analysis to sandbox configuration and to
+Hooks and credential handling.</p>
+<p><span class="meta">Elective. Preparation before class, a 60-minute
+class session, then required review, independent work and transfer
+assessment, with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>The same agent can read web pages, change code and log in to servers.
-How do you keep what it reads on a web page from gaining the power to
-carry out tasks? Enforce the boundary through controls on actions and
-credentials.</p>
-<p>This lesson verifies permissions with ordinary test files and dummy
+<p>A single agent may read web pages, modify code and sign in to
+servers. The central problem of this session is how to prevent content
+read from an external source from acquiring the authority to carry out
+tasks. The boundary is enforced through controls on actions and
+credentials, not through the agent’s judgment alone.</p>
+<p>The session verifies permissions with ordinary test files and dummy
 credentials. Where attack evaluation is involved, attack samples are
 generated and run in a dedicated server environment, and the course
 pages cover only the threat model and defense metrics.</p>
@@ -227,14 +259,14 @@ pages cover only the threat model and defense metrics.</p>
 <p><a href="downloads/lesson-5-en.zip">Download the Lesson 5
 materials</a></p>
 </div>
-<h2 id="before-class">Before class</h2>
-<p><span class="meta">Allow 20 to 40 minutes, and deal with component
+<h2 id="before-class">Preparation</h2>
+<p><span class="meta">Allow 20 to 40 minutes, and complete component
 downloads in advance.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> Check Python and Git, confirm
-that Bash and the scanner work, and back up your existing configuration.
-How to divide role permissions, how configuration merges and how to test
-the sandbox are handled together in class.</p>
+<p><strong>Preparation.</strong> Check Python and Git, confirm that Bash
+and the scanner work, and back up the existing configuration. The
+division of role permissions, configuration merging and sandbox testing
+are carried out in class.</p>
 </div>
 <pre class="text"><code>Unzip this lesson&#39;s materials. Only read settings.example.json, config.example.toml and README.md; do not copy them to where they take effect yet.
 Check that Python, Git, Bash and gitleaks return versions; install anything missing from the official sources.
@@ -242,10 +274,10 @@ Check my system and components against the table below and download what is miss
 Back up the existing project configuration to my own pre-class directory, and prepare a disposable demonstration directory with no real credentials.
 Write the system, agent versions, component status and error messages into preflight.md. Do not fill in any key values.</code></pre>
 <p>Claude’s shell sandbox uses different mechanisms on different
-operating systems. The component check only confirms that things exist;
-actual isolation is tested in class. The table below is based on the <a
-href="https://code.claude.com/docs/en/sandboxing">official sandboxing
-guide</a>.</p>
+operating systems. The component check confirms only that the components
+exist; actual isolation is tested in class. The table below is based on
+the <a href="https://code.claude.com/docs/en/sandboxing">official
+sandboxing guide</a>.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -270,150 +302,161 @@ status in the session with <code>/sandbox</code></td>
 <td>Linux and WSL2</td>
 <td>Run <code>command -v bwrap</code> and <code>command -v socat</code>,
 and check dependencies in the session with <code>/sandbox</code></td>
-<td>Install bubblewrap and socat for your distribution; system policy
-issues go to the teacher or administrator</td>
+<td>Install bubblewrap and socat for your distribution; refer system
+policy issues to the instructor or administrator</td>
 </tr>
 <tr>
 <td>Native Windows</td>
-<td>In PowerShell, use <code>wsl -l -v</code> to see whether WSL2 is
-already there</td>
+<td>In PowerShell, use <code>wsl -l -v</code> to check whether WSL2 is
+installed</td>
 <td>This Claude sandbox demonstration uses WSL2; if it is not ready, use
 the environment supported in class. Codex’s native Windows sandbox is
 tested separately according to its own configuration</td>
 </tr>
 </tbody>
 </table>
-<p>Bring to class a runnable checker, an empty configuration as a
-starting point, and an ordinary test directory. Do not copy a finished
+<p>Bring to class a working checker, an empty configuration as a
+starting point and an ordinary test directory. Do not copy a finished
 permission table before class, and do not change system security policy
 in advance.</p>
-<p>If your machine does not support some kind of isolation, tell the
-teacher in advance. In class you observe that boundary in a supported
-demonstration environment and record which environment you observed in
-your own record; on your own device, record only the capabilities
-actually tested, and add the transfer test after class.</p>
-<h2 id="in-class">In class</h2>
-<h3 id="trace-information-through-the-workbench-5-minutes">Trace
-information through the workbench, 5 minutes</h3>
-<p>First check the components and backup record in preflight.md, then
-follow one flow of material to find the permission boundaries.</p>
-<p>Papers retrieved in Lesson 2 become notes through the reading helper,
-then go to the writing helper, and finally to the publishing task. If a
-note preserves an instruction from an external source, it does not
-automatically become trustworthy just because it is now an internal
-file.</p>
-<p>Keep source information with the material, and before it enters an
-executable task, check whether the action was authorized by the user’s
-task. Processes that read external material should hold no publishing
-credentials where possible, and the publisher accepts only selected
-products and a fixed target.</p>
+<p>If a machine does not support a particular kind of isolation, inform
+the instructor in advance. In class, that boundary is observed in a
+supported demonstration environment and the student’s record states
+which environment was observed; on the student’s own device, only the
+capabilities actually tested are recorded, and the transfer test is
+added after class.</p>
+<h2 id="in-class">Class session</h2>
+<h3 id="trace-information-through-the-workbench-5-minutes">Tracing
+information through the workflow, 5 minutes</h3>
+<p>Check the components and backup record in preflight.md, then follow
+one flow of material to identify the permission boundaries.</p>
+<p>Papers retrieved in Session 2 become notes through the reading
+helper, then pass to the writing helper and finally to the publishing
+task. If a note preserves an instruction from an external source, the
+instruction does not become trustworthy because it now resides in an
+internal file.</p>
+<p>Source information stays with the material, and before the material
+enters an executable task, the action is checked against the user’s task
+authorization. Processes that read external material should hold no
+publishing credentials where possible, and the publisher accepts only
+selected products and a fixed target.</p>
 <h3 id="three-layers-of-control-10-minutes">Three layers of control, 10
 minutes</h3>
-<p>Permission rules decide which tools the agent can call. Process
-isolation limits which files and networks the code being run can touch.
-A credential service or remote account limits what can ultimately be
+<p>Permission rules determine which tools the agent can call. Process
+isolation limits which files and networks the executed code can reach. A
+credential service or remote account limits what can ultimately be
 done.</p>
-<p>If any one layer is configured too broadly, the other layers carry a
-heavier load. Allowing any Python script to run means an allowed script
-can also do file and network operations; forbidding only the agent’s
-direct read tool does not cover those paths.</p>
-<p>Hooks can add checks at specific entry points. What they can do
-depends on which event they are attached to, whether failures block the
-action, and whether the executing process can bypass them. State the
-coverage first, then test the real behavior.</p>
+<p>If any one layer is configured too broadly, the other layers carry
+more of the load. Allowing any Python script to run means that an
+allowed script can also perform file and network operations; forbidding
+only the agent’s direct read tool does not cover those paths.</p>
+<p>Hooks can add checks at specific entry points. What they achieve
+depends on the event they are attached to, whether a failure blocks the
+action, and whether the executing process can bypass them. The intended
+coverage is stated first, and the actual behavior is then tested.</p>
 <h3 id="exercise-1-assign-permissions-by-role-15-minutes">Exercise 1:
-assign permissions by role, 15 minutes</h3>
+assigning permissions by role, 15 minutes</h3>
 <pre class="text"><code>Write a capability table for each of reading, experimenting, reviewing and publishing.
 The reader outputs only to its own notes directory; the experimenter runs only in the execution directory and on allocated resources.
 The reviewer reads only frozen versions and outputs comments; the publisher accepts only approved products and targets.
 For each, state the file scope, network scope and credential source, then generate candidate settings against the current official configuration.</code></pre>
-<p>Model names can be swapped; permissions follow the task role. Assign
-one integrator to handle shared writes.</p>
+<p>Model names can be exchanged; permissions follow the task role. A
+single integrator is assigned to handle shared writes.</p>
 <h3
 id="exercise-2-test-one-allowed-and-one-denied-action-10-minutes">Exercise
-2: test one allowed and one denied action, 10 minutes</h3>
+2: testing one allowed and one denied action, 10 minutes</h3>
 <pre class="text"><code>Prepare ordinary test files in a disposable demonstration directory and list the actions expected to be allowed and denied.
 Execute each with the permissions and sandbox currently in effect, recording the actual result, the error code and the source of the configuration.
 Then test the same boundary from another controlled entry point, for example the direct file tool versus a read from a subprocess.
 If something is not really isolated, write down the gap, fix it and retest.</code></pre>
-<p>Keep the test content harmless, and create the out-of-bounds target
-yourself in advance. System permissions, network isolation and remote
-accounts are tested separately; you cannot infer from one of them that
-all are in effect.</p>
+<p>The two tests support different conclusions. A successful allowed
+action shows that the configuration does not prevent the legitimate work
+it is meant to permit. A denied action shows that the boundary held for
+that action through that entry point under the configuration in effect;
+it does not show that the same action is blocked through other entry
+points. A test through a second entry point is therefore needed before
+the boundary can be described more generally. Test content remains
+harmless, and the out-of-bounds target is created in advance by the
+student. System permissions, network isolation and remote accounts are
+tested separately; none can be inferred to be in effect from a test of
+another.</p>
 <h3 id="exercise-3-test-the-coverage-of-two-checks-15-minutes">Exercise
-3: test the coverage of two checks, 15 minutes</h3>
+3: testing the coverage of two checks, 15 minutes</h3>
 <pre class="text"><code>Run the Hook verification in the package, then see which event triggers the number checker and which triggers the pre-push scan.
 Use ordinary test inputs to trigger three branches for each: success, problem found, and checker failure.
 Confirm that the check after an edit reports problems back, and that a failed pre-publication check blocks.
 Write the entry points not covered, and the final full check, into the run instructions.</code></pre>
-<p>Scanner tests use invalid samples or stand-ins, and the output hides
+<p>Scanner tests use invalid samples or stand-ins, and the output masks
 suspected values. Real credentials are managed by local or server-side
-facilities, and the agent gets only the permissions needed to complete
-its task.</p>
-<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+facilities, and the agent receives only the permissions needed for its
+task.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Common errors and
 summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
-<p><strong>Trusting a note because you wrote it yourself.</strong> Keep
-the source label in later steps, and recheck task authorization before
-executing actions.</p>
+<p><strong>Trusting a note because it was written within the
+project.</strong> Keep the source label in later steps, and recheck task
+authorization before actions are executed.</p>
 </div>
 <div class="pitfall">
-<p><strong>Denying file reads but allowing any script in the same
+<p><strong>Denying file reads while allowing any script in the same
 process.</strong> Check the subprocess, network and credential
-boundaries, and switch to an isolated user or container where
-needed.</p>
+boundaries, and use an isolated user or container where needed.</p>
 </div>
 <div class="pitfall">
-<p><strong>Declaring the sandbox safe because the Hook unit tests
-passed.</strong> Record script branch tests and actual system boundary
-tests separately.</p>
+<p><strong>Concluding that the sandbox is safe because the Hook unit
+tests passed.</strong> Record script branch tests and actual system
+boundary tests separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>SSH exceptions outside the sandbox are not managed
-separately.</strong> Local restrictions do not reach the server; remote
-accounts and job permissions are configured on their own.</p>
+<p><strong>Leaving SSH exceptions outside the sandbox
+unmanaged.</strong> Local restrictions do not extend to the server;
+remote accounts and job permissions are configured separately.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
 <p>The safety configuration can now be assessed through observable
 behavior: which task can read what, which process holds which
-credential, and which actions are actually denied. After adding tools,
-check along the information flow again, and save test records with the
-configuration version.</p>
+credential, and which actions are actually denied. When tools are added,
+the information flow is checked again, and test records are saved with
+the configuration version.</p>
 </div>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
 <p>Redraw the information flow from the configuration actually used in
-class: how external material enters notes, which process can call tools,
+class: how external material enters notes, which process can call tools
 and where credentials are held. Label each edge with its control and one
-test result, and write the edges not yet tested into
+test result, and record the edges not yet tested in
 <code>review-after-class.md</code>.</p>
-<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
-minutes</h3>
-<p>A records that the file read tool was denied access, and so claims
-the file is isolated; yet the same process can still run any script. B
-tests the file tool and a controlled subprocess separately, and records
-the configuration version and the actual denials. Say what each record
-proves. Then judge whether all Hook branch tests passing already proves
-that both the local sandbox and remote SSH enforce the same
-boundary.</p>
+<h3 id="compare-the-examples-20-minutes">Analysis of contrasting
+examples, 20 minutes</h3>
+<p>Record A states that the file read tool was denied access and claims
+on that basis that the file is isolated, although the same process can
+still run any script. Record B tests the file tool and a controlled
+subprocess separately and records the configuration version and the
+actual denials. State what each record demonstrates. Then judge whether
+the passing of all Hook branch tests demonstrates that both the local
+sandbox and remote SSH enforce the same boundary.</p>
 <details>
 <summary>
-Write the coverage first, then see the comparison notes
+Record the coverage before reading the commentary
 </summary>
-<p>A tested only one entry point. B brought the process path into view
-as well, but each actual control still needs verifying one by one. Hook
-branches, system isolation and remote accounts are different test
-targets, and each should keep its own effective configuration and
-behavioral evidence.</p>
+<p>A tested only one entry point. B also brought the process path into
+view, but each actual control still needs to be verified individually.
+Hook branches, system isolation and remote accounts are different
+objects of testing, and each should keep its own effective configuration
+and behavioral evidence.</p>
 </details>
 <h3 id="further-study">Further study</h3>
 <p>First complete the allowed and denied tests in your own exercise
-environment, then choose one path. Where complex configuration is
-unclear, keep a minimal reproduction and check it together in a later
-Q&amp;A session.</p>
+environment, then choose one path. Where complex configuration remains
+unclear, keep a minimal reproduction and examine it in a later question
+session.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -442,8 +485,19 @@ environment</td>
 </tbody>
 </table>
 <p>Finally, verify with one ordinary task that legitimate work can still
-be completed, then try one predefined out-of-bounds action. Both results
-together make up the acceptance check.</p>
+be completed, then attempt one predefined out-of-bounds action. The two
+results together constitute the acceptance check.</p>
+<h3 id="assessment">Assessment</h3>
+<p>Attainment of the outcomes is judged from the student’s account of
+what each test shows. Students should be able to identify, for a given
+information flow, where untrusted content could acquire authority;
+justify each role’s file, network and credential scope; explain what the
+allowed test and the denied test each support, and why a denial at one
+entry point does not establish isolation; and state what the Hook tests
+cover and what they leave untested. Transfer is assessed by retesting
+the same boundary through a different entry point or execution
+environment and reporting where the observed permissions differed from
+the configured intention.</p>
 </article>
 <nav class="pager"><a class="prev" href="automate-pages.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.3 结果展示</span><span lang="en">4.3 Presenting results</span></a><a class="next" href="safety-sandbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandboxes</span></a></nav>
 </main>

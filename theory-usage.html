@@ -31,98 +31,122 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="用量与成本核算">6.4 用量与成本核算</h1>
-<p><span class="meta">课后深入，约 40 分钟。</span></p>
-<p>一张经验榜提高了正确率，却让每次任务多花一倍时间。它是否值得部署，需要结合学习收益和资源成本作判断。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>统一不同来源的 token
+用量与费用口径，区分缺失值、实测零值、订阅费用与折算资源量。</li>
+<li>运用对话分段、追加审阅与并行执行的简化模型作出资源决策，并检验其敏感性和适用前提。</li>
+<li>把学习收益、资源成本与风险纳入事先确定的部署目标，评价一项学习方案是否值得部署。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 40 分钟。</span></p>
+<p>一张经验榜提高了正确率，却使每次任务的耗时增加一倍。它是否值得部署，需要综合学习收益和资源成本加以判断。</p>
 <h2 id="用量来源与统计口径">用量来源与统计口径</h2>
-<p>记录任务与执行者并注明起止时间，再分别填写输入、输出与缓存用量。不同产品的输入字段可能已包含缓存读取，也可能只计未缓存输入，先查日志定义，再做加总。</p>
-<p>练习包的账本明确把未缓存输入，缓存读，缓存写和输出分列，四列互不重叠。新增自己的日志时，保留原始字段与来源，转换成统一口径。读不到的数留缺失，零是一个实际测量值。</p>
+<p>记录任务、执行者和起止时间，再分别填写输入、输出与缓存用量。不同产品的输入字段可能已经包含缓存读取，也可能只计未缓存输入，应先查明日志定义，再做加总。</p>
+<p>练习包的账本把未缓存输入、缓存读取、缓存写入和输出分为四列，四列互不重叠。加入自己的日志时，保留原始字段与来源，再转换为统一口径。读不到的数值记为缺失，零是一个实际测量值。</p>
 <p>订阅费用、API 费用和按 API
-价折算的资源量分别写。示例费率只是演算假设，实际价格到官方页面核对，不能当作订阅的逐
+价格折算的资源量分别记录。示例费率只是演算假设，实际价格须到官方页面核对，不能当作订阅的逐
 token 账单。</p>
 <h2 id="对话分段的简化模型">对话分段的简化模型</h2>
-<p>每轮增加
+<p>设每轮增加
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
 个历史 token，共
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-轮，若每轮完整读取累计历史，输入总量约为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">cn(n+1)/2</annotation></semantics></math>。这是未考虑压缩与截断的模型。</p>
-<p>均匀拆成
+轮。若每轮都完整读取累计历史，输入总量约为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">cn(n+1)/2</annotation></semantics></math>。这一模型未考虑压缩与截断。</p>
+<p>均匀拆分为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
-段，每轮读交接长度
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>，每次换段另付成本
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>，忽略与
+段，每轮读取长度为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
+的交接内容，每次换段另付成本
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>。忽略与
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
-无关的小项，可写：</p>
+无关的小项，可写为：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>≈</mo><mfrac><mrow><mi>c</mi><msup><mi>n</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><mo>+</mo><mi>n</mi><mi>h</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>r</mi><mo>,</mo><mspace width="2.0em"></mspace><msup><mi>m</mi><mo>*</mo></msup><mo>≈</mo><mi>n</mi><msqrt><mfrac><mi>c</mi><mrow><mn>2</mn><mi>r</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">F(m)\approx\frac{cn^2}{2m}+nh+(m-1)r,\qquad
 m^*\approx n\sqrt{\frac{c}{2r}}.</annotation></semantics></math></p>
-<p>计算器另计首段启动成本，两式相差固定的
-r。最优段数不受影响，节省比例以计算器的一段基准为准。把各项统一成同一种成本单位，再代入相邻整数和合法范围。实际缓存、压缩和任务切换会改变形状，用自己的逐轮日志验证。更短的会话还可能增加遗漏，交付采用率也要比较。</p>
-<h2 id="多做一轮的价值">多做一轮的价值</h2>
-<p>再审一轮发现实质问题的概率为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>，问题价值为
+<p>计算器另计首段的启动成本，两式相差一个固定的
+r，最优段数不受影响，节省比例以计算器的单段基准为准。各项统一为同一种成本单位后，代入相邻整数并检查合法范围。实际的缓存、压缩和任务切换会改变曲线形状，应以自己的逐轮日志验证。会话更短也可能增加遗漏，交付采用率同样需要比较。</p>
+<h2 id="多做一轮的价值">追加一轮的价值</h2>
+<p>设再审一轮发现实质问题的概率为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>，问题的价值为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>，本轮成本为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>。粗略决策看
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>。粗略的决策依据是
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>V</mi><mo>−</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">pV-C</annotation></semantics></math>。<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
-从同类历史任务估计，样本少时做敏感性分析。</p>
-<p>既定必需核查仍应完成。这条式子适合在合格产物上决定追加审阅，不能用来略过尚未完成的验收。</p>
+由同类任务的历史估计，样本较少时做敏感性分析。</p>
+<p>既定的必需核查仍须完成。这一公式适用于在产物已经合格的前提下决定是否追加审阅，不能用来跳过尚未完成的验收。</p>
 <h2 id="并行的成本与收益">并行的成本与收益</h2>
-<p>串行与并行分别花费
+<p>设串行与并行的花费分别为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>,</mo><msup><mi>S</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">S,S&#39;</annotation></semantics></math>，实际耗时为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>,</mo><msup><mi>T</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">T,T&#39;</annotation></semantics></math>，时间价值为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>。在质量相同的前提下，可比较：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo>−</mo><msup><mi>T</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mi>w</mi><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>S</mi><mo>′</mo></msup><mo>−</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(T-T&#39;)w-(S&#39;-S).</annotation></semantics></math></p>
-<p>并行多出的说明与整合会消耗
-token，质量也可能变化。记录证据抽查通过率、返工和失败，再算每份被采用产物的总成本。</p>
+<p>并行需要额外的任务说明与整合，会消耗
+token，质量也可能变化。应记录证据抽查通过率、返工和失败，再计算每份被采用产物的总成本。</p>
 <h2 id="学习方案的部署目标">学习方案的部署目标</h2>
-<p>把回报、资源与风险写进同一目标，例如：</p>
+<p>把回报、资源与风险写入同一目标，例如：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>λ</mi><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>μ</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">U(B)=J(B)-\lambda C(B)-\mu R(B).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
 和
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
-分别表示已定义的资源与风险指标，权重体现实际取舍。也可以把成本设成硬约束，只在预算内比较回报。选择方式事前确定，保留原始多指标结果，避免权重变化掩盖退步。</p>
+分别表示已定义的资源指标与风险指标，权重反映实际取舍。也可以把成本设为硬约束，只在预算内比较回报。选择方式须事先确定，并保留原始的多指标结果，以免权重变化掩盖性能退步。</p>
 <h2 id="练习">练习</h2>
-<p>运行 <code>calc.py</code>
-复算三项编排决策。再把经验试验的写榜与评估成本加入，改变时间价值和成本上限，找出结论何时变化。然后把自己的逐轮日志接进同一口径，比较推算与实际花费。</p>
+<p>运行
+<code>calc.py</code>，复算三项编排决策。再加入经验试验中写榜与评估的成本，改变时间价值和成本上限，找出结论在何时发生变化。然后把自己的逐轮日志接入同一口径，比较推算值与实际花费。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>缓存输入重复加总。</strong>
-保留产品原始口径，转换前确认包含关系。</p>
+<p><strong>缓存输入被重复加总。</strong>
+保留产品的原始口径，转换前确认字段间的包含关系。</p>
 </div>
 <div class="pitfall">
-<p><strong>把折算费率当真实扣费。</strong> 分列订阅、API
-支出与资源估算。</p>
+<p><strong>把折算费率当作实际扣费。</strong> 订阅费用、API
+支出与资源估算分列。</p>
 </div>
 <div class="pitfall">
-<p><strong>只算执行，不算写榜和挑榜。</strong>
-全流程记录，比较同预算下的最终回报。</p>
+<p><strong>只计算执行成本，忽略写榜和选榜成本。</strong>
+记录全流程，在相同预算下比较最终回报。</p>
 </div>
 <p>工具可参考 <a href="https://github.com/ryoppippi/ccusage">ccusage</a>
 与 <a href="https://code.claude.com/docs/en/costs">Claude
-成本管理</a>，是否支持当前日志格式要实读验证。</p>
+成本管理</a>，是否支持当前日志格式须实际读取验证。</p>
 </article>
 <article lang="en"><h1 id="usage-and-cost-accounting">6.4 Usage and cost accounting</h1>
-<p><span class="meta">After-class deep dive, about 40
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Record and reconcile usage data under explicit accounting
+conventions, distinguishing subscription fees, API spending and resource
+estimates.</li>
+<li>Use simplified cost models of conversation splitting, additional
+review rounds and parallel work to support orchestration decisions, and
+test their sensitivity to the assumptions.</li>
+<li>Define a deployment objective that combines reward, resources and
+risk, with the decision rule fixed in advance.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 40
 minutes.</span></p>
-<p>A playbook raised accuracy but doubled the time each task takes.
-Whether it is worth deploying depends on connecting the learning gain to
-a resource decision.</p>
-<h2 id="record-usage-sources-and-accounting-conventions">Record usage
+<p>A playbook that raises accuracy may also double the time each task
+takes. Whether it is worth deploying depends on relating the learning
+gain to a resource decision.</p>
+<h2 id="record-usage-sources-and-accounting-conventions">Recording usage
 sources and accounting conventions</h2>
 <p>Record the task, the executor and the start and end times, then the
 input, output and cache. In different products, the input field may
-already include cache reads, or may count only uncached input; check the
-log definitions first, then add things up.</p>
-<p>The exercise package’s ledger explicitly lists uncached input, cache
-reads, cache writes and output as four non-overlapping columns. When
-adding your own logs, keep the original fields and source, and convert
-to a common basis. Leave values you cannot read as missing; zero is an
-actual measurement.</p>
-<p>Write subscription fees, API spending and resource estimates valued
-at API rates separately. The example rates are only assumptions for the
-worked example; check actual prices on the official pages, and do not
-treat them as a per-token bill for a subscription.</p>
+already include cache reads or may count only uncached input; the log
+definitions are checked before any totals are computed.</p>
+<p>The exercise package’s ledger lists uncached input, cache reads,
+cache writes and output as four non-overlapping columns. When adding
+your own logs, keep the original fields and their source, and convert to
+a common basis. Values that cannot be read are left as missing; zero is
+an actual measurement.</p>
+<p>Subscription fees, API spending and resource estimates valued at API
+rates are recorded separately. The example rates are assumptions for the
+worked example only; actual prices are checked on the official pages and
+must not be treated as a per-token bill for a subscription.</p>
 <h2 id="a-simplified-model-of-splitting-conversations">A simplified
-model of splitting conversations</h2>
+model of conversation splitting</h2>
 <p>If each turn adds
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
 tokens of history over
@@ -131,26 +155,27 @@ turns, and every turn reads the full accumulated history, total input is
 about
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">cn(n+1)/2</annotation></semantics></math>.
 This model ignores compression and truncation.</p>
-<p>Split evenly into
+<p>Divide the conversation evenly into
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
 segments, with each turn reading a handover of length
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
-and each segment change costing an extra
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>;
-ignoring small terms that do not depend on
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>,
-we can write:</p>
+and each change of segment costing an additional
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>.
+Ignoring small terms that do not depend on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>≈</mo><mfrac><mrow><mi>c</mi><msup><mi>n</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><mo>+</mo><mi>n</mi><mi>h</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>r</mi><mo>,</mo><mspace width="2.0em"></mspace><msup><mi>m</mi><mo>*</mo></msup><mo>≈</mo><mi>n</mi><msqrt><mfrac><mi>c</mi><mrow><mn>2</mn><mi>r</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">F(m)\approx\frac{cn^2}{2m}+nh+(m-1)r,\qquad
 m^*\approx n\sqrt{\frac{c}{2r}}.</annotation></semantics></math></p>
 <p>The calculator also charges for first-segment startup, adding a
 constant r; this leaves the optimal segment count unchanged, and savings
-percentages use the calculator’s own one-segment baseline. Put all terms
-in the same unit of cost, then evaluate neighboring integers within the
-valid range. Real caching, compression and task switching change the
-shape, so verify with your own turn-by-turn logs. Shorter sessions may
-also cause more omissions, so compare how often deliverables are
-actually adopted too.</p>
-<h2 id="the-value-of-one-more-round">The value of one more round</h2>
+percentages use the calculator’s own one-segment baseline. Express all
+terms in the same unit of cost, then evaluate the neighboring integers
+within the valid range. Real caching, compression and task switching
+change the shape of the curve, so the model is checked against
+turn-by-turn logs. Shorter sessions may also cause more omissions, so
+the rate at which deliverables are actually adopted is compared as
+well.</p>
+<h2 id="the-value-of-one-more-round">The value of an additional
+round</h2>
 <p>Let the probability that another round of review finds a substantive
 problem be
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>,
@@ -158,53 +183,54 @@ the value of the problem
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>,
 and the cost of the round
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.
-A rough decision looks at
+A first approximation to the decision considers
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>V</mi><mo>−</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">pV-C</annotation></semantics></math>.
 Estimate
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
-from similar past tasks, and do a sensitivity analysis when the sample
-is small.</p>
-<p>Checks already established as required must still be done. This
-formula is for deciding on extra review of an output that meets the
-required criteria; it cannot be used to skip acceptance checks not yet
-completed.</p>
-<h2 id="what-parallelism-buys">What parallelism buys</h2>
+from similar past tasks, and perform a sensitivity analysis when the
+sample is small.</p>
+<p>Checks already established as required must still be carried out.
+This formula applies to the decision on additional review of an output
+that meets the required criteria; it cannot be used to skip acceptance
+checks not yet completed.</p>
+<h2 id="what-parallelism-buys">The value of parallel work</h2>
 <p>Let serial and parallel work cost
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>,</mo><msup><mi>S</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">S,S&#39;</annotation></semantics></math>
 with wall-clock times
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>,</mo><msup><mi>T</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">T,T&#39;</annotation></semantics></math>,
 and let the value of time be
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>.
-Given equal quality, compare:</p>
+At equal quality, compare:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo>−</mo><msup><mi>T</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mi>w</mi><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>S</mi><mo>′</mo></msup><mo>−</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(T-T&#39;)w-(S&#39;-S).</annotation></semantics></math></p>
-<p>The extra instructions and integration in parallel work consume
-tokens, and quality may change too. Record the pass rate of evidence
-spot-checks, rework and failures, then compute the total cost per
-product actually adopted.</p>
-<h2 id="define-the-deployment-objective">Define the deployment
+<p>The additional instructions and integration required by parallel work
+consume tokens, and quality may also change. Record the pass rate of
+evidence spot checks, rework and failures, then compute the total cost
+per product actually adopted.</p>
+<h2 id="define-the-deployment-objective">Defining the deployment
 objective</h2>
-<p>Write reward, resources and risk into one objective, for example:</p>
+<p>Reward, resources and risk can be combined in a single objective, for
+example:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>λ</mi><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>μ</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">U(B)=J(B)-\lambda C(B)-\mu R(B).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
 are defined resource and risk metrics, and the weights reflect the
-actual trade-off. You can also make cost a hard constraint and compare
-reward only within budget. Set the decision rule in advance and keep the
-raw multi-metric results, so a change of weights does not hide a
-regression.</p>
+actual trade-off. Alternatively, cost can be imposed as a hard
+constraint and reward compared only within budget. The decision rule is
+set in advance and the raw multi-metric results are kept, so that a
+change of weights does not conceal a regression.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Run <code>calc.py</code> to recompute the three orchestration
 decisions. Then add the costs of writing and evaluating the playbook in
-the experience trial, change the value of time and the cost cap, and
-find when the conclusion changes. Next, connect your own turn-by-turn
-logs on the same basis and compare the estimate with actual
+the experience trial, vary the value of time and the cost cap, and
+identify when the conclusion changes. Next, connect your own
+turn-by-turn logs on the same basis and compare the estimate with actual
 spending.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Adding cached input in twice.</strong> Keep the product’s
-original definitions, and confirm what includes what before
+<p><strong>Counting cached input twice.</strong> Keep the product’s
+original definitions, and confirm which fields include which before
 converting.</p>
 </div>
 <div class="pitfall">
@@ -212,9 +238,9 @@ converting.</p>
 subscriptions, API spending and resource estimates separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>Counting execution only, not writing and choosing the
-playbook.</strong> Record the whole process, and compare final reward
-under the same budget.</p>
+<p><strong>Counting execution only, and not the writing and selection of
+the playbook.</strong> Record the whole process, and compare final
+reward under the same budget.</p>
 </div>
 <p>For tools, see <a
 href="https://github.com/ryoppippi/ccusage">ccusage</a> and <a

@@ -30,78 +30,102 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="知识库搭建">2.2 知识库搭建</h1>
-<p><span class="meta">课后深入，约 55 分钟。</span></p>
-<p>一篇新论文推翻了你原来的理解。知识库里哪些页面应该变化？若答案只是再加一篇笔记，它还只是阅读档案。</p>
-<h2 id="从一条观察开始">从一条观察开始</h2>
-<p>论文页中的每条结果给一个稳定标识。内容写清研究对象与干预、比较项与指标，并注明出处。作者的解释与结果分开，自己的解释再单列。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>以带稳定标识的观察记录证据，区分观察、作者解释与研究者解释，并识别证据之间的依赖关系。</li>
+<li>按实验条件对相互冲突的结果分层，把无法统一的分歧转化为判别实验设计。</li>
+<li>在加入反例后沿依赖关系确定受影响的概念与问题，评价知识更新是否落实到研究决策。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 55 分钟。</span></p>
+<p>一篇新论文可能推翻原有的理解。此时需要回答：知识库中哪些页面应当随之改变？若答案只是再增加一篇笔记，这个知识库仍然只是阅读档案。</p>
+<h2 id="从一条观察开始">以观察为基本单位</h2>
+<p>论文页中的每条结果都有稳定标识。内容写明研究对象与干预、比较项与指标，并注明出处。作者的解释与结果分开记录，研究者自己的解释另列一项。</p>
 <pre class="text"><code>E01
 对象与条件：数据集，模型，训练与选择规则
 干预与比较：具体改变了什么，其余怎样一致
 观察：指标与数值，重复单位和不确定性
 出处：文件版本，PDF 顺序页，表号或段落
 解释：作者怎样解释，证据支持到哪一步</code></pre>
-<p>同一个结果在三个段落里出现，仍是一条证据。三篇论文复用同一个数据集，也要记录依赖关系，避免把相关证据当成三次独立重复。</p>
+<p>同一结果在三个段落中出现，仍然只是一条证据。三篇论文使用同一个数据集时，也要记录这种依赖关系，避免把相关证据当作三次独立重复。</p>
 <h2 id="概念页的综合与更新">概念页的综合与更新</h2>
-<p>概念页开头用几句话说当前认识，后面给支撑和反例，链接到论文页的证据标识。读者应当看得出这段综合依赖哪些观察。</p>
-<p>当多篇结果表面相反，按条件分层：噪声模型、训练预算与选择规则是否相同。无法统一时保留两种解释，再写一个能区分它们的问题。</p>
+<p>概念页开头用几句话陈述当前认识，其后列出支持证据和反例，并链接到论文页的证据标识。读者应能看出每段综合依赖哪些观察。</p>
+<p>多篇结果表面相反时，按条件分层：噪声模型、训练预算与选择规则是否相同。无法统一时保留两种解释，并写出一个能区分它们的问题。</p>
 <pre class="text"><code>新增论文进入后，先列它改变了概念页哪句话。
 同方向的新证据合入对应位置，条件不同的补条件差异，反方向的进入分歧表。
 更新开头的综合，使它覆盖现有证据。保留修改原因与来源。</code></pre>
-<h2 id="分歧怎样变成实验">分歧怎样变成实验</h2>
-<p>示例库的排序反转涉及多处训练设置。知识库先记录两个观察，再提出竞争解释：优化日程改变方法行为，或模型选择方式造成表面差别。</p>
-<p>实验可以形成一个二维设计。横向改优化日程，纵向改选轮次规则，其他设置保持一致。若只在一个轴变化时反转，下一步就围绕这个轴继续检验。</p>
-<p>这一步把知识库从材料集合变成研究依据。每个新问题都应说明它要解决哪一处不确定性。</p>
+<h2 id="分歧怎样变成实验">由分歧到实验设计</h2>
+<p>示例库中的排序反转涉及多处训练设置。知识库先记录两项观察，再提出两种竞争解释：优化日程改变了方法的行为，或模型选择方式造成了表面差异。</p>
+<p>据此可以构造二维实验设计：一个维度改变优化日程，另一个维度改变选择轮次的规则，其余设置保持一致。若反转只随其中一个维度变化，下一步就围绕该维度继续检验。</p>
+<p>这一步使知识库从材料集合成为研究依据。每个新问题都应说明它要消除哪一处不确定性。</p>
 <h2 id="反例与依赖更新">反例与依赖更新</h2>
-<p>给一条证据加入新状态，例如待复核或被新版本替代。沿链接列出受影响的概念页和问题。先处理核心主张直接依赖的部分，再处理展示页。</p>
-<p>可以让 Agent
-生成受影响清单，但由一个合并者更新共享综述。已经完成的实验保留当时问题与预测，后来的反例只追加更新说明，历史不重写。</p>
+<p>为一条证据设置新的状态，例如待复核或已被新版本替代。沿链接列出受影响的概念页和问题。先处理核心主张直接依赖的部分，再处理展示页面。</p>
+<p>可以由 Agent
+生成受影响清单，但共享综述由一位合并者更新。已完成的实验保留当时的问题与预测，后来出现的反例只追加更新说明，不改写历史记录。</p>
 <pre class="text"><code>把 E01 标为待复核，找出引用它的概念和问题。
 逐项判断：结论仍有其他独立证据、需要补一项实验，或当前无法继续使用。
 保存影响清单，再按清单更新，不改原件与旧实验预测。</code></pre>
-<h2 id="文件夹保持简单">文件夹保持简单</h2>
+<h2 id="文件夹保持简单">目录结构</h2>
 <pre class="text"><code>vault/
   sources/       原件及文件清单
   papers/        带证据标识的论文页
   concepts/      当前综合与分歧
   questions.md   带来源的问题
   updates/       影响清单和更新原因</code></pre>
-<p>Obsidian 的双链适合浏览，普通 Markdown
-链接适合稳定交付。文件移动后查引用，证据标识保持稳定。关系图用来发现孤立材料，不能单凭节点多就判断认识更完整。</p>
+<p>Obsidian 的双向链接适合浏览，普通 Markdown
+链接适合稳定交付。文件移动后检查引用，证据标识保持不变。关系图用于发现孤立材料，节点数量多并不说明认识更完整。</p>
 <h2 id="练习">练习</h2>
-<p>选概念页中的一条重要判断，给它添加一篇反方向论文。交出三个文件：新证据页，更新后的概念页，受影响问题清单。请同学只看清单，检查是否能指出哪项实验应当先补。</p>
+<p>选择概念页中的一条重要判断，为它加入一篇结论相反的论文。提交三个文件：新证据页、更新后的概念页、受影响问题清单。请同学只看清单，检查能否据此指出应当优先补做的实验。</p>
 <details>
 <summary>
 检查标准
 </summary>
-<p>综合段发生了有理由的变化；旧证据仍能追溯；新增解释写明是推测；问题清单能指出补证办法。四项都完成，更新才落实到研究决策。</p>
+<p>综合段落发生了有依据的变化；旧证据仍可追溯；新增解释注明为推测；问题清单指出了补证办法。四项均满足，更新才落实到研究决策。</p>
 </details>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
 <p><strong>把推测写成论文发现。</strong>
-用独立字段记录观察、作者解释与自己的解释。</p>
+用独立字段分别记录观察、作者解释与研究者解释。</p>
 </div>
 <div class="pitfall">
-<p><strong>每篇新论文都追加到概念页末尾。</strong>
-先说它改变哪句话，再重写综合，来源链接留在对应位置。</p>
+<p><strong>每篇新论文都追加在概念页末尾。</strong>
+先说明它改变了哪句话，再重写综合，来源链接留在对应位置。</p>
 </div>
 <div class="pitfall">
-<p><strong>只更新笔记，没有更新依赖它的问题。</strong>
-维护受影响清单，按主张依赖查到实验入口。</p>
+<p><strong>只更新笔记，未更新依赖它的问题。</strong>
+维护受影响清单，按主张的依赖关系追溯到实验入口。</p>
 </div>
 <p><a href="https://help.obsidian.md/">Obsidian
-官方帮助</a>中的双链与反向链接，可用来查找谁正在引用一条证据。</p>
+官方帮助</a>中的双向链接与反向链接功能，可用于查找哪些页面引用了某条证据。</p>
 </article>
 <article lang="en"><h1 id="building-a-knowledge-base">2.2 Building a knowledge base</h1>
-<p><span class="meta">After-class deep dive, about 55
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Record observations as stable evidence units that separate
+conditions, intervention, result, source and interpretation, and that
+account for dependence between studies.</li>
+<li>Maintain a synthesis that reflects supporting and contrary evidence,
+and design a factorial experiment that distinguishes competing
+explanations of a disagreement.</li>
+<li>Propagate the effect of new or contrary evidence through dependent
+conclusions and questions while preserving the historical record.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 55
 minutes.</span></p>
-<p>A new paper overturns your earlier understanding. Which pages in the
-knowledge base should change? If the answer is only “add one more note”,
-it is still just a reading archive.</p>
-<h2 id="start-from-one-observation">Start from one observation</h2>
-<p>Give each result on a paper page a stable identifier. Its content
+<p>A knowledge base is tested when a new paper contradicts an earlier
+understanding. If the only response it allows is to add another note, it
+is still a reading archive. This section develops a structure in which
+the affected pages can be identified and updated.</p>
+<h2 id="start-from-one-observation">Starting from a single
+observation</h2>
+<p>Each result on a paper page receives a stable identifier. Its content
 states the object of study, the intervention, the comparison, the metric
 and the source. The authors’ explanation is kept apart from the result,
-and your own explanation is listed separately again.</p>
+and the student’s own explanation is listed separately again.</p>
 <pre class="text"><code>E01
 Object and conditions: dataset, model, training and selection rules
 Intervention and comparison: what exactly changed, and how everything else was kept the same
@@ -109,96 +133,97 @@ Observation: metric and value, unit of replication and uncertainty
 Source: file version, PDF page in sequence, table number or paragraph
 Explanation: how the authors explain it, and how far the evidence supports it</code></pre>
 <p>A result that appears in three paragraphs is still one piece of
-evidence. When three papers reuse the same dataset, record that
-dependence as well, so related evidence is not counted as three
+evidence. When three papers reuse the same dataset, that dependence is
+recorded as well, so that related evidence is not counted as three
 independent replications.</p>
-<h2 id="concept-pages-hold-the-current-understanding">Concept pages hold
-the current understanding</h2>
-<p>A concept page opens with a few sentences on the current
-understanding, followed by support and counterexamples, linked to the
-evidence identifiers on paper pages. Readers should be able to see which
-observations the synthesis depends on.</p>
+<h2 id="concept-pages-hold-the-current-understanding">Concept pages
+record the current understanding</h2>
+<p>A concept page opens with a few sentences stating the current
+understanding, followed by supporting evidence and counterexamples,
+linked to the evidence identifiers on paper pages. Readers should be
+able to see which observations the synthesis depends on.</p>
 <p>When several results appear to point in opposite directions, stratify
-by condition: are the noise model, training budget and selection rule
-the same? When they cannot be reconciled, keep both explanations, then
-write a question that can tell them apart.</p>
+them by condition: whether the noise model, training budget and
+selection rule are the same. When the results cannot be reconciled, both
+explanations are kept and a question that can distinguish them is
+written.</p>
 <pre class="text"><code>When a new paper comes in, first list which sentence of the concept page it changes.
 New evidence in the same direction goes in the corresponding place; evidence under different conditions adds a condition difference; evidence in the opposite direction goes into the disagreement table.
 Update the opening synthesis so it covers the existing evidence. Keep the reason for the change and its source.</code></pre>
-<h2 id="how-a-disagreement-becomes-an-experiment">How a disagreement
-becomes an experiment</h2>
+<h2 id="how-a-disagreement-becomes-an-experiment">From disagreement to
+experiment</h2>
 <p>The ranking reversal in the sample knowledge base involves several
-training settings. The knowledge base first records the two
-observations, then proposes competing explanations: the optimization
-schedule changes how the methods behave, or the way models are selected
-creates an apparent difference.</p>
-<p>Use a two-factor design: vary the optimization schedule along one
-axis and the epoch-selection rule along the other, keeping all other
-settings fixed. If the reversal appears only when one axis changes, the
-next step keeps testing along that axis.</p>
+training settings. The knowledge base first records the two observations
+and then states competing explanations: the optimization schedule
+changes how the methods behave, or the method of model selection creates
+an apparent difference.</p>
+<p>A two-factor design addresses this: vary the optimization schedule
+along one axis and the epoch-selection rule along the other, keeping all
+other settings fixed. If the reversal appears only when one factor
+changes, the next experiment continues along that factor.</p>
 <p>This step turns the knowledge base from a collection of material into
-a basis for research. Every new question can point to the uncertainty it
-is resolving.</p>
-<h2 id="propagate-updates-from-counterexamples">Propagate updates from
+a basis for research. Every new question can identify the uncertainty it
+is intended to resolve.</p>
+<h2 id="propagate-updates-from-counterexamples">Propagating updates from
 counterexamples</h2>
-<p>Give a piece of evidence a new status, such as pending recheck or
-superseded by a new version. Following the links, list the affected
-concept pages and questions. First address the evidence on which core
-claims depend directly, then the display pages.</p>
-<p>You can let the agent generate the list of affected items, but one
+<p>A piece of evidence can be given a new status, such as pending
+recheck or superseded by a new version. Following the links, list the
+affected concept pages and questions. Evidence on which core claims
+depend directly is addressed first, then the display pages.</p>
+<p>The agent can generate the list of affected items, but a single
 editor updates the shared synthesis. Completed experiments keep the
-question and prediction of the time; later counterexamples only append
-an update note, and history is not rewritten.</p>
+question and prediction as they stood at the time; later counterexamples
+add an update note and do not rewrite history.</p>
 <pre class="text"><code>Mark E01 as pending recheck and find the concepts and questions that cite it.
 Judge each: the conclusion still has other independent evidence, it needs one more experiment, or it cannot be used for now.
 Save the impact list, then update according to the list, without changing originals or old experiment predictions.</code></pre>
-<h2 id="keep-the-folders-simple">Keep the folders simple</h2>
+<h2 id="keep-the-folders-simple">A simple folder structure</h2>
 <pre class="text"><code>vault/
   sources/       originals and the file list
   papers/        paper pages with evidence identifiers
   concepts/      current synthesis and disagreements
   questions.md   questions with their sources
   updates/       impact lists and reasons for updates</code></pre>
-<p>Obsidian’s wikilinks are good for browsing; plain Markdown links are
-good for stable delivery. After moving files, check references, and keep
-evidence identifiers stable. Use the graph view to find isolated
-material; more nodes alone do not mean the understanding is more
-complete.</p>
+<p>Obsidian’s wikilinks are convenient for browsing; plain Markdown
+links are more stable for delivery. After moving files, check references
+and keep evidence identifiers stable. The graph view helps locate
+isolated material; a larger number of nodes does not in itself indicate
+a more complete understanding.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Pick one important judgment on a concept page and add a paper
-pointing the other way. Hand in three files: the new evidence page, the
-updated concept page and the list of affected questions. Have a
-classmate look only at the list and check whether it shows which
+<p>Select one important judgment on a concept page and add a paper
+pointing in the opposite direction. Submit three files: the new evidence
+page, the updated concept page and the list of affected questions. Ask a
+colleague to read only the list and judge whether it shows which
 experiment should be added first.</p>
 <details>
 <summary>
-Checking criteria
+Assessment criteria
 </summary>
-<p>The synthesis changed for a stated reason; old evidence can still be
-traced; new explanations are marked as speculation; the question list
-shows how to add evidence. All four are needed for the update to inform
-research decisions.</p>
+<p>The synthesis changed for a stated reason; the old evidence can still
+be traced; new explanations are marked as speculation; and the question
+list shows how evidence will be added. All four are required for the
+update to inform research decisions.</p>
 </details>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Writing speculation as a paper’s finding.</strong> Use
-separate fields for the observation, the authors’ explanation and your
-own explanation.</p>
+<p><strong>Recording speculation as a paper’s finding.</strong> Use
+separate fields for the observation, the authors’ explanation and the
+student’s own explanation.</p>
 </div>
 <div class="pitfall">
-<p><strong>Appending every new paper to the end of the concept
-page.</strong> First say which sentence it changes, then rewrite the
-synthesis, with source links in the right places.</p>
+<p><strong>Appending each new paper to the end of the concept
+page.</strong> First state which sentence it changes, then rewrite the
+synthesis with source links in the appropriate places.</p>
 </div>
 <div class="pitfall">
-<p><strong>Updating the notes but not the questions that depend on
+<p><strong>Updating notes without updating the questions that depend on
 them.</strong> Maintain the list of affected items and follow claim
 dependencies through to the experimental plan.</p>
 </div>
-<p>Wikilinks and backlinks in <a
-href="https://help.obsidian.md/">Obsidian’s official help</a> can be
-used to find what is citing a piece of evidence.</p>
+<p>Wikilinks and backlinks, described in <a
+href="https://help.obsidian.md/">Obsidian’s official help</a>, can be
+used to find what cites a given piece of evidence.</p>
 </article>
 <nav class="pager"><a class="prev" href="explore-fulltext.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.1 文献获取</span><span lang="en">2.1 Finding full texts</span></a><a class="next" href="explore-parallel.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.3 并行复筛与选题</span><span lang="en">2.3 Parallel screening and research questions</span></a></nav>
 </main>

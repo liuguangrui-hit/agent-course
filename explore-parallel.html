@@ -30,129 +30,152 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="并行复筛与选题">2.3 并行复筛与选题</h1>
-<p><span class="meta">课后深入，约 50 分钟。</span></p>
-<p>把三百条文献分给六个助手，很快就能得到六张表。真正难的是六张表里的收与不收是否是同一个意思。</p>
-<h2 id="先用共同样本校准">先用共同样本校准</h2>
-<p>从检索结果中抽一小组，放入明确相关、明确不相关和边界案例。由不同助手按同一标准判断，比较分歧。把标准修成对研究问题有意义的条件，再冻结本轮版本。</p>
-<p>复筛首先控制漏读。边界案例进入待定，后续全文复筛；明确排除的也保留一句理由。若任务要求系统性覆盖，另外对排除集抽样回读，估计漏掉相关文献的风险。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>用共同样本校准筛选标准，评价不同阅读者判断的一致性，并控制漏读风险。</li>
+<li>设计输入范围、写入范围与合并职责明确的并行筛选，并通过分层抽查评价其质量。</li>
+<li>用逐项比较表评价研究问题相对最近先例的新增信息。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 50 分钟。</span></p>
+<p>把三百条文献分给六个助手，很快就能得到六张筛选表。难点在于确认六张表中的纳入与排除是否采用了同一标准。</p>
+<h2 id="先用共同样本校准">用共同样本校准</h2>
+<p>从检索结果中抽取一小组样本，包括明确相关、明确不相关和处于边界的文献。由不同助手按同一标准判断，比较分歧。把标准修订为对研究问题有意义的条件，再冻结本轮版本。</p>
+<p>复筛的首要任务是控制漏读。边界文献列为待定，进入后续全文复筛；明确排除的文献也保留一句理由。若任务要求系统性覆盖，还应对排除集抽样回读，估计遗漏相关文献的风险。</p>
 <pre class="text"><code>用同一份 criteria.md 独立判断校准集，输出 include，exclude，uncertain 和理由。
 比较分歧，找出标准中含糊的地方。修订后用另一小组校准，再开始批量任务。
 保留标准版本与各轮判断。</code></pre>
-<h2 id="每个助手只写自己的分片">每个助手只写自己的分片</h2>
-<p>任务说明要自成一体，写清输入文件与标准版本，指定可写目录和输出列。共享概念页留给一个合并者。文献标识去重后分配，避免同一篇在不同分片重复计数。</p>
+<h2 id="每个助手只写自己的分片">分片写入与合并</h2>
+<p>任务说明应当自成一体，写明输入文件与标准版本，指定可写目录和输出列。共享概念页由一位合并者负责。文献标识去重后再分配，避免同一篇文献在不同分片中重复计数。</p>
 <pre class="text"><code>只读分配给你的论文与 criteria.md，不读其他助手的结论。
 写 screening/part-01.csv，逐条保留文献标识与判断，并说明理由和阅读范围。
 只写自己的分片。返回文件清单、无法判断项和实际使用的工具名称。</code></pre>
-<p>合并时检查编号集合，重复项和缺行。质量抽查按明确排除，边界与纳入分层抽样，发现某一类持续出错，再决定重做范围。</p>
+<p>合并时检查编号集合、重复项和缺行。质量抽查按明确排除、边界与纳入三层分层抽样；若某一类持续出错，再决定重做范围。</p>
 <h2 id="新会话的输入范围">新会话的输入范围</h2>
-<p>新会话可以减少既有讨论的影响，仍可能继承项目文件和默认知识。任务卡写明问题生成允许读取哪些材料，并记录实际输入。</p>
-<p>让它提出问题时，同时生成最近先例与竞争解释。三个问题若都只是在原方法上改一个参数，回到分歧表检查遗漏了哪种机制。</p>
-<h2 id="查新要形成同一张比较表">查新要形成同一张比较表</h2>
+<p>新会话可以减少已有讨论的影响，但仍可能继承项目文件和模型的默认知识。任务卡应写明问题生成阶段允许读取哪些材料，并记录实际输入。</p>
+<p>要求新会话提出问题时，同时给出最近先例与竞争解释。若三个问题都只是在原方法上改动一个参数，应回到分歧表，检查遗漏了哪种机制。</p>
+<h2 id="查新要形成同一张比较表">查新比较表</h2>
 <table>
 <thead>
 <tr>
 <th>维度</th>
-<th>自己的问题</th>
+<th>本研究的问题</th>
 <th>最近先例</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>要解释的现象</td>
-<td>具体到可观察变化</td>
+<td>具体到可观察的变化</td>
 <td>原工作解释了什么</td>
 </tr>
 <tr>
 <td>关键干预</td>
-<td>这次改变什么</td>
-<td>已做过哪些变化</td>
+<td>本研究改变什么</td>
+<td>已做过哪些改变</td>
 </tr>
 <tr>
 <td>预测与反例</td>
 <td>哪种结果会否定解释</td>
-<td>原证据能否区分它</td>
+<td>原有证据能否区分它</td>
 </tr>
 <tr>
 <td>新增信息</td>
-<td>实验成功或失败各多知道什么</td>
+<td>实验成功或失败各增加哪些认识</td>
 <td>已经知道的部分</td>
 </tr>
 </tbody>
 </table>
-<p>关键词搜索先找线索，再查原文和引用关系。某次检索没有找到，记录查询范围和日期。保留原问题的尺度，针对差异补充证据或换一项真正有信息的干预。</p>
+<p>关键词检索用于寻找线索，随后核查原文和引用关系。某次检索没有结果时，记录查询范围和日期。保持原问题的尺度，针对差异补充证据，或换用一项真正能提供新信息的干预。</p>
 <h2 id="并行阅读的质量评估">并行阅读的质量评估</h2>
-<p>用同一批材料做一个小对照：串行阅读与分工阅读使用相同模板，比较遗漏关键条件的比例、证据抽查通过率和实际耗时。token
-成本另记。</p>
-<p>即使分工更快，合并阶段也可能丢掉限定条件。把合并后的核心结论再抽回原文，才能知道瓶颈转移到了哪里。</p>
+<p>用同一批材料做一个小型对照：串行阅读与分工阅读使用相同模板，比较遗漏关键条件的比例、证据抽查通过率和实际耗时。token
+成本另行记录。</p>
+<p>即使分工阅读更快，合并阶段也可能丢失限定条件。把合并后的核心结论再抽回原文核对，才能确定瓶颈转移到了哪个环节。</p>
 <h2 id="练习">练习</h2>
-<p>取二十条自己方向的文献，四条用于校准，余下分两组。合并后抽查明确排除与边界各几条，再让一个只读知识库的新会话提出研究问题。交付标准版本、分片与查新表。</p>
+<p>选取自己研究方向的二十条文献，四条用于校准，其余分为两组。合并后对明确排除与边界文献各抽查若干条，再由一个只读知识库的新会话提出研究问题。提交标准版本、各分片与查新比较表。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>分工前没有校准。</strong>
-先比较共同样本，修清标准再分配。</p>
+<p><strong>分工前未做校准。</strong>
+先比较共同样本，修订标准后再分配。</p>
 </div>
 <div class="pitfall">
-<p><strong>多个助手直接改共享综述。</strong>
-各写分片，一个合并者更新总表和概念页。</p>
+<p><strong>多个助手直接修改共享综述。</strong>
+各自写入分片，由一位合并者更新总表和概念页。</p>
 </div>
 <div class="pitfall">
-<p><strong>并行速度当成研究覆盖。</strong>
+<p><strong>把并行速度当作研究覆盖。</strong>
 检查文献标识集合，分层抽查排除项和关键证据。</p>
 </div>
 <p><a
 href="https://huggingface.co/learn/agents-course/en/unit2/introduction">Hugging
-Face Agents Course</a>的框架选择讨论适合判断简单脚本何时已经够用。<a
+Face Agents
+Course</a>中关于框架选择的讨论，可用于判断何时简单脚本已经足够。<a
 href="https://llmagents-learning.org/f24">Berkeley LLM
-Agents</a>可继续看多阶段系统怎样安排分工和评估。</p>
+Agents</a>可进一步了解多阶段系统怎样安排分工和评估。</p>
 </article>
 <article lang="en"><h1 id="parallel-screening-and-research-questions">2.3 Parallel
 screening and research questions</h1>
-<p><span class="meta">After-class deep dive, about 50
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Calibrate screening criteria on a shared sample so that independent
+screeners apply the same inclusion and exclusion decisions.</li>
+<li>Design a parallel screening procedure with independent inputs and
+outputs, and assess its coverage and quality through identifier checks
+and stratified spot checks.</li>
+<li>Compare a proposed research question with its nearest precedent in
+terms of phenomenon, intervention, prediction and expected new
+information.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 50
 minutes.</span></p>
-<p>Split three hundred papers among six helpers and you quickly get six
-tables. The hard part is whether include and exclude mean the same thing
-in all six.</p>
-<h2 id="calibrate-on-a-shared-sample-first">Calibrate on a shared sample
-first</h2>
-<p>Draw a small set from the search results, containing clearly
-relevant, clearly irrelevant and borderline cases. Have different
-helpers judge them by the same criteria and compare disagreements.
-Revise the criteria into conditions that mean something for the research
-question, then freeze this round’s version.</p>
+<p>Dividing three hundred papers among six helpers quickly produces six
+tables. The methodological problem is whether include and exclude mean
+the same thing in all six.</p>
+<h2 id="calibrate-on-a-shared-sample-first">Calibrating on a shared
+sample</h2>
+<p>Draw a small set from the search results containing clearly relevant,
+clearly irrelevant and borderline cases. Have different helpers judge
+them against the same criteria and compare their disagreements. Revise
+the criteria into conditions that are meaningful for the research
+question, then freeze the version for this round.</p>
 <p>The first priority in rescreening is to avoid missing relevant
-papers. Borderline cases go to pending for later full-text rescreening;
-clear exclusions also keep a one-sentence reason. If the task requires
-systematic coverage, also sample and reread the excluded set to estimate
-the risk of having missed relevant work.</p>
+papers. Borderline cases are marked as pending for later full-text
+rescreening, and clear exclusions also keep a one-sentence reason. Where
+the task requires systematic coverage, a sample of the excluded set is
+reread to estimate the risk of having missed relevant work.</p>
 <pre class="text"><code>Judge the calibration set independently using the same criteria.md, outputting include, exclude or uncertain with a reason.
 Compare disagreements and find where the criteria are vague. After revising, calibrate on another small set before starting the batch.
 Keep the criteria version and each round&#39;s judgments.</code></pre>
-<h2 id="give-each-helper-a-separate-output-file">Give each helper a
-separate output file</h2>
-<p>The task description must stand on its own, stating the input files,
-criteria version, writable directory and output columns. The shared
-concept page is left to one editor. Deduplicate by paper identifier
-before assigning, so the same paper is not counted twice in different
-shards.</p>
+<h2 id="give-each-helper-a-separate-output-file">Separate output files
+for each helper</h2>
+<p>The task description must be self-contained, stating the input files,
+the criteria version, the writable directory and the output columns. The
+shared concept page is left to a single editor. Papers are deduplicated
+by identifier before assignment, so that the same paper is not counted
+twice in different shards.</p>
 <pre class="text"><code>Read only the papers assigned to you and criteria.md; do not read other helpers&#39; conclusions.
 Write screening/part-01.csv, keeping for each item the paper identifier, judgment, reason and reading scope.
 Write only your own shard. Return the file list, the items you could not judge and the actual names of the tools you used.</code></pre>
 <p>When merging, check the set of identifiers, duplicates and missing
-rows. Spot-check quality with stratified samples from clear exclusions,
-borderline cases and inclusions; if one class keeps going wrong, then
-decide how much to redo.</p>
-<h2 id="check-what-a-new-session-can-read">Check what a new session can
-read</h2>
-<p>A new session can reduce the influence of earlier discussion, but may
+rows. Quality is spot-checked with stratified samples from clear
+exclusions, borderline cases and inclusions; if one class shows repeated
+errors, the extent of rework is decided on that basis.</p>
+<h2 id="check-what-a-new-session-can-read">Controlling what a new
+session can read</h2>
+<p>A new session can reduce the influence of earlier discussion but may
 still inherit project files and background knowledge. The task card
 states which materials question generation may read, and the actual
 inputs are recorded.</p>
-<p>When it proposes questions, have it also produce the nearest
-precedent and competing explanations. If all three questions only change
-one parameter of the original method, go back to the disagreement table
-and check which mechanism was left out.</p>
+<p>When the session proposes questions, it also produces the nearest
+precedent and competing explanations. If all three questions merely
+change one parameter of the original method, return to the disagreement
+table and check which mechanism was omitted.</p>
 <h2 id="a-novelty-search-should-produce-one-comparison-table">A novelty
-search should produce one comparison table</h2>
+search produces a comparison table</h2>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -162,72 +185,75 @@ search should produce one comparison table</h2>
 <thead>
 <tr>
 <th>Dimension</th>
-<th>Your question</th>
+<th>Proposed question</th>
 <th>Nearest precedent</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Phenomenon to explain</td>
-<td>Specific down to an observable change</td>
+<td>Specified down to an observable change</td>
 <td>What the original work explained</td>
 </tr>
 <tr>
 <td>Key intervention</td>
-<td>What this one changes</td>
+<td>What this question changes</td>
 <td>Which changes have already been made</td>
 </tr>
 <tr>
 <td>Prediction and counterexample</td>
 <td>Which result would refute the explanation</td>
-<td>Whether the original evidence can tell it apart</td>
+<td>Whether the original evidence can distinguish it</td>
 </tr>
 <tr>
 <td>New information</td>
-<td>What more you would know if the experiment succeeds or fails</td>
+<td>What would be learned if the experiment succeeds or fails</td>
 <td>What is already known</td>
 </tr>
 </tbody>
 </table>
-<p>Keyword searches find leads first; then check the originals and
-citation relations. If a search found nothing, record the query scope
-and date. Keep the scale of the original question, and address the gap
-by adding evidence or choosing a more informative intervention.</p>
-<h2 id="evaluate-the-quality-of-parallel-reading">Evaluate the quality
+<p>Keyword searches find leads; the originals and citation relations are
+then checked. If a search finds nothing, record the query scope and
+date. The scope of the original question is kept, and the gap is
+addressed by adding evidence or choosing a more informative
+intervention.</p>
+<h2 id="evaluate-the-quality-of-parallel-reading">Evaluating the quality
 of parallel reading</h2>
 <p>Run a small comparison on the same materials: serial and parallel
-reading use the same template, and you compare the share of key
-conditions missed, the pass rate of evidence spot-checks and wall-clock
-time. Record token cost separately.</p>
-<p>Even if splitting is faster, the merge stage may drop qualifying
-conditions. Only by taking the merged core conclusions back to the
-originals do you learn where the bottleneck moved.</p>
+reading use the same template, and the comparison covers the proportion
+of key conditions missed, the pass rate of evidence spot checks and the
+wall-clock time. Token cost is recorded separately.</p>
+<p>Even when division of labor is faster, the merge stage may drop
+qualifying conditions. Only by checking the merged core conclusions
+against the originals can one establish where the bottleneck has
+moved.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Take twenty papers from your own field: four for calibration, the
-rest split into two groups. After merging, spot-check a few clear
-exclusions and a few borderline cases, then have a new session that
-reads only the knowledge base propose a research question. Deliver the
-criteria version, the shards and the novelty table.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Take twenty papers from your own field: four for calibration and the
+remainder divided into two groups. After merging, spot-check several
+clear exclusions and several borderline cases, then have a new session
+that reads only the knowledge base propose a research question. Submit
+the criteria version, the shards and the novelty table.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Splitting the work without calibrating.</strong> Compare on a
-shared sample first, clarify the criteria, then assign.</p>
+<p><strong>Dividing the work without calibration.</strong> Compare
+judgments on a shared sample, clarify the criteria and then assign the
+work.</p>
 </div>
 <div class="pitfall">
 <p><strong>Several helpers editing the shared review directly.</strong>
-Each writes a shard, and one editor updates the master table and concept
-page.</p>
+Each writes a shard, and a single editor updates the master table and
+the concept page.</p>
 </div>
 <div class="pitfall">
-<p><strong>Mistaking faster parallel reading for complete
+<p><strong>Equating faster parallel reading with complete
 coverage.</strong> Check the set of paper identifiers, and spot-check
 exclusions and key evidence by stratum.</p>
 </div>
 <p>The discussion of framework choice in the <a
 href="https://huggingface.co/learn/agents-course/en/unit2/introduction">Hugging
-Face Agents Course</a> helps judge when a simple script is already
-enough. <a href="https://llmagents-learning.org/f24">Berkeley LLM
+Face Agents Course</a> helps to judge when a simple script is
+sufficient. <a href="https://llmagents-learning.org/f24">Berkeley LLM
 Agents</a> covers task allocation and evaluation in multi-stage
 systems.</p>
 </article>

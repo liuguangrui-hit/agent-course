@@ -29,9 +29,19 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="hooks-与密钥管理">5.2 Hooks 与密钥管理</h1>
-<p><span class="meta">课后深入，约 60 分钟。</span></p>
-<p>改完文件后的检查能告诉 Agent
-数字错了，却撤不回已经发生的编辑。推送前的检查可以阻断发布，但前提是那次推送经过了这个入口。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>依据事件时机分析各类 Hook
+能够反馈或阻断的动作，以及仍需补充的边界。</li>
+<li>分别验证 Hook
+的脚本分支与实际触发，检验检查器故障时发布入口是否失败关闭。</li>
+<li>依据进程和凭据的实际可达范围选择凭据存放方式，并制定泄露后的处置顺序。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 60 分钟。</span></p>
+<p>文件编辑之后的检查能告诉 Agent
+数字有误，却无法撤回已经发生的编辑。推送前的检查可以阻断发布，但前提是这次推送经过了该入口。</p>
 <h2 id="事件与检查时机">事件与检查时机</h2>
 <table>
 <thead>
@@ -64,62 +74,78 @@
 </tr>
 </tbody>
 </table>
-<p>包内 <code>hooks/check_tex.py</code>
+<p>包内的 <code>hooks/check_tex.py</code>
 处理编辑事件，<code>hooks/pre_push_secrets.sh</code>
-处理受支持的单分支推送。先读 README
-的支持范围，再看测试，避免把一种入口的保护推到所有动作上。</p>
-<h2 id="分支测试与实际触发分开">分支测试与实际触发分开</h2>
-<p>先给脚本喂事件输入，确认成功，发现问题和内部失败的退出行为。再在
+处理受支持的单分支推送。应先阅读 README
+中的支持范围，再查看测试，避免把对某一入口的保护推广到所有动作。</p>
+<h2 id="分支测试与实际触发分开">分支测试与实际触发</h2>
+<p>先向脚本输入模拟事件，确认成功、发现问题和内部失败三种情况下的退出行为。再在
 Agent
-的真实配置里触发同一事件，检查脚本是否被调用，错误是否可见，预期阻断是否发生。</p>
+的真实配置中触发同一事件，检查脚本是否被调用、错误是否可见、预期的阻断是否发生。</p>
 <pre class="text"><code>运行 code/test_hooks.py，保存分支验证结果。
 接到自己的演示配置后，再用一个无害编辑和一次本地测试推送触发。
 记录配置版本，事件名，脚本退出码与 Agent 实际反馈。
 扫描器不可用或超时时，发布入口应失败关闭，不能跳过检查继续。</code></pre>
-<p>Hook 配置和事件字段随产品版本变化，当前格式查 <a
+<p>Hook 的配置和事件字段随产品版本变化，当前格式见 <a
 href="https://code.claude.com/docs/en/hooks">Claude Hooks</a>。Codex
-的可用事件与接口查它自己的当前文档，分别测试。</p>
+的可用事件与接口以其当前文档为准，须分别测试。</p>
 <h2 id="交付入口的全量检查">交付入口的全量检查</h2>
 <p>单个编辑 Hook
-用来快速反馈，发布入口再对冻结产物做全量检查。把受检文件哈希和结果保存，发布器确认将发布的就是这一版。</p>
+用于快速反馈，发布入口再对冻结的产物做全量检查。保存受检文件的哈希和检查结果，发布器据此确认将要发布的就是这一版本。</p>
 <p>若 Agent 有权删除 Hook
-或改核查器，保护强度也随之变化。需要更强边界时，把发布凭据和最终检查放到由另一权限主体维护的环境中。</p>
+或修改核查器，保护强度也随之改变。需要更强的边界时，应把发布凭据和最终检查放到由另一权限主体维护的环境中。</p>
 <h2 id="进程与凭据访问">进程与凭据访问</h2>
 <p><code>.gitignore</code>
-防止常规提交，不阻止程序读取；环境变量也会被子进程继承。一个能运行任意代码的
-Agent，通常能借这些路径接触同一用户下的凭据。</p>
-<p>按能力选存放方式：普通本地使用可以让工具从钥匙串读取；需要隔离时，把敏感调用交给受限服务，向任务提供短期、窄作用域的凭据。变量名留在文档，值不进对话与仓库。</p>
-<h2 id="凭据泄露后的处理">凭据泄露后的处理</h2>
-<p>先在服务端吊销或轮换凭据，限制继续使用。再检查访问记录和影响范围，更新依赖它的配置，最后处理仓库历史与缓存副本。</p>
-<p>历史清理不能召回已被复制的凭据。测试时用失效样例或扫描器替身，日志隐藏疑似值。误报应逐项核实并限定忽略范围，扫描器错误继续按失败处理。</p>
+防止凭据被常规提交，但不阻止程序读取；环境变量也会被子进程继承。能运行任意代码的
+Agent，通常可以借助这些路径接触同一用户下的凭据。</p>
+<p>凭据的存放方式按所需能力选择：普通本地使用可以由工具从钥匙串读取；需要隔离时，把敏感调用交给受限服务，向任务提供短期、窄作用域的凭据。变量名可以写入文档，变量值不进入对话与仓库。</p>
+<h2 id="凭据泄露后的处理">凭据泄露后的处置</h2>
+<p>首先在服务端吊销或轮换凭据，阻止继续使用。然后检查访问记录和影响范围，更新依赖该凭据的配置，最后处理仓库历史与缓存副本。</p>
+<p>清理历史记录无法召回已被复制的凭据。测试时使用失效样例或扫描器替身，日志中隐藏疑似值。误报应逐项核实，并限定忽略范围；扫描器出错仍按失败处理。</p>
 <h2 id="练习">练习</h2>
-<p>在一次性目录创建无效样例，验证扫描器会报问题且输出已脱敏。再模拟扫描器不在
-PATH 中，检查发布是否被阻断。把这两种失败分别记在验证表里。</p>
+<p>在一次性目录中创建无效样例，验证扫描器会报告问题且输出已经脱敏。再模拟扫描器不在
+PATH 中的情形，检查发布是否被阻断。两种失败分别记入验证表。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>PostToolUse 能阻止已经完成的编辑。</strong>
-把反馈与发布阻断分别设计，先后时刻写清。</p>
+<p><strong>认为 PostToolUse 能阻止已经完成的编辑。</strong>
+反馈与发布阻断分别设计，写明各自的触发时刻。</p>
 </div>
 <div class="pitfall">
-<p><strong>扫描器崩溃被当成没有发现问题。</strong>
-检查成功状态、退出码和报告完整性。</p>
+<p><strong>扫描器崩溃被当作未发现问题。</strong>
+检查成功状态、退出码和报告的完整性。</p>
 </div>
 <div class="pitfall">
-<p><strong>密钥从仓库挪进环境变量，就宣布 Agent 看不到。</strong>
-检查实际进程与凭据能力，必要时隔离执行者。</p>
+<p><strong>密钥从仓库移入环境变量，即宣布 Agent 无法读取。</strong>
+检查实际进程与凭据的可达范围，必要时隔离执行者。</p>
 </div>
-<p>继续读 <a href="https://github.com/gitleaks/gitleaks">gitleaks
-官方说明</a>，对照实际版本配置扫描范围。</p>
+<p>延伸阅读：<a href="https://github.com/gitleaks/gitleaks">gitleaks
+官方说明</a>，按实际版本配置扫描范围。</p>
 </article>
 <article lang="en"><h1 id="hooks-and-secret-management">5.2 Hooks and secret
 management</h1>
-<p><span class="meta">After-class deep dive, about 60
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Select the event at which a check should run according to what it
+must prevent or report, and identify the actions it does not cover.</li>
+<li>Verify a check at two levels, the script’s branch behavior and its
+handling in the agent’s real configuration, including failure of the
+checker itself.</li>
+<li>Assess which processes can reach a credential, choose storage and
+isolation accordingly, and specify the response to a credential
+leak.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 60
 minutes.</span></p>
-<p>A check after a file edit can tell the agent a number is wrong, but
-cannot undo the edit that already happened. A pre-push check can block
-publication, but only if that push went through this entry point.</p>
-<h2 id="choose-the-right-event-for-each-check">Choose the right event
-for each check</h2>
+<p>A check after a file edit can report that a number is wrong but
+cannot undo the edit that has already occurred. A pre-push check can
+block publication, but only if the push passes through that entry point.
+The value of a check therefore depends on when it runs and which actions
+pass through it.</p>
+<h2 id="choose-the-right-event-for-each-check">Choosing the event for
+each check</h2>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -129,113 +155,116 @@ for each check</h2>
 <thead>
 <tr>
 <th>Moment</th>
-<th>What it does</th>
+<th>Function</th>
 <th>Coverage to verify</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>After an edit</td>
-<td>Catches format or number problems quickly</td>
-<td>Are edits made from the command line covered too</td>
+<td>Detects format or number problems quickly</td>
+<td>Whether edits made from the command line are also covered</td>
 </tr>
 <tr>
 <td>Before a tool call</td>
-<td>Blocks dangerous actions at the specified entry</td>
-<td>Can other tools do the same action</td>
+<td>Blocks dangerous actions at the specified entry point</td>
+<td>Whether other tools can perform the same action</td>
 </tr>
 <tr>
-<td>Commit or publication entry</td>
+<td>Commit or publication entry point</td>
 <td>Checks the complete product about to be delivered</td>
-<td>Does it block when the checker fails</td>
+<td>Whether it blocks when the checker fails</td>
 </tr>
 <tr>
 <td>End of the task</td>
 <td>Checks unfinished items and state</td>
-<td>Who picks up if the session crashes</td>
+<td>Who takes over if the session crashes</td>
 </tr>
 </tbody>
 </table>
 <p>The packaged <code>hooks/check_tex.py</code> handles edit events, and
 <code>hooks/pre_push_secrets.sh</code> handles supported single-branch
-pushes. First read the supported scope in the README, then look at the
-tests, so the protection of one entry point is not assumed to cover
-every action.</p>
-<h2 id="test-script-branches-and-actual-event-handling-separately">Test
+pushes. Read the supported scope in the README first, then the tests, so
+that protection at one entry point is not assumed to cover every
+action.</p>
+<h2
+id="test-script-branches-and-actual-event-handling-separately">Testing
 script branches and actual event handling separately</h2>
 <p>First feed event input to the script and confirm its exit behavior on
-success, on finding a problem and on internal failure. Then trigger the
-same event in the agent’s real configuration and check whether the
-script was called, whether errors are visible, and whether the action
-was blocked as expected.</p>
+success, on detecting a problem and on internal failure. Then trigger
+the same event in the agent’s real configuration and check whether the
+script was called, whether errors are visible and whether the action was
+blocked as expected.</p>
 <pre class="text"><code>Run code/test_hooks.py and save the branch verification results.
 After connecting it to my own demonstration configuration, trigger it with one harmless edit and one local test push.
 Record the configuration version, event name, script exit code and the agent&#39;s actual feedback.
 When the scanner is unavailable or times out, the publication entry should fail closed and must not skip the check and carry on.</code></pre>
 <p>Hook configuration and event fields change with product versions;
-look up the current format in <a
+consult the current format in <a
 href="https://code.claude.com/docs/en/hooks">Claude Hooks</a>. For
-Codex, look up its available events and interfaces in its own current
-docs, and test them separately.</p>
+Codex, consult its own current documentation for available events and
+interfaces, and test them separately.</p>
 <h2 id="the-final-check-relies-on-the-delivery-entry-point">The final
-check relies on the delivery entry point</h2>
-<p>A single edit Hook gives quick feedback; the publication entry then
-does a full check on the frozen product. Save the hashes of the checked
-files and the results, so the publisher can confirm that what it is
-about to publish is this version.</p>
-<p>If the agent has permission to delete Hooks or change the checker,
-the strength of the protection changes with it. When you need a stronger
-boundary, put the publishing credentials and the final check in an
-environment maintained by a separate authority.</p>
+check depends on the delivery entry point</h2>
+<p>An edit Hook gives rapid feedback; the publication entry point then
+performs a full check on the frozen product. The hashes of the checked
+files and the results are saved, so that the publisher can confirm that
+what it is about to publish is this version.</p>
+<p>If the agent has permission to delete Hooks or modify the checker,
+the strength of the protection changes accordingly. When a stronger
+boundary is required, the publishing credentials and the final check are
+placed in an environment maintained under separate authority.</p>
 <h2 id="process-access-to-credentials">Process access to
 credentials</h2>
 <p><code>.gitignore</code> prevents ordinary commits but does not stop
-programs from reading; environment variables are also inherited by
+programs from reading files; environment variables are also inherited by
 subprocesses. An agent that can run arbitrary code can usually reach the
 credentials of the same user through these paths.</p>
-<p>Choose storage by capability: for ordinary local use, a tool can read
-from the keychain; when isolation is needed, hand sensitive calls to a
-restricted service and give the task short-lived, narrowly scoped
-credentials. Variable names stay in the documentation; values stay out
-of conversations and repositories.</p>
+<p>Storage is chosen according to capability: for ordinary local use, a
+tool can read from the keychain; when isolation is required, sensitive
+calls are delegated to a restricted service and the task receives
+short-lived, narrowly scoped credentials. Variable names appear in the
+documentation; values are kept out of conversations and
+repositories.</p>
 <h2 id="responding-to-a-credential-leak">Responding to a credential
 leak</h2>
-<p>First revoke or rotate the credential on the server side, to stop
-further use. Then check access records and the extent of impact, update
-the configuration that depends on it, and finally deal with repository
-history and cached copies.</p>
+<p>First revoke or rotate the credential on the server side to stop
+further use. Then examine access records and the extent of the impact,
+update dependent configuration, and finally deal with repository history
+and cached copies.</p>
 <p>Cleaning history cannot recall credentials that have already been
-copied. Tests use invalid samples or scanner stand-ins, and logs hide
-suspected values. False positives are verified one by one with a limited
-ignore scope, and scanner errors are still treated as failures.</p>
+copied. Tests use invalid samples or scanner stand-ins, and logs mask
+suspected values. False positives are verified individually with a
+limited ignore scope, and scanner errors are still treated as
+failures.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Create an invalid sample in a disposable directory and verify that
-the scanner reports the problem and its output is masked. Then simulate
-the scanner not being on PATH and check whether publication is blocked.
+the scanner reports the problem and masks its output. Then simulate the
+scanner being absent from PATH and check whether publication is blocked.
 Record the two kinds of failure separately in the verification
 table.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Believing PostToolUse can block an edit that has already been
-made.</strong> Design feedback and publication blocking separately, and
-state when each check runs.</p>
+<p><strong>Assuming that PostToolUse can block an edit that has already
+been made.</strong> Design feedback and publication blocking separately,
+and state when each check runs.</p>
 </div>
 <div class="pitfall">
-<p><strong>A crashed scanner is taken as having found no
+<p><strong>Interpreting a crashed scanner as having found no
 problems.</strong> Check the success status, the exit code and the
 completeness of the report.</p>
 </div>
 <div class="pitfall">
-<p><strong>Declaring the agent cannot see a key because it moved from
+<p><strong>Assuming the agent cannot see a key because it was moved from
 the repository to an environment variable.</strong> Check the actual
 process and credential capabilities, and isolate the executor where
-needed.</p>
+necessary.</p>
 </div>
 <p>Further reading: <a
 href="https://github.com/gitleaks/gitleaks">official gitleaks
-documentation</a>; configure the scan scope against the version you
-actually use.</p>
+documentation</a>; configure the scan scope for the version actually in
+use.</p>
 </article>
 <nav class="pager"><a class="prev" href="safety-sandbox.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandboxes</span></a><a class="next" href="theory.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6 编排理论</span><span lang="en">6 Orchestration theory</span></a></nav>
 </main>

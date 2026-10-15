@@ -30,140 +30,166 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="经验管理与评估">4.2 经验管理与评估</h1>
-<p><span class="meta">课后深入，约 70 分钟。</span></p>
-<p>一次冒烟测试发现了缺失列。Agent
-把做法写进经验榜，下一轮也照做了。这说明经验被使用，还需要下一批任务证明它减少了错误。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>把经验写成带适用条件、动作、来源与检验方式的条目，区分使用声明与因果贡献。</li>
+<li>设计目标经验、匹配安慰剂与无经验三组对照，在未见任务上估计经验的总效应与内容差。</li>
+<li>区分内环与外环更新，识别留出集复用和任务难度变化造成的虚假进步。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 70 分钟。</span></p>
+<p>一次冒烟测试发现了缺失的数据列。Agent
+把相应做法写入经验榜，下一轮也按此执行。这只说明经验被使用了；它是否减少了错误，还需要由下一批任务证明。</p>
 <h2 id="经验条目的构成">经验条目的构成</h2>
 <pre class="text"><code>适用条件：实验输出格式发生变化
 动作：短运行后检查所有预期列、行数与有限值，再提交正式执行版本
 来源：哪轮任务出现何种失败，哪轮通过检查发现同类问题
 测试：在之后未见任务上比较漏检率与新增耗时
 状态：候选</code></pre>
-<p>有效条目应明确下一次要检查什么。把来源写成链接，保留当时的数据和失败记录。触发条件应当由任务开始时可见的信息识别。</p>
+<p>有效的条目应明确下一次要检查什么。来源以链接形式记录，并保留当时的数据和失败记录。触发条件应能根据任务开始时可见的信息识别。</p>
 <h2 id="从回报到更新">从回报到更新</h2>
 <p>把每次任务看作一次尝试。Agent
-读取当前榜，选择做法，环境或检查器给出回报，更新器据此新增、合并或删除条目。</p>
-<p>这里有两种不同信号：作者说用了某条经验，以及带这条经验后实际表现怎样。前者是使用声明，后者需要对照。声明可用来提出消融候选，不能单独当成因果贡献。</p>
-<p>新增条目先进入候选集。用验证任务比较后保留，再到未参与选择的任务上评估。容量有限时，删掉冗余条目，把每条经验的具体适用条件留下。</p>
+读取当前经验榜并选择做法，环境或检查器给出回报，更新器据此新增、合并或删除条目。</p>
+<p>这里有两种不同的信号：作者声称使用了某条经验，以及带有这条经验时的实际表现。前者是使用声明，后者需要对照才能判断。使用声明可以用来提出消融候选，不能单独作为因果贡献的证据。</p>
+<p>新增条目先进入候选集，经验证任务比较后保留，再在未参与选择的任务上评估。容量有限时删除冗余条目，并保留每条经验的具体适用条件。</p>
 <h2 id="三组对照评估">三组对照评估</h2>
-<p>对同一批未见任务，三组分别带目标经验、格式与长度匹配的安慰剂，或不带经验。执行预算和评分规则相同，输出匿名打乱后交给冻结评审。</p>
-<p>目标经验减无经验给总效应，目标经验减安慰剂给匹配安慰剂下的内容差。安慰剂也可能有帮助或造成干扰，因此三组都要报告。第
-<a href="theory-evaluation.html">6.2 节</a>进一步推导它能识别什么。</p>
+<p>对同一批未见任务，三组分别带有目标经验、格式与长度匹配的安慰剂，或不带经验。三组的执行预算和评分规则相同，输出匿名并打乱顺序后交给冻结的评审。</p>
+<p>目标经验减无经验得到总效应，目标经验减安慰剂得到匹配安慰剂条件下的内容差。安慰剂本身也可能有帮助或造成干扰，因此三组结果都要报告。<a
+href="theory-evaluation.html">6.2
+节</a>将进一步推导该设计能够识别什么。</p>
 <pre class="text"><code>留出一批从未用于写榜或挑榜的任务，冻结输入和评分。
 每个任务独立跑三组，随机化执行顺序，记录原点版本、预算与失败。
 按任务配对分析，报告三个均值、内容差与总效应及其区间。</code></pre>
-<h2 id="每次改规则产生一个新版本">每次改规则，产生一个新版本</h2>
-<p>更新经验内容属于内环，改变合并规则、容量或评分属于外环。外环有自己的训练与验证记录。若它持续看到同一留出成绩，留出集也会被用于挑选，最后还需要新的确认集。</p>
-<p>反思检查可以提出新版本，不能悄悄改写过去的评分。固定评估点，保留所有尝试，把当前榜版本与学习规则版本一起记录。</p>
+<h2 id="每次改规则产生一个新版本">规则变更与版本管理</h2>
+<p>更新经验内容属于内环，改变合并规则、容量或评分属于外环。外环有自己的训练与验证记录。若外环持续观察同一留出集的成绩，留出集也就参与了选择，最终还需要新的确认集。</p>
+<p>反思检查可以提出新版本，但不能改写过去的评分。固定评估点，保留全部尝试，并把当前经验榜版本与学习规则版本一起记录。</p>
 <h2 id="研究问题与任务难度的核查">研究问题与任务难度的核查</h2>
-<p>有些经验会让任务变得容易：只选自己擅长的问题，预测写得很宽，结果说明避开主要比较。表面命中率会升高。</p>
-<p>把任务难度与问题尺度也放进复盘。比较每轮的问题与最初的问题，解释变化来自哪项证据。缺支撑的方向先列补证实验，避免用更简单的问题替代进步。</p>
+<p>有些经验会使任务变得容易：只选择自己擅长的问题，把预测写得很宽泛，或在结果说明中回避主要比较。表面命中率因此升高。</p>
+<p>复盘时应同时检查任务难度与问题尺度。比较每轮的问题与最初的问题，解释变化来自哪项证据。缺乏支撑的方向先列出补证实验，避免以更简单的问题替代真正的进步。</p>
 <h2 id="练习">练习</h2>
-<p>选一条你相信有效的经验，先写它会改善哪类任务，再做一个小规模三组试验。小样本只用于检查设计与波动，正式主张需要按效应大小规划样本。条目移除后的差值也记录，看看使用声明是否真的指向贡献。</p>
+<p>选择一条自认为有效的经验，先写明它会改善哪类任务，再做一个小规模的三组试验。小样本只用于检查设计与波动，正式主张须按预期效应大小规划样本量。同时记录移除该条目后的差值，检验使用声明是否确实对应贡献。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
 <p><strong>每次成功都写成通则。</strong>
-保存具体条件，预留新任务验证。</p>
+保存具体条件，预留新任务加以验证。</p>
 </div>
 <div class="pitfall">
-<p><strong>作者自评帮上忙就加分。</strong>
-使用声明与客观结果分开，贡献用随机化对照或消融检验。</p>
+<p><strong>作者自评有帮助即给条目加分。</strong>
+使用声明与客观结果分开记录，贡献用随机化对照或消融检验。</p>
 </div>
 <div class="pitfall">
-<p><strong>不停看留出集挑榜。</strong>
-每次选择保留记录，最终用未反馈给更新器的确认集。</p>
+<p><strong>反复查看留出集来挑选经验榜。</strong>
+记录每次选择，最终使用从未反馈给更新器的确认集。</p>
 </div>
 </article>
 <article lang="en"><h1 id="managing-and-evaluating-playbooks">4.2 Managing and evaluating
 playbooks</h1>
-<p><span class="meta">After-class deep dive, about 70
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Write playbook entries with recognizable conditions of use, a
+concrete action, a traceable source and a defined test.</li>
+<li>Design a three-group evaluation on unseen tasks that separates the
+total effect of a playbook from the difference attributable to its
+content, and distinguish usage claims from measured contributions.</li>
+<li>Evaluate whether changes to the playbook or its update rules
+introduce selection bias or shift the difficulty of the research
+questions.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 70
 minutes.</span></p>
-<p>A smoke test found a missing column. The agent added the check to the
-playbook as an entry, and the next round followed it. That shows the
-entry was used; the next batch of tasks still has to show that it
-reduced errors.</p>
-<h2 id="write-actionable-playbook-entries">Write actionable playbook
+<p>A playbook records methods intended to improve future tasks. Its
+value is a matter of evidence. Suppose a smoke test found a missing
+column, the agent added the corresponding check to the playbook as an
+entry, and the next round followed it. This shows that the entry was
+used; whether it reduced errors must still be shown on the next batch of
+tasks.</p>
+<h2 id="write-actionable-playbook-entries">Writing actionable playbook
 entries</h2>
 <pre class="text"><code>Conditions of use: the format of experiment output has changed
 Action: after a short run, check all expected columns, the number of rows and that values are finite, then commit the version for full execution
 Source: which round showed which failure, and which round caught the same kind of problem through the check
 Test: compare the miss rate and added time on later unseen tasks
 Status: candidate</code></pre>
-<p>A good entry specifies what to check on the next task. Write the
-source as a link, and keep the data and failure records of the time. The
-trigger condition should be recognizable from information visible when
-the task starts.</p>
+<p>A good entry specifies what to check in the next task. The source is
+written as a link, and the data and failure records of the time are
+retained. The trigger condition should be recognizable from information
+available when the task starts.</p>
 <h2 id="from-reward-to-update">From reward to update</h2>
-<p>Treat each task as one attempt. The agent reads the current playbook
-and chooses a method, the environment or checker gives a reward, and the
-updater adds, merges or deletes entries accordingly.</p>
-<p>There are two different signals here: the author saying it used a
-particular entry, and how it actually performed with that entry. The
-first is a usage claim; the second needs a control. Claims can be used
-to propose ablation candidates, but cannot on their own be taken as a
-causal contribution.</p>
-<p>New entries go into a candidate set first. They are kept after
-comparison on validation tasks, then evaluated on tasks that took no
-part in selection. When capacity is limited, delete redundant entries
-and keep each entry’s specific conditions of use.</p>
-<h2 id="three-groups-separate-the-gains">Three groups separate the
-gains</h2>
-<p>On the same batch of unseen tasks, the three groups carry the target
-playbook, a placebo matched in format and length, or no playbook.
-Execution budget and scoring rules are the same, and outputs are
+<p>Each task is treated as one attempt. The agent reads the current
+playbook and chooses a method, the environment or checker returns a
+reward, and the updater adds, merges or deletes entries accordingly.</p>
+<p>Two different signals are involved: the agent’s statement that it
+used a particular entry, and its measured performance with that entry.
+The first is a usage claim; the second requires a control. Usage claims
+can be used to propose ablation candidates but cannot by themselves be
+taken as a causal contribution.</p>
+<p>New entries enter a candidate set first. They are retained after
+comparison on validation tasks and then evaluated on tasks that played
+no part in selection. When capacity is limited, redundant entries are
+removed, and each entry’s specific conditions of use are kept.</p>
+<h2 id="three-groups-separate-the-gains">Separating gains with three
+groups</h2>
+<p>On the same batch of unseen tasks, the three groups receive the
+target playbook, a placebo matched in format and length, or no playbook.
+Execution budget and scoring rules are identical, and outputs are
 anonymized and shuffled before scoring with a fixed reviewer and
 rubric.</p>
 <p>Target playbook minus no playbook gives the total effect; target
 playbook minus placebo gives the content difference under a matched
-placebo. The placebo may also help or interfere, so all three groups are
-reported. <a href="theory-evaluation.html">Section 6.2</a> examines
+placebo. The placebo may itself help or interfere, so all three groups
+are reported. <a href="theory-evaluation.html">Section 6.2</a> examines
 which effects these comparisons can identify.</p>
 <pre class="text"><code>Set aside a batch of tasks never used for writing or choosing the playbook, and freeze their inputs and scoring.
 Run the three groups independently on each task, randomize the execution order, and record the origin version, budget and failures.
 Analyze paired differences by task, reporting the three means, the content difference and the total effect with their intervals.</code></pre>
 <h2 id="every-rule-change-produces-a-new-version">Every rule change
 produces a new version</h2>
-<p>Updating entry content belongs to the inner loop; changing the merge
-rule, capacity or scoring belongs to the outer loop. The outer loop has
-its own training and validation records. If it keeps seeing the same
-held-out scores, the held-out set is also being used for selection, and
-in the end a new confirmation set is needed.</p>
-<p>A reflection check can propose a new version, but cannot quietly
+<p>Updating the content of entries belongs to the inner loop; changing
+the merge rule, capacity or scoring belongs to the outer loop. The outer
+loop has its own training and validation records. If it repeatedly sees
+the same held-out scores, the held-out set has also been used for
+selection, and a new confirmation set is eventually required.</p>
+<p>A reflection check can propose a new version but cannot silently
 rewrite past scores. Fix the evaluation points, keep all attempts, and
-record the current playbook version together with the learning-rule
-version.</p>
-<h2 id="check-whether-entries-steer-the-questions-off-course">Check
-whether entries steer the questions off course</h2>
-<p>Some entries make tasks easier: choose only questions you are good
-at, make vague predictions, or explain results while avoiding the main
-comparison. The apparent hit rate goes up.</p>
-<p>Put task difficulty and the scale of the question into the review as
-well. Compare each round’s question with the original one, and explain
-which evidence the change came from. For directions lacking support,
-first list the experiments that would add evidence, so a simpler
-question does not stand in for progress.</p>
+record the current playbook version together with the version of the
+learning rule.</p>
+<h2 id="check-whether-entries-steer-the-questions-off-course">Checking
+whether entries shift the research questions</h2>
+<p>Some entries make tasks easier rather than better: selecting only
+questions the system handles well, making vague predictions, or
+explaining results while avoiding the main comparison. The apparent hit
+rate then rises.</p>
+<p>Task difficulty and the scope of the question are therefore included
+in the review. Compare each round’s question with the original one and
+state which evidence prompted any change. For directions that lack
+support, first list the experiments that would add evidence, so that a
+simpler question is not mistaken for progress.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Choose a playbook entry you believe works, first write which kind of
-task it will improve, then run a small three-group trial. A small sample
-is only for checking the design and the variation; a substantive claim
-requires sample-size planning based on the effect size. Also record the
-difference after the entry is removed, and see whether the usage claim
-really points to a contribution.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Choose a playbook entry believed to be effective, state which kind of
+task it should improve, and run a small three-group trial. A small
+sample serves only to check the design and the variation; a substantive
+claim requires sample-size planning based on the effect size. Also
+record the difference after the entry is removed, and assess whether the
+usage claim corresponds to an actual contribution.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Writing every success as a general rule.</strong> Save the
-specific conditions and reserve new tasks for verification.</p>
+<p><strong>Turning every success into a general rule.</strong> Record
+the specific conditions and reserve new tasks for verification.</p>
 </div>
 <div class="pitfall">
-<p><strong>Adding points because the author judged that it
-helped.</strong> Keep usage claims apart from objective results, and
+<p><strong>Crediting an entry because the agent judged that it
+helped.</strong> Keep usage claims separate from objective results, and
 test contribution with randomized controls or ablations.</p>
 </div>
 <div class="pitfall">
-<p><strong>Choosing the playbook by looking at the held-out set again
-and again.</strong> Keep a record of every selection, and in the end use
-a confirmation set that was never fed back to the updater.</p>
+<p><strong>Selecting the playbook by consulting the held-out set
+repeatedly.</strong> Keep a record of every selection, and finally use a
+confirmation set that was never fed back to the updater.</p>
 </div>
 </article>
 <nav class="pager"><a class="prev" href="automate-schedule.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.1 定时调度与无人值守</span><span lang="en">4.1 Scheduling and unattended runs</span></a><a class="next" href="automate-pages.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.3 结果展示</span><span lang="en">4.3 Presenting results</span></a></nav>

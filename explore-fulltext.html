@@ -30,142 +30,164 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="文献获取">2.1 文献获取</h1>
-<p><span class="meta">课后深入，约 45 分钟。</span></p>
-<p>下载器返回成功，文件名也对，打开却是一张登录页。全文获取完成后，应能确认取得的是哪份原件。</p>
-<h2 id="把论文与文件分开编号">把论文与文件分开编号</h2>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>区分论文身份与文件身份，为同一论文的不同版本分别建立可核查记录。</li>
+<li>依据当前判断所需的信息选择文献版本，并分层检验文件、身份与版本完整性。</li>
+<li>对获取失败进行分类，记录可供他人继续处理的状态，并评估版本变化对已有证据的影响。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 45 分钟。</span></p>
+<p>下载器返回成功，文件名也正确，打开后却可能只是一张登录页。全文获取完成的标准，是能够确认所得文件是哪一份原件。</p>
+<h2 id="把论文与文件分开编号">论文与文件分别编号</h2>
 <p>论文以 DOI 或 arXiv 标识识别，文件以版本和 SHA-256
-识别。同一论文可以有预印本、正式版与补充材料，每个文件各记一行。</p>
+识别。同一篇论文可以有预印本、正式版与补充材料，每个文件单独记录一行。</p>
 <pre class="text"><code>paper_id, version, source_url, retrieved_at, filename, sha256, pages, identity_status</code></pre>
-<p>题目检索用来发现候选，标识用来确认对象。接口里的在线年份、卷期年份与首次提交年分别保存，展示时再选口径。名单先核对身份，再考虑下载顺序。</p>
-<h2 id="选择能完成当前判断的版本">选择能完成当前判断的版本</h2>
-<p>开放预印本常便于取得，正式版可能改过结论，补充材料可能才有关键设置。阅读开始前先问要用哪项信息：方法细节、主结果还是审稿后的结论。需要哪一项，就确认对应版本是否包含它。</p>
-<p>文献接口提供元数据和开放位置；出版社页面给正式记录；作者主页或机构库可能提供允许公开的稿件。需要机构登录的，在你已授权的浏览器中完成。访问资格不足或真人验证未完成，留下获取状态，继续处理其他材料。</p>
-<h2 id="检查文件再检查身份">检查文件，再检查身份</h2>
-<p>第一层检查文件头和 PDF 解析，确认它确实是 PDF
-且有页面。第二层读取首页与正文，确认标题，作者和标识。第三层检查版本与完整性，看主文，参考文献和所需补充材料是否齐全。</p>
+<p>题目检索用于发现候选，标识用于确认对象。接口中的在线发表年份、卷期年份与首次提交年份分别保存，展示时再选择口径。文献名单先核对身份，再安排下载顺序。</p>
+<h2 id="选择能完成当前判断的版本">按当前判断选择版本</h2>
+<p>开放预印本通常便于取得，正式版可能修改过结论，关键设置可能只在补充材料中。开始阅读前，先明确需要哪一类信息：方法细节、主要结果，还是经过审稿后的结论，再确认对应版本是否包含该信息。</p>
+<p>文献接口提供元数据和开放获取位置，出版社页面提供正式记录，作者主页或机构库可能提供允许公开的稿件。需要机构登录的，在已授权的浏览器中完成。访问资格不足或真人验证未完成时，记录获取状态，继续处理其他材料。</p>
+<h2 id="检查文件再检查身份">文件检查与身份检查</h2>
+<p>第一层检查文件头和 PDF 解析结果，确认文件确实是 PDF
+且含有页面。第二层读取首页与正文，核对标题、作者和标识。第三层检查版本与完整性，确认正文、参考文献和所需补充材料是否齐全。</p>
 <pre class="text"><code>对每个下载文件解析 PDF，记录页数并提取前两页。
 与清单核对身份，再渲染首页和一页包含关键结果的页面查看。
 逐项记录 file_ok，identity_ok，version_ok。失败的保留原因和来源页面。</code></pre>
-<p>某一项通过不能替代其余项。出版社返回的附件也能通过 PDF
-解析，论文的错误版本也能通过标题核对。</p>
+<p>任何一层通过都不能代替其他各层。出版社返回的附件同样能通过 PDF
+解析，错误版本的论文同样能通过标题核对。</p>
 <h2 id="获取失败的分类与处理">获取失败的分类与处理</h2>
-<p>失败分为五类：等待登录与无访问资格、频率限制与网络错误，以及身份待核。每一类写下一步：用户登录，找公开版本，按服务提示退避，或人工核对。</p>
-<p>接口批量调用要遵守当前配额，保留查询字符串和时间。相同失败持续出现时先改获取计划，避免一轮轮重新尝试同一路径。文献库中可以保留未得全文的记录，明确目前只看到了摘要。</p>
-<p>订阅页跳回登录时，先确认浏览器里的机构身份是否仍有效。需要你重新登录或完成人机验证时，把当前页面留好，恢复后再从这个位置继续下载。</p>
-<h2 id="版本变化会改变证据">版本变化会改变证据</h2>
-<p>新版本到来后，先比较你正在使用的图表与方法段。数字变了，更新论文页；比较条件变了，概念页的综合也可能要变。原笔记保留原文件身份，新笔记说明修正的地方。</p>
-<p>不要让同名 PDF 覆盖旧版。旧结论仍应能追回当时阅读的那份材料。</p>
+<p>获取失败分为五类：等待登录、无访问资格、频率限制、网络错误和身份待核。每一类都写明下一步：由用户登录，寻找公开版本，按服务提示退避，或人工核对。</p>
+<p>批量调用接口时遵守当前配额，保留查询字符串和时间。同一失败反复出现时，先调整获取计划，不要一轮轮重试同一路径。知识库可以保留尚未取得全文的记录，但须写明目前只读到摘要。</p>
+<p>订阅页面跳回登录时，先确认浏览器中的机构身份是否仍然有效。需要用户重新登录或完成人机验证时，保留当前页面，恢复后从该位置继续下载。</p>
+<h2 id="版本变化会改变证据">版本变化对证据的影响</h2>
+<p>取得新版本后，先比较正在使用的图表与方法段落。数字改变时更新论文页；比较条件改变时，概念页的综合也可能需要修改。原笔记保留原文件身份，新笔记说明修正之处。</p>
+<p>同名 PDF 不能覆盖旧版本。旧结论仍应能追溯到当时阅读的那份材料。</p>
 <h2 id="练习">练习</h2>
-<p>拿一篇同时有预印本与正式版的论文，为两份文件分别建记录。挑一条结果，从原文到笔记来回查。再给一次失败下载建状态，说明下一位读者可以从哪里继续处理。</p>
+<p>选一篇同时有预印本与正式版的论文，为两份文件分别建立记录。选一条结果，在原文与笔记之间往返核对。再为一次失败的下载建立状态记录，说明下一位读者可以从哪里继续处理。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>文件扩展名等于内容类型。</strong>
+<p><strong>以文件扩展名判断内容类型。</strong>
 解析文件，并核对实际页面。</p>
 </div>
 <div class="pitfall">
 <p><strong>最新版本自动覆盖旧证据。</strong>
-新文件另存，先查已有结论依赖了哪一版。</p>
+新文件另行保存，先查明已有结论依赖哪一版。</p>
 </div>
 <div class="pitfall">
-<p><strong>缺全文仍写成已通读。</strong>
-保存当前阅读范围，摘要判断与全文结果分开。</p>
+<p><strong>未取得全文却记为已通读。</strong>
+记录当前阅读范围，把基于摘要的判断与基于全文的结果分开。</p>
 </div>
-<p>入口文档：<a href="https://info.arxiv.org/help/api/">arXiv
+<p>相关文档：<a href="https://info.arxiv.org/help/api/">arXiv
 API</a>，<a href="https://docs.openalex.org/">OpenAlex</a>，<a
 href="https://lite.ego.app/">Ego Lite</a>。</p>
 </article>
 <article lang="en"><h1 id="finding-full-texts">2.1 Finding full texts</h1>
-<p><span class="meta">After-class deep dive, about 45
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Distinguish the identity of a paper from the identity of a file, and
+verify a retrieved document at the levels of file integrity,
+bibliographic identity and version.</li>
+<li>Select the version of a paper that contains the evidence required,
+and assess how differences between versions affect recorded
+evidence.</li>
+<li>Record retrieval failures by cause so that another reader can
+continue the retrieval without repeating failed attempts.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 45
 minutes.</span></p>
-<p>The downloader reports success and the file name is right, but it
-opens as a login page. Full-text retrieval is complete only when you
-have verified which source document you obtained.</p>
-<h2 id="identify-papers-and-files-separately">Identify papers and files
-separately</h2>
+<p>A downloader may report success and produce a correctly named file
+that opens as a sign-in page. Full-text retrieval is complete only when
+the source document obtained has been verified.</p>
+<h2 id="identify-papers-and-files-separately">Identifying papers and
+files separately</h2>
 <p>A paper is identified by its DOI or arXiv identifier; a file is
-identified by its version and SHA-256. One paper can have a preprint, a
-published version and supplementary material, and each file gets its own
-row.</p>
+identified by its version and SHA-256. One paper may have a preprint, a
+published version and supplementary material, and each file receives its
+own row.</p>
 <pre class="text"><code>paper_id, version, source_url, retrieved_at, filename, sha256, pages, identity_status</code></pre>
-<p>Title searches find candidates; identifiers confirm the paper. Save
-the online publication year, volume year and initial submission year
-from the API separately, and choose which one to show when displaying.
-Check the identities on the list first, then think about download
-order.</p>
-<h2 id="choose-the-version-that-contains-the-evidence-you-need">Choose
-the version that contains the evidence you need</h2>
-<p>Open preprints are often easy to get, the published version may have
-changed conclusions, and the key settings may be only in the
-supplementary material. Before reading, ask which information you need:
-method details, the main results, or the conclusions after peer review.
-Whichever you need, confirm that the corresponding version contains
-it.</p>
+<p>Title searches find candidates; identifiers confirm the paper. The
+online publication year, volume year and initial submission year
+reported by the API are stored separately, and the year to display is
+chosen explicitly. The identities on the list are checked before the
+download order is considered.</p>
+<h2 id="choose-the-version-that-contains-the-evidence-you-need">Choosing
+the version that contains the required evidence</h2>
+<p>Open preprints are often easy to obtain, the published version may
+have revised conclusions, and key settings may appear only in the
+supplementary material. Before reading, decide which information is
+needed: method details, the main results or the conclusions after peer
+review. In each case, confirm that the chosen version contains it.</p>
 <p>Literature APIs provide metadata and open-access locations; publisher
-pages give the formal record; author home pages or institutional
+pages provide the formal record; authors’ home pages or institutional
 repositories may offer manuscripts cleared for public sharing.
-Institutional login, where needed, happens in the browser you have
-authorized. If access rights are insufficient or a human-verification
-challenge has not been completed, leave a retrieval status and carry on
-with other material.</p>
-<h2 id="check-the-file-then-check-the-identity">Check the file, then
-check the identity</h2>
-<p>The first layer checks the file header and PDF parsing, confirming it
-is really a PDF with pages. The second layer reads the first page and
-the body, confirming title, authors and identifier. The third layer
+Institutional sign-in, where needed, takes place in the browser the user
+has authorized. If access rights are insufficient or a
+human-verification challenge has not been completed, record a retrieval
+status and continue with other material.</p>
+<h2 id="check-the-file-then-check-the-identity">Checking the file, then
+the identity</h2>
+<p>The first level checks the file header and PDF parsing, confirming
+that the file is a PDF with pages. The second level reads the first page
+and the body, confirming title, authors and identifier. The third level
 checks version and completeness: whether the main text, references and
-needed supplementary material are all there.</p>
+required supplementary material are all present.</p>
 <pre class="text"><code>Parse each downloaded PDF, record its page count and extract the first two pages.
 Check its identity against the list, then render and look at the first page and one page with a key result.
 Record file_ok, identity_ok and version_ok for each. For failures, keep the reason and the source page.</code></pre>
-<p>Passing one layer does not replace the others. An attachment returned
-by a publisher also parses as a PDF, and a wrong version of a paper also
-passes a title check.</p>
-<h2 id="record-retrieval-failures-and-next-steps">Record retrieval
+<p>Passing one level does not replace the others. An attachment returned
+by a publisher also parses as a PDF, and the wrong version of a paper
+also passes a title check.</p>
+<h2 id="record-retrieval-failures-and-next-steps">Recording retrieval
 failures and next steps</h2>
-<p>Split failures into waiting for login, no access rights, rate
-limiting, network error and identity pending. For each, write the next
-step: the user logs in, look for a public version, back off as the
-service says, or check by hand.</p>
-<p>Bulk API calls must respect the current quota, and keep the query
-string and time. When the same failure keeps happening, change the
-retrieval plan first, instead of retrying the same route round after
-round. The literature base can keep records without full texts, stating
-clearly that only the abstract has been seen so far.</p>
-<p>When a subscription page bounces back to login, first confirm that
-the institutional identity in the browser is still valid. When you need
-to log in again or complete a human-verification challenge, keep the
-current page open, and once access is restored, continue downloading
-from that point.</p>
+<p>Failures are classified as awaiting sign-in, no access rights, rate
+limiting, network error and identity pending. Each is recorded with its
+next step: sign-in by the user, a search for a public version, back-off
+as the service specifies, or a manual check.</p>
+<p>Bulk API calls must respect the current quota and record the query
+string and time. When the same failure recurs, the retrieval plan is
+changed rather than retrying the same route repeatedly. The literature
+base can hold records without full texts, provided it states that only
+the abstract has been read.</p>
+<p>When a subscription page returns to sign-in, first confirm that the
+institutional identity in the browser is still valid. When
+re-authentication or a human-verification challenge is required, keep
+the current page open and resume downloading from that point once access
+is restored.</p>
 <h2 id="version-changes-can-change-the-evidence">Version changes can
 change the evidence</h2>
 <p>When a new version arrives, first compare the figures, tables and
-method sections you are using. If numbers changed, update the paper
-page; if comparison conditions changed, the synthesis on the concept
-page may have to change as well. Old notes keep the original file’s
-identity; new notes say what was corrected.</p>
-<p>Do not let a PDF with the same name overwrite the old version. An old
-conclusion should still trace back to the material read at the time.</p>
+method sections being used. If numbers changed, update the paper page;
+if the comparison conditions changed, the synthesis on the concept page
+may also need to change. Old notes keep the identity of the original
+file; new notes state what was corrected.</p>
+<p>A PDF with the same name must not overwrite the old version. An
+earlier conclusion should remain traceable to the material read at the
+time.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Take a paper that has both a preprint and a published version, and
-create a record for each file. Pick one result and check back and forth
-between original and notes. Then create a status for one failed
-download, writing the action the next reader can take to continue
-without retrying.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Take a paper that has both a preprint and a published version and
+create a record for each file. Choose one result and check it in both
+directions between original and notes. Then create a status record for
+one failed download, stating the action the next reader can take to
+continue without retrying blindly.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
 <p><strong>Treating the file extension as the content type.</strong>
-Parse the file and check the actual pages.</p>
+Parse the file and inspect the actual pages.</p>
 </div>
 <div class="pitfall">
-<p><strong>The newest version automatically overwrites old
+<p><strong>Allowing the newest version to overwrite old
 evidence.</strong> Save the new file separately, and first check which
-version existing conclusions relied on.</p>
+version the existing conclusions relied on.</p>
 </div>
 <div class="pitfall">
-<p><strong>Writing “read in full” when the full text is
-missing.</strong> Save the current reading scope, and keep judgments
-from the abstract apart from results in the full text.</p>
+<p><strong>Recording a paper as read in full when the full text is
+missing.</strong> Record the current reading scope, and keep judgments
+based on the abstract separate from results in the full text.</p>
 </div>
 <p>Documentation: <a href="https://info.arxiv.org/help/api/">arXiv
 API</a>, <a href="https://docs.openalex.org/">OpenAlex</a>, <a

@@ -29,9 +29,17 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="权限与沙箱">5.1 权限与沙箱</h1>
-<p><span class="meta">课后深入，约 60 分钟。</span></p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>分析一条命令规则实际授予的能力，区分工具入口、子进程、网络与凭据四类边界。</li>
+<li>设计覆盖直接工具、子进程与网络的沙箱行为测试，并说明测试结论的适用条件。</li>
+<li>按信息流组织角色权限，单独评估 SSH 等沙箱外例外的能力范围。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 60 分钟。</span></p>
 <p>允许
-<code>uv run</code>，究竟允许了什么？它启动的脚本可以再启动程序，也可以使用环境里的凭据。理解这一点，才能判断权限表的实际范围。</p>
+<code>uv run</code>，实际上允许了什么？它启动的脚本可以再启动其他程序，也可以使用环境中的凭据。理解这一点，才能判断权限表的实际范围。</p>
 <h2 id="四类能力与权限边界">四类能力与权限边界</h2>
 <table>
 <thead>
@@ -59,58 +67,72 @@
 </tr>
 </tbody>
 </table>
-<p>权限模式是这些边界的起点。当前配置可能同时来自组织、用户和项目，需要读取最终有效值，再解释实际生效范围。</p>
+<p>权限模式是这些边界的起点。当前配置可能同时来自组织、用户和项目三级，须读取最终有效值，再解释实际生效范围。</p>
 <h2 id="命令规则只覆盖特定入口">命令规则只覆盖特定入口</h2>
-<p>拒绝一个删除命令的写法，可以挡住那种工具请求。其他脚本也能执行删除，允许的
+<p>拒绝某个删除命令的写法，只能挡住这一种工具请求。其他脚本同样可以执行删除，被允许的
 shell
-还可以组合命令。规则应按任务选择最小入口，进程层再限制目录和网络。</p>
-<p>只读资料任务优先用只读执行环境。需要写入的任务只挂载专用输出目录。高权限发布凭据不要放进会读取外部资料的执行进程。</p>
+还可以组合命令。规则应按任务选择最小入口，再在进程层限制目录和网络。</p>
+<p>只读资料任务优先使用只读执行环境。需要写入的任务只挂载专用的输出目录。高权限的发布凭据不应放入会读取外部资料的执行进程。</p>
 <h2 id="沙箱行为测试">沙箱行为测试</h2>
-<p>macOS，Linux，Windows 的隔离机制和支持范围不同。当前 Agent
-的某种默认模式，也可能被组织配置覆盖。先记录版本和生效配置，再测试读写，子进程与网络。</p>
+<p>macOS、Linux 与 Windows 的隔离机制和支持范围不同。当前 Agent
+的默认模式也可能被组织配置覆盖。应先记录版本和生效配置，再测试读写、子进程与网络。</p>
 <p>练习材料提供配置起点，具体字段按 <a
 href="https://code.claude.com/docs/en/settings">Claude 权限</a>、<a
 href="https://code.claude.com/docs/en/sandboxing">Claude 沙箱</a>和 <a
 href="https://developers.openai.com/codex/security">Codex
-安全说明</a>核对。配置解析成功之后仍要做行为测试。</p>
+安全说明</a>核对。配置解析成功之后，仍须进行行为测试。</p>
 <pre class="text"><code>在演示目录内为每条边界建一个用例，包含预期与实际结果。
 直接工具和子进程分别尝试读取普通测试文件。
 允许目录写入应成功，预定隔离目录写入应失败。
 测试一个允许网络目标与一个未允许目标，记录实际行为。</code></pre>
-<p>测试只能说明这些路径在当前配置下怎样工作。新增工具、改变启动方式或更新版本，重测受影响路径。</p>
+<p>测试只能说明这些路径在当前配置下的行为。新增工具、改变启动方式或更新版本后，应重测受影响的路径。</p>
 <h2 id="ssh-例外是另一项能力">SSH 例外是另一项能力</h2>
 <p>把 SSH
-放到本机沙箱外，它会拿到本机进程可用的连接能力；远端命令又受服务器账号控制。最小化远端账号权限，限定工作目录，使用集群已有的调度与网络管理。</p>
-<p>如果一次任务只需查询作业状态，可提供只返回固定字段的查询入口。给任意远端
-shell 的权限比查询状态宽，配置说明应当明确这个选择。</p>
+放到本机沙箱之外，它就获得本机进程可用的连接能力；远端命令则受服务器账号控制。应尽量缩小远端账号权限，限定工作目录，并使用集群已有的调度与网络管理。</p>
+<p>若一项任务只需查询作业状态，可以提供只返回固定字段的查询入口。允许任意远端
+shell 的权限比查询状态宽得多，配置说明应明确记录这一选择。</p>
 <h2 id="按信息流组织角色">按信息流组织角色</h2>
-<p>外部资料进入阅读角色，带来源的笔记进入分析角色，批准的产物进入发布角色。来源标签贯穿传递，发布操作核对目标与授权。</p>
+<p>外部资料进入阅读角色，带来源的笔记进入分析角色，批准的产物进入发布角色。来源标记在传递中始终保留，发布操作须核对目标与授权。</p>
 <p>摘要和结构化 JSON
-也可能包含不可信要求。把资料格式变整齐，并没有改变来源。权限在执行端落实，模型判断再谨慎也只是其中一层。</p>
+同样可能包含不可信的要求。把资料格式整理得规范，并不改变其来源。权限须在执行端落实，模型的谨慎判断只是其中一层。</p>
 <h2 id="练习">练习</h2>
 <p>从第 4
-课选一次收工，逐项列出读写文件、网络和凭据。给每项动作找最小可用入口。然后换一个入口运行同样的无害测试，记录哪里发生了权限扩张。</p>
+课选择一次收工过程，逐项列出其中的文件读写、网络与凭据。为每项动作找到最小可用入口。然后换一个入口运行同样的无害测试，记录在何处发生了权限扩张。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>把两家的配置逐字段翻译。</strong>
-先写所需能力，再分别实现与实测同一种语义。</p>
+<p><strong>把两家的配置逐字段对译。</strong>
+先写出所需能力，再分别实现，并实测同一语义。</p>
 </div>
 <div class="pitfall">
-<p><strong>名单只写域名，忽略外部工具例外。</strong>
-把沙箱外命令和连接器分别列进能力表。</p>
+<p><strong>名单只列域名，忽略外部工具例外。</strong>
+把沙箱外命令和连接器分别列入能力表。</p>
 </div>
 <div class="pitfall">
-<p><strong>本机目录隔离等于远端隔离。</strong>
+<p><strong>以本机目录隔离代替远端隔离。</strong>
 远端账号与进程另做边界测试。</p>
 </div>
 </article>
 <article lang="en"><h1 id="permissions-and-sandboxes">5.1 Permissions and sandboxes</h1>
-<p><span class="meta">After-class deep dive, about 60
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Analyze the effective scope of a permission by tracing the
+capabilities it grants to subprocesses, networks and credentials,
+including configuration merged from several sources.</li>
+<li>Design behavioral tests that verify read, write, subprocess and
+network boundaries under the configuration actually in effect.</li>
+<li>Organize roles and their permissions along the information flow,
+treating exceptions such as SSH as separate capabilities with their own
+controls.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 60
 minutes.</span></p>
-<p>When you allow <code>uv run</code>, what exactly have you allowed?
-The script it starts can start other programs, and can use the
-credentials in the environment. Understanding this helps you assess the
-actual scope of a permission table.</p>
+<p>Allowing <code>uv run</code> allows more than a single command: the
+script it starts can start other programs and can use the credentials in
+its environment. Assessing the actual scope of a permission table
+requires following these consequences.</p>
 <h2 id="four-capabilities-and-their-boundaries">Four capabilities and
 their boundaries</h2>
 <table>
@@ -147,78 +169,77 @@ allows</td>
 </table>
 <p>The permission mode is the starting point for these boundaries. The
 current configuration may come from the organization, the user and the
-project at once, so read the final effective values before explaining
-the scope actually in force.</p>
+project simultaneously, so the final effective values are read before
+the scope actually in force is described.</p>
 <h2 id="command-rules-cover-only-specific-entry-points">Command rules
 cover only specific entry points</h2>
-<p>Denying one way of writing a delete command blocks that kind of tool
-request. Other scripts can also delete, and an allowed shell can combine
-commands. Allow only the commands the task needs, and the process layer
-then limits directories and networks.</p>
+<p>Denying one form of a delete command blocks that kind of tool
+request. Other scripts can still delete files, and an allowed shell can
+combine commands. Only the commands the task needs are allowed, and the
+process layer then limits directories and networks.</p>
 <p>Tasks that only read source material should use a read-only execution
-environment where possible. For tasks that need to write files, mount
-only a dedicated output directory with write access. Do not put
-high-privilege publishing credentials into an execution process that
-reads external material.</p>
-<h2 id="test-the-sandboxs-actual-behavior">Test the sandbox’s actual
+environment where possible. For tasks that must write files, mount only
+a dedicated output directory with write access. High-privilege
+publishing credentials are not placed in an execution process that reads
+external material.</p>
+<h2 id="test-the-sandboxs-actual-behavior">Testing the sandbox’s actual
 behavior</h2>
-<p>macOS, Linux and Windows differ in isolation mechanisms and what they
-support. A default mode of the current agent may also be overridden by
-organization configuration. First record the version and the effective
-configuration, then test reads and writes, subprocesses and the
-network.</p>
+<p>macOS, Linux and Windows differ in their isolation mechanisms and in
+what they support. A default mode of the current agent may also be
+overridden by organization configuration. Record the version and the
+effective configuration first, then test reads and writes, subprocesses
+and the network.</p>
 <p>The exercise materials provide a configuration starting point; check
 specific fields against <a
 href="https://code.claude.com/docs/en/settings">Claude permissions</a>,
 the <a href="https://code.claude.com/docs/en/sandboxing">Claude
 sandbox</a> and <a
 href="https://developers.openai.com/codex/security">Codex security</a>.
-Even after the configuration parses, you still need behavioral
-tests.</p>
+A configuration that parses still requires behavioral tests.</p>
 <pre class="text"><code>In the demonstration directory, create one test case for each boundary, with the expected and actual results.
 Try to read an ordinary test file with the direct tool and with a subprocess, separately.
 Writing to an allowed directory should succeed; writing to the designated isolated directory should fail.
 Test one allowed network target and one not allowed, and record the actual behavior.</code></pre>
-<p>Tests only show how these paths work under the current configuration.
-When you add tools, change how things are started or update versions,
-retest the affected paths.</p>
-<h2 id="an-ssh-exception-is-another-capability">An SSH exception is
-another capability</h2>
-<p>Put SSH outside the local sandbox and it gets the connection ability
-available to local processes; remote commands are then controlled by the
-server account. Minimize the remote account’s permissions, restrict the
-working directory, and use the cluster’s existing scheduling and network
-management.</p>
-<p>If a task only needs to query job status, provide a query entry that
-returns only fixed fields. Access to an arbitrary remote shell grants
-more capability than a status query, and the configuration notes should
-state this choice clearly.</p>
-<h2 id="organize-roles-by-information-flow">Organize roles by
+<p>Tests show only how these paths behave under the current
+configuration. When tools are added, the startup method changes or
+versions are updated, the affected paths are retested.</p>
+<h2 id="an-ssh-exception-is-another-capability">An SSH exception is a
+separate capability</h2>
+<p>When SSH is placed outside the local sandbox, it receives the
+connection ability available to local processes, and remote commands are
+then controlled by the server account. Minimize the remote account’s
+permissions, restrict the working directory, and use the cluster’s
+existing scheduling and network management.</p>
+<p>If a task only needs to query job status, provide a query entry point
+that returns fixed fields only. Access to an arbitrary remote shell
+grants more capability than a status query, and the configuration notes
+should state this choice explicitly.</p>
+<h2 id="organize-roles-by-information-flow">Organizing roles by
 information flow</h2>
 <p>External material goes to the reading role, notes with sources go to
 the analysis role, and approved products go to the publishing role. The
-source label travels with every handoff, and publishing checks the
-target and authorization.</p>
+source label accompanies every handover, and publishing checks the
+target and the authorization.</p>
 <p>Summaries and structured JSON can also contain untrusted requests.
 Making material tidier does not change its source. Permissions are
-enforced at the executor; however careful the model’s judgment, it is
-only one layer.</p>
+enforced at the executor; the model’s judgment, however careful, is only
+one layer.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Choose one finishing step from Lesson 4 and list, item by item, the
-files it reads and writes, the network and the credentials. Find the
-smallest usable entry point for each action. Then run the same harmless
-test through another entry point and record where permissions
-expanded.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Choose one wrap-up step from Session 4 and list, item by item, the
+files it reads and writes, the network access it uses and the
+credentials it needs. Identify the smallest usable entry point for each
+action. Then run the same harmless test through another entry point and
+record where permissions expanded.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
 <p><strong>Translating one vendor’s configuration into the other’s field
-by field.</strong> First write the capability needed, then implement and
-test the required behavior separately in each.</p>
+by field.</strong> First state the capability required, then implement
+and test the required behavior separately in each.</p>
 </div>
 <div class="pitfall">
-<p><strong>The allowlist names only domains and ignores exceptions for
-external tools.</strong> List commands outside the sandbox and
+<p><strong>An allowlist that names only domains and ignores exceptions
+for external tools.</strong> List commands outside the sandbox and
 connectors separately in the capability table.</p>
 </div>
 <div class="pitfall">

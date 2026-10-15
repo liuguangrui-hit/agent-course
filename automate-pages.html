@@ -30,131 +30,154 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="结果展示">4.3 结果展示</h1>
-<p><span class="meta">课后深入，约 45 分钟。</span></p>
-<p>早上打开结果页，看到完成了十轮。你下一步要做什么？页面需要把值得行动的信息摆出来，并让每项判断能追回原件。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>设计由结构化记录生成的结果页，使执行失败、待核、科学负结果与审阅退修分别呈现，并为每项汇总写明分母。</li>
+<li>区分内部记录与公开投影，逐字段评估公开范围。</li>
+<li>区分构建、上传、部署与线上核验等发布状态，并据此设计通知内容。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 45 分钟。</span></p>
+<p>结果页显示已完成十轮，读者接下来应该做什么？结果页需要呈现可据以行动的信息，并使每项判断都能追溯到原件。</p>
 <h2 id="首页内容与状态">首页内容与状态</h2>
-<p>最上方写当前主要问题的结论，执行状态和下一步。下面列出每轮结果与审阅判定，再给通往预测，原始数据和运行身份的入口。</p>
-<p>运行失败，分析待核，科学负结果分别显示。一次任务尚在执行，不能算进已完成实验的分母；审查退修保留在总表里，不能因为没有通过就消失。</p>
-<h2 id="从结构化记录生成">从结构化记录生成</h2>
-<p>页面由文件生成，指标定义与代码版本一起保存。尽量让状态和数字来自结构化字段，审阅结论也保留单独判定，减少从自由文本猜状态。</p>
+<p>页面最上方写明当前主要问题的结论、执行状态和下一步工作。其下列出每轮结果与审阅判定，并提供通往预测、原始数据和运行身份的入口。</p>
+<p>运行失败、分析待核与科学负结果分别显示。尚在执行的任务不计入已完成实验的分母；审阅退修的轮次保留在总表中，不能因未通过而消失。</p>
+<h2 id="从结构化记录生成">由结构化记录生成</h2>
+<p>页面由文件生成，指标定义与代码版本一并保存。状态和数字尽量来自结构化字段，审阅结论也单独保存判定，以减少从自由文本中推测状态。</p>
 <pre class="text"><code>读全部轮次的执行记录与结果，生成本地结果页。
 校验运行编号唯一，预测与结果一一对应，完成轮次存在预期产物。
 分别统计执行成功率、审查通过率和主要研究指标，逐项写分母。
 缺失字段显示待核，并生成错误清单。</code></pre>
-<p>现有 <code>make_page.py</code>
-可展示完整记录。先看它读取哪些字段，再决定怎样接到自己的运行器。页面生成成功后，抽一个值回查源记录。</p>
+<p>现有的 <code>make_page.py</code>
+可以展示完整记录。先查看它读取哪些字段，再决定怎样接入自己的运行器。页面生成后，抽取一个数值回查源记录。</p>
 <h2 id="公开字段的选择">公开字段的选择</h2>
-<p>研究问题、预测和对错本身，也可能透露未发表成果。内部页可以完整展示，公开页先由你选哪些字段可发布。默认公开页面的访问范围与仓库可见性分别核对。</p>
-<p>把已批准公开的投影单独保存，由生成器只读这份投影。每次发布前比较新增字段，避免内部模板更新后带出额外内容。</p>
-<h2 id="发布有自己的完成条件">发布有自己的完成条件</h2>
-<p>本地构建完成，生成文件已经存在；远端上传成功，服务器收到了文件；部署成功，线上服务已经更新；打开页面核验，才看到了实际版本。把这些状态分开记录。</p>
-<p>页面可以带短版本标识和生成时间，便于核对缓存。发布失败时从失败步骤继续，同一轮结果仍引用同一份记录。</p>
+<p>研究问题、预测及其正误本身也可能透露未发表的成果。内部页可以完整展示，公开页则由研究者逐项选择可发布的字段。公开页面的访问范围与仓库可见性须分别核对。</p>
+<p>已批准公开的投影单独保存，生成器只读取这份投影。每次发布前比较新增字段，避免内部模板更新后带出额外内容。</p>
+<h2 id="发布有自己的完成条件">发布的完成条件</h2>
+<p>本地构建完成，说明生成文件已经存在；远端上传成功，说明服务器收到了文件；部署成功，说明线上服务已经更新；打开页面核验，才能确认看到的是实际版本。这些状态应分别记录。</p>
+<p>页面可以带有简短的版本标识和生成时间，便于核对缓存。发布失败时从失败步骤继续，同一轮结果仍引用同一份记录。</p>
 <h2 id="通知内容与后续操作">通知内容与后续操作</h2>
-<p>通知回答完成还是卡住，哪个问题改变了判断，点哪里继续。长日志留在运行目录，通知只链接到需要看的位置。</p>
-<p>通知渠道使用已配置的认证和访问控制。把随机频道名当作唯一保护，很难知道谁能订阅或发布。先做测试，再按研究内容决定通知粒度。</p>
+<p>通知应回答三件事：任务完成还是受阻，哪个问题的判断发生了变化，从哪里继续处理。长日志保留在运行目录，通知只链接到需要查看的位置。</p>
+<p>通知渠道使用已配置的认证和访问控制。若只依靠随机频道名保护，很难确定谁能订阅或发布。先做测试，再根据研究内容确定通知粒度。</p>
 <h2 id="练习">练习</h2>
-<p>给生成器放入三轮：一轮成功，一轮执行失败，一轮完成但审查退修。检查汇总和分母，再故意移走一份结果文件，确认页面显示待核。最后为同一记录生成一份你愿意公开的投影。</p>
+<p>为生成器提供三轮记录：一轮成功，一轮执行失败，一轮完成但审阅退修。检查汇总值和分母，再故意移走一份结果文件，确认页面显示待核。最后为同一记录生成一份愿意公开的投影。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>汇总率只算成功案例。</strong>
-定义分母，失败和待核保留状态。</p>
+<p><strong>汇总比率只统计成功案例。</strong>
+明确定义分母，失败与待核轮次保留状态。</p>
 </div>
 <div class="pitfall">
-<p><strong>公开页没有数字就默认安全。</strong>
-问题和预测也要逐字段确认公开范围。</p>
+<p><strong>公开页没有数字即默认安全。</strong>
+问题和预测也须逐字段确认公开范围。</p>
 </div>
 <div class="pitfall">
-<p><strong>推送完成就宣布发布成功。</strong>
+<p><strong>推送完成即宣布发布成功。</strong>
 核对部署状态，再打开实际页面确认版本。</p>
 </div>
-<p>参考 <a href="https://docs.github.com/en/pages">GitHub Pages 文档</a>
-与 <a href="https://docs.ntfy.sh/">ntfy 文档</a>。</p>
+<p>参考资料：<a href="https://docs.github.com/en/pages">GitHub Pages
+文档</a> 与 <a href="https://docs.ntfy.sh/">ntfy 文档</a>。</p>
 </article>
 <article lang="en"><h1 id="presenting-results">4.3 Presenting results</h1>
-<p><span class="meta">After-class deep dive, about 45
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Design a results summary generated from structured records, with
+explicit denominators and with failures, pending checks and negative
+results shown separately.</li>
+<li>Decide field by field which research information may be made public,
+and keep the public view consistent with that decision.</li>
+<li>Distinguish the completion conditions of building, uploading,
+deploying and verifying a publication, and design notifications that
+point to the information requiring action.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 45
 minutes.</span></p>
-<p>In the morning you open the results page and see that ten rounds
-finished. What do you do next? The page has to lay out the information
-worth acting on, and let every judgment trace back to the originals.</p>
-<h2 id="lead-with-the-current-conclusion-and-status">Lead with the
+<p>A results page is read in order to decide what to do next. A
+statement that ten rounds have finished does not support that decision.
+The page has to present the information on which action depends and
+allow every judgment to be traced back to the original records.</p>
+<h2 id="lead-with-the-current-conclusion-and-status">Leading with the
 current conclusion and status</h2>
-<p>At the top, write the conclusion on the current main question, the
-execution status and the next step. Below, list each round’s results and
-review verdict, then link to the predictions, raw data and run
-identities.</p>
-<p>Show failed runs, analyses pending checks and negative scientific
-results separately. A task still running cannot count in the denominator
-of completed experiments; a review that returned the work for revision
-stays in the master table and does not vanish because it did not
-pass.</p>
-<h2 id="generate-from-structured-records">Generate from structured
-records</h2>
+<p>The top of the page states the conclusion on the current main
+question, the execution status and the next step. Below this, each
+round’s results and review verdict are listed, with links to the
+predictions, raw data and run identities.</p>
+<p>Failed runs, analyses pending checks and negative scientific results
+are shown separately. A task still running cannot be counted in the
+denominator of completed experiments; a review that returned the work
+for revision remains in the master table and does not disappear because
+it did not pass.</p>
+<h2 id="generate-from-structured-records">Generating the page from
+structured records</h2>
 <p>The page is generated from files, and metric definitions are saved
-with the code version. Let states and numbers come from structured
-fields wherever possible, and keep review conclusions as separate
-verdicts, to reduce guessing states from free text.</p>
+with the code version. States and numbers come from structured fields
+wherever possible, and review conclusions are kept as separate verdicts,
+to reduce inference of states from free text.</p>
 <pre class="text"><code>Read the execution records and results of all rounds and generate a local results page.
 Check that run IDs are unique, predictions and results correspond one to one, and completed rounds have their expected products.
 Count the execution success rate, the review pass rate and the main research metrics separately, writing the denominator for each.
 Show missing fields as pending checks, and generate an error list.</code></pre>
 <p>The existing <code>make_page.py</code> can display the complete
-record. First see which fields it reads, then decide how to connect it
-to your own runner. Once the page is generated, take one value back to
-its source record.</p>
-<h2 id="decide-what-is-public-field-by-field">Decide what is public
-field by field</h2>
-<p>Research questions, predictions and whether they were right can
+record. First establish which fields it reads, then decide how to
+connect it to your own runner. Once the page is generated, trace one
+value back to its source record.</p>
+<h2 id="decide-what-is-public-field-by-field">Deciding field by field
+what is public</h2>
+<p>Research questions, predictions and whether they were correct can
 themselves reveal unpublished results. The internal page can show
-everything; for the public page, you first choose which fields may be
-published. Check the access scope of the default public page and the
-repository’s visibility separately.</p>
-<p>Save the projection approved for publication on its own, and have the
-generator read only this projection. Before each publication, compare
-newly added fields, so updates to the internal template do not expose
-additional content.</p>
-<h2 id="publishing-has-its-own-completion-conditions">Publishing has its
-own completion conditions</h2>
-<p>When the local build is done, the generated files exist; when the
+everything; for the public page, the fields that may be published are
+chosen first. The access scope of the default public page and the
+visibility of the repository are checked separately.</p>
+<p>The projection approved for publication is saved on its own, and the
+generator reads only this projection. Before each publication, newly
+added fields are compared, so that changes to the internal template do
+not expose additional content.</p>
+<h2 id="publishing-has-its-own-completion-conditions">Publication has
+its own completion conditions</h2>
+<p>When the local build is complete, the generated files exist; when the
 remote upload succeeds, the server has received the files; when
-deployment succeeds, the online service has been updated; only when you
-open the page and check do you see the actual version. Record these
-states separately.</p>
-<p>The page can carry a short version tag and generation time, to help
-detect stale cached pages. When publishing fails, continue from the
-failed step, and the same round’s results still refer to the same
+deployment succeeds, the online service has been updated; only opening
+and checking the page shows the version actually served. These states
+are recorded separately.</p>
+<p>The page can carry a short version tag and generation time to help
+detect stale cached pages. When publication fails, it resumes from the
+failed step, and the results of the same round still refer to the same
 record.</p>
-<h2 id="make-notifications-actionable">Make notifications
-actionable</h2>
-<p>A notification answers whether something finished or got stuck, which
-research question has an updated conclusion, and where to click to
-continue. Long logs stay in the run directory; the notification only
-links to the place that needs looking at.</p>
+<h2 id="make-notifications-actionable">Actionable notifications</h2>
+<p>A notification states whether something finished or stalled, which
+research question has an updated conclusion, and where to continue. Long
+logs remain in the run directory; the notification only links to the
+place that requires attention.</p>
 <p>Notification channels use configured authentication and access
-control. If a random channel name is the only protection, it is hard to
-know who can subscribe or post. Test first, then decide how fine-grained
-notifications should be according to the research content.</p>
+control. If a random channel name is the only protection, it is
+difficult to know who can subscribe or post. Test first, and then decide
+how detailed notifications should be according to the research
+content.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Give the generator three rounds: one success, one execution failure,
 and one completed but returned for revision. Check the summary and
-denominators, then deliberately remove one result file and confirm the
-page shows a pending check. Finally, generate from the same record a
+denominators, then deliberately remove one result file and confirm that
+the page shows a pending check. Finally, generate from the same record a
 public view containing only the fields you would share.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
 <p><strong>Computing summary rates from successful cases only.</strong>
-Define the denominator, and keep the status of failures and pending
+Define the denominator, and retain the status of failures and pending
 checks.</p>
 </div>
 <div class="pitfall">
-<p><strong>Assuming the public page is safe because it has no
-numbers.</strong> Questions and predictions also need their public scope
+<p><strong>Assuming that a public page without numbers is safe.</strong>
+Questions and predictions also require their public scope to be
 confirmed field by field.</p>
 </div>
 <div class="pitfall">
-<p><strong>Declaring publication successful once the push is
-done.</strong> Check the deployment status, then open the actual page to
-confirm the version.</p>
+<p><strong>Treating a completed push as a successful
+publication.</strong> Check the deployment status, then open the actual
+page to confirm the version.</p>
 </div>
 <p>See the <a href="https://docs.github.com/en/pages">GitHub Pages
 docs</a> and the <a href="https://docs.ntfy.sh/">ntfy docs</a>.</p>

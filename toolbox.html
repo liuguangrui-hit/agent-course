@@ -27,7 +27,15 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="工具箱">工具箱</h1>
-<p>工具安装后，要用实际任务检查一次。本页按课程和阶段列出需要的能力。安装下载与登录放在课前。复杂配置和边界判断在课上共同完成，随即用于首次研究任务；课后再扩大使用。软件留在电脑上，项目文件只保留本项目的调用方法。下一课复制约定时，先删去与新任务无关的部分。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>依据各课的研究任务确定所需的工具能力，区分课前可用性检查与课堂上的配置和实测。</li>
+<li>以与研究任务相连的验收任务检验工具，不以安装成功或配置解析成功作为可用的依据。</li>
+<li>维护最小化的项目工具约定，在新任务中删去无关部分。</li>
+</ol>
+</div>
+<p>工具安装完成后，须用实际任务检验一次。本页按课程和阶段列出所需的能力。安装、下载与登录安排在课前；复杂配置和边界判断在课堂上共同完成，并随即用于首次研究任务；课后再扩大使用范围。软件安装在本机，项目文件只保留本项目的调用方法。下一课复制约定时，先删去与新任务无关的部分。</p>
 <pre class="text"><code>读上一课 AGENTS.md，保留本课用得上的工具约定。
 检查下面列出的能力，报告已可用，需要安装，需要我登录三类。
 说明新增软件的来源与安装位置，再执行已获同意的安装。
@@ -37,8 +45,8 @@
 <h2 id="第-0-课-课前准备">第 0 课 课前准备</h2>
 <p><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a>
 与 <a href="https://learn.chatgpt.com/docs/codex/cli">Codex</a>
-负责读文件、改文件并运行工具。桌面应用适合看任务与产物，命令行适合脚本调用。按<a
-href="setup.html">课前准备</a>安装，先在同一个练习目录完成写纪要和查纪要。</p>
+负责读取和修改文件并运行工具。桌面应用便于查看任务与产物，命令行适合脚本调用。按<a
+href="setup.html">课前准备</a>安装，先在同一个练习目录中完成纪要的整理与核查。</p>
 <h2 id="第-1-课-写作绘图">第 1 课 写作绘图</h2>
 <table>
 <colgroup>
@@ -50,7 +58,7 @@ href="setup.html">课前准备</a>安装，先在同一个练习目录完成写�
 <tr>
 <th>工具</th>
 <th>课前检查</th>
-<th>课上共同做</th>
+<th>课堂任务</th>
 </tr>
 </thead>
 <tbody>
@@ -82,8 +90,8 @@ href="setup.html">课前准备</a>安装，先在同一个练习目录完成写�
 </tbody>
 </table>
 <h2 id="第-2-课-知识库">第 2 课 知识库</h2>
-<p>课前装浏览器和
-Obsidian、登录并取得原件；课上核对版本和证据，配置独立阅读的输入输出范围。</p>
+<p>课前安装浏览器和
+Obsidian，完成登录并取得原件；课堂上核对版本和证据，配置独立阅读的输入与输出范围。</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -116,10 +124,10 @@ href="https://docs.openalex.org/">OpenAlex</a></td>
 </tr>
 </tbody>
 </table>
-<p>接口用来批量查元数据，浏览器处理需要登录的页面。接口当前的账号和频率要求以官方文档为准。浏览器能否使用已有登录，要在自己的设备上实测。</p>
+<p>接口用于批量查询元数据，浏览器处理需要登录的页面。接口当前的账号和频率要求以官方文档为准。浏览器能否沿用已有登录，须在自己的设备上实测。</p>
 <h2 id="第-3-课-实验分析">第 3 课 实验分析</h2>
 <p>课前准备
-Git、锁定依赖与可用执行端；课上一起冻结预测与提交代码，检查输出和后台身份。</p>
+Git、锁定依赖与可用的执行端；课堂上共同冻结预测、提交代码，并检查输出和后台任务身份。</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -156,7 +164,7 @@ Git、锁定依赖与可用执行端；课上一起冻结预测与提交代码�
 </tbody>
 </table>
 <h2 id="第-4-课-自动化">第 4 课 自动化</h2>
-<p>课前检查已有入口与本地页，完成一次零延迟只读调用。课上共同设置单次唤醒并完成收工交接；课后再扩成周期调度，另选通知和发布。</p>
+<p>课前检查已有入口与本地页面，完成一次零延迟的只读调用。课堂上共同设置单次唤醒并完成收工交接；课后再扩展为周期调度，通知和发布另行选择。</p>
 <table>
 <thead>
 <tr>
@@ -188,26 +196,40 @@ Git、锁定依赖与可用执行端；课上一起冻结预测与提交代码�
 </tbody>
 </table>
 <p><a href="https://docs.github.com/en/pages">GitHub
-Pages</a>可发布选定网页，公开范围由你决定。未发表的问题和预测本身也可能需要保密，公开摘要逐项选取字段。通知服务用已验证的认证与访问控制；频道名只负责寻址。</p>
+Pages</a>可以发布选定的网页，公开范围由研究者决定。未发表的问题和预测本身也可能需要保密，公开摘要应逐项选取字段。通知服务使用经过验证的认证与访问控制；频道名只用于寻址。</p>
 <h2 id="第-5-课-安全控制">第 5 课 安全控制</h2>
-<p>课前下载扫描器与所需组件并备份配置；课上定义角色并合并配置，实测系统边界；课后换入口重测。</p>
+<p>课前下载扫描器与所需组件，并备份配置；课堂上定义角色、合并配置并实测系统边界；课后更换入口重测。</p>
 <p>权限规则控制工具调用，沙箱限制实际进程，Hooks
 在事件发生时执行检查。<a
-href="https://github.com/gitleaks/gitleaks">gitleaks</a>用于辅助查找疑似密钥。分别做一次允许测试和拒绝测试，再换一个入口确认边界仍在。命令白名单无法替代进程隔离，配置被解析也无法替代实测。</p>
+href="https://github.com/gitleaks/gitleaks">gitleaks</a>用于辅助查找疑似密钥。分别做一次允许测试和拒绝测试，再换一个入口确认边界仍然成立。命令白名单不能替代进程隔离，配置解析成功也不能替代实测。</p>
 <h2 id="第-6-课-编排理论">第 6 课 编排理论</h2>
-<p>课前确认标准库和数据文件可读；课上解释三组与分析结果；课后做理论复算和真实任务检验。</p>
-<p>本课新增三组评估器。它读取同一任务在无经验、匹配安慰剂和目标经验下的得分，按任务配对估计差值，再检查成本与原点版本。用量账本帮助判断某种改进是否值得部署。相关公式和可运行练习见<a
+<p>课前确认标准库和数据文件可以读取；课堂上解释三组设计与分析结果；课后完成理论复算和真实任务检验。</p>
+<p>本课新增三组评估器。它读取同一任务在无经验、匹配安慰剂和目标经验三种条件下的得分，按任务配对估计差值，再检查成本与原点版本。用量账本用于判断某项改进是否值得部署。相关公式和可运行练习见<a
 href="theory.html">编排理论</a>。</p>
 </article>
 <article lang="en"><h1 id="toolbox">Toolbox</h1>
-<p>After installing a tool, try it on a real task. This page lists the
-capabilities needed by lesson and stage. Installs, downloads and logins
-happen before class. Complex configuration and boundary judgments are
-done together in class and used straight away on a first research task;
-you extend their use after class. The software stays on your computer,
-and the project files record only the commands needed for this project.
-When you copy the conventions into the next lesson, first delete what is
-irrelevant to the new task.</p>
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>Using this page across the course, students should be able to:</p>
+<ol type="1">
+<li>Distinguish setup that can be completed independently before class
+(installation, downloads, sign-in) from configuration and boundary
+judgments that depend on a defined research task.</li>
+<li>Verify each tool through a practical check on a research task rather
+than through installation alone.</li>
+<li>Maintain project-level tool conventions that carry forward only what
+the next task requires.</li>
+</ol>
+</div>
+<p>This page lists the capabilities required by session and by stage.
+Installation, downloads and sign-in take place before class. Complex
+configuration and boundary judgments are carried out in class and
+applied immediately to a first research task; their use is extended
+after class. A tool is considered ready only once it has been used on a
+real task. Software remains installed on the student’s computer, and
+project files record only the commands needed for that project. When
+conventions are carried into the next session, anything irrelevant to
+the new task is removed first.</p>
 <pre class="text"><code>Read the previous lesson&#39;s AGENTS.md and keep the tool conventions this lesson can use.
 Check the capabilities listed below and report them in three groups: already usable, needs installing, needs me to log in.
 State the source and install location of any new software, then carry out the installs I have agreed to.
@@ -217,10 +239,11 @@ Record reusable tool commands in this project&#39;s files, and in class use each
 <h2 id="lesson-0-getting-started">Lesson 0: Getting started</h2>
 <p><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a>
 and <a href="https://learn.chatgpt.com/docs/codex/cli">Codex</a> read
-files, change files and run tools. The desktop app is good for viewing
-tasks and outputs; the command line is good for scripted calls. Install
-them following <a href="setup.html">Getting started</a>, and first write
-and check meeting minutes in the same exercise directory.</p>
+and modify files and run tools. The desktop app is suited to inspecting
+tasks and outputs; the command line is suited to scripted calls. Install
+them following <a href="setup.html">Getting started</a>, and complete
+the meeting-minutes task, with its independent check, in the same
+exercise directory.</p>
 <h2 id="lesson-1-writing-and-figures">Lesson 1: Writing and figures</h2>
 <table>
 <colgroup>
@@ -232,7 +255,7 @@ and check meeting minutes in the same exercise directory.</p>
 <tr>
 <th>Tool</th>
 <th>Check before class</th>
-<th>Done together in class</th>
+<th>Work in class</th>
 </tr>
 </thead>
 <tbody>
@@ -250,8 +273,8 @@ figures</td>
 </tr>
 <tr>
 <td>PDF renderer</td>
-<td>The original draft turns into full-page images</td>
-<td>Judge readability at actual column width</td>
+<td>The original draft is rendered as full-page images</td>
+<td>Judge legibility at actual column width</td>
 </tr>
 <tr>
 <td><a href="https://agents.md/">AGENTS.md</a></td>
@@ -261,15 +284,15 @@ figures</td>
 <tr>
 <td><a href="https://code.claude.com/docs/en/skills">Skill</a></td>
 <td>Confirm that the Skill can be found</td>
-<td>Distill the revision that worked into a method, with a transfer test
-after class</td>
+<td>Distill the effective revision method, with a transfer test after
+class</td>
 </tr>
 </tbody>
 </table>
 <h2 id="lesson-2-research-knowledge-bases">Lesson 2: Research knowledge
 bases</h2>
-<p>Before class, install the browser and Obsidian, log in and get the
-originals; in class, check versions and evidence, and configure the
+<p>Before class, install the browser and Obsidian, sign in and obtain
+the originals; in class, check versions and evidence, and configure the
 input and output scope for independent reading.</p>
 <table>
 <colgroup>
@@ -291,30 +314,30 @@ identity</td>
 </tr>
 <tr>
 <td><a href="https://obsidian.md/">Obsidian</a></td>
-<td>Jump from a concept page back to a paper page, then find the page
-number in the original</td>
+<td>Navigate from a concept page back to a paper page, then find the
+page number in the original</td>
 </tr>
 <tr>
 <td><a href="https://info.arxiv.org/help/api/">arXiv</a> and <a
 href="https://docs.openalex.org/">OpenAlex</a></td>
-<td>Find one record and save the query time and identifier</td>
+<td>Retrieve one record and save the query time and identifier</td>
 </tr>
 <tr>
 <td>Sub-agent</td>
-<td>Write one note within an independent input scope and hand back the
-file list</td>
+<td>Write one note within an independent input scope and return the file
+list</td>
 </tr>
 </tbody>
 </table>
-<p>APIs are for querying metadata in bulk; the browser handles pages
-that need login. The APIs’ current account and rate requirements are as
-stated in the official docs. Whether the browser can use existing logins
-must be tested on your own device.</p>
+<p>APIs are used for bulk metadata queries; the browser handles pages
+that require sign-in. The APIs’ current account and rate requirements
+are those stated in the official documentation. Whether the browser can
+use existing sign-ins must be tested on the student’s own device.</p>
 <h2 id="lesson-3-experimental-analysis">Lesson 3: Experimental
 analysis</h2>
 <p>Before class, prepare Git, locked dependencies and an available
-execution environment; in class, freeze the prediction and commit code
-together, and check the outputs and background job details.</p>
+execution environment; in class, freeze the prediction and commit code,
+and check the outputs and the details of background jobs.</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -338,30 +361,30 @@ directory</td>
 working directory</td>
 </tr>
 <tr>
-<td><a href="https://tailscale.com/">Tailscale</a> or the network entry
-your university provides</td>
-<td>Test a connection from off campus; reusing your lab’s existing setup
-is fine</td>
+<td><a href="https://tailscale.com/">Tailscale</a> or the network access
+provided by the university</td>
+<td>Test a connection from off campus; the laboratory’s existing setup
+may be reused</td>
 </tr>
 <tr>
 <td><a href="https://github.com/tmux/tmux">tmux</a> or a cluster
 scheduler</td>
 <td>The job continues after the terminal disconnects, and the exit code
-and log can still be read</td>
+and log remain readable</td>
 </tr>
 <tr>
 <td>Monitor</td>
-<td>Tells running, success and failure apart, and stops monitoring when
-the job ends</td>
+<td>Distinguishes running, success and failure, and stops monitoring
+when the job ends</td>
 </tr>
 </tbody>
 </table>
 <h2 id="lesson-4-research-automation">Lesson 4: Research automation</h2>
-<p>Before class, check the existing entry points and local page, and
-complete one zero-delay read-only call. In class, set up a single
-wake-up together and hand the wrap-up to a new session; after class,
-extend it to periodic scheduling, and choose notifications and
-publishing separately.</p>
+<p>Before class, check the existing entry points and the local page, and
+complete one zero-delay read-only call. In class, configure a single
+wake-up and hand the wrap-up to a new session; after class, extend this
+to periodic scheduling, and decide on notifications and publication
+separately.</p>
 <table>
 <colgroup>
 <col style="width: 50%" />
@@ -380,7 +403,7 @@ publishing separately.</p>
 </tr>
 <tr>
 <td>Unattended call</td>
-<td>Reads material only, saves comments as a file, returns an exit
+<td>Reads material only, saves comments as a file and returns an exit
 status</td>
 </tr>
 <tr>
@@ -389,8 +412,8 @@ status</td>
 </tr>
 <tr>
 <td>Results page generator</td>
-<td>Rebuild the page from result files, with failed rounds shown
-too</td>
+<td>Rebuild the page from result files, with failed rounds also
+shown</td>
 </tr>
 <tr>
 <td>Notification channel</td>
@@ -399,35 +422,35 @@ too</td>
 </tbody>
 </table>
 <p><a href="https://docs.github.com/en/pages">GitHub Pages</a> can
-publish selected web pages, and you decide the public scope. Unpublished
-questions and predictions may themselves need to stay confidential, so
-the public summary selects fields one by one. Notification services use
-verified authentication and access control; the channel name only
-identifies the destination.</p>
+publish selected web pages, with the public scope decided by the user.
+Unpublished questions and predictions may themselves need to remain
+confidential, so the public summary selects fields individually.
+Notification services use verified authentication and access control;
+the channel name only identifies the destination.</p>
 <h2 id="lesson-5-safety-controls">Lesson 5: Safety controls</h2>
-<p>Before class, download the scanner and needed components and back up
-your configuration; in class, define roles, merge configuration and test
-the system boundaries; after class, retest through another entry
+<p>Before class, download the scanner and required components and back
+up the configuration; in class, define roles, merge configuration and
+test the system boundaries; after class, retest through another entry
 point.</p>
 <p>Permission rules control tool calls, the sandbox limits actual
-processes, and Hooks run checks when events happen. <a
-href="https://github.com/gitleaks/gitleaks">gitleaks</a> helps find
-suspected secrets. Do one allowed test and one denied test, then confirm
-through another entry point that the boundary still holds. A command
-allowlist cannot replace process isolation, and a configuration that
-parses cannot replace actual testing.</p>
+processes, and Hooks run checks when events occur. <a
+href="https://github.com/gitleaks/gitleaks">gitleaks</a> helps to detect
+suspected secrets. Carry out one allowed test and one denied test, then
+confirm through another entry point that the boundary still holds. A
+command allowlist cannot replace process isolation, and a configuration
+that parses cannot replace actual testing.</p>
 <h2 id="lesson-6-orchestration-theory">Lesson 6: Orchestration
 theory</h2>
 <p>Before class, confirm that the standard library and data files can be
 read; in class, interpret the three groups and the analysis results;
 after class, check the theoretical calculations and test the method on
 real tasks.</p>
-<p>This lesson adds a three-group evaluator. It reads the scores of the
+<p>This session adds a three-group evaluator. It reads the scores of the
 same task with no experience, a matched placebo and the target
-experience, estimates the differences paired by task, then checks cost
-and the origin version. The usage ledger helps you decide whether an
-improvement is worth deploying. The formulas and runnable exercises are
-in <a href="theory.html">Orchestration theory</a>.</p>
+experience, estimates the differences paired by task, and then checks
+cost and the origin version. The usage ledger supports the decision on
+whether an improvement is worth deploying. The formulas and runnable
+exercises are in <a href="theory.html">Orchestration theory</a>.</p>
 </article>
 <nav class="pager"><a class="prev" href="syllabus.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 课程大纲</span><span lang="en"> Syllabus</span></a><a class="next" href="setup.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">0 课前准备</span><span lang="en">0 Getting started</span></a></nav>
 </main>

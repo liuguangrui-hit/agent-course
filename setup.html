@@ -27,116 +27,125 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="课前准备">0 课前准备</h1>
+<h2 id="学习目标">学习目标</h2>
 <div class="goal">
-<p>让两个 Agent
-在同一个练习文件夹里工作：一家整理会议记录，另一家拿原记录核查。结束时，你能找到它们写出的文件，也知道自己登录的是哪一种服务。</p>
+<ol type="1">
+<li>区分网页聊天、桌面应用与命令行 Agent 的能力范围，以及订阅登录与 API
+密钥登录的计费渠道，确认本机实际使用的认证方式。</li>
+<li>依据版本号、实际执行路径和 PATH
+诊断安装问题，并以一次登录后的文件读写任务作为环境验收标准。</li>
+<li>在原件、产物与独立核查之间建立文件交接，使审阅者针对明确的文件给出意见。</li>
+</ol>
 </div>
 <p><span class="meta">自学 45 至 90
-分钟。按自己的系统选一条路径。安装说明核对于 2026 年 10 月 15
+分钟。按自己的操作系统选择一条路径。安装说明核对于 2026 年 10 月 15
 日。</span></p>
-<p>本页是第一次课以前的共同准备，不占六堂课各自的一小时。先完成安装与登录，再做第一次读写；每堂课还各有一张预备卡，提前装那一课新增的工具，下载材料。暂时只有一家
-Agent，也先把第一次读写做通。</p>
-<p>第一次安装提前一天开始，留出下载与报错处理的时间。会话怎么交接、怎样判断输出可靠，课堂会接着练，不要求在课前自行完成复杂配置。</p>
+<p>本页是首次课前的共同准备，不占用六次课堂各自的 60
+分钟。先完成安装与登录，再完成首次文件读写。此后每课另有一份课前准备说明，用于提前安装该课新增的工具并下载材料。暂时只能使用一家
+Agent 的，也应先完成首次读写。</p>
+<p>首次安装建议提前一天开始，为下载与报错处理留出时间。会话交接和输出可靠性的判断在课堂中继续训练，课前不要求自行完成复杂配置。</p>
 <h2 id="网页桌面应用与命令行">网页、桌面应用与命令行</h2>
 <p>Claude 和 ChatGPT 的网页聊天适合提问。Claude Code 与 Codex
-的本地入口还能读写项目文件，并调用电脑上的程序。本课同时介绍桌面应用和命令行：桌面应用便于看产物；命令行在第
+的本地入口还能读写项目文件，并调用本机程序。本课同时介绍桌面应用和命令行：桌面应用便于查看产物，命令行在第
 4 课用于自动执行。</p>
-<p>使用前确认账号有相应访问资格。订阅登录与 API
-密钥登录使用不同的计费渠道；本课走官方账号登录，不需要先买 API
-额度。登录界面显示的套餐与组织是最后的检查位置。</p>
-<p>桌面安装从 <a href="https://code.claude.com/docs/en/desktop">Claude
+<p>使用前应确认账号具有相应的访问资格。订阅登录与 API
+密钥登录属于不同的计费渠道；本课使用官方账号登录，无需购买 API
+额度。登录界面显示的套餐与组织是最终的核对依据。</p>
+<p>桌面应用从 <a href="https://code.claude.com/docs/en/desktop">Claude
 Code Desktop</a> 和 <a
 href="https://learn.chatgpt.com/docs/quickstart">Codex
-快速入门</a>进入，选择官网提供的系统安装包。macOS 把应用拖到
+快速入门</a>进入，选择官网提供的系统安装包。macOS 把应用拖入
 Applications，Windows
-按官方安装界面完成。装好后选择本地项目，找到能显示工作目录的任务入口。Linux
-读者可直接走下面的命令行路线。</p>
-<h2 id="windows在-powershell-里装">Windows：在 PowerShell 里装</h2>
-<h3 id="第一步打开正确的终端">第一步，打开正确的终端</h3>
-<p>在开始菜单搜索 PowerShell，打开普通用户窗口。提示符通常以
-<code>PS C:\</code> 开头。下面这组安装命令要在 PowerShell 里运行。</p>
-<p>如果平时使用 Git Bash 或
-WSL，先选定一套环境，安装和启动都在同一套里完成。Windows 与 WSL
-各有自己的程序、PATH 和用户目录。</p>
-<h3 id="第二步安装-claude-code">第二步，安装 Claude Code</h3>
+按官方安装界面完成。安装后选择本地项目，找到能够显示工作目录的任务入口。Linux
+用户可直接采用下文的命令行路线。</p>
+<h2 id="windows在-powershell-里装">Windows：在 PowerShell 中安装</h2>
+<h3 id="第一步打开正确的终端">第一步：打开 PowerShell</h3>
+<p>在开始菜单中搜索 PowerShell，打开普通用户窗口，提示符通常以
+<code>PS C:\</code> 开头。以下安装命令均在 PowerShell 中运行。</p>
+<p>平时使用 Git Bash 或 WSL
+的用户，应先选定一套环境，安装和启动都在同一环境中完成。Windows 与 WSL
+各有独立的程序、PATH 和用户目录。</p>
+<h3 id="第二步安装-claude-code">第二步：安装 Claude Code</h3>
 <p>按 <a href="https://code.claude.com/docs/en/setup">Anthropic
-官方安装说明</a>，粘贴：</p>
+官方安装说明</a>运行：</p>
 <pre class="powershell"><code>irm https://claude.ai/install.ps1 | iex</code></pre>
-<p>下载阶段可能一时没有输出。等它回到提示符，关掉这个窗口，再开一个
-PowerShell，检查：</p>
+<p>下载阶段可能暂时没有输出。回到提示符后关闭该窗口，新开一个 PowerShell
+检查：</p>
 <pre class="powershell"><code>claude --version
 Get-Command claude</code></pre>
-<p>第一条应当显示版本号，第二条显示实际执行文件的位置。Claude Code
-原生安装放在用户目录。需要 Bash 工具时，按 <a
+<p>第一条命令应显示版本号，第二条显示实际执行文件的位置。Claude Code
+的原生安装位于用户目录。需要 Bash 工具时，按 <a
 href="https://git-scm.com/download/win">Git for Windows 官网</a>安装
 Git，再确认：</p>
 <pre class="powershell"><code>git --version</code></pre>
-<p>当前 Claude Code 在未安装 Git for Windows 时也可使用 PowerShell 作为
-shell 工具。后续课程涉及 Bash 脚本时，再检查运行环境，见<a
+<p>当前版本的 Claude Code 在未安装 Git for Windows 时，也可以使用
+PowerShell 作为 shell 工具。后续课程涉及 Bash 脚本时再检查运行环境，见<a
 href="https://code.claude.com/docs/en/setup">官方说明</a>。</p>
-<h3 id="第三步安装-codex">第三步，安装 Codex</h3>
-<p>在同一套 PowerShell 环境运行官方安装器：</p>
+<h3 id="第三步安装-codex">第三步：安装 Codex</h3>
+<p>在同一 PowerShell 环境中运行官方安装器：</p>
 <pre class="powershell"><code>irm https://chatgpt.com/codex/install.ps1 | iex</code></pre>
-<p>重新打开 PowerShell，检查：</p>
+<p>重新打开 PowerShell 检查：</p>
 <pre class="powershell"><code>codex --version
 Get-Command codex</code></pre>
-<p>官方独立安装器可以直接安装 Codex，不需要先装 Node.js。已有 npm
-工作环境的读者也可用官方文档列出的
-<code>npm install -g @openai/codex</code>。一台机器选一种安装方式，避免
+<p>官方独立安装器可以直接安装 Codex，无需先安装 Node.js。已有 npm
+工作环境的用户也可以使用官方文档列出的
+<code>npm install -g @openai/codex</code>。同一台机器只选一种安装方式，以免
 PATH 先找到另一份旧程序。安装入口见 <a
 href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a>。</p>
-<h3 id="第四步找不到命令时修-path">第四步，找不到命令时修 PATH</h3>
-<p>PATH 是终端查找程序的一串目录。先确认文件是否存在：</p>
+<h3 id="第四步找不到命令时修-path">第四步：找不到命令时修复 PATH</h3>
+<p>PATH 是终端查找程序时依次搜索的目录列表。先确认文件是否存在：</p>
 <pre class="powershell"><code>Test-Path &quot;$env:USERPROFILE\.local\bin\claude.exe&quot;
 Test-Path &quot;$env:LOCALAPPDATA\Programs\OpenAI\Codex\bin\codex.exe&quot;</code></pre>
-<p>若文件存在，把对应目录加入当前窗口再试。下面分别是 Claude 与 Codex
-独立安装器的默认目录：</p>
+<p>若文件存在，先把对应目录加入当前窗口的 PATH 再试。以下分别是 Claude
+与 Codex 独立安装器的默认目录：</p>
 <pre class="powershell"><code>$env:Path = &quot;$env:USERPROFILE\.local\bin;$env:LOCALAPPDATA\Programs\OpenAI\Codex\bin;$env:Path&quot;
 claude --version
 codex --version</code></pre>
-<p>如果这样成功，问题就在持久
-PATH。开始菜单搜索环境变量，进入环境变量窗口，在上半部分的用户变量里编辑
-Path。点新建，分别填入 Claude 的 <code>C:\Users\用户名\.local\bin</code>
-和 Codex 的
-<code>%LOCALAPPDATA%\Programs\OpenAI\Codex\bin</code>，保留已有项目，确认保存。重新打开终端再检查。</p>
-<p>若 <code>Test-Path</code> 为
-<code>False</code>，回到安装日志查实际安装位置和下载结果。使用 npm
+<p>若这样能够运行，问题在于持久
+PATH。在开始菜单中搜索环境变量，打开环境变量窗口，在上半部分的用户变量中编辑
+Path。点击新建，分别填入 Claude 的
+<code>C:\Users\用户名\.local\bin</code> 和 Codex 的
+<code>%LOCALAPPDATA%\Programs\OpenAI\Codex\bin</code>，保留已有条目，确认保存。重新打开终端后再检查。</p>
+<p>若 <code>Test-Path</code> 返回
+<code>False</code>，应回到安装日志查找实际安装位置和下载结果。使用 npm
 安装的 Codex，运行
-<code>npm config get prefix</code>，检查它报告的全局目录是否在用户 Path
-中。不要把 PATH 整列替换成一个新目录。</p>
-<h3 id="第五步进入练习目录">第五步，进入练习目录</h3>
+<code>npm config get prefix</code>，检查其报告的全局目录是否在用户 Path
+中。不要用一个新目录替换整个 PATH。</p>
+<h3 id="第五步进入练习目录">第五步：进入练习目录</h3>
 <div class="download">
 <p><a href="downloads/lesson-0-zh.zip">下载第 0 课材料</a></p>
 </div>
-<p>把压缩包解到自己的 <code>agent-course</code> 文件夹，找到含
-<code>notes.md</code> 的那一层。资源管理器在这一层打开终端，或者在
-PowerShell 输入实际路径：</p>
+<p>把压缩包解压到自己的 <code>agent-course</code> 文件夹，找到包含
+<code>notes.md</code>
+的那一层目录。可以在资源管理器中从该目录打开终端，也可以在 PowerShell
+中输入实际路径：</p>
 <pre class="powershell"><code>Set-Location &quot;$env:USERPROFILE\Documents\agent-course\lesson-0&quot;
 Get-Location
 Get-ChildItem
 claude</code></pre>
-<p>路径含空格时保留双引号。若目录放在桌面或
-OneDrive，改成资源管理器地址栏里看到的实际位置。</p>
-<p>Windows 原生 Codex 有自己的沙箱配置。若出现组织策略或系统组件错误，按
+<p>路径含空格时保留引号。目录位于桌面或 OneDrive
+时，改为资源管理器地址栏中显示的实际位置。</p>
+<p>Windows 原生 Codex 有独立的沙箱配置。若出现组织策略或系统组件错误，按
 <a href="https://learn.chatgpt.com/docs/windows/windows-sandbox">Windows
-官方排障页</a>核对系统版本与错误码。需要 Linux 工具链时，可由你启用
-WSL，再按 Linux 路线安装；已有 Windows 安装不会自动成为 WSL 安装。</p>
-<h2 id="macos在-terminal-里装">macOS：在 Terminal 里装</h2>
-<h3 id="第一步打开终端并查看系统">第一步，打开终端并查看系统</h3>
-<p>按 Command 与空格，搜索 Terminal，回车。先运行：</p>
+官方排障页</a>核对系统版本与错误码。需要 Linux
+工具链时，可由用户本人启用 WSL，再按 Linux 路线安装；已有的 Windows
+安装不会自动成为 WSL 中的安装。</p>
+<h2 id="macos在-terminal-里装">macOS：在 Terminal 中安装</h2>
+<h3 id="第一步打开终端并查看系统">第一步：打开终端并查看系统</h3>
+<p>按 Command 与空格键，搜索 Terminal 并打开，先运行：</p>
 <pre class="bash"><code>sw_vers
 uname -m
 echo &quot;$SHELL&quot;</code></pre>
-<p><code>arm64</code> 对应 Apple 芯片，<code>x86_64</code> 对应
-Intel。安装器会选择适合的程序；桌面应用的芯片与系统要求以下载页为准。</p>
-<h3 id="第二步安装两家命令行">第二步，安装两家命令行</h3>
-<p>已有 Homebrew 的读者可沿用它安装，两条命令分开运行：</p>
+<p><code>arm64</code> 对应 Apple 芯片，<code>x86_64</code> 对应 Intel
+芯片。安装器会自动选择适配的程序；桌面应用的芯片与系统要求以下载页为准。</p>
+<h3 id="第二步安装两家命令行">第二步：安装两家命令行工具</h3>
+<p>已使用 Homebrew 的用户可以沿用它安装，两条命令分别运行：</p>
 <pre class="bash"><code>brew install --cask claude-code
 brew install --cask codex</code></pre>
-<p>未使用 Homebrew 时，官方独立安装器更直接：</p>
+<p>未使用 Homebrew 时，官方独立安装器更为直接：</p>
 <pre class="bash"><code>curl -fsSL https://claude.ai/install.sh | bash
 curl -fsSL https://chatgpt.com/codex/install.sh | sh</code></pre>
-<p>两种路线选一种。分别见 <a
+<p>两种路线任选其一，分别见 <a
 href="https://code.claude.com/docs/en/setup">Claude Code 安装</a>和 <a
 href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI
 安装</a>。安装结束后新开一个终端窗口：</p>
@@ -144,77 +153,78 @@ href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI
 codex --version
 command -v claude
 command -v codex</code></pre>
-<h3 id="第三步处理-path">第三步，处理 PATH</h3>
+<h3 id="第三步处理-path">第三步：配置 PATH</h3>
 <p>独立安装器通常把入口放在
-<code>~/.local/bin</code>。如果程序存在却提示找不到命令，先只修当前窗口：</p>
+<code>~/.local/bin</code>。若程序存在却提示找不到命令，先只修复当前窗口：</p>
 <pre class="bash"><code>export PATH=&quot;$HOME/.local/bin:$PATH&quot;
 claude --version
 codex --version</code></pre>
-<p>成功后，用文本编辑器打开
-<code>~/.zshrc</code>，把同一行加到末尾一次，再运行：</p>
+<p>确认有效后，用文本编辑器打开
+<code>~/.zshrc</code>，在末尾加入同一行，只加一次，再运行：</p>
 <pre class="bash"><code>source ~/.zshrc</code></pre>
-<p>使用 Bash 的读者改对应的 <code>~/.bashrc</code>；登录 shell
-还要检查自己的 <code>~/.bash_profile</code> 是否加载它。用 Homebrew
-安装时，按 <code>brew --prefix</code> 找实际前缀，再按 Homebrew
-安装后的提示配置 shell，避免把 Apple 芯片和 Intel 的目录写反。</p>
-<h3 id="第四步进入目录">第四步，进入目录</h3>
+<p>使用 Bash 的用户修改对应的 <code>~/.bashrc</code>；登录 shell
+还需检查 <code>~/.bash_profile</code> 是否加载了它。使用 Homebrew
+安装时，通过 <code>brew --prefix</code> 查找实际前缀，再按 Homebrew
+安装后的提示配置 shell，避免混淆 Apple 芯片与 Intel 芯片的目录。</p>
+<h3 id="第四步进入目录">第四步：进入练习目录</h3>
 <p>下载并解压<a href="downloads/lesson-0-zh.zip">第 0 课材料</a>，找到
-<code>notes.md</code> 所在文件夹。在终端输入 <code>cd</code>，把文件夹从
-Finder 拖进终端，再按回车。也可以写实际路径：</p>
+<code>notes.md</code> 所在的文件夹。在终端输入
+<code>cd</code>，把文件夹从 Finder
+拖入终端，再按回车；也可以直接输入实际路径：</p>
 <pre class="bash"><code>cd &quot;$HOME/Documents/agent-course/lesson-0&quot;
 pwd
 ls
 claude</code></pre>
-<h2 id="linux先把用户环境做通">Linux：先把用户环境做通</h2>
-<p>以下示例使用 Ubuntu 或 Debian。其他发行版先通过自己的包管理器安装
+<h2 id="linux先把用户环境做通">Linux：用户环境的准备</h2>
+<p>以下示例使用 Ubuntu 或 Debian。其他发行版先通过各自的包管理器安装
 curl 和 Git。共享服务器沿用管理员提供的基础环境。</p>
 <pre class="bash"><code>sudo apt update
 sudo apt install curl git ca-certificates</code></pre>
-<p>这两步会修改系统软件，由你本人授权。接下来的 Agent
-安装在自己的用户目录里完成：</p>
+<p>这两步会修改系统软件，须由用户本人授权。随后的 Agent
+安装在自己的用户目录中完成：</p>
 <pre class="bash"><code>curl -fsSL https://claude.ai/install.sh | bash
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
 export PATH=&quot;$HOME/.local/bin:$PATH&quot;
 claude --version
 codex --version</code></pre>
-<p>把 PATH 那一行加入自己的 <code>~/.bashrc</code>
-一次，重新打开终端检查。若使用 Zsh，改
-<code>~/.zshrc</code>。安装失败时先看官方页面的发行版和 CPU 要求；Alpine
-等环境的依赖不同，不能直接套用 Ubuntu 的包名。</p>
-<p>解压练习材料，进入含 <code>notes.md</code> 的目录：</p>
+<p>把设置 PATH 的那一行加入
+<code>~/.bashrc</code>，只加一次，重新打开终端检查。使用 Zsh 时改为
+<code>~/.zshrc</code>。安装失败时，先查看官方页面对发行版和 CPU
+的要求；Alpine 等环境的依赖不同，不能直接套用 Ubuntu 的包名。</p>
+<p>解压练习材料，进入包含 <code>notes.md</code> 的目录：</p>
 <pre class="bash"><code>cd &quot;$HOME/agent-course/lesson-0&quot;
 pwd
 ls
 claude</code></pre>
-<p>远程无桌面的机器可能打不开登录浏览器。Claude Code
-启动时按终端提示在本机浏览器完成登录；Codex 可按<a
-href="https://learn.chatgpt.com/docs/auth">官方认证说明</a>使用设备码登录。先在真实界面确认支持的方式，登录结果以终端回报为准。</p>
-<h2 id="首次登录两家分别确认">首次登录，两家分别确认</h2>
-<p>启动 <code>claude</code> 后，按提示选择官方 Claude
-账号登录。浏览器里完成账号和组织选择，回到终端确认已经进入对话。启动
+<p>没有桌面环境的远程机器可能无法打开登录浏览器。Claude Code
+启动时按终端提示在本机浏览器中完成登录；Codex 可按<a
+href="https://learn.chatgpt.com/docs/auth">官方认证说明</a>使用设备码登录。先在实际界面中确认支持的方式，登录结果以终端的反馈为准。</p>
+<h2 id="首次登录两家分别确认">首次登录与认证方式确认</h2>
+<p>启动 <code>claude</code> 后，按提示选择以官方 Claude
+账号登录。在浏览器中完成账号和组织选择，回到终端确认已经进入对话。启动
 <code>codex</code> 时选择 Sign in with
-ChatGPT，再回到终端检查。两家分别登录，各自使用自己的账号状态。</p>
-<p>如果机器以前配过 API，只检查相关变量是否存在：</p>
+ChatGPT，再回到终端检查。两家分别登录，各自维护账号状态。</p>
+<p>若本机以前配置过 API，只检查相关变量是否存在：</p>
 <pre class="text"><code>检查这台机器是否配置过影响当前 Agent 认证的环境变量，只报告变量名和是否存在。
 不要输出值。告诉我当前实际使用订阅登录还是 API 登录。</code></pre>
 <p>以 Claude 的 <code>ANTHROPIC_API_KEY</code> 和 Codex 的
 <code>OPENAI_API_KEY</code>
-为例，先查是否设置了这些环境变量；最终渠道还要结合当前设置和登录状态确认。需要调整时保留原配置，明确改哪一项。密钥由你在本地管理。</p>
-<p>第一次进入项目，会看到目录信任和权限选择。核对当前路径是练习目录，使用能逐步看到读写与命令的默认权限。先完成一次小任务，后面再按工作需要配置。</p>
+为例，先检查是否设置了这些环境变量；实际使用的渠道还须结合当前设置和登录状态确认。需要调整时保留原配置，并明确修改哪一项。密钥由用户本人在本地管理。</p>
+<p>首次进入项目时，会出现目录信任和权限选择。确认当前路径是练习目录，使用能够逐步显示读写与命令的默认权限。先完成一次小任务，之后再按工作需要配置。</p>
 <h2
-id="第一次任务整理并核查会议纪要">第一次任务：整理并核查会议纪要</h2>
+id="第一次任务整理并核查会议纪要">首次任务：会议纪要的整理与核查</h2>
 <p>在 Claude Code 中发送：</p>
 <pre class="text"><code>读 notes.md，把这次组会整理成 minutes.md。
 分别写已作出的决定、每个人的待办和截止日期。记录里没有的日期写待定。
 写完告诉我产物位置，列出你发现的一处原记录歧义。</code></pre>
-<p>在文件夹里打开
-<code>minutes.md</code>。核对人物、日期和决定是否来自原记录。接着开
-Codex，选择同一个项目，发送：</p>
+<p>在文件夹中打开
+<code>minutes.md</code>，核对人物、日期和决定是否来自原记录。接着打开
+Codex，选择同一项目，发送：</p>
 <pre class="text"><code>对照 notes.md 核查 minutes.md，查漏项和凭空补出的决定。
 只把核查意见写到 check.md，不改纪要。注明审阅的文件和问题位置。</code></pre>
-<p>现在你已经做完后面各课都会用到的交接：原件留在文件里，产物另存，审阅者拿明确版本核查。换一个任务时，让当前
-Agent 把下一步写进文件，再开新会话。</p>
-<h2 id="常见报错按现象查">常见报错，按现象查</h2>
+<p>这一任务包含后续各课都会使用的交接方式：原件保留在文件中，产物另行保存，审阅者针对明确的文件进行核查。切换任务时，由当前
+Agent 把下一步写入文件，再开启新会话。</p>
+<h2 id="常见报错按现象查">常见报错的诊断</h2>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -275,102 +285,116 @@ Agent 把下一步写进文件，再开新会话。</p>
 </table>
 <p>Claude Code 的诊断可从 <code>claude doctor</code> 开始，更多现象见<a
 href="https://code.claude.com/docs/en/troubleshooting">官方排障</a>。Codex
-从 <code>/status</code> 检查会话设置，再按 <a
+先用 <code>/status</code> 检查会话设置，再按 <a
 href="https://learn.chatgpt.com/docs/codex/cli">CLI
-文档</a>定位。保留错误文本和版本号，发给 Agent 时删去凭据。</p>
+文档</a>定位问题。保留错误文本和版本号，提交给 Agent 时删去凭据。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>安装成功就宣布能用了。</strong>
-版本号只证明程序能启动。再做一次登录后的读写任务，文件落到预定目录才完成验收。</p>
+<p><strong>安装成功即认为环境可用。</strong>
+版本号只证明程序能够启动。还须完成一次登录后的读写任务，文件写入预定目录才算通过验收。</p>
 </div>
 <div class="pitfall">
-<p><strong>修 PATH 时覆盖旧配置。</strong> 要加入一个目录，却把原来的
-Path 清空。编辑前保留原值，新增目录后在新终端验证。</p>
+<p><strong>修复 PATH 时覆盖了原有配置。</strong>
+本意是加入一个目录，却清空了原来的
+Path。编辑前保留原值，新增目录后在新终端中验证。</p>
 </div>
 <div class="pitfall">
-<p><strong>两家同时改同一份纪要。</strong>
-核查任务只写核查文件，修改交回原作者处理。一个产物在同一时刻由一个会话写。</p>
+<p><strong>两家 Agent 同时修改同一份纪要。</strong>
+核查任务只写核查文件，修改交回原作者处理。同一产物在同一时刻只由一个会话写入。</p>
 </div>
-<h2 id="工作台小结">工作台小结</h2>
-<p>现在的工作台只有两家 Agent 和一个项目文件夹。<code>notes.md</code>
+<h2 id="工作台小结">本节小结</h2>
+<p>目前的工作环境由两家 Agent
+和一个项目文件夹构成。<code>notes.md</code>
 是原件，<code>minutes.md</code> 是产物，<code>check.md</code>
-是独立核查。安装位置和启动命令写进自己的简短准备记录，后续课堂无需重新安装。</p>
-<p>准备好<a href="downloads/lesson-1-zh.zip">第 1 课材料</a>。下一课让
-Agent 把 Python、编译和页面检查接上，完成一篇论文的重讲。</p>
-<h2 id="第一次课前交什么">第一次课前交什么</h2>
-<p>在练习目录留下 preflight.md，写明系统与两家 Agent
-的版本，标出实际工作目录及 minutes.md 与 check.md
+是独立核查。安装位置和启动命令写入自己的准备记录，后续课堂无需重新安装。</p>
+<p>请准备好<a href="downloads/lesson-1-zh.zip">第 1
+课材料</a>。下一课将接入 Python、LaTeX
+编译和页面检查，完成一篇论文的重写。</p>
+<h2 id="第一次课前交什么">首次课前提交的准备记录</h2>
+<p>在练习目录中保存 preflight.md，写明操作系统与两家 Agent
+的版本，注明实际工作目录、minutes.md 与 check.md
 的位置，以及尚未解决的错误。确认文件能在自己的电脑上打开，然后进入<a
 href="writing.html#课前预备">第 1
-课预备卡</a>，完成编译环境、渲染和范文下载。</p>
-<p>以后每课在自己的材料目录更新同名准备记录。带着错误记录提前求助，比开课后重新尝试整套安装更容易定位问题。</p>
+课课前准备</a>，完成编译环境、渲染和范文下载。</p>
+<p>此后每课都在相应材料目录中更新同名的准备记录。带着错误记录提前求助，比开课后重新尝试整套安装更容易定位问题。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip new">+ Claude Code</span><span class="chip new">+ Codex</span></div><h1 id="getting-started">0 Getting started</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Get two agents working in the same exercise folder: one turns meeting
-notes into minutes, the other checks them against the original notes. At
-the end you can find the files they wrote, and you know which service
-and billing method you are using.</p>
+<p>After completing this unit, students should be able to:</p>
+<ol type="1">
+<li>Verify that an agent environment is usable by distinguishing program
+installation, authenticated service access and correct file access in
+the intended working directory.</li>
+<li>Identify the authentication and billing channel an agent is using,
+and diagnose common installation failures from their symptoms without
+discarding existing configuration.</li>
+<li>Organize a two-agent task so that the source material, the product
+and an independent check are kept in separate files with identifiable
+versions.</li>
+</ol>
 </div>
 <p><span class="meta">Self-study, 45 to 90 minutes. Choose the path for
-your system. Installation instructions checked on 15 October
+your operating system. Installation instructions checked on 15 October
 2026.</span></p>
-<p>This page is the shared preparation before the first class and is
-separate from the six one-hour classes. Work through installation, login
-and your first file task; each lesson also has its own preparation card
-for installing that lesson’s new tools and downloading materials. If you
-have only one agent for now, still get your first file task working.</p>
-<p>Start the first installation a day early to leave time for downloads
-and errors. You will practice session handoffs and assess output
-reliability in class; you are not expected to set up complex
-configuration on your own beforehand.</p>
+<p>This unit is the common preparation for the course and is separate
+from the six 60-minute sessions. It covers installation, sign-in and a
+first file task. Each session also has its own preparation requirements
+for additional tools and materials. Students who currently have access
+to only one agent should still complete the first file task with that
+agent.</p>
+<p>The first installation should begin a day in advance to allow for
+downloads and errors. Session handovers and the assessment of output
+reliability are taught in class; no complex configuration is expected
+beforehand.</p>
 <h2 id="web-chat-desktop-apps-and-command-line-tools">Web chat, desktop
 apps and command-line tools</h2>
-<p>The Claude and ChatGPT web chats are good for asking questions. The
-local versions of Claude Code and Codex can also read and write project
-files and run programs on your computer. This lesson covers both the
-desktop apps and the command line: the desktop app makes outputs easy to
-view; the command line is used for automatic execution in Lesson 4.</p>
-<p>Before you start, confirm that your account has the right access.
-Subscription login and API key login are billed through different
-channels; this course uses official account login and does not require
-buying API credit first. The plan and organization shown on the login
-screen provide the final confirmation.</p>
+<p>The Claude and ChatGPT web interfaces are suited to answering
+questions. The local versions, Claude Code and Codex, can also read and
+write project files and run programs on the user’s computer. This unit
+covers both the desktop apps and the command line. The desktop app makes
+outputs easy to inspect; the command line is used for automated
+execution in Session 4.</p>
+<p>Confirm before starting that the account has the required access.
+Subscription sign-in and API-key sign-in are billed through different
+channels. The course uses official account sign-in and does not require
+the purchase of API credit. The plan and organization shown on the
+sign-in screen are the definitive confirmation.</p>
 <p>For the desktop apps, start from <a
 href="https://code.claude.com/docs/en/desktop">Claude Code Desktop</a>
 and the <a href="https://learn.chatgpt.com/docs/quickstart">Codex
-quickstart</a>, and choose the installer the official site offers for
-your system. On macOS, drag the app into Applications; on Windows,
-follow the official installer. Once installed, choose a local project
-and find the task view that shows the working directory. Linux readers
-can go straight to the command-line route below.</p>
+quickstart</a>, and choose the installer offered for your system. On
+macOS, drag the app into Applications; on Windows, follow the official
+installer. After installation, choose a local project and locate the
+task view that shows the working directory. Linux users can proceed
+directly to the command-line route below.</p>
 <h2 id="windows-install-in-powershell">Windows: install in
 PowerShell</h2>
-<h3 id="step-1-open-the-right-terminal">Step 1: open the right
+<h3 id="step-1-open-the-right-terminal">Step 1: open the correct
 terminal</h3>
 <p>Search for PowerShell in the Start menu and open a normal user
-window. The prompt usually starts with <code>PS C:\</code>. Run the
+window. The prompt usually begins with <code>PS C:\</code>. Run the
 following installation commands in PowerShell.</p>
-<p>If you normally use Git Bash or WSL, choose one environment and do
-both installation and startup in it. Windows and WSL each have their own
-programs, PATH and user directory.</p>
+<p>Users who normally work in Git Bash or WSL should choose one
+environment and carry out both installation and startup in it. Windows
+and WSL each have their own programs, PATH and user directory.</p>
 <h3 id="step-2-install-claude-code">Step 2: install Claude Code</h3>
 <p>Following <a href="https://code.claude.com/docs/en/setup">Anthropic’s
 official installation guide</a>, paste:</p>
 <pre class="powershell"><code>irm https://claude.ai/install.ps1 | iex</code></pre>
-<p>The download may show no output for a while. Wait until it returns to
-the prompt, close this window, open a new PowerShell and check:</p>
+<p>The download may produce no output for some time. Wait for the prompt
+to return, close the window, open a new PowerShell window and check:</p>
 <pre class="powershell"><code>claude --version
 Get-Command claude</code></pre>
-<p>The first should show a version number, the second the location of
-the actual executable. The native Claude Code install goes in your user
-directory. If you need the Bash tool, install Git from the <a
-href="https://git-scm.com/download/win">Git for Windows site</a>, then
-confirm:</p>
+<p>The first command should report a version number and the second the
+location of the executable. The native Claude Code installation is
+placed in the user directory. If the Bash tool is needed, install Git
+from the <a href="https://git-scm.com/download/win">Git for Windows
+site</a>, then confirm:</p>
 <pre class="powershell"><code>git --version</code></pre>
-<p>Current Claude Code can also use PowerShell as its shell tool when
-Git for Windows is not installed. When later lessons involve Bash
-scripts, check the runtime environment then; see the <a
+<p>Current versions of Claude Code can use PowerShell as the shell tool
+when Git for Windows is not installed. When later sessions involve Bash
+scripts, check the runtime environment at that point; see the <a
 href="https://code.claude.com/docs/en/setup">official guide</a>.</p>
 <h3 id="step-3-install-codex">Step 3: install Codex</h3>
 <p>In the same PowerShell environment, run the official installer:</p>
@@ -378,17 +402,17 @@ href="https://code.claude.com/docs/en/setup">official guide</a>.</p>
 <p>Reopen PowerShell and check:</p>
 <pre class="powershell"><code>codex --version
 Get-Command codex</code></pre>
-<p>The official standalone installer installs Codex directly; you do not
-need Node.js first. Readers who already have a working npm setup can
-also use <code>npm install -g @openai/codex</code>, as listed in the
-official docs. Choose one installation method per machine, so that PATH
-does not find another, older copy first. See the installation
+<p>The official standalone installer installs Codex directly, without a
+prior Node.js installation. Users with a working npm setup may instead
+use <code>npm install -g @openai/codex</code>, as listed in the official
+documentation. Use only one installation method per machine, so that
+PATH does not find an older copy first. See the installation
 instructions in <a href="https://learn.chatgpt.com/docs/codex/cli">Codex
 CLI</a>.</p>
-<h3 id="step-4-fix-path-when-the-command-is-not-found">Step 4: fix PATH
-when the command is not found</h3>
-<p>PATH is the list of directories the terminal searches for programs.
-First check whether the files exist:</p>
+<h3 id="step-4-fix-path-when-the-command-is-not-found">Step 4: correct
+PATH when a command is not found</h3>
+<p>PATH is the list of directories in which the terminal searches for
+programs. First check whether the files exist:</p>
 <pre class="powershell"><code>Test-Path &quot;$env:USERPROFILE\.local\bin\claude.exe&quot;
 Test-Path &quot;$env:LOCALAPPDATA\Programs\OpenAI\Codex\bin\codex.exe&quot;</code></pre>
 <p>If they exist, add their directories to the current window and try
@@ -397,59 +421,58 @@ standalone installers:</p>
 <pre class="powershell"><code>$env:Path = &quot;$env:USERPROFILE\.local\bin;$env:LOCALAPPDATA\Programs\OpenAI\Codex\bin;$env:Path&quot;
 claude --version
 codex --version</code></pre>
-<p>If this works, the problem is the persistent PATH. Search for
-environment variables in the Start menu, open the Environment Variables
-window, and edit Path under the user variables in the upper half. Click
-New and add Claude’s <code>C:\Users\YourName\.local\bin</code> (with
-your own user name) and Codex’s
-<code>%LOCALAPPDATA%\Programs\OpenAI\Codex\bin</code> as separate
-entries, keep the existing entries, and save. Reopen the terminal and
-check again.</p>
-<p>If <code>Test-Path</code> returns <code>False</code>, go back to the
-installation log to find the actual install location and download
-result. For Codex installed with npm, run
+<p>If the commands now work, the problem lies in the persistent PATH.
+Search for environment variables in the Start menu, open the Environment
+Variables window and edit Path under the user variables in the upper
+half. Click New and add Claude’s
+<code>C:\Users\YourName\.local\bin</code> (with your own user name) and
+Codex’s <code>%LOCALAPPDATA%\Programs\OpenAI\Codex\bin</code> as
+separate entries, keep the existing entries and save. Reopen the
+terminal and check again.</p>
+<p>If <code>Test-Path</code> returns <code>False</code>, return to the
+installation log to establish the actual installation location and
+download result. For Codex installed with npm, run
 <code>npm config get prefix</code> and check whether the global
-directory it reports is in your user Path. Do not replace the whole PATH
+directory it reports is in the user Path. Do not replace the whole PATH
 with a single new directory.</p>
-<h3 id="step-5-go-to-the-exercise-directory">Step 5: go to the exercise
+<h3 id="step-5-go-to-the-exercise-directory">Step 5: open the exercise
 directory</h3>
 <div class="download">
 <p><a href="downloads/lesson-0-en.zip">Download the Lesson 0
 materials</a></p>
 </div>
-<p>Unzip the archive into your own <code>agent-course</code> folder and
-find the level that contains <code>notes.md</code>. Open a terminal at
-that level from File Explorer, or type the actual path in
-PowerShell:</p>
+<p>Unzip the archive into an <code>agent-course</code> folder and locate
+the level that contains <code>notes.md</code>. Open a terminal at that
+level from File Explorer, or type the actual path in PowerShell:</p>
 <pre class="powershell"><code>Set-Location &quot;$env:USERPROFILE\Documents\agent-course\lesson-0&quot;
 Get-Location
 Get-ChildItem
 claude</code></pre>
 <p>Keep the double quotes when the path contains spaces. If the folder
-is on the Desktop or in OneDrive, use the actual location shown in File
+is on the Desktop or in OneDrive, use the location shown in File
 Explorer’s address bar.</p>
-<p>Native Codex on Windows has its own sandbox configuration. If you see
-an organization policy or system component error, check your system
-version and the error code against the <a
+<p>Native Codex on Windows has its own sandbox configuration. If an
+organization policy or system component error appears, check the system
+version and error code against the <a
 href="https://learn.chatgpt.com/docs/windows/windows-sandbox">official
-Windows troubleshooting page</a>. If you need a Linux toolchain, you can
-enable WSL yourself and follow the Linux route; an existing Windows
-install does not automatically become a WSL install.</p>
+Windows troubleshooting page</a>. Users who need a Linux toolchain can
+enable WSL and follow the Linux route; an existing Windows installation
+does not become a WSL installation automatically.</p>
 <h2 id="macos-install-in-terminal">macOS: install in Terminal</h2>
 <h3 id="step-1-open-a-terminal-and-check-the-system">Step 1: open a
 terminal and check the system</h3>
-<p>Press Command and Space, search for Terminal, and press Return. First
+<p>Press Command and Space, search for Terminal and press Return. First
 run:</p>
 <pre class="bash"><code>sw_vers
 uname -m
 echo &quot;$SHELL&quot;</code></pre>
-<p><code>arm64</code> means Apple silicon and <code>x86_64</code> means
-Intel. The installers choose the right program; for the desktop apps,
-the chip and system requirements on the download page are
+<p><code>arm64</code> indicates Apple silicon and <code>x86_64</code>
+indicates Intel. The installers select the appropriate program; for the
+desktop apps, the chip and system requirements on the download page are
 authoritative.</p>
 <h3 id="step-2-install-both-command-line-tools">Step 2: install both
 command-line tools</h3>
-<p>If you already use Homebrew, you can install with it, running the two
+<p>Users who already use Homebrew can install with it, running the two
 commands separately:</p>
 <pre class="bash"><code>brew install --cask claude-code
 brew install --cask codex</code></pre>
@@ -468,100 +491,105 @@ codex --version
 command -v claude
 command -v codex</code></pre>
 <h3 id="step-3-configure-path">Step 3: configure PATH</h3>
-<p>The standalone installers usually put their entry points in
+<p>The standalone installers usually place their entry points in
 <code>~/.local/bin</code>. If the program exists but the command is not
-found, first fix only the current window:</p>
+found, first correct only the current window:</p>
 <pre class="bash"><code>export PATH=&quot;$HOME/.local/bin:$PATH&quot;
 claude --version
 codex --version</code></pre>
-<p>Once that works, open <code>~/.zshrc</code> in a text editor, add the
+<p>Once this works, open <code>~/.zshrc</code> in a text editor, add the
 same line once at the end, then run:</p>
 <pre class="bash"><code>source ~/.zshrc</code></pre>
 <p>Bash users edit <code>~/.bashrc</code> instead; for login shells,
-also check whether your <code>~/.bash_profile</code> loads it. If you
-installed with Homebrew, find the actual prefix with
-<code>brew --prefix</code> and configure the shell as Homebrew suggests
-after installation, so you do not mix up the Apple silicon and Intel
-directories.</p>
-<h3 id="step-4-go-to-the-directory">Step 4: go to the directory</h3>
+also check whether <code>~/.bash_profile</code> loads it. After a
+Homebrew installation, find the actual prefix with
+<code>brew --prefix</code> and configure the shell as Homebrew
+recommends, so that the Apple silicon and Intel directories are not
+confused.</p>
+<h3 id="step-4-go-to-the-directory">Step 4: open the exercise
+directory</h3>
 <p>Download and unzip the <a href="downloads/lesson-0-en.zip">Lesson 0
-materials</a> and find the folder that contains <code>notes.md</code>.
+materials</a> and locate the folder that contains <code>notes.md</code>.
 Type <code>cd</code> in the terminal, drag the folder from Finder into
-the terminal, and press Return. You can also type the actual path:</p>
+the terminal and press Return, or type the actual path:</p>
 <pre class="bash"><code>cd &quot;$HOME/Documents/agent-course/lesson-0&quot;
 pwd
 ls
 claude</code></pre>
-<h2 id="linux-get-the-user-environment-working-first">Linux: get the
-user environment working first</h2>
+<h2 id="linux-get-the-user-environment-working-first">Linux: prepare the
+user environment first</h2>
 <p>The examples below use Ubuntu or Debian. On other distributions,
-first install curl and Git with your own package manager. On shared
-servers, use the base environment the administrator provides.</p>
+install curl and Git with the distribution’s package manager. On shared
+servers, use the base environment provided by the administrator.</p>
 <pre class="bash"><code>sudo apt update
 sudo apt install curl git ca-certificates</code></pre>
-<p>These two steps change system software, and you authorize them
-yourself. The agents are then installed in your own user directory:</p>
+<p>These two commands change system software and must be authorized by
+the user. The agents are then installed in the user directory:</p>
 <pre class="bash"><code>curl -fsSL https://claude.ai/install.sh | bash
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
 export PATH=&quot;$HOME/.local/bin:$PATH&quot;
 claude --version
 codex --version</code></pre>
-<p>Add the PATH line to your <code>~/.bashrc</code> once, reopen the
-terminal and check. If you use Zsh, edit <code>~/.zshrc</code>. If
-installation fails, first check the distribution and CPU requirements on
-the official pages; environments such as Alpine have different
-dependencies, and Ubuntu package names do not carry over.</p>
-<p>Unzip the exercise materials and go to the directory that contains
+<p>Add the PATH line to <code>~/.bashrc</code> once, reopen the terminal
+and check. Zsh users edit <code>~/.zshrc</code>. If installation fails,
+check the distribution and CPU requirements on the official pages first;
+environments such as Alpine have different dependencies, and Ubuntu
+package names do not carry over.</p>
+<p>Unzip the exercise materials and open the directory that contains
 <code>notes.md</code>:</p>
 <pre class="bash"><code>cd &quot;$HOME/agent-course/lesson-0&quot;
 pwd
 ls
 claude</code></pre>
-<p>A remote machine without a desktop may not be able to open the login
-browser. When Claude Code starts, follow the terminal prompts and finish
-login in a browser on your local machine; Codex can use device-code
-login as described in the <a
+<p>A remote machine without a desktop may be unable to open the sign-in
+browser. When Claude Code starts, follow the terminal prompts and
+complete sign-in in a browser on the local machine; Codex can use
+device-code sign-in as described in the <a
 href="https://learn.chatgpt.com/docs/auth">official authentication
-guide</a>. First confirm in the actual interface which methods are
-supported; the terminal’s report is what counts as the login result.</p>
-<h2 id="log-in-to-each-agent-separately">Log in to each agent
-separately</h2>
+guide</a>. Confirm in the actual interface which methods are supported;
+the terminal’s report is the definitive sign-in result.</p>
+<h2 id="log-in-to-each-agent-separately">Authentication for each
+agent</h2>
 <p>After starting <code>claude</code>, follow the prompts and choose
-official Claude account login. Finish choosing the account and
-organization in the browser, then go back to the terminal and confirm
-that you are in a conversation. When starting <code>codex</code>, choose
-Sign in with ChatGPT, then check back in the terminal. Log in to each
-separately; each keeps its own account state.</p>
-<p>If this machine was configured for APIs before, only check whether
-the relevant variables exist:</p>
+official Claude account sign-in. Select the account and organization in
+the browser, then return to the terminal and confirm that a conversation
+has started. When starting <code>codex</code>, choose Sign in with
+ChatGPT and check the result in the terminal. Each agent is signed in
+separately and keeps its own account state.</p>
+<p>If the machine was previously configured for API access, check only
+whether the relevant variables exist:</p>
 <pre class="text"><code>Check whether this machine has environment variables that affect the current agent&#39;s authentication. Report only the variable names and whether they exist.
 Do not print their values. Tell me whether you are actually using subscription login or API login.</code></pre>
-<p>For example, Claude’s <code>ANTHROPIC_API_KEY</code> and Codex’s
-<code>OPENAI_API_KEY</code> are worth checking if present; confirm the
-billing method from the current settings and login state. If something
-needs changing, keep the original configuration and say exactly which
-item you change. You manage keys locally yourself.</p>
-<p>The first time you enter a project, you will see a directory trust
+<p>Claude’s <code>ANTHROPIC_API_KEY</code> and Codex’s
+<code>OPENAI_API_KEY</code>, for example, should be checked if present;
+the billing channel is confirmed from the current settings and sign-in
+state. If a change is required, keep the original configuration and
+record exactly which item was changed. Keys are managed locally by the
+user.</p>
+<p>On first entering a project, the agent displays a directory trust
 prompt and a permission choice. Check that the current path is the
-exercise directory and use the default permissions, which let you see
-reads, writes and commands step by step. Finish one small task first;
-configure more later as your work requires.</p>
-<h2 id="your-first-task-write-and-check-meeting-minutes">Your first
-task: write and check meeting minutes</h2>
-<p>In Claude Code, send:</p>
+exercise directory and use the default permissions, which display each
+read, write and command for approval. Complete one small task first;
+further configuration is added when later work requires it.</p>
+<h2 id="your-first-task-write-and-check-meeting-minutes">First task:
+producing and checking meeting minutes</h2>
+<p>This task introduces the division of labor used throughout the
+course: one agent produces an output from a source file, and a second
+agent checks that output against the source without modifying it. In
+Claude Code, send:</p>
 <pre class="text"><code>Read notes.md and turn these group meeting notes into minutes.md.
 Write the decisions made, each person&#39;s to-dos and their deadlines as separate parts. Where the notes give no date, write TBD.
 When done, tell me where the output is and list one ambiguity you found in the original notes.</code></pre>
-<p>Open <code>minutes.md</code> in the folder. Check that the people,
-dates and decisions come from the original notes. Then open Codex,
-choose the same project and send:</p>
+<p>Open <code>minutes.md</code> and check that the people, dates and
+decisions all come from the original notes. Then open Codex, select the
+same project and send:</p>
 <pre class="text"><code>Check minutes.md against notes.md for omissions and decisions that were invented.
 Write your review only to check.md; do not change the minutes. Name the files you reviewed and where each problem is.</code></pre>
-<p>You have now done the handover that every later lesson uses: the
-original stays in a file, the product is saved separately, and the
-reviewer checks an explicit version. When you change tasks, have the
-current agent write the next step into a file, then open a new
-session.</p>
+<p>This is the handover pattern used in every later session: the
+original remains in its own file, the product is saved separately, and
+the reviewer checks an explicitly identified version. When a task
+changes, the current agent writes the next step into a file before a new
+session is opened.</p>
 <h2 id="common-errors-by-symptom">Common errors, by symptom</h2>
 <table>
 <colgroup>
@@ -573,111 +601,117 @@ session.</p>
 <tr>
 <th>Symptom</th>
 <th>Check first</th>
-<th>What to do</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>irm</code> not recognized</td>
-<td>Are you in CMD or Bash</td>
+<td>Whether the terminal is CMD or Bash</td>
 <td>Run the installation command in PowerShell</td>
 </tr>
 <tr>
 <td><code>command not found</code> or command not recognized</td>
-<td>Was the file downloaded, and where does the current PATH point</td>
-<td>Verify with the full path first, then fix the user PATH</td>
+<td>Whether the file was downloaded, and where the current PATH
+points</td>
+<td>Verify with the full path first, then correct the user PATH</td>
 </tr>
 <tr>
 <td><code>codex.ps1</code> blocked by execution policy</td>
-<td>Was it installed with npm</td>
+<td>Whether it was installed with npm</td>
 <td>Start it with <code>codex.cmd</code> for now, or switch to the
-official standalone installer; organization policy goes to the
+official standalone installer; refer organization policy to the
 administrator</td>
 </tr>
 <tr>
 <td>Download timeout, 403 or certificate error</td>
-<td>Does the official address open normally in a browser, is the
-machine’s clock correct</td>
+<td>Whether the official address opens in a browser and whether the
+system clock is correct</td>
 <td>Check the university network and proxy settings and keep the error
 code; do not switch to an installation script of unknown origin</td>
 </tr>
 <tr>
 <td><code>Permission denied</code> or <code>EACCES</code></td>
-<td>Are you writing to a system directory, and who owns the old
-install</td>
-<td>Install in the user directory or fix the specific directory
-permission, keeping a backup of the configuration</td>
+<td>Whether a system directory is being written, and who owns the old
+installation</td>
+<td>Install in the user directory or correct the permission of the
+specific directory, keeping a backup of the configuration</td>
 </tr>
 <tr>
-<td>Terminal still not logged in after login</td>
-<td>Did the browser log in to the right account, did the callback return
-to this machine</td>
-<td>Retry once as the official prompt says; on remote machines, check
-supported methods such as device code</td>
+<td>Terminal still not signed in after sign-in</td>
+<td>Whether the browser used the correct account, and whether the
+callback returned to this machine</td>
+<td>Retry once as the official prompt instructs; on remote machines,
+check supported methods such as device code</td>
 </tr>
 <tr>
 <td>401 or 403 on model calls</td>
-<td>Login channel, organization permissions and account eligibility</td>
-<td>Check against the authentication docs, and keep installation success
-distinct from service availability</td>
+<td>Sign-in channel, organization permissions and account
+eligibility</td>
+<td>Check against the authentication documentation, and keep
+installation success distinct from service availability</td>
 </tr>
 <tr>
-<td>The same command shows different versions</td>
-<td>Is there more than one install on PATH</td>
+<td>The same command reports different versions</td>
+<td>Whether more than one installation is on PATH</td>
 <td>On Windows use <code>Get-Command codex -All</code>, on macOS and
 Linux <code>type -a codex</code>; settle on one installation source</td>
 </tr>
 </tbody>
 </table>
-<p>Diagnosis for Claude Code can start with <code>claude doctor</code>;
-more symptoms are in the <a
+<p>Diagnosis for Claude Code can begin with <code>claude doctor</code>;
+further symptoms are covered in the <a
 href="https://code.claude.com/docs/en/troubleshooting">official
 troubleshooting guide</a>. For Codex, check session settings with
-<code>/status</code>, then use the <a
+<code>/status</code>, then consult the <a
 href="https://learn.chatgpt.com/docs/codex/cli">CLI docs</a>. Keep the
-error text and version numbers, and remove credentials before sending
+error text and version numbers, and remove credentials before passing
 them to an agent.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Declaring it usable because installation succeeded.</strong>
-A version number only proves that the program starts. Do one
-read-and-write task after login; the check passes only when the file
-lands in the intended directory.</p>
+<p><strong>Treating a successful installation as a usable
+environment.</strong> A version number shows only that the program
+starts. Complete one read-and-write task after sign-in; the check passes
+only when the file is written to the intended directory.</p>
 </div>
 <div class="pitfall">
-<p><strong>Overwriting the old configuration while fixing PATH.</strong>
-You meant to add one directory but emptied the original Path. Keep the
-original value before editing, and verify in a new terminal after adding
-the directory.</p>
+<p><strong>Overwriting existing configuration while correcting
+PATH.</strong> An attempt to add one directory can empty the original
+Path. Keep the original value before editing, and verify in a new
+terminal after adding the directory.</p>
 </div>
 <div class="pitfall">
-<p><strong>Both agents editing the same minutes at once.</strong> The
-checking task writes only the check file; changes go back to the
+<p><strong>Two agents editing the same minutes concurrently.</strong>
+The checking task writes only the check file; corrections return to the
 original author. Only one session writes to a given output at a
 time.</p>
 </div>
-<h2 id="workbench-summary">Workbench summary</h2>
-<p>Your workbench now has only two agents and one project folder.
-<code>notes.md</code> is the original, <code>minutes.md</code> is the
-output, and <code>check.md</code> is the independent check. Write the
-install locations and startup commands into your own short preparation
-record, so later lessons need no reinstalling.</p>
-<p>Get the <a href="downloads/lesson-1-en.zip">Lesson 1 materials</a>
-ready. In the next lesson, you will use an agent with Python, a compiler
-and page rendering to restructure a paper.</p>
-<h2 id="what-to-hand-in-before-the-first-class">What to hand in before
+<h2 id="workbench-summary">Summary</h2>
+<p>The environment now consists of two agents and one project folder.
+<code>notes.md</code> is the source, <code>minutes.md</code> is the
+product and <code>check.md</code> is the independent check. Record the
+installation locations and startup commands in a short preparation
+record so that later sessions do not require reinstallation.</p>
+<p>Download the <a href="downloads/lesson-1-en.zip">Lesson 1
+materials</a> in advance. Session 1 uses an agent together with Python,
+a LaTeX compiler and page rendering to restructure a research paper.</p>
+<h2 id="what-to-hand-in-before-the-first-class">Preparation record for
 the first class</h2>
-<p>Leave a preflight.md in the exercise directory with your system and
-both agents’ versions, the actual working directory, the locations of
-minutes.md and check.md, and any errors not yet solved. Confirm that the
-files open on your own computer, then go to the <a
-href="writing.html#before-class">Lesson 1 preparation card</a> and set
-up compilation, rendering and the exemplar download.</p>
-<p>For every later lesson, update the preparation record of the same
-name in that lesson’s materials directory. Asking for help early with an
-error record makes problems easier to locate than retrying the whole
-installation after class has started.</p>
+<p>Leave a preflight.md in the exercise directory recording the
+operating system, the versions of both agents, the actual working
+directory, the locations of minutes.md and check.md, and any unresolved
+errors. Confirm that the files open on your own computer, then proceed
+to the <a href="writing.html#before-class">Lesson 1 preparation</a> to
+set up compilation, rendering and the exemplar download.</p>
+<p>For each later session, update the preparation record of the same
+name in that session’s materials directory. Reporting an error early,
+with its record, makes the problem easier to locate than reinstalling
+everything after class has begun.</p>
+<p>The unit’s outcomes are met when the record shows that both agents
+ran from the exercise directory, that <code>check.md</code> refers to
+the minutes it checked, and that each unresolved error is described by
+its symptom and the check already made.</p>
 </article>
 <nav class="pager"><a class="prev" href="toolbox.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 工具箱</span><span lang="en"> Toolbox</span></a><a class="next" href="writing.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1 写作绘图</span><span lang="en">1 Writing and figures</span></a></nav>
 </main>

@@ -30,10 +30,18 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="定时调度与无人值守">4.1 定时调度与无人值守</h1>
-<p><span class="meta">课后深入，约 65 分钟。</span></p>
-<p>课堂用 wake_review.py
-接过一次短延迟唤醒，查了主机与时区，并核对只读审阅结果。现在把这一次扩成可暂停的周期运行。调度器按时触发任务，却不保证上一轮已经结束。它也不替你判断一次失败请求有没有产生效果。长期运行还需要执行协议。</p>
-<h2 id="从状态转移定义一轮">从状态转移定义一轮</h2>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>为一轮研究定义各阶段的转移依据与恢复动作，分析外部动作与状态写入之间的不一致窗口。</li>
+<li>评价写锁与接管机制的保证范围，说明在何种条件下仍可能出现两个写入者。</li>
+<li>为调度方式规定执行环境、预算、停止条件与交接方式，并通过手动触发和故障恢复加以验证。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 65 分钟。</span></p>
+<p>课堂上已用 wake_review.py
+完成一次短延迟唤醒，核对了主机与时区，并检查了只读审阅结果。本节把这一次运行扩展为可以暂停的周期运行。调度器只负责按时触发任务，并不保证上一轮已经结束，也不能判断一次失败的请求是否已经产生效果。长期运行因此还需要执行协议。</p>
+<h2 id="从状态转移定义一轮">以状态转移定义一轮</h2>
 <table>
 <thead>
 <tr>
@@ -70,22 +78,23 @@
 </tr>
 </tbody>
 </table>
-<p>外部动作成功后，状态写入前可能崩溃。写状态提前也有风险：状态显示完成，动作实际未发生。外部系统用请求键识别同一动作，用状态查询确认结果。恢复先按这个键查询：已完成就推进状态，未发生才执行，仍未知就等待核查。</p>
+<p>外部动作成功后，程序可能在写入状态前崩溃。提前写入状态同样有风险：状态显示完成，动作实际并未发生。外部系统以请求键识别同一动作，以状态查询确认结果。恢复时先按该键查询：已完成则推进状态，未发生才执行，仍无法确定则等待核查。</p>
 <h2 id="本地动作的恢复机制">本地动作的恢复机制</h2>
-<p>包内 <code>recovery_demo.py</code>
-用原子文件替换模拟一项本地产物。它先检查预定运行编号的产物，内容匹配就复用；没有产物才创建。状态写入失败后，下一次通过产物核对恢复。</p>
+<p>包内的 <code>recovery_demo.py</code>
+用原子文件替换模拟一项本地产物。它先检查预定运行编号对应的产物，内容匹配则复用，不存在才创建。状态写入失败后，下一次运行通过核对产物恢复。</p>
 <pre class="text"><code>准备动作及其身份
 检查对应产物是否已存在
 执行动作并校验效果
 原子写入新状态
 追加有唯一事件键的记录</code></pre>
-<p>日志记录每次恢复尝试，效果文件始终对应同一个运行编号。</p>
+<p>日志记录每一次恢复尝试，效果文件始终对应同一个运行编号。</p>
 <h2 id="写锁与接管">写锁与接管</h2>
-<p>原子建目录能让两个同时开工者只有一个先获得锁。持有者写入 owner
-和运行编号，释放前确认归属。新会话接管前核对旧会话、监视器与实际作业。</p>
-<p>如果采用租约，旧持有者在网络恢复后仍可能写入。需要在共享写入端验证递增的接管代号，拒绝旧代号。示例目录锁不提供这项强保证，因此超时锁人工核查，演示任务在同一台机器中串行恢复。</p>
+<p>原子创建目录可以保证两个同时开工的执行者中只有一个先获得锁。持有者写入
+owner
+和运行编号，释放前确认归属。新会话接管前，须核对旧会话、监视器与实际作业。</p>
+<p>若采用租约，旧持有者在网络恢复后仍可能写入。需要在共享写入端验证递增的接管代号，拒绝旧代号的写入。示例中的目录锁不提供这一强保证，因此超时锁须人工核查，演示任务在同一台机器上串行恢复。</p>
 <h2 id="调度方式与执行环境">调度方式与执行环境</h2>
-<p>桌面定时便于查看运行，要求相应应用和电脑可执行任务。服务器调度适合长期后台，环境变量和命令路径需显式设置。云端调度有自己的文件系统和连接权限，先确认它能取得哪些材料。</p>
+<p>桌面定时便于查看运行情况，但要求相应应用和电脑处于可执行状态。服务器调度适合长期后台运行，环境变量和命令路径须显式设置。云端调度有独立的文件系统和连接权限，应先确认它能取得哪些材料。</p>
 <pre class="text"><code>为本循环提出一种调度方式，说明执行机器、时区和每次输入。
 先列出具体时间表与工具授权范围，再做一次手动触发和失败恢复，确认日志和输出均可查看，并找到暂停与删除入口。
 明确最大轮数、运行预算和何种状态停止，再建立长期调度。</code></pre>
@@ -93,38 +102,53 @@
 href="https://code.claude.com/docs/en/desktop-scheduled-tasks">官方定时说明</a>，Codex
 见<a href="https://learn.chatgpt.com/docs/quickstart">官方文档</a>。</p>
 <h2 id="无人值守调用的交接">无人值守调用的交接</h2>
-<p>一个任务给一份自成一体的指令，输入与输出通过文件。只读审阅者读取指定版本，最终意见由调用端保存。调用退出状态、会话标识与产物身份一并记录。</p>
-<p>在自己的项目中，使用所选 Agent
-的官方非交互入口，再给执行器加超时、权限与结果核查。</p>
-<p>额度耗尽写成等待状态，按可确认的恢复时间继续。未知恢复时间留为空，不靠反复重试猜测。接管时若旧会话仍会被叫醒，两边就可能重复启动同一轮。因此先停止旧会话的监视与唤醒，再让新会话接管。</p>
+<p>每个任务给出一份自成一体的指令，输入与输出通过文件传递。只读审阅者读取指定版本，最终意见由调用端保存。调用的退出状态、会话标识与产物身份一并记录。</p>
+<p>在自己的项目中，应使用所选 Agent
+的官方非交互入口，并为执行器设置超时、权限与结果核查。</p>
+<p>额度耗尽时记录为等待状态，按可确认的恢复时间继续。恢复时间未知则留空，不以反复重试来试探。接管时若旧会话仍会被唤醒，两边可能重复启动同一轮。因此应先停止旧会话的监视与唤醒，再由新会话接管。</p>
 <h2 id="练习">练习</h2>
-<p>给循环选两个故障点：启动已成功但回包丢失，结果页已生成但归档状态未更新。分别写出恢复查询与唯一键。演示一次，检查最终产物和所有失败尝试是否都能追溯。</p>
+<p>为循环选择两个故障点：启动已成功但回执丢失，结果页已生成但归档状态未更新。分别写出恢复查询与唯一键。演示一次，检查最终产物和所有失败尝试是否均可追溯。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>时间到了就开始新轮次。</strong>
-调度先看当前状态，仍在执行则查询或退出。</p>
+<p><strong>到达设定时间即开始新一轮。</strong>
+调度先检查当前状态，上一轮仍在执行时，查询状态或退出。</p>
 </div>
 <div class="pitfall">
 <p><strong>把失败重试写成无条件重复。</strong>
-每个有副作用的动作都要有身份与核查办法。</p>
+每个有副作用的动作都须有身份和核查方法。</p>
 </div>
 <div class="pitfall">
-<p><strong>过期锁直接删。</strong>
-确认持有者已经停止，记录接管，再让新执行者写入。</p>
+<p><strong>直接删除过期锁。</strong>
+确认持有者已经停止并记录接管，再让新执行者写入。</p>
 </div>
 </article>
 <article lang="en"><h1 id="scheduling-and-unattended-runs">4.1 Scheduling and unattended
 runs</h1>
-<p><span class="meta">After-class deep dive, about 65
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Define a research round by its state transitions, specifying for
+each the evidence required to advance and the recovery action after an
+interruption.</li>
+<li>Design recovery for actions with side effects using action
+identities and status queries, and assess the guarantees and limits of a
+given locking scheme.</li>
+<li>Select and configure a scheduler for a given execution environment,
+with run limits, stop conditions and a safe procedure for session
+takeover.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 65
 minutes.</span></p>
-<p>In class you connected one short-delay wake-up with wake_review.py,
-checked the host and time zone, and verified the read-only review
-result. Now extend that single run into a periodic run that can be
-paused. A scheduler wakes a task on time, but does not guarantee the
-previous round has finished. Nor does it judge for you whether a failed
-request had an effect. Long-running workflows need an execution protocol
-as well as a scheduler.</p>
-<h2 id="define-a-round-by-its-state-transitions">Define a round by its
+<p>In class, one short-delay wake-up was configured with wake_review.py,
+the host and time zone were checked, and the read-only review result was
+verified. This section extends that single run into a periodic run that
+can be paused. A scheduler wakes a task on time, but it does not
+guarantee that the previous round has finished, nor does it determine
+whether a failed request took effect. Long-running workflows therefore
+require an execution protocol in addition to a scheduler.</p>
+<h2 id="define-a-round-by-its-state-transitions">Defining a round by its
 state transitions</h2>
 <table>
 <colgroup>
@@ -153,7 +177,7 @@ state transitions</h2>
 <tr>
 <td>Ran</td>
 <td>Exit code and expected outputs verified</td>
-<td>Redo verification, keep the failure list</td>
+<td>Repeat verification, keep the failure list</td>
 </tr>
 <tr>
 <td>Reviewed</td>
@@ -164,22 +188,23 @@ verdict</td>
 <tr>
 <td>Archived</td>
 <td>Page and ledger rows both correspond to this round</td>
-<td>Check the unique key, fill in unfinished outputs</td>
+<td>Check the unique key, complete unfinished outputs</td>
 </tr>
 </tbody>
 </table>
 <p>After an external action succeeds, the process may crash before the
-state is written. Writing the state early is risky too: the state says
-done but the action never happened. External systems recognize the same
-action by a request key and confirm the result by a status query.
-Recovery first queries by this key: if done, advance the state; if it
-did not happen, execute it; if still unknown, wait for a check.</p>
+state is written. Writing the state early is also risky: the state may
+report completion when the action never took place. External systems
+recognize the same action by a request key and confirm the result by a
+status query. Recovery first queries by this key: if the action is
+complete, the state advances; if it did not happen, it is executed; if
+the outcome is still unknown, the state waits for a check.</p>
 <h2 id="recovering-a-local-file-action">Recovering a local file
 action</h2>
 <p>The packaged <code>recovery_demo.py</code> simulates a local output
-file with atomic file replacement. It first checks the output for the
-intended run ID, reusing it if the content matches and creating it only
-when there is none. If writing the state fails, the next run recovers by
+file using atomic file replacement. It first checks the output for the
+intended run ID, reuses it if the content matches, and creates it only
+when none exists. If writing the state fails, the next run recovers by
 checking the output.</p>
 <pre class="text"><code>Prepare the action and its identity
 Check whether the corresponding output already exists
@@ -189,21 +214,22 @@ Append a record with a unique event key</code></pre>
 <p>The log records every recovery attempt, and the effect file always
 corresponds to the same run ID.</p>
 <h2 id="write-locks-and-session-handoff">Write locks and session
-handoff</h2>
-<p>Creating a directory atomically lets only one of two processes
-starting simultaneously get the lock first. The holder writes the owner
-and run ID, and confirms ownership before releasing. Before a new
+handover</h2>
+<p>Atomic directory creation ensures that only one of two processes
+starting simultaneously obtains the lock. The holder writes the owner
+and run ID, and confirms ownership before releasing it. Before a new
 session takes over, it checks the old session, the monitor and the
 actual job.</p>
-<p>With a lease, the old holder may still write after its network comes
-back. The shared write point needs to verify a monotonically increasing
-takeover token and reject stale tokens. The example directory lock does
-not give this strong guarantee, so a timed-out lock is checked by hand,
-and the demonstration task recovers serially on one machine.</p>
-<h2 id="choose-a-scheduler-for-the-execution-environment">Choose a
+<p>With a lease, the old holder may still write after its network
+connection returns. The shared write point must verify a monotonically
+increasing takeover token and reject stale tokens. The example directory
+lock does not provide this stronger guarantee, so a timed-out lock is
+checked manually, and the demonstration task recovers serially on a
+single machine.</p>
+<h2 id="choose-a-scheduler-for-the-execution-environment">Choosing a
 scheduler for the execution environment</h2>
-<p>Desktop scheduling makes runs easy to watch, but requires the app and
-the computer to be able to run the task. Server scheduling suits
+<p>Desktop scheduling makes runs easy to observe but requires the app
+and the computer to be able to run the task. Server scheduling suits
 long-term background work, but environment variables and command paths
 must be set explicitly. Cloud scheduling has its own file system and
 connection permissions, so first confirm which materials it can
@@ -211,46 +237,46 @@ reach.</p>
 <pre class="text"><code>Propose one way of scheduling this loop, stating the executing machine, the time zone and the input for each run.
 First list the concrete timetable and the scope of tool authorization, then do one manual trigger and one failure recovery, confirming the log, outputs, and the controls for pausing and deleting the schedule.
 Set the maximum number of rounds, the run budget and which states cause a stop, and only then create the long-term schedule.</code></pre>
-<p>For Claude’s available scheduling options, see the <a
+<p>For Claude’s scheduling options, see the <a
 href="https://code.claude.com/docs/en/desktop-scheduled-tasks">official
 guide to scheduled tasks</a>; for Codex, see the <a
 href="https://learn.chatgpt.com/docs/quickstart">official docs</a>.</p>
-<h2 id="handoffs-for-unattended-runs">Handoffs for unattended runs</h2>
-<p>Each task gets one self-contained instruction, with input and output
-through files. A read-only reviewer reads the specified version, and the
-caller saves the final comments. The call’s exit status, session
+<h2 id="handoffs-for-unattended-runs">Handovers in unattended runs</h2>
+<p>Each task receives one self-contained instruction, with input and
+output through files. A read-only reviewer reads the specified version,
+and the caller saves the final comments. The call’s exit status, session
 identifier and product identity are recorded together.</p>
-<p>In your own project, use the official non-interactive interface of
-the agent you chose, then add a timeout, permissions and a result check
-to the executor.</p>
-<p>Running out of quota is written as a waiting state, and work
-continues at a recovery time that can be confirmed. If the reset time is
-unknown, leave it blank rather than inferring it from repeated retries.
-During a takeover, if the old session can still be woken, both sides may
-start the same round. So first stop the old session’s monitoring and
-wake-ups, then let the new session take over.</p>
+<p>In a student’s own project, use the official non-interactive
+interface of the chosen agent, and add a timeout, permissions and a
+result check to the executor.</p>
+<p>Exhausted quota is recorded as a waiting state, and work resumes at a
+recovery time that can be confirmed. If the reset time is unknown, the
+field is left blank rather than inferred from repeated retries. During a
+takeover, if the old session can still be woken, both sessions may start
+the same round. The old session’s monitoring and wake-ups are therefore
+stopped before the new session takes over.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Choose two failure points in the loop: the launch succeeded but the
-reply was lost, and the results page was generated but the archive state
-was not updated. Write the recovery query and unique key for each.
-Demonstrate once, and check that the final products and all failed
-attempts can be traced.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Choose two failure points in the loop: a launch that succeeded but
+whose reply was lost, and a results page that was generated while the
+archive state was not updated. Write the recovery query and unique key
+for each. Demonstrate recovery once, and check that the final products
+and all failed attempts can be traced.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Starting a new round because the time has come.</strong> The
-scheduler looks at the current state first; if something is still
-running, it queries or exits.</p>
+<p><strong>Starting a new round because the scheduled time has
+arrived.</strong> The scheduler checks the current state first; if a run
+is still in progress, it queries or exits.</p>
 </div>
 <div class="pitfall">
-<p><strong>Writing failure retries as unconditional repeats.</strong>
-Every action with side effects needs an identity and a way to check
+<p><strong>Implementing retries as unconditional repeats.</strong> Every
+action with side effects requires an identity and a means of checking
 it.</p>
 </div>
 <div class="pitfall">
-<p><strong>Deleting an expired lock outright.</strong> Confirm the
-holder has stopped, record the takeover, then let the new executor
-write.</p>
+<p><strong>Deleting an expired lock directly.</strong> Confirm that the
+holder has stopped, record the takeover, and only then allow the new
+executor to write.</p>
 </div>
 </article>
 <nav class="pager"><a class="prev" href="automate.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4 自动化</span><span lang="en">4 Research automation</span></a><a class="next" href="automate-playbook.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.2 经验管理与评估</span><span lang="en">4.2 Managing and evaluating playbooks</span></a></nav>

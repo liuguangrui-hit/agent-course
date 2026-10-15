@@ -30,30 +30,37 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip new">+ Git 与 GitHub</span><span class="chip new">+ SSH 与 Tailscale</span><span class="chip new">+ tmux 后台任务</span><span class="chip new">+ 监视器</span></div><h1 id="实验分析">3 实验分析</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>把一个文献问题改写成能区分两种解释的实验。先保存预测和分析计划，再让
-Agent
-执行，最后用配对结果更新判断。每份结果都能找到执行代码与数据版本信息。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>针对一个研究问题提出竞争解释，写出各自的可区分预测，并选择能够区分它们的对照。</li>
+<li>在执行前冻结预测、主要指标、实验单位与分析方案，并识别实际执行与计划之间的偏离。</li>
+<li>为每次运行维护代码提交、数据哈希、参数、环境与执行身份，区分管线检验与正式运行。</li>
+<li>解释配对差值及其区间，区分差异不显著与等价，并说明支持等价所需的事前界和设计。</li>
+<li>依据实验证据更新研究判断，同时保留原始预测以供核查。</li>
+</ol>
+<p>课堂用已有的完整预览结果练习分析，用新增对照的短运行检验管线；新增对照的正式推断须等课后完整运行后完成。</p>
 </div>
-<p><span class="meta">课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>验证集也带噪声，早停是不是就失灵了？配套实验原先预测它会让 CE
-晚停、准确率下降，结果四条预测错了三条。错误留下了一个更好的问题：验证标签中的哪些信息足以帮助选模型？</p>
-<p>这一课从预览结果出发，先判断哪项实验能进一步检验解释。课堂只跑一条短路径，完整种子和扩展对照课后完成。</p>
+<p>本节以一次预测检验为分析材料。研究问题是：验证集同样带有标签噪声时，早停是否失效。配套实验原先预测带噪验证会使
+CE
+推迟停止并降低准确率，结果四条预测中有三条错误。这一失败引出了更有价值的问题：验证标签中的哪些信息足以支持模型选择。</p>
+<p>本节从预览结果出发，先判断哪项实验能进一步检验解释。课堂只运行一条短路径，完整种子和扩展对照在课后完成。</p>
 <div class="download">
 <p><a href="downloads/lesson-3-zh.zip">下载第 3 课材料</a></p>
 </div>
-<h2 id="课前预备">课前预备</h2>
+<h2 id="课前预备">课前准备</h2>
 <p><span class="meta">预留 20 至 40
-分钟；实验依赖提前下载，课堂不等待安装。</span></p>
+分钟；实验依赖须提前下载，课堂不等待安装。</span></p>
 <div class="install">
 <p><strong>课前工具准备。</strong> 准备 Git
-与实验环境，检查后台执行入口。课堂一起确定判别对照，冻结预测，修改代码，再检查第一次运行。</p>
+与实验环境，检查后台执行入口。确定判别对照、冻结预测、修改代码和检查首次运行均在课堂中进行。</p>
 </div>
 <pre class="text"><code>保留上一课用得上的调用方法，解压本课材料。
 检查 git、Python 项目环境与 README.md 中的 uv 锁定依赖，先完成依赖下载。
@@ -61,93 +68,92 @@ href="#课后复习与拔高">课后复习与拔高</a></p>
 课堂默认用本机；已有服务器的，另核对 SSH 别名，实际机器，工作目录和后台任务入口。
 需要 GitHub 的读者提前安装 gh 并自行登录；本地提交练习不要求远端账号。
 把可用命令、执行端与未解决项写到 preflight.md，把稳定入口写入 AGENTS.md。</code></pre>
-<p>准备完成的标志是 Git 能返回版本，锁定环境能导入
-numpy，预览结果能打开。此时还没有写本轮预测，也没有改实验代码。</p>
-<p>服务器尚未连通就选本机路线。课堂先用本机短运行理解实验与执行身份；首次搭远程网络、完整训练和新增对照可在后续指导中完成。若本机环境也未就绪，先用完整预览做判别分析，把冒烟测试标为待补。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="先看一次猜错的预测5-分钟">先看一次猜错的预测，5 分钟</h3>
+<p>准备完成的标志是：Git 能返回版本号，锁定环境能导入
+numpy，预览结果能够打开。此时尚未写本轮预测，也未修改实验代码。</p>
+<p>服务器尚未连通时，选择本机路线。课堂先用本机短运行理解实验设计与执行身份；首次搭建远程网络、完整训练和新增对照可在后续指导中完成。若本机环境也未就绪，先用完整预览做判别分析，冒烟测试记为待补。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="先看一次猜错的预测5-分钟">一次失败预测的分析，5 分钟</h3>
 <p>先核对 preflight.md
-的执行端与环境状态，随后看一次已经完成的预测检验。</p>
-<p>预览中，四成标签噪声下 CE 的带噪验证早停准确率是
-93.25%，干净验证早停是 92.26%，不早停是
-68.37%。五个种子配对后的带噪减干净差为 0.99 个百分点，95% 区间为负 0.34
-到 2.32 个百分点。</p>
-<p>这些数回答了当前比较。它们还留下两种解释：带噪标签仍保留有用的排序信息，或只要提前停止就已经能保住大部分表现。增加随机停止时点和随机验证标签等对照，才能往下判断。</p>
-<h3 id="明确判别标准与实验单位10-分钟">明确判别标准与实验单位，10
-分钟</h3>
-<p>一个问题配两种解释，各自给出可测预测。选主要比较后，固定数据切分和分析方式。写清哪项结果支持哪种解释，无法区分时补什么。</p>
-<p>同一个种子应尽量共享数据划分、标签翻转和初始化，让比较关注干预。实验单位是一次独立训练，重复记录同一条训练曲线的多个轮次，不能当成增加种子数。</p>
-<p>代码写完以后先做冒烟测试，检查输出结构和数值，再提交正式版本。预测、代码和结果分别留下版本，先后关系才完整。</p>
-<h3 id="练习一写判别计划10-分钟">练习一，写判别计划，10 分钟</h3>
+中的执行端与环境状态，再分析一次已经完成的预测检验。</p>
+<p>预览结果中，四成标签噪声下 CE 的带噪验证早停准确率为
+93.25%，干净验证早停为 92.26%，不早停为
+68.37%。五个种子配对后，带噪减干净的差值为 0.99 个百分点，95% 区间为负
+0.34 到 2.32 个百分点。</p>
+<p>这些数字回答了当前比较，但仍留下两种解释：带噪标签仍保留有用的排序信息，或只要提前停止就足以保住大部分表现。需要增加随机停止时点和随机验证标签等对照，才能进一步区分。</p>
+<h3 id="明确判别标准与实验单位10-分钟">判别标准与实验单位，10 分钟</h3>
+<p>一个研究问题对应两种解释，每种解释给出可测量的预测。选定主要比较后，固定数据切分和分析方式，写明哪项结果支持哪种解释，以及结果无法区分时还需补充什么。</p>
+<p>同一个种子应尽量共享数据划分、标签翻转和初始化，使比较集中于干预本身。实验单位是一次独立训练；同一条训练曲线上的多个轮次只是重复记录，不能当作增加种子数。</p>
+<p>代码完成后先做冒烟测试，检查输出结构和数值，再提交正式版本。预测、代码和结果分别留有版本，三者的先后关系才完整。</p>
+<h3 id="练习一写判别计划10-分钟">练习一：制定判别计划，10 分钟</h3>
 <pre class="text"><code>读 questions.md 和 preview/ 中的真实结果。
 围绕带噪验证集为什么有效，写两个竞争解释。
 先选一个最小对照，固定主要指标与比较方向，写出有实际意义的效应大小。
 把种子，数据划分，早停规则和分析方法写入 prediction.md，再提交。
 说明什么结果能区分两种解释，什么结果仍需继续实验。</code></pre>
-<h3
-id="练习二先查执行再扩大运行20-分钟">练习二，先查执行，再扩大运行，20
+<h3 id="练习二先查执行再扩大运行20-分钟">练习二：执行核查与运行扩展，20
 分钟</h3>
 <pre class="text"><code>先核查预览的提交字段与审查记录，再为本次运行建立真实提交和独立审查记录。
 根据计划改实验代码，加入 --seeds、--epochs 和输出目录参数。
 每次运行保存代码提交和数据哈希，同时记录参数、环境与随机种子。
 先做单种子短运行，核对预期行数和有限值，并确认验证集与测试集分离，结果写 smoke/。
 通过后提交正式代码，把完整任务的后台命令和停止方法准备好。课堂用短任务检验后台入口，正式任务课后提交。返回任务标识、日志与完成检查入口。</code></pre>
-<p>正式训练中的早停使用验证交叉熵，耐心值
-8，并恢复最好一轮权重。沿用预览时先核对这一规则；第 2
-课问题页还展示了按验证准确率选择的另一种设计，两者应分别登记。</p>
-<p>课堂可以在现有实现上做短运行，再用完整预览练分析。完整运行和新对照都放进课后计划，短运行的数字不能填进正式结论。</p>
+<p>正式训练的早停以验证交叉熵为监测指标，耐心值为
+8，并恢复最好一轮的权重。沿用预览实现时，应先核对这一规则；第 2
+课问题页还给出了按验证准确率选择轮次的另一种设计，两种设计应分别登记。</p>
+<p>课堂可以在现有实现上做短运行，再用完整预览练习分析。完整运行和新增对照都列入课后计划，短运行的数字不能写入正式结论。</p>
 <h3
-id="练习三读区间核管线再交审10-分钟">练习三，读区间，核管线，再交审，10
+id="练习三读区间核管线再交审10-分钟">练习三：区间解读、管线核查与审阅，10
 分钟</h3>
 <pre class="text"><code>分析演练用 preview/ 的五个种子，重算带噪减干净的配对差、均值与区间，写到 smoke/analysis-rehearsal.md。
 注明演练沿用的旧比较，只回答带噪与干净验证的差异，不拿它回答本次新增对照。
 核对新对照两臂已有的同种子短运行，检查配对键与输出字段，只验证分析管线。
 本轮 prediction.md 保持冻结；正式 result.md 等课后完整运行再写。
 另一家 Agent 只读演练文件、冒烟记录和 prediction.md，检查数据归属与计划是否可检验，意见及主张检查写到 smoke/review.md。</code></pre>
-<p>预测命中只是一次检验结果。研究理解是否变好，还要看它能否继续预测新条件。猜错以后，回写知识库中的解释与下一问，保留当时的预测原件。</p>
-<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<p>预测命中只是一次检验的结果。研究理解是否改进，还要看它能否继续预测新条件下的结果。预测失败后，在知识库中更新相应的解释与下一个问题，同时保留当时的预测原件。</p>
+<h3 id="检查与工作台小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>预测对了，就说机制得证。</strong>
-写出竞争解释，补能让两种解释产生不同预测的对照。</p>
+<p><strong>预测正确即宣称机制得到证明。</strong>
+写出竞争解释，补充能使两种解释给出不同预测的对照。</p>
 </div>
 <div class="pitfall">
-<p><strong>测试集参与选轮次。</strong>
-选择规则只读取验证信息。测试指标用于最终报告，相关代码入口分开核查。</p>
+<p><strong>测试集参与轮次选择。</strong>
+选择规则只读取验证信息。测试指标仅用于最终报告，相关代码入口分别核查。</p>
 </div>
 <div class="pitfall">
-<p><strong>任务消失就算跑完。</strong>
-同时检查退出码、预期产物和内容完整性，失败也留下状态。</p>
+<p><strong>任务从进程列表中消失即视为运行完成。</strong>
+同时检查退出码、预期产物和内容完整性，失败的运行也保留状态。</p>
 </div>
 <div class="pitfall">
-<p><strong>不显著就写一样好。</strong>
-报配对差及区间。要主张等价，先定等价界，再设计相应检验。</p>
+<p><strong>差异不显著即写成效果相同。</strong>
+报告配对差值及其区间。若要主张等价，须先确定等价界，再设计相应检验。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
-<p>结果现在有完整的执行记录：提交与数据对应，后台任务有日志与退出状态，结论有事前计划和独立核查。无论在哪台机器上跑，下一位接手者都能找到同一项比较。</p>
+<p>实验结果现在具有完整的执行记录：代码提交与数据版本对应，后台任务有日志与退出状态，结论有事前计划和独立核查。无论在哪台机器上运行，后续接手者都能找到同一项比较。</p>
 </div>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
-<p>不看课堂记录，写出两种竞争解释，各写出一个会让自己改判的结果。再核对
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
+<p>不看课堂记录，写出两种竞争解释，并各写一个会使自己改变判断的结果。再核对
 <code>prediction.md</code>
-和运行身份，说明主要指标、实验单位与停止规则。把计划和实际执行的偏差写到
-<code>review-after-class.md</code>，预测原件保留。</p>
+和运行身份，说明主要指标、实验单位与停止规则。把计划与实际执行之间的偏差写入
+<code>review-after-class.md</code>，预测原件保持不变。</p>
 <h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
-<p>以下数字仅供辨析。甲报告配对差为 0.3 个百分点，95% 区间为负 1.2 到
-1.8，因此两种做法等价。乙报告同一组数，指出区间仍含有预先关心的差异，提出按事前等价界增加有判别力的实验。判断哪一句得到了当前结果支持，再写出要支持等价所需的界和设计。另找出把同一种子的五个轮次当作五次独立实验会改变哪一个分母。</p>
+<p>以下数字仅用于辨析。甲报告配对差为 0.3 个百分点，95% 区间为负 1.2 到
+1.8，并据此认为两种做法等价。乙报告同一组数字，指出区间仍包含事先关心的差异，提出按事前等价界补充有判别力的实验。判断哪一种表述得到当前结果的支持，并写出支持等价所需的界和实验设计。另说明：若把同一种子的五个轮次当作五次独立实验，会改变哪一个分母。</p>
 <details>
 <summary>
-先写判据，再看对照思路
+先写出判据，再查看参考思路
 </summary>
-<p>当前区间只说明这批数据对差值的约束，尚不能推出等价。等价要先给有实际含义的界，再看相应检验与区间是否满足它。轮次共享同一次训练，不能替代独立种子。把它们当作独立重复会虚增区间公式的
+<p>当前区间只说明这批数据对差值的约束，不能据此推出等价。等价需要先给出有实际意义的界，再看相应的检验与区间是否满足该界。轮次共享同一次训练，不能替代独立种子。把它们当作独立重复，会虚增区间公式中的
 n
-和自由度，使标准误被人为缩小；需要更多支持时增加独立重复和有效对照。</p>
+和自由度，使标准误被人为缩小；需要更多证据时，应增加独立重复和有效对照。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>先补完课堂冒烟与计划审阅，再按冻结计划完成种子和对照。完整结果到齐后，按相同种子配对，写正式
-result.md 回答主要问题，再交另一家核查到
-review.md。完整训练提交后台后，先做推导与分析练习，任务结束再汇总，不把训练等待算作学习操作。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>先补完课堂上的冒烟测试与计划审阅，再按冻结计划完成全部种子和对照。完整结果到齐后，按相同种子配对，写出正式的
+result.md 回答主要问题，再交另一家 Agent 核查并写入
+review.md。完整训练提交后台后，可先做推导与分析练习，任务结束后再汇总；训练等待时间不计为学习活动。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -156,9 +162,9 @@ review.md。完整训练提交后台后，先做推导与分析练习，任务�
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
@@ -169,7 +175,7 @@ review.md。完整训练提交后台后，先做推导与分析练习，任务�
 </tr>
 <tr>
 <td><a href="experiment-server.html">3.2 服务器与后台任务</a></td>
-<td>50 分钟，查询断连后的真实任务状态</td>
+<td>50 分钟，查询断连后任务的真实状态</td>
 <td>任务身份、日志与接管记录</td>
 </tr>
 <tr>
@@ -180,45 +186,73 @@ review.md。完整训练提交后台后，先做推导与分析练习，任务�
 </tbody>
 </table>
 <p>3.3
-可以分两次完成：先做配对与等价，再做噪声公式和机制对照。用自己的课题重做时，先决定哪种新结果会推翻目前的解释。</p>
+可分两次完成：先做配对与等价分析，再做噪声公式和机制对照。用自己的课题重做时，先确定哪种新结果会推翻当前解释。</p>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查 prediction.md
+是否在运行前冻结并写明判别结果，冒烟记录是否只用于验证管线，演练分析是否正确计算并解释配对区间。课后独立完成层面，学生在完整运行后写出正式
+result.md，说明结果支持哪种解释、依据哪项预先指定的比较，以及仍需哪项对照。迁移层面，学生为自己课题中的一个问题独立写出竞争解释、判别对照和事前分析方案，并在更换数据或停止规则后说明结论是否改变及其原因。评价依据为推理过程及证据与计划的对应关系。预测与结果不一致时，应说明据此更新研究判断的理由。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip new">+ Git and GitHub</span><span class="chip new">+ SSH and Tailscale</span><span class="chip new">+ tmux jobs</span><span class="chip new">+ Monitors</span></div><h1 id="experimental-analysis">3 Experimental analysis</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Turn a question from the literature into an experiment that can
-distinguish two explanations. Save the prediction and analysis plan
-first, then let the agent run it, and finally update your judgment with
-paired results. Every result can be traced to the exact code and data
-used.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Formulate competing explanations for an observed result and derive
+predictions that distinguish them.</li>
+<li>Design an effective control and a pre-specified analysis plan,
+including the experimental unit, pairing and decision criteria.</li>
+<li>Maintain the identity of code, data, environment and execution for
+every run, so that each result can be traced to what produced it.</li>
+<li>Interpret paired differences and their uncertainty intervals,
+distinguishing lack of evidence for a difference from evidence of
+equivalence.</li>
+<li>Update a research judgment in light of the evidence, including
+predictions that turn out to be wrong.</li>
+</ol>
 </div>
-<p><span class="meta">Prepare before class, spend 60 minutes in class,
-then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels. In class, students freeze
+a prediction, modify the experimental code, check the pipeline with
+short runs and rehearse the analysis on existing complete results. After
+class, they complete the full run under the frozen plan and draw the
+formal inference. The extension paths require the same reasoning on a
+further control or on the student’s own research question.</p>
+<p><span class="meta">Preparation before class, a 60-minute class
+session, then required review, independent work and transfer assessment,
+with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>If the validation set is noisy too, does early stopping stop working?
-The companion experiment originally predicted that it would make CE stop
-later and lose accuracy, and three of the four predictions were wrong.
-The failed predictions raised a better question: which information in
-the validation labels is enough to help choose a model?</p>
-<p>This lesson starts from the preview results and asks which experiment
-would help distinguish the explanations. In class you carry out a short
-run; the full set of seeds and the extended controls are done after
-class.</p>
+<p>An experiment is informative when its possible outcomes would change
+a research judgment. This session therefore begins from competing
+explanations, fixes the prediction and analysis before execution, and
+treats the record of code, data and environment as part of the
+evidence.</p>
+<p>The case material comes from the companion experiment on noisy
+labels. Its question was whether early stopping still works when the
+validation set is also noisy. The experiment originally predicted that
+noisy validation would make CE stop later and lose accuracy, and three
+of its four predictions were wrong. The failed predictions led to a
+better question: which information in the validation labels is
+sufficient to guide model selection?</p>
+<p>The session starts from the preview results and asks which experiment
+would distinguish the explanations. In class, students carry out short
+runs that check the pipeline; the full set of seeds and the extended
+controls, on which the formal conclusion rests, are run after class.</p>
 <div class="download">
 <p><a href="downloads/lesson-3-en.zip">Download the Lesson 3
 materials</a></p>
 </div>
-<h2 id="before-class">Before class</h2>
+<h2 id="before-class">Preparation</h2>
 <p><span class="meta">Allow 20 to 40 minutes; experiment dependencies
-are downloaded in advance, and the class does not wait for
-installs.</span></p>
+are downloaded in advance so that class time is not spent on
+installation.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> Prepare Git and the experiment
-environment, and check how to launch a background job. In class we
-choose a control together to distinguish the explanations, freeze the
-prediction, change the code, then check the first run.</p>
+<p><strong>Preparation.</strong> Set up Git and the experiment
+environment and check how to launch a background job. In class, a
+control that distinguishes the explanations is chosen, the prediction is
+frozen, the code is modified and the first run is checked.</p>
 </div>
 <pre class="text"><code>Keep the tool commands from the previous lesson that are still useful, and unzip this lesson&#39;s materials.
 Check git, the Python project environment and the uv-locked dependencies in README.md, and finish downloading dependencies first.
@@ -226,51 +260,50 @@ Confirm that data/ and preview/ can be read, create logs/, and run only the prev
 The class uses this machine by default; if you already have a server, also check the SSH alias, the actual machine, the working directory and the background job entry.
 Readers who need GitHub install gh in advance and log in themselves; the local commit exercise needs no remote account.
 Write the usable commands, the execution environment and unresolved items into preflight.md, and the stable entry points into AGENTS.md.</code></pre>
-<p>Preparation is done when Git returns a version, the locked
-environment can import numpy, and the preview results open. At this
-point no prediction for this round has been written and no experiment
-code has been changed.</p>
-<p>If the server is not connected yet, choose the local route. In class
-you first use short local runs to understand the experiment and the
-code, data and run records; setting up remote networking for the first
-time, full training and new controls can be done with later guidance. If
-the local environment is not ready either, do the discriminating
-analysis with the full preview first and mark the smoke test as still to
-do.</p>
-<h2 id="in-class">In class</h2>
+<p>Preparation is complete when Git reports a version, the locked
+environment can import numpy and the preview results open. At this stage
+no prediction for the round has been written and no experimental code
+has been changed.</p>
+<p>If a server connection is not yet available, use the local route. In
+class, short local runs are used to understand the experiment and its
+records of code, data and runs; first-time remote network setup, full
+training and new controls can follow later with guidance. If the local
+environment is not ready either, carry out the discriminating analysis
+on the full preview first and record the smoke test as outstanding.</p>
+<h2 id="in-class">Class session</h2>
 <h3 id="a-prediction-that-turned-out-wrong-5-minutes">A prediction that
 turned out wrong, 5 minutes</h3>
-<p>First check the executor and environment status in preflight.md, then
-look at a prediction test that has already been completed.</p>
-<p>In the preview, with 40% label noise, CE’s accuracy with early
-stopping on noisy validation is 93.25%, with early stopping on clean
-validation 92.26%, and without early stopping 68.37%. Paired over five
-seeds, noisy minus clean is 0.99 percentage points, with a 95% interval
-from minus 0.34 to 2.32 percentage points.</p>
-<p>These numbers answer the current comparison. They still leave two
-explanations: noisy labels keep useful ranking information, or simply
-stopping early is already enough to keep most of the performance. Only
-adding controls such as a random stopping point and random validation
-labels lets you judge further.</p>
+<p>Check the executor and environment status in preflight.md, then
+examine a prediction test that has already been completed.</p>
+<p>In the preview, with 40% label noise, CE’s accuracy is 93.25% with
+early stopping on noisy validation, 92.26% with early stopping on clean
+validation, and 68.37% without early stopping. Paired over five seeds,
+noisy minus clean is 0.99 percentage points, with a 95% interval from
+minus 0.34 to 2.32 percentage points.</p>
+<p>These numbers answer the current comparison but leave two
+explanations open: noisy labels retain useful ranking information, or
+stopping early is in itself enough to retain most of the performance.
+Further controls, such as a random stopping point and random validation
+labels, are needed to decide between them.</p>
 <h3
-id="define-the-decision-criteria-before-running-the-experiment-10-minutes">Define
-the decision criteria before running the experiment, 10 minutes</h3>
-<p>One question comes with two explanations, each giving a measurable
-prediction. Once you choose the main comparison, fix the data split and
-the analysis. State which result supports which explanation, and what to
-add if they cannot be told apart.</p>
+id="define-the-decision-criteria-before-running-the-experiment-10-minutes">Defining
+the decision criteria before the experiment, 10 minutes</h3>
+<p>A question comes with two explanations, each giving a measurable
+prediction. Once the main comparison is chosen, the data split and the
+analysis are fixed. The plan states which result supports which
+explanation, and what will be added if they cannot be distinguished.</p>
 <p>Runs with the same seed should share data splits, label flips and
-initialization wherever possible, so the comparison focuses on the
+initialization wherever possible, so that the comparison isolates the
 intervention. The experimental unit is one independent training run;
-recording many epochs of the same training curve does not count as
-adding seeds.</p>
-<p>After writing the code, run a smoke test first, check the output
-structure and values, then commit the version for full execution. The
-prediction, the code and the results each keep their own version, so you
-can show what came first.</p>
+recording many epochs of the same training curve does not add seeds.</p>
+<p>After the code is written, a smoke test is run first to check the
+output structure and values, and the version for full execution is then
+committed. The prediction, the code and the results each keep their own
+version, so that their order can be demonstrated.</p>
 <h3
 id="exercise-1-plan-an-experiment-to-distinguish-explanations-10-minutes">Exercise
-1: plan an experiment to distinguish explanations, 10 minutes</h3>
+1: planning an experiment that distinguishes explanations, 10
+minutes</h3>
 <pre class="text"><code>Read questions.md and the real results in preview/.
 Write two competing explanations for why a noisy validation set works.
 First choose one minimal control, fix the main metric and the direction of comparison, and write down an effect size that matters in practice.
@@ -278,110 +311,114 @@ Write the seeds, data split, early-stopping rule and analysis method into predic
 State which result would separate the two explanations, and which result would still need further experiments.</code></pre>
 <h3
 id="exercise-2-check-the-execution-first-then-scale-up-the-run-20-minutes">Exercise
-2: check the execution first, then scale up the run, 20 minutes</h3>
+2: checking execution before scaling up, 20 minutes</h3>
 <pre class="text"><code>First check the commit fields and review record of the preview, then create a real commit and an independent review record for this run.
 Change the experiment code according to the plan, adding the --seeds and --epochs parameters and an output directory parameter.
 Each run saves the code commit, data hash, parameters, environment and random seed.
 First do a short single-seed run and check the expected number of rows, finite values, and that validation and test are separate. Write results to smoke/.
 Once it passes, commit the code for the full run and prepare the background command for the full job and the way to stop it. In class, use a short job to test the background entry; the full job is submitted after class. Return the job identifier, the log and the entry for checking completion.</code></pre>
-<p>Early stopping in full training uses validation cross-entropy, with
-patience 8, and restores the weights of the best epoch. When reusing the
-preview, check this rule first; the Lesson 2 question page also shows
-another design that selects by validation accuracy, and the two should
-be registered separately.</p>
-<p>In class you can do short runs on the existing implementation, then
-practice the analysis with the full preview. The full run and the new
-controls both go into the after-class plan, and numbers from short runs
-do not belong in the final conclusions.</p>
+<p>Early stopping in full training uses validation cross-entropy with
+patience 8 and restores the weights of the best epoch. When reusing the
+preview, check this rule first; the Lesson 2 question page also
+describes a design that selects by validation accuracy, and the two
+designs are registered separately.</p>
+<p>In class, short runs can be made on the existing implementation, and
+the analysis is rehearsed on the full preview. The full run and the new
+controls form part of the after-class plan, and numbers from short runs
+are not used in the final conclusions.</p>
 <h3
 id="exercise-3-read-the-interval-check-the-pipeline-then-hand-over-for-review-10-minutes">Exercise
-3: read the interval, check the pipeline, then hand over for review, 10
-minutes</h3>
+3: interpreting the interval, checking the pipeline and handing over for
+review, 10 minutes</h3>
 <pre class="text"><code>For the analysis rehearsal, use the five seeds in preview/ to recompute the paired noisy-minus-clean difference, its mean and interval, and write them to smoke/analysis-rehearsal.md.
 Note that the rehearsal reuses the old comparison and answers only the difference between noisy and clean validation; it is not used to answer this round&#39;s new control.
 Check the pairing keys and output fields in the existing matched-seed short runs of both arms of the new control. This verifies only the analysis pipeline.
 Keep this round&#39;s prediction.md frozen; the final result.md is written after the full after-class run.
 The other vendor&#39;s agent reads only the rehearsal file, the smoke record and prediction.md, checks where the data belong and whether the plan can be tested, and writes its comments and a claim check to smoke/review.md.</code></pre>
-<p>A correct prediction is only one test result. An improved explanation
+<p>A correct prediction is a single test result. An improved explanation
 should also make useful predictions under new conditions. After a wrong
-prediction, write the explanation and the next question back into the
-knowledge base, and keep the original prediction.</p>
-<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+prediction, the explanation and the next question are written back into
+the knowledge base, and the original prediction is kept.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Common errors and
 summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
-<p><strong>Saying the mechanism is proven because the prediction was
-right.</strong> Write out the competing explanation and add the control
-under which the two explanations predict different things.</p>
+<p><strong>Concluding that a mechanism is proven because the prediction
+was correct.</strong> State the competing explanation and add the
+control under which the two explanations predict different outcomes.</p>
 </div>
 <div class="pitfall">
-<p><strong>The test set takes part in choosing the epoch.</strong> The
-selection rule reads only validation information. Test metrics are for
-the final report, and the code paths involved are checked
+<p><strong>Using the test set to choose the epoch.</strong> The
+selection rule reads only validation information. Test metrics are
+reserved for the final report, and the code paths involved are checked
 separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>The job disappeared, so it must have finished.</strong> Check
-the exit code, the expected products and their completeness together,
-and leave a status for failures too.</p>
+<p><strong>Assuming that a job which has disappeared has
+finished.</strong> Check the exit code, the expected products and their
+completeness together, and record a status for failures as well.</p>
 </div>
 <div class="pitfall">
-<p><strong>Writing “equally good” because a difference is not
-significant.</strong> Report the paired difference and its interval. To
-claim equivalence, first set an equivalence margin, then design the
-matching test.</p>
+<p><strong>Reporting two methods as equally good because the difference
+is not significant.</strong> Report the paired difference and its
+interval. A claim of equivalence requires an equivalence margin set in
+advance and a corresponding test.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
 <p>Results now have traceable run records: each identifies the code
 commit and data, background jobs have logs and exit statuses, and
-conclusions refer to a plan recorded in advance and an independent
-check. Whichever machine it runs on, the next person to take over can
-find the same comparison.</p>
+conclusions refer to a plan recorded in advance and to an independent
+check. Whichever machine executes the run, the next person to take over
+can locate the same comparison.</p>
 </div>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
-<p>Without looking at the class record, write the two competing
-explanations, and for each sketch one result that would make you change
-your judgment. Then check <code>prediction.md</code> and the run
-identity, and state the main metric, the experimental unit and the
-stopping rule. Write the deviations between the plan and what was
-actually run into <code>review-after-class.md</code>, keeping the
-original prediction.</p>
-<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
-minutes</h3>
-<p>The numbers below are for discussion only. A reports a paired
-difference of 0.3 percentage points with a 95% interval from minus 1.2
-to 1.8, and so concludes that the two approaches are equivalent. B
-reports the same numbers, points out that the interval still contains
-the difference of interest set in advance, and proposes adding a more
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
+<p>Without consulting the class record, write the two competing
+explanations and, for each, outline one result that would change your
+judgment. Then check <code>prediction.md</code> and the run identity,
+and state the main metric, the experimental unit and the stopping rule.
+Record any deviations between the plan and what was actually run in
+<code>review-after-class.md</code>, keeping the original prediction.</p>
+<h3 id="compare-the-examples-20-minutes">Analysis of contrasting
+examples, 20 minutes</h3>
+<p>The following numbers are for discussion only. Statement A reports a
+paired difference of 0.3 percentage points with a 95% interval from
+minus 1.2 to 1.8, and concludes that the two approaches are equivalent.
+Statement B reports the same numbers, notes that the interval still
+contains the difference of interest set in advance, and proposes a more
 discriminating experiment based on an equivalence margin set in advance.
-Judge which statement the current result supports, then write the margin
-and design needed to support equivalence. Also find which denominator
-changes if the five epochs of one seed are treated as five independent
-experiments.</p>
+Judge which statement the current result supports, then specify the
+margin and design needed to support equivalence. Also identify which
+denominator changes if the five epochs of one seed are treated as five
+independent experiments.</p>
 <details>
 <summary>
-Write your criteria first, then see the comparison notes
+Record your criteria before reading the commentary
 </summary>
-<p>The current interval only shows how this batch of data constrains the
-difference; it cannot yet establish equivalence. Equivalence first needs
-a margin with practical meaning, then a check of whether the matching
-test and interval satisfy it. Epochs share one training run and cannot
-replace independent seeds. Treating them as independent replications
-inflates the n and degrees of freedom in the interval formula, shrinking
-the standard error artificially; when you need more support, add
-independent replications and effective controls.</p>
+<p>The current interval shows only how this batch of data constrains the
+difference; it cannot yet establish equivalence. Equivalence first
+requires a margin with practical meaning, followed by a check of whether
+the corresponding test and interval satisfy it. Epochs share one
+training run and cannot replace independent seeds. Treating them as
+independent replications inflates the n and degrees of freedom in the
+interval formula and artificially shrinks the standard error; where more
+support is needed, add independent replications and effective
+controls.</p>
 </details>
 <h3 id="further-study">Further study</h3>
-<p>First finish the class smoke test and plan review, then complete the
-seeds and controls according to the frozen plan. Once the full results
-are in, pair them by seed, write the final result.md to answer the main
-question, then have the other vendor check it in review.md. After
-submitting full training to the background, do the derivation and
-analysis exercises first, and aggregate once the job finishes; training
-wait time is separate from time spent on the exercise.</p>
+<p>First complete the class smoke test and plan review, then run the
+remaining seeds and controls according to the frozen plan. When the full
+results are available, pair them by seed, write the final result.md to
+answer the main question, and have the other vendor’s agent check it in
+review.md. While the full training runs in the background, work on the
+derivation and analysis exercises, and aggregate once the job finishes;
+training time is separate from the time allocated to the exercises.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -415,10 +452,21 @@ ranking derivation</td>
 </tr>
 </tbody>
 </table>
-<p>3.3 can be done in two sittings: paired comparison and equivalence
-first, then the noise formula and mechanism controls. When redoing this
-with your own topic, first decide which new result would overturn your
-current explanation.</p>
+<p>Section 3.3 can be completed in two sittings: paired comparison and
+equivalence first, then the noise formula and mechanism controls. When
+the exercise is repeated with a student’s own topic, the first step is
+to decide which new result would overturn the current explanation.</p>
+<h3 id="assessment">Assessment</h3>
+<p>Attainment of the outcomes is judged from the reasoning that connects
+plan, execution and conclusion. Students should be able to explain why
+the chosen control distinguishes the two explanations; show from the run
+records which code, data and environment produced each result; justify
+why the class short runs verify only the pipeline while the formal
+inference rests on the complete after-class run; and interpret the
+paired interval without treating a non-significant difference as
+equivalence. Transfer is assessed by applying the same design to a
+further control or to the student’s own question, and stating in advance
+which result would change the current explanation.</p>
 </article>
 <nav class="pager"><a class="prev" href="explore-parallel.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.3 并行复筛与选题</span><span lang="en">2.3 Parallel screening and research questions</span></a><a class="next" href="experiment-git.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3.1 Git 与 GitHub</span><span lang="en">3.1 Git and GitHub</span></a></nav>
 </main>

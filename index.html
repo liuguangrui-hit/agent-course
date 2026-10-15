@@ -27,13 +27,31 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="agent-科研">Agent 科研</h1>
-<p>一篇稿子改得顺了，数字却还停在旧版本。一批论文读完了，问起某条结论的出处，又要从头翻。实验顺利跑了一夜，早上才发现漏掉了能区分两种解释的对照。</p>
-<p>Agent
-能加快这些工作。研究者要学会让每一步留下依据，供后续工作使用。这门课从一篇四页论文开始，带你搭起一个自己的科研工作台。你会练习用
-Agent
-重讲论文并核查数字，阅读文献时追问证据，在实验前明确结果的判断标准。</p>
-<p>四堂必修按顺序上，每堂课分三段：课前备好材料，课上一小时共同解决难题，课后从复习走向深入。第
-5、6 课为选修，分别讲安全控制与编排理论，也沿用同样的节奏。</p>
+<h2 id="课程简介">课程简介</h2>
+<p>本课程围绕人工智能 Agent
+在科研中的应用方法，涵盖论文写作与绘图、科研知识库、实验分析、流程自动化、安全控制及编排理论。课程结合专题讲授、案例分析与研究实践，重点培养证据核查、实验设计、可复现研究和
+Agent 系统评估能力。</p>
+<h2 id="课程目标">课程目标</h2>
+<p>完成必修部分后，学生应能够：</p>
+<ol type="1">
+<li>运用 Agent
+完成论文表达、数据核查与结果绘图，核验文本、图表和原始数据的一致性。</li>
+<li>构建可追溯的科研知识库，辨析文献结论及其证据，提出可检验的研究问题。</li>
+<li>设计区分竞争解释的对照实验，事先确定分析方案，开展结果分析与复现核查。</li>
+<li>构建具备状态记录和故障恢复能力的自动化科研流程，检验流程衔接与执行结果。</li>
+</ol>
+<p>选修部分进一步训练权限边界设计与安全测试，以及固定 Agent
+之外的经验学习建模、学习收益评估和迁移分析。</p>
+<h2 id="适用人群与先修要求">适用人群与先修要求</h2>
+<p>课程面向拟将 Agent
+应用于科研工作的硕士研究生和博士研究生，也可供研究生导师及科研人员参考。学习者应具备基本的科研文献阅读能力，了解所在领域常用的数据分析方法。课程不要求已有
+Agent 开发经验；统计推断与形式化分析的进阶内容可结合课后材料学习。</p>
+<p>上课前须按<a
+href="setup.html">课前准备</a>完成软件安装、账号登录及环境检查。各课所需材料和检查要求见相应课程页面。</p>
+<h2 id="课程内容">课程内容</h2>
+<p>课程设四次必修课和两次选修课，每次课堂教学 60 分钟。第 1 至第 4
+课按顺序完成；第 5、6 课在必修部分之后选修。第 0
+单元为课前准备，不计入六次课堂教学。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -42,46 +60,46 @@ Agent
 </colgroup>
 <thead>
 <tr>
-<th>课</th>
-<th>核心问题</th>
-<th>学习成果</th>
+<th>教学单元</th>
+<th>核心内容</th>
+<th>实践成果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="setup.html">0 课前准备</a></td>
-<td>怎样让 Agent 在正确的文件夹里开始工作</td>
-<td>两个能用的 Agent，一份会议纪要和核查记录</td>
+<td>Agent 安装、账号登录与工作环境配置</td>
+<td>环境检查、首次文件读写及核查记录</td>
 </tr>
 <tr>
 <td><a href="writing.html">1 写作绘图</a></td>
-<td>同一份研究，怎样写得清楚、有吸引力</td>
-<td>重讲稿、两张数据图与改稿 Skill</td>
+<td>论文表达、数据核查、结果绘图与审稿返修</td>
+<td>论文修订稿、数据图与可复用 Skill</td>
 </tr>
 <tr>
 <td><a href="explore.html">2 知识库</a></td>
-<td>读过的论文，怎样支持一个新问题</td>
-<td>能追回原文的知识库和实验问题</td>
+<td>文献证据整理、来源追溯与研究问题形成</td>
+<td>科研知识库与可检验的研究问题</td>
 </tr>
 <tr>
 <td><a href="experiment.html">3 实验分析</a></td>
-<td>哪个实验能分开两种解释</td>
-<td>事前预测、配对结果与可重跑记录</td>
+<td>对照实验设计、结果分析与复现核查</td>
+<td>事前预测、配对分析及可复现记录</td>
 </tr>
 <tr>
 <td><a href="automate.html">4 自动化</a></td>
-<td>怎样衔接每一轮研究</td>
-<td>能中断恢复的循环与待检验的经验</td>
+<td>科研流程衔接、状态恢复与经验检验</td>
+<td>可恢复的研究循环及经验检验方案</td>
 </tr>
 <tr>
 <td><a href="safety.html">5 安全控制</a></td>
-<td>读到外部内容时，权限怎样仍握在手里</td>
-<td>能实测的权限边界和自动检查</td>
+<td>权限配置、执行隔离与边界测试</td>
+<td>权限方案、自动检查及测试记录</td>
 </tr>
 <tr>
 <td><a href="theory.html">6 编排理论</a></td>
-<td>Agent 的权重不变，系统怎样学习</td>
-<td>经验学习的形式化与一份对照实验方案</td>
+<td>经验学习建模、效应识别与跨 Agent 迁移</td>
+<td>形式化模型与学习收益评估方案</td>
 </tr>
 </tbody>
 </table>
@@ -95,55 +113,86 @@ Agent
 <thead>
 <tr>
 <th>阶段</th>
-<th>做什么</th>
+<th>教学与学习活动</th>
 <th>阶段成果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>课前预备</td>
-<td>安装软件并下载依赖与材料，完成登录后跑最小可用检查</td>
-<td>preflight.md 与能打开的本地材料</td>
+<td>课前准备</td>
+<td>完成软件安装、依赖与材料下载、账号登录及可用性检查</td>
+<td>准备检查记录与可用的本地材料</td>
 </tr>
 <tr>
-<td>课上一小时</td>
-<td>一起分析问题，配置复杂规则，执行短练习，再检查结果</td>
-<td>一份注明版本和来源的课堂成果</td>
+<td>课堂教学</td>
+<td>专题讲授、复杂配置、证据判断、短时实践及结果核查</td>
+<td>注明版本与来源的实践成果</td>
 </tr>
 <tr>
-<td>课后复习与拔高</td>
-<td>先复述和核查，再辨析正反例，最后选一条深入路径</td>
-<td>复盘记录与一次相连的扩展练习</td>
+<td>课后学习</td>
+<td>概念复习、正反例分析及与课堂内容衔接的扩展研究</td>
+<td>复习记录与扩展作业</td>
 </tr>
 </tbody>
 </table>
-<p>工具逐课累积。第 1 课准备编译和画图环境，第 2 课加浏览器与知识库，第
-3 课接版本管理和后台执行，第 4
-课连起调度与结果页。安装下载提前完成；课堂一起练习怎样使用工具，并讨论必需的研究判断。调用方法留在项目文件里，换一个对话也能接手。<a
-href="toolbox.html">工具箱</a>按阶段列出了所需工具。</p>
-<p>课程面向研究生和研究生导师。第一课从文件和成品上手；后几课逐步要求你判断证据、设计对照，并推导一个学习系统成立的条件。准备好后，从<a
-href="setup.html">第 0 课</a>开始。授课安排见<a
+<p>课程以一个带噪标签学习实验为贯穿案例，逐步整合写作绘图、文献分析、实验执行和流程管理。课堂集中处理研究判断与复杂操作，完整训练、批量资料获取及长期运行任务安排在课后。各阶段工具及环境要求见<a
+href="toolbox.html">工具箱</a>。</p>
+<h2 id="学习评价">学习评价</h2>
+<p>各所修单元的复习、独立实践与迁移评价为必做要求；深入专题中指定的必读片段须完成，其余内容按需选做。</p>
+<p>学习评价以实践成果与方法论证为依据，重点考察来源可追溯性、数据与图表一致性、实验设计、结果解释及流程恢复能力。评价分三个层次：课堂训练中的方法运用，课后独立完成的练习，以及更换材料或条件后的迁移检验。各课的学习目标对应该课及其课后练习，并非全部在
+60
+分钟课堂内独立达成。必修部分须完成一轮可复查的研究记录，并演示中断恢复；选修部分提交相应的安全测试记录或学习收益评估记录与方案。具体要求见<a
 href="syllabus.html">课程大纲</a>。</p>
 </article>
 <article lang="en"><h1 id="ai-agents-for-research">AI Agents for Research</h1>
-<p><span class="subtitle">Build each research step on
-evidence</span></p>
-<p>A draft finally reads well, but its numbers are still from an old
-version. You have read a batch of papers, and when someone asks where a
-conclusion came from, you start searching again. An experiment ran
-smoothly overnight, and in the morning you notice it lacked the control
-that could separate two explanations.</p>
-<p>Agents can speed up these tasks. Researchers need to ensure that each
-step produces evidence the next step can use. Starting with a four-page
-paper, this course helps you build your own research workbench. You will
-use an agent to restructure a paper and check its numbers, read the
-literature and examine its evidence, and decide before each experiment
-how its results will be judged.</p>
-<p>Take the four required lessons in order. Each has three parts:
-preparation before class, a one-hour class for working through the
-harder problems together, and review followed by optional further study.
-Lessons 5 and 6 are electives on safety controls and orchestration
-theory, with the same structure.</p>
+<h2 id="course-overview">Course overview</h2>
+<p>This graduate course examines the use of AI agents in scientific
+research. Topics include academic writing and figures, research
+knowledge bases, experimental analysis, research automation, safety
+controls, and orchestration theory. Lectures, case studies, and
+practical assignments develop students’ ability to assess evidence,
+design experiments, conduct reproducible research, and evaluate agent
+systems.</p>
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<p>On completion of the required sessions, students should be able
+to:</p>
+<ol type="1">
+<li>Organize a research paper around its central finding, verify that
+its numbers and figures agree with the underlying data, and use
+independent review to improve it.</li>
+<li>Verify literature sources and their versions, distinguish
+observations from synthesis and hypothesis, and turn disagreements in
+the literature into testable research questions.</li>
+<li>Design controlled experiments that distinguish competing
+explanations, specify analysis plans in advance, interpret paired
+results with their uncertainty, and maintain reproducible records.</li>
+<li>Represent research workflows as explicit states with recovery
+procedures, and evaluate whether recorded experience improves
+performance on unseen tasks.</li>
+</ol>
+<p>The electives extend these outcomes to the design and testing of
+permission boundaries, and to the formal modeling and evaluation of
+learning from external experience while the underlying agent remains
+fixed, including transfer across agents. Each session page states its
+own learning outcomes; reproducing the course case study is the means of
+practice, not the outcome itself.</p>
+<h2 id="intended-audience-and-prerequisites">Intended audience and
+prerequisites</h2>
+<p>The course is intended for master’s and doctoral students who plan to
+use agents in research. It may also be useful to research supervisors
+and other researchers. Students should be able to read research
+literature and be familiar with the data analysis methods used in their
+field. Prior experience developing agents is not required. Advanced
+material on statistical inference and formal analysis is supported by
+further-study readings and exercises.</p>
+<p>Before attending, students must complete software installation,
+account sign-in, and environment checks in <a href="setup.html">Getting
+started</a>. Each session specifies its materials and preparation
+requirements.</p>
+<h2 id="course-structure">Course structure</h2>
+<p>There are six 60-minute sessions: four required sessions followed by
+two electives. Sessions 1–4 are taken in sequence. Unit 0 covers
+preparation and is separate from the six taught sessions.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -152,54 +201,56 @@ theory, with the same structure.</p>
 </colgroup>
 <thead>
 <tr>
-<th>Lesson</th>
-<th>The question it answers</th>
-<th>What you take away</th>
+<th>Unit</th>
+<th>Topics</th>
+<th>Practical work</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="setup.html">0 Getting started</a></td>
-<td>How to get an agent working in the right folder</td>
-<td>Two working agents, meeting minutes and a fact-check report</td>
+<td>Agent installation, account access, and environment
+configuration</td>
+<td>Environment checks, initial file operations, and verification
+records</td>
 </tr>
 <tr>
 <td><a href="writing.html">1 Writing and figures</a></td>
-<td>How to present the same research clearly and engagingly</td>
-<td>A restructured draft, two data figures and a revision Skill</td>
+<td>Paper structure, numerical verification, figures, and peer
+review</td>
+<td>A revised paper, data figures, and a reusable Skill</td>
 </tr>
 <tr>
 <td><a href="explore.html">2 Research knowledge bases</a></td>
-<td>How papers you have read can support a new question</td>
-<td>A knowledge base linked to source papers, and questions to test</td>
+<td>Literature evidence, source traceability, and research
+questions</td>
+<td>A research knowledge base and testable questions</td>
 </tr>
 <tr>
 <td><a href="experiment.html">3 Experimental analysis</a></td>
-<td>Which experiment can separate two explanations</td>
-<td>Predictions recorded in advance, paired results and a reproducible
-record</td>
+<td>Controlled experiments, analysis, and reproducibility</td>
+<td>Recorded predictions, paired analyses, and reproducible records</td>
 </tr>
 <tr>
 <td><a href="automate.html">4 Research automation</a></td>
-<td>How one round of research can lead into the next by itself</td>
-<td>A recoverable research loop and candidate playbook entries to
-test</td>
+<td>Workflow integration, recovery, and evaluation of playbook
+entries</td>
+<td>A recoverable research loop and an evaluation plan</td>
 </tr>
 <tr>
 <td><a href="safety.html">5 Safety controls</a></td>
-<td>How to keep control of permissions when the agent reads outside
-content</td>
-<td>A permission boundary you can test, and automatic checks</td>
+<td>Permissions, execution isolation, and boundary testing</td>
+<td>A permission policy, automated checks, and test records</td>
 </tr>
 <tr>
 <td><a href="theory.html">6 Orchestration theory</a></td>
-<td>How a system learns while the agent’s weights stay fixed</td>
-<td>A formal account of learning from experience and a controlled
-experiment plan</td>
+<td>Learning from experience, effect identification, and transfer across
+agents</td>
+<td>A formal model and a plan for evaluating learning benefits</td>
 </tr>
 </tbody>
 </table>
-<h2 id="how-every-lesson-runs">How every lesson runs</h2>
+<h2 id="teaching-format">Teaching format</h2>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -209,45 +260,51 @@ experiment plan</td>
 <thead>
 <tr>
 <th>Stage</th>
-<th>What you do</th>
-<th>What is left at the end</th>
+<th>Activities</th>
+<th>Outputs</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Before class</td>
-<td>Install software, download dependencies and materials, log in, then
-run a minimal working check</td>
-<td>preflight.md and accessible local materials</td>
+<td>Preparation</td>
+<td>Software installation, dependency and material downloads, account
+access, and functionality checks</td>
+<td>A preparation record and accessible local materials</td>
 </tr>
 <tr>
-<td>In class</td>
-<td>Analyze the problem together, configure complex rules, run short
-exercises, then check the results</td>
-<td>A versioned output with recorded sources</td>
+<td>Class</td>
+<td>Lectures, complex configuration, evidence assessment, short
+practical exercises, and verification</td>
+<td>Practical outputs with recorded versions and sources</td>
 </tr>
 <tr>
-<td>After class: review and extension</td>
-<td>Recall and check first, then compare examples, then choose one path
-to go deeper</td>
-<td>A review record and one connected extension exercise</td>
+<td>Review and extension</td>
+<td>Conceptual review, analysis of sound and flawed examples, and
+related extension work</td>
+<td>A review record and an extension assignment</td>
 </tr>
 </tbody>
 </table>
-<p>Tools accumulate from lesson to lesson. Lesson 1 sets up compilation
-and plotting, Lesson 2 adds a browser and a knowledge base, Lesson 3
-brings in version control and background execution, and Lesson 4
-connects scheduling and results pages. Complete installations and
-downloads in advance. In class, we work through how to use the tools in
-research and which judgments are essential. Record tool commands in the
-project files so a new session can continue the work. The <a
-href="toolbox.html">Toolbox</a> lists the tools for each stage.</p>
-<p>The course is for graduate students and their supervisors. Lesson 1
-starts with files and completed examples; later lessons develop your
-ability to judge evidence, design controls, and derive the conditions
-under which a learning system works. When you are ready, start with <a
-href="setup.html">Lesson 0</a>. The teaching plan is in the <a
-href="syllabus.html">Syllabus</a>.</p>
+<p>A shared case study on learning with noisy labels connects writing,
+literature analysis, experimentation, and workflow management. Class
+time is devoted to research decisions and complex operations. Full
+training runs, bulk literature retrieval, and long-running tasks are
+completed outside class. The <a href="toolbox.html">Toolbox</a> lists
+tools and environment requirements by stage.</p>
+<h2 id="assessment">Assessment</h2>
+<p>For each session taken, review, independent work and transfer
+assessment are required. Any specified core readings within extension
+pages are also required; the remaining extension work is optional.</p>
+<p>Assessment is based on practical work and methodological
+justification, at three levels: practice on the shared case in class,
+independent completion after class, and transfer of the same methods to
+different material. Criteria include source traceability, consistency
+between data and figures, experimental design, interpretation of
+results, and workflow recovery. The required component concludes with an
+auditable record of one research cycle and a demonstration of recovery
+after interruption. Elective work comprises safety test records or a
+learning evaluation report and protocol, as appropriate. Details are
+given in the <a href="syllabus.html">Syllabus</a>.</p>
 </article>
 <nav class="pager"><span></span><a class="next" href="syllabus.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh"> 课程大纲</span><span lang="en"> Syllabus</span></a></nav>
 </main>

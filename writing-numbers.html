@@ -33,160 +33,181 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="数据核查">1.2 数据核查</h1>
-<p><span class="meta">课后深入，约 35 分钟。</span></p>
-<p>摘要里是 96.2%，结果表里是
-96.0%。两句话都很顺，读一遍很容易放过。更难发现的是两个地方都写
-25%，分母却已经换了。</p>
-<p>数据核查分两层。脚本保证计算与复制一致，审阅者检查这一个数究竟在说什么。</p>
-<h2 id="明确指标与统计口径">明确指标与统计口径</h2>
-<p>一个结果数字至少带五项信息：数据版本与配置、指标与统计口径，以及单位。比如
-GCE
-在四成训练标签翻转下，五个种子的最终测试准确率均值，单位是百分比。这组信息比数字本身更适合作为键。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>为论文中的每个结果数字定义唯一的指标身份，包括数据版本、配置、统计口径、分母与单位。</li>
+<li>设计从数据到正文宏、表格和图的生成链，并用受控改动检验其覆盖范围。</li>
+<li>区分数值核查器与语义审阅各自能够发现的错误，据此安排检查位置。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 35 分钟。</span></p>
+<p>摘要写 96.2%，结果表写
+96.0%，两处文字都很通顺，通读一遍时容易放过。更隐蔽的情形是两处都写
+25%，分母却已经不同。</p>
+<p>数据核查分为两层：脚本保证计算与复制的一致性，审阅者判断一个数字究竟表达了什么。</p>
+<h2 id="明确指标与统计口径">指标与统计口径的定义</h2>
+<p>一个结果数字至少应附带五项信息：数据版本与配置，指标与统计口径，以及单位。例如：GCE
+在四成训练标签翻转条件下，五个种子的最终测试准确率均值，单位为百分比。这组信息比数字本身更适合作为检索键。</p>
 <pre class="text"><code>读 data/results.csv，列出论文实际报告的指标。
 为每个指标写明配置，以及样本或种子的分母，再注明汇总方式、单位和输出位置。
 先形成 code/make_numbers.py 的计算清单，再生成正文宏与结果表。</code></pre>
-<p>把筛选条件写进函数，避免每个段落各算一次。摘要需要整数近似时，由同一份原始值派生，记录舍入规则。</p>
-<h2 id="从数据生成宏与表">从数据生成宏与表</h2>
-<p>参考答案的 <code>code/make_numbers.py</code> 生成
-<code>paper/numbers.tex</code> 和结果表。正文通过宏引用：</p>
+<p>筛选条件应写入函数，避免各段落分别计算。摘要需要取整时，由同一份原始值派生，并记录舍入规则。</p>
+<h2 id="从数据生成宏与表">由数据生成宏与表格</h2>
+<p>参考答案中的 <code>code/make_numbers.py</code> 生成
+<code>paper/numbers.tex</code> 和结果表，正文通过宏引用：</p>
 <pre class="latex"><code>\input{numbers.tex}
 GCE ends at \gceFinalForty\%.</code></pre>
-<p>更换数据后，先重新生成，再编译全文。图与表也读取同一份数据输入。这样能把人工复制的环节拿掉。</p>
-<p>用一个变化测试这条链：复制数据到测试目录，只改一个种子的一个值，重建论文，列出所有变化的位置。改动若只到了表格，摘要仍未接上生成流程。</p>
-<h2 id="核查器要查对应关系">核查器要查对应关系</h2>
-<p>练习里的 <code>check_numbers.py</code>
-会提取百分数，并与预定汇总值比较。它能抓到两处故意写错的数，是一个小型核查器。</p>
-<p>候选值扩得太大，会把错误放过去。96.2
-也许恰好出现在另一种配置的早期曲线上。正式项目可以把正文结果标记到唯一指标键，再核查键与值对应；一个全库数值集合只适合初步筛查。</p>
+<p>数据更新后，先重新生成，再编译全文。图与表读取同一份数据输入，从而去掉人工复制的环节。</p>
+<p>可以用一次受控改动检验这条生成链：把数据复制到测试目录，只修改一个种子的一个值，重建论文，列出所有发生变化的位置。若改动只传到表格，说明摘要尚未接入生成流程。</p>
+<h2 id="核查器要查对应关系">核查器应检查对应关系</h2>
+<p>练习中的 <code>check_numbers.py</code>
+提取正文中的百分数，与预定的汇总值比较。它能发现两处故意写错的数字，是一个小型核查器。</p>
+<p>候选值集合过大时，错误会被放过。96.2
+可能恰好出现在另一种配置的早期曲线上。正式项目可以把正文中的每个结果标记到唯一的指标键，再核查键与值的对应关系；全库数值集合只适合作初步筛查。</p>
 <pre class="text"><code>在初稿和重讲稿上分别运行 check_numbers.py，保存输出。
 抽三处数字，记录原文句子与指标键，再写明筛选条件和重算结果。
 再故意把一个正确数字移到另一种配置的句子里，检查现有核查器能否发现。</code></pre>
-<h2 id="差值从未舍入的数据算">差值从未舍入的数据算</h2>
-<p>把方法 A 和 B
-的原始汇总值相减，再按统一位数报告。表中已经舍入的两个数相减，末位可能有一点差异，表注交代即可。统计分析和区间估计始终使用未舍入数据。</p>
-<p>从 67.4% 到 96.0%，差值是 28.6
-个百分点；相对提升则要除以前者。让脚本分别保留 <code>delta_pp</code> 与
-<code>relative_change</code>，正文按指标键取数。</p>
-<h2 id="构建与语义核查">构建与语义核查</h2>
-<p>构建入口依次生成数字，表格，图和
-PDF。检查入口再核查引用，数字与文件完整性。每次输出保留输入文件的哈希，重建时就能知道用了哪份数据。</p>
-<p>审阅时把重复数字的上下文并排放：主语是否一致，分母是否一致，均值是否被写成单次最好成绩，标准差是否被写成置信区间。这些问题需要结合语义判断。</p>
+<h2 id="差值从未舍入的数据算">差值由未舍入数据计算</h2>
+<p>方法 A 与 B
+的差值应由原始汇总值相减，再按统一位数报告。若用表中已舍入的两个数相减，末位可能略有出入，在表注中说明即可。统计分析和区间估计始终使用未舍入数据。</p>
+<p>从 67.4% 到 96.0%，差值为 28.6
+个百分点；相对提升则需再除以前者。脚本应分别保留 <code>delta_pp</code>
+与 <code>relative_change</code>，正文按指标键取数。</p>
+<h2 id="构建与语义核查">构建核查与语义核查</h2>
+<p>构建入口依次生成数字、表格、图和
+PDF。检查入口随后核查引用、数字与文件完整性。每次输出都保留输入文件的哈希，重建时即可确认所用数据。</p>
+<p>审阅时，把重复出现的数字连同上下文并排列出，检查主语和分母是否一致，均值是否被写成单次最好成绩，标准差是否被写成置信区间。这些问题需要结合语义判断。</p>
 <h2 id="练习">练习</h2>
-<p>做三次故意出错：改一个数值，调换两个配置的结果，把准确率提升改成错误率下降。每次记录谁发现了问题：生成流程、数值核查器，还是语义审阅。由此决定下一项检查应放在哪里。</p>
+<p>人为制造三种错误：修改一个数值，调换两个配置的结果，把准确率提升写成错误率下降。每次记录由哪一层发现问题：生成流程、数值核查器，还是语义审阅。据此决定下一项检查应放在哪一层。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>数字在某处出现过就算通过。</strong>
-要求结果与唯一配置和指标对应，抽查原始行。</p>
+<p><strong>数字在某处出现过就判为通过。</strong>
+要求每个结果对应唯一的配置和指标，并抽查原始数据行。</p>
 </div>
 <div class="pitfall">
-<p><strong>表里相减更整齐，就用舍入值分析。</strong>
-计算保留原始精度，展示统一舍入，表注解释末位差异。</p>
+<p><strong>为求整齐，用表中舍入值做分析。</strong>
+计算保留原始精度，展示时统一舍入，在表注中说明末位差异。</p>
 </div>
 <div class="pitfall">
-<p><strong>生成脚本覆盖了手工改动。</strong>
-生成文件标记为自动产物；修正放进数据处理代码，再重建。</p>
+<p><strong>生成脚本覆盖了手工修改。</strong>
+生成文件标记为自动产物；修正写入数据处理代码，再重新生成。</p>
 </div>
 <p><a href="https://doi.org/10.1371/journal.pcbi.1003285">Ten Simple
 Rules for Reproducible Computational
-Research</a>可用来检查从数据到结论的整条记录。</p>
+Research</a>可用于检查从数据到结论的完整记录。</p>
 </article>
 <article lang="en"><h1 id="checking-the-numbers">1.2 Checking the numbers</h1>
-<p><span class="meta">After-class deep dive, about 35
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Specify each reported result by its data version, configuration,
+metric, aggregation and unit, and use that identity to verify it.</li>
+<li>Design a generation and checking chain in which text, tables and
+figures derive from the same data, and test the chain with deliberate
+perturbations.</li>
+<li>Distinguish errors that mechanical checks can detect from errors of
+meaning that require reading a number in context.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 35
 minutes.</span></p>
-<p>The abstract says 96.2% and the results table says 96.0%. Both
-sentences read smoothly, so a quick read can miss the discrepancy.
-Harder to catch: both places say 25%, but the denominator has
-changed.</p>
-<p>Number checking has two layers. Scripts make sure computation and
-copying agree; the reviewer checks what each number means in
-context.</p>
-<h2 id="define-each-reported-result">Define each reported result</h2>
-<p>A result number carries at least five pieces of information: data
+<p>Numerical inconsistencies are easy to miss because both versions of a
+sentence read smoothly. An abstract may report 96.2% while the results
+table reports 96.0%. A harder case is a value that appears as 25% in two
+places but with a different denominator in each.</p>
+<p>Number checking therefore has two layers. Scripts ensure that
+computation and transcription agree; the reviewer checks what each
+number means in its context.</p>
+<h2 id="define-each-reported-result">Defining each reported result</h2>
+<p>A reported result carries at least five pieces of information: data
 version, configuration, metric, aggregation and unit. For example: the
 mean final test accuracy of GCE over five seeds with 40% of training
-labels flipped, in percent. This identity is a better key than the
-number itself.</p>
+labels flipped, in percent. This identity is a more reliable key than
+the number itself.</p>
 <pre class="text"><code>Read data/results.csv and list the metrics the paper actually reports.
 For each metric, write the configuration, the denominator in samples or seeds, the aggregation, the unit and where it is output.
 First build the list of calculations for code/make_numbers.py, then generate the text macros and the results table.</code></pre>
-<p>Put the filter conditions in functions, so each paragraph does not
-compute its own. When the abstract needs a rounded figure, derive it
-from the same raw value and record the rounding rule.</p>
-<h2 id="generate-macros-and-tables-from-data">Generate macros and tables
-from data</h2>
+<p>Filter conditions are defined in functions so that individual
+paragraphs do not compute their own values. Where the abstract needs a
+rounded figure, it is derived from the same raw value and the rounding
+rule is recorded.</p>
+<h2 id="generate-macros-and-tables-from-data">Generating macros and
+tables from data</h2>
 <p>In the reference answers, <code>code/make_numbers.py</code> generates
 <code>paper/numbers.tex</code> and the results table. The text refers to
 them through macros:</p>
 <pre class="latex"><code>\input{numbers.tex}
 GCE ends at \gceFinalForty\%.</code></pre>
-<p>When the data change, regenerate first, then compile the whole paper.
-Figures and tables read the same data input. This removes the manual
-copying step.</p>
-<p>Test the chain with one change: copy the data to a test directory,
-change one value of one seed, rebuild the paper, and list every place
-that changed. If the change reached only the table, the abstract is not
-yet connected to the generation process.</p>
-<h2 id="check-that-values-match-their-metrics">Check that values match
-their metrics</h2>
+<p>When the data change, the numbers are regenerated first and the whole
+paper is then compiled. Figures and tables read the same data input,
+which removes manual copying from the process.</p>
+<p>The chain can be tested with a single change: copy the data to a test
+directory, change one value for one seed, rebuild the paper and list
+every place that changed. If the change reached only the table, the
+abstract is not yet connected to the generation process.</p>
+<h2 id="check-that-values-match-their-metrics">Checking that values
+match their metrics</h2>
 <p>The exercise’s <code>check_numbers.py</code> extracts percentages and
 compares them with predefined aggregate values. This small checker
-catches the two deliberately incorrect numbers.</p>
-<p>If the set of candidate values grows too large, errors get through.
-96.2 might happen to appear early on a curve from another configuration.
-A real project can tag each result in the text with a unique metric key,
-then check that key and value match; a set of all values in the
-repository is only good for a first screen.</p>
+detects the two deliberately incorrect numbers.</p>
+<p>When the set of candidate values becomes too large, errors pass
+undetected: 96.2 might happen to occur early on a curve from another
+configuration. A real project can tag each result in the text with a
+unique metric key and check that key and value match; a set of all
+values in the repository is suitable only for an initial screen.</p>
 <pre class="text"><code>Run check_numbers.py on the first draft and on the revised draft, and save the output.
 Pick three numbers and write out the original sentence, the metric key, the filter conditions and the recomputed result.
 Then deliberately move a correct number into a sentence about another configuration, and check whether the existing checker catches it.</code></pre>
-<h2 id="compute-differences-from-unrounded-data">Compute differences
+<h2 id="compute-differences-from-unrounded-data">Computing differences
 from unrounded data</h2>
-<p>Subtract the raw aggregate values of methods A and B, then report at
-a uniform number of digits. Subtracting two already-rounded numbers in a
-table may differ slightly in the last digit; a table note can explain
-that. Statistical analysis and interval estimates always use unrounded
-data.</p>
+<p>Subtract the raw aggregate values of methods A and B, then report the
+result to a uniform number of digits. Subtracting two already-rounded
+values in a table may differ in the last digit, which a table note can
+explain. Statistical analysis and interval estimates always use
+unrounded data.</p>
 <p>From 67.4% to 96.0%, the difference is 28.6 percentage points; a
-relative improvement divides by the former. Have the script keep
-<code>delta_pp</code> and <code>relative_change</code> separately, and
-let the text take values by metric key.</p>
-<h2 id="automate-the-build-and-review-the-meaning">Automate the build
-and review the meaning</h2>
+relative improvement divides by the former value. The script should
+store <code>delta_pp</code> and <code>relative_change</code> separately,
+and the text should retrieve values by metric key.</p>
+<h2 id="automate-the-build-and-review-the-meaning">Automating the build
+and reviewing meaning</h2>
 <p>The build command generates numbers, tables, figures and the PDF in
-turn. The validation command then checks citations, numbers and file
-completeness. Each output keeps the hashes of its input files, so a
+sequence. The validation command then checks citations, numbers and file
+completeness. Each output records the hashes of its input files, so a
 rebuild shows which data were used.</p>
-<p>When reviewing, put the contexts of repeated numbers side by side: is
-the subject the same, is the denominator the same, has a mean been
-written as a single best result, has a standard deviation been written
-as a confidence interval? These checks require reading the numbers in
-context.</p>
+<p>In review, the contexts of repeated numbers are placed side by side:
+whether the subject is the same, whether the denominator is the same,
+whether a mean has been presented as a single best result, and whether a
+standard deviation has been presented as a confidence interval. These
+checks require reading the numbers in context.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Make three deliberate errors: change one value, swap the results of
-two configurations, and turn an accuracy gain into an error-rate drop.
-Each time, record what caught the problem: the generation process, the
-number checker, or a review of meaning. Use this to decide where the
-next check belongs.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<p>Introduce three deliberate errors: change one value, swap the results
+of two configurations, and turn an accuracy gain into an error-rate
+reduction. For each, record which check detected the problem: the
+generation process, the number checker or the review of meaning. Use the
+results to decide where the next check should be placed.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>A number passes because it appears somewhere.</strong>
+<p><strong>Accepting a number because it appears somewhere.</strong>
 Require each result to correspond to a unique configuration and metric,
 and spot-check the raw rows.</p>
 </div>
 <div class="pitfall">
-<p><strong>Analyzing rounded values because subtracting in the table
+<p><strong>Analyzing rounded values because subtraction in the table
 looks tidier.</strong> Compute at full precision, display with uniform
 rounding, and explain last-digit differences in a table note.</p>
 </div>
 <div class="pitfall">
-<p><strong>The generation script overwrote a manual edit.</strong> Mark
-generated files as automatically generated outputs; put the fix into the
-data-processing code, then rebuild.</p>
+<p><strong>A generation script overwriting a manual edit.</strong> Mark
+generated files as automatically generated outputs; make the correction
+in the data-processing code and rebuild.</p>
 </div>
 <p><a href="https://doi.org/10.1371/journal.pcbi.1003285">Ten Simple
 Rules for Reproducible Computational Research</a> can be used to check
-the whole record from data to conclusion.</p>
+the complete record from data to conclusion.</p>
 </article>
 <nav class="pager"><a class="prev" href="writing-story.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.1 论文表达</span><span lang="en">1.1 Structuring a paper</span></a><a class="next" href="writing-figures.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.3 结果绘图</span><span lang="en">1.3 Plotting results</span></a></nav>
 </main>

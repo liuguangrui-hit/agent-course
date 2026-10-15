@@ -30,44 +30,54 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="结果判读">3.3 结果判读</h1>
-<p><span class="meta">课后深入，约 80 分钟。</span></p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>计算并解释配对差值的置信区间，区分差异检验与等价检验的结论及其前提。</li>
+<li>推导对称标签噪声下带噪验证准确率与干净准确率的关系，并说明该推导对实际早停实现的适用范围。</li>
+<li>为竞争解释设计判别实验，区分主要比较与探索性分析，防止多次尝试造成的选择偏差。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 80 分钟。</span></p>
 <p>带噪验证早停比干净验证早停高 0.99
-个百分点。你准备怎样写这句结论？先看差值的不确定性，再看实验是否区分了你关心的解释。</p>
+个百分点。写结论之前，应先看差值的不确定性，再看实验是否区分了所关心的解释。</p>
 <h2 id="配对差值与区间估计">配对差值与区间估计</h2>
 <p>设同一种子下两种方法的差值为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>，共
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>，共有
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 个独立种子。报告配对均值与区间：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>d</mi><mi>i</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>±</mo><msub><mi>t</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mo>,</mo><mn>0.975</mn></mrow></msub><mfrac><msub><mi>s</mi><mi>d</mi></msub><msqrt><mi>n</mi></msqrt></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \bar d=\frac{1}{n}\sum_i d_i,\qquad
 \bar d\pm t_{n-1,0.975}\frac{s_d}{\sqrt n}.
 </annotation></semantics></math></p>
-<p>预览的 CE 四成噪声比较，五个种子的差值标准差约 1.07 个百分点，得到
-95% 区间负 0.34 到
-2.32。这里的区间来自配对差值，不能用两组各自的标准差替代。</p>
-<p>种子数很少时，区间依赖差值分布假设。把每个差值也展示出来，检查异常值与依赖；任务或数据集也有抽样时，按真正独立的单位做分层分析。</p>
+<p>在预览的 CE 四成噪声比较中，五个种子差值的标准差约为 1.07
+个百分点，95% 区间为负 0.34 到
+2.32。该区间由配对差值得到，不能用两组各自的标准差代替。</p>
+<p>种子数很少时，区间依赖于差值分布的假设。应同时展示每个差值，检查异常值与依赖关系；若任务或数据集也经过抽样，应按真正独立的单位做分层分析。</p>
 <h2 id="差异检验与等价检验">差异检验与等价检验</h2>
-<p>区间跨零，当前数据还无法确认正负差异。若研究主张是两种验证方式在实际应用上等价，先给有意义的界，例如正负
-2 个百分点，再做等价检验和样本量设计。</p>
-<p>标准的双单侧等价检验在每侧 5% 水平下，看 90%
+<p>区间跨越零时，现有数据尚不能确定差异的方向。若研究主张两种验证方式在实际应用中等价，须先给出有实际意义的界，例如正负
+2 个百分点，再进行等价检验和样本量设计。</p>
+<p>标准的双单侧等价检验在每侧 5% 水平下，检查 90%
 区间是否完全落在等价界内。95% 区间完全落入是更保守的充分条件。预览的 95%
-区间超过正 2，单凭它不能宣布这个等价主张成立。</p>
-<p>想证明事前提出的等价主张，增加独立重复并降低估计不确定性，保留原先的界。根据结果临时放宽界，会改变要回答的问题。</p>
-<h2 id="带噪验证标签为什么仍能排序">带噪验证标签为什么仍能排序</h2>
-<p>先看一个可以推导的情形。<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+区间上限超过正 2，仅凭它不能认定这一等价主张成立。</p>
+<p>要证明事先提出的等价主张，应增加独立重复以降低估计的不确定性，并保持原定的界。根据结果临时放宽界，会改变所要回答的问题。</p>
+<h2 id="带噪验证标签为什么仍能排序">带噪验证标签仍能排序的原因</h2>
+<p>先看一个可以推导的情形。在
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
 类分类中，验证标签以概率
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>η</mi><annotation encoding="application/x-tex">\eta</annotation></semantics></math>
-均匀翻成其他类别，且翻转独立于输入和预测。某个固定模型的干净验证准确率是
+均匀翻转为其他类别，且翻转与输入和预测相互独立。某个固定模型的干净验证准确率为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>，带噪准确率的期望为：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">̃</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>η</mi><mo stretchy="false" form="postfix">)</mo><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>C</mi><mi>η</mi></mrow><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \tilde a=(1-\eta)a+\frac{\eta}{C-1}(1-a)
 =\left(1-\frac{C\eta}{C-1}\right)a+\frac{\eta}{C-1}.
 </annotation></semantics></math></p>
 <p>当
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>&lt;</mo><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">\eta&lt;(C-1)/C</annotation></semantics></math>，斜率为正，期望上的模型排名保持不变。十分类、四成翻转时，斜率约
-0.556。标签变坏了，平均排序信息仍能留下来，但有限验证集上的噪声会让排序更不稳定。</p>
-<p>练习包的
-<code>verify_noise_identity.py</code>，枚举正确与错误预测下的翻转结果，复算这条等式。再读原实验的早停实现：它监测的是交叉熵，这条准确率等式并没有直接证明该实现的行为。下一步可以比较两种验证指标，再改变噪声生成方式。</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>&lt;</mo><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">\eta&lt;(C-1)/C</annotation></semantics></math>
+时，斜率为正，模型排序在期望意义上保持不变。十分类、四成翻转时，斜率约为
+0.556。标签质量下降后，平均意义上的排序信息仍然保留，但有限验证集上的噪声会使排序更不稳定。</p>
+<p>练习包中的 <code>verify_noise_identity.py</code>
+枚举正确预测与错误预测下的翻转结果，复算这一等式。再阅读原实验的早停实现：它监测的是交叉熵，上述准确率等式并不能直接证明该实现的行为。下一步可以比较两种验证指标，再改变噪声生成方式。</p>
 <h2 id="竞争解释与判别实验">竞争解释与判别实验</h2>
 <table>
 <colgroup>
@@ -79,7 +89,7 @@
 <tr>
 <th>竞争解释</th>
 <th>新增干预</th>
-<th>看什么</th>
+<th>观测指标</th>
 </tr>
 </thead>
 <tbody>
@@ -91,7 +101,7 @@
 <tr>
 <td>提前停止本身已经足够</td>
 <td>预先抽取随机停止轮次，匹配平均训练预算</td>
-<td>验证选择是否超过随机选择</td>
+<td>验证选择是否优于随机选择</td>
 </tr>
 <tr>
 <td>对称噪声结构保留了信号</td>
@@ -100,75 +110,88 @@
 </tr>
 </tbody>
 </table>
-<p>先登记每种解释的预测，再执行，按表中的观测决定下一项实验。</p>
+<p>先登记每种解释的预测，再执行实验，按表中的观测决定下一项实验。</p>
 <h2 id="多次尝试的完整记录">多次尝试的完整记录</h2>
-<p>试十种设置只展示最好的一种，会把随机波动变成方法优势。计划中指定主要比较；其余作为探索性分析保留全部尝试，新的发现再用独立数据或新种子确认。</p>
-<p>效果依赖某个设置时，先问什么机制预测了这个依赖。增加跨条件实验，报告交互作用，避免只按显著与否分组。</p>
+<p>尝试十种设置却只展示最好的一种，会把随机波动呈现为方法优势。计划中应指定主要比较；其余尝试作为探索性分析全部保留，新发现须用独立数据或新种子确认。</p>
+<p>效果依赖于某种设置时，先追问什么机制预测了这种依赖。增加跨条件实验，报告交互作用，避免只按显著与否分组。</p>
 <h2 id="练习">练习</h2>
-<p>运行包内等式核验，再提出一个交叉熵早停与准确率选轮次可能不同的情形。写明要新增哪列曲线，怎样配对分析，什么结果会改变解释。可用同一训练轨迹比较选择规则，测试集只用于最终报告。</p>
+<p>运行包内的等式核验，再提出一种交叉熵早停与准确率选轮次可能给出不同结果的情形。写明需要新增哪一列曲线，怎样配对分析，以及什么结果会改变解释。可以用同一训练轨迹比较不同选择规则，测试集只用于最终报告。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>用测试曲线最高点当可实现算法。</strong>
-这可以描述轨迹或给事后参照，实际选择必须由事前允许的信息完成。</p>
+<p><strong>把测试曲线的最高点当作可实现的算法。</strong>
+它可以描述轨迹或作为事后参照，实际选择必须依据事前允许使用的信息。</p>
 </div>
 <div class="pitfall">
-<p><strong>期望排序推导直接代替有限样本实验。</strong>
-增加验证集规模和噪声类型的对照，测排名稳定性。</p>
+<p><strong>用期望排序的推导代替有限样本实验。</strong>
+增加验证集规模和噪声类型的对照，测量排序稳定性。</p>
 </div>
 <div class="pitfall">
-<p><strong>主要比较失败就换一个显著结果讲。</strong>
-保留主比较结论，探索性发现用下一次独立实验确认。</p>
+<p><strong>主要比较失败后，改为报告另一个显著结果。</strong>
+保留主要比较的结论，探索性发现用下一次独立实验确认。</p>
 </div>
 </article>
 <article lang="en"><h1 id="interpreting-results">3.3 Interpreting results</h1>
-<p><span class="meta">After-class deep dive, about 80
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Compute and interpret a paired mean difference and its interval,
+identifying the independent unit of replication.</li>
+<li>Distinguish a test of difference from a test of equivalence, and
+specify the margin and procedure an equivalence claim requires.</li>
+<li>Analyze, under stated assumptions, why noisy validation labels can
+preserve model rankings, and design controls that distinguish the
+competing mechanisms.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 80
 minutes.</span></p>
 <p>Accuracy with early stopping on noisy validation is 0.99 percentage
-points higher than with early stopping on clean validation. How will you
-write that conclusion? First look at the uncertainty of the difference,
-then at whether the experiment separated the explanations you care
-about.</p>
-<h2 id="estimate-paired-differences-and-intervals">Estimate paired
+points higher than with early stopping on clean validation. Before this
+result can be stated as a conclusion, two questions must be answered:
+how uncertain the difference is, and whether the experiment separated
+the explanations of interest.</p>
+<h2 id="estimate-paired-differences-and-intervals">Estimating paired
 differences and intervals</h2>
-<p>Let the difference between the two methods under the same seed be
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>,
-over
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>
+be the difference between the two methods under the same seed, over
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-independent seeds. Report the paired mean and interval:</p>
+independent seeds. The paired mean and interval are:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>d</mi><mi>i</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>±</mo><msub><mi>t</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mo>,</mo><mn>0.975</mn></mrow></msub><mfrac><msub><mi>s</mi><mi>d</mi></msub><msqrt><mi>n</mi></msqrt></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \bar d=\frac{1}{n}\sum_i d_i,\qquad
 \bar d\pm t_{n-1,0.975}\frac{s_d}{\sqrt n}.
 </annotation></semantics></math></p>
 <p>In the preview’s CE comparison at 40% noise, the standard deviation
 of the differences over five seeds is about 1.07 percentage points,
-giving a 95% interval of minus 0.34 to 2.32. This interval comes from
-the paired differences; it cannot be replaced by each group’s own
+giving a 95% interval from minus 0.34 to 2.32. This interval is computed
+from the paired differences and cannot be replaced by each group’s own
 standard deviation.</p>
 <p>With very few seeds, the interval depends on assumptions about the
-distribution of differences. Show each difference as well, and check for
-outliers and dependence; when tasks or datasets are also sampled, do a
-stratified analysis by the truly independent unit.</p>
-<h2
-id="distinguish-tests-of-difference-from-tests-of-equivalence">Distinguish
-tests of difference from tests of equivalence</h2>
-<p>When the interval crosses zero, the current data cannot yet confirm a
-positive or negative difference. If the research claim is that the two
-validation approaches are equivalent in practice, first give a
-meaningful margin, such as plus or minus 2 percentage points, then do an
-equivalence test and sample-size planning.</p>
+distribution of the differences. Report each difference as well, and
+check for outliers and dependence; when tasks or datasets are also
+sampled, stratify the analysis by the truly independent unit.</p>
+<h2 id="distinguish-tests-of-difference-from-tests-of-equivalence">Tests
+of difference and tests of equivalence</h2>
+<p>When the interval includes zero, the current data cannot yet
+establish a positive or negative difference. If the research claim is
+that the two validation approaches are equivalent in practice, a
+meaningful margin must first be specified, such as plus or minus 2
+percentage points, followed by an equivalence test and sample-size
+planning.</p>
 <p>The standard two one-sided tests procedure, at the 5% level on each
 side, checks whether the 90% interval lies entirely within the
-equivalence margin. A 95% interval lying entirely inside is a more
-conservative sufficient condition. The preview’s 95% interval goes
-beyond plus 2, so on its own it cannot establish this equivalence
-claim.</p>
-<p>To prove an equivalence claim stated in advance, add independent
-replications and reduce the uncertainty of the estimate, keeping the
-original margin. Widening the margin on the spot in light of the result
-changes the question being answered.</p>
+equivalence margin. A 95% interval lying entirely within the margin is a
+more conservative sufficient condition. The preview’s 95% interval
+extends beyond plus 2, so on its own it cannot establish this
+equivalence claim.</p>
+<p>To establish an equivalence claim stated in advance, add independent
+replications and reduce the uncertainty of the estimate while keeping
+the original margin. Widening the margin after seeing the result changes
+the question being answered.</p>
 <h2 id="why-noisy-validation-labels-can-preserve-model-rankings">Why
 noisy validation labels can preserve model rankings</h2>
-<p>Start with a case we can analyze mathematically. In
+<p>Begin with a case that can be analyzed mathematically. In
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>-class
 classification, validation labels are flipped uniformly to the other
 classes with probability
@@ -183,18 +206,19 @@ the expected noisy accuracy is:</p>
 </annotation></semantics></math></p>
 <p>When
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>&lt;</mo><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">\eta&lt;(C-1)/C</annotation></semantics></math>,
-the slope is positive and the expected ranking of models stays the same.
-With ten classes and 40% flips, the slope is about 0.556. The labels got
-worse, but the average ranking information survives; noise on a finite
-validation set still makes the ranking less stable.</p>
+the slope is positive and the expected ranking of models is preserved.
+With ten classes and 40% flips, the slope is about 0.556. Although the
+labels are degraded, the ranking information is preserved in
+expectation; on a finite validation set, noise still makes the ranking
+less stable.</p>
 <p>The exercise package’s <code>verify_noise_identity.py</code>
 enumerates the flip outcomes under correct and incorrect predictions and
-recomputes this identity. Then read the early-stopping implementation of
-the original experiment: it monitors cross-entropy, and this accuracy
-identity does not directly prove how that implementation behaves. A next
-step is to compare the two validation metrics, then change how the noise
-is generated.</p>
-<h2 id="design-controls-that-distinguish-mechanisms">Design controls
+recomputes this identity. The early-stopping implementation of the
+original experiment should then be read: it monitors cross-entropy, so
+this accuracy identity does not directly establish how that
+implementation behaves. A next step is to compare the two validation
+metrics and then to change how the noise is generated.</p>
+<h2 id="design-controls-that-distinguish-mechanisms">Designing controls
 that distinguish mechanisms</h2>
 <table>
 <colgroup>
@@ -206,22 +230,22 @@ that distinguish mechanisms</h2>
 <tr>
 <th>Competing explanation</th>
 <th>New intervention</th>
-<th>What to look at</th>
+<th>Observation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Validation labels still keep ranking information</td>
+<td>Validation labels still retain ranking information</td>
 <td>Raise validation noise step by step, with the training trajectory
 fixed</td>
-<td>How the quality of the chosen epoch and the rank correlation
+<td>How the quality of the selected epoch and the rank correlation
 decline</td>
 </tr>
 <tr>
-<td>Stopping early is already enough by itself</td>
+<td>Stopping early is sufficient by itself</td>
 <td>Draw random stopping epochs in advance, matching the average
 training budget</td>
-<td>Whether validation-based selection beats random selection</td>
+<td>Whether validation-based selection outperforms random selection</td>
 </tr>
 <tr>
 <td>The symmetric noise structure preserved the signal</td>
@@ -230,42 +254,43 @@ training budget</td>
 </tr>
 </tbody>
 </table>
-<p>First record each explanation’s prediction in advance, then run, and
-decide the next experiment from the observations in the table.</p>
-<h2 id="record-all-experimental-attempts">Record all experimental
+<p>Record each explanation’s prediction in advance, then run the
+experiment, and decide the next experiment from the observations in the
+table.</p>
+<h2 id="record-all-experimental-attempts">Recording all experimental
 attempts</h2>
-<p>Trying ten settings and showing only the best turns random
-fluctuation into a method advantage. Name the main comparison in the
-plan; keep all other attempts as exploratory analysis, and confirm new
-findings with independent data or new seeds.</p>
+<p>Trying ten settings and reporting only the best turns random
+fluctuation into an apparent method advantage. The plan names the main
+comparison; all other attempts are kept as exploratory analysis, and new
+findings are confirmed with independent data or new seeds.</p>
 <p>When an effect depends on a setting, first ask which mechanism
 predicted that dependence. Add cross-condition experiments and report
 the interaction, rather than sorting results into significant and not
 significant.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Run the identity check in the package, then propose a case where
+<p>Run the identity check in the package, then propose a case in which
 cross-entropy early stopping and accuracy-based epoch selection might
-differ. State which additional curve you would record, how to analyze it
-in pairs, and which result would change the explanation. You can compare
-selection rules on the same training trajectory; the test set is used
-only for the final report.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+differ. State which additional curve would be recorded, how it would be
+analyzed in pairs and which result would change the explanation.
+Selection rules can be compared on the same training trajectory; the
+test set is used only for the final report.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
 <p><strong>Treating the peak of the test curve as an achievable
 algorithm.</strong> It can describe the trajectory or serve as a
-post-hoc reference, but the actual selection must use only information
-allowed in advance.</p>
+post-hoc reference, but the actual selection may use only information
+available in advance.</p>
 </div>
 <div class="pitfall">
-<p><strong>Letting the derivation of the expected ranking replace a
-finite-sample experiment.</strong> Add controls on validation-set size
+<p><strong>Letting the derivation of the expected ranking substitute for
+a finite-sample experiment.</strong> Add controls on validation-set size
 and noise type, and measure ranking stability.</p>
 </div>
 <div class="pitfall">
 <p><strong>Switching to a significant result when the main comparison
 fails.</strong> Keep the conclusion of the main comparison, and confirm
-exploratory findings with the next independent experiment.</p>
+exploratory findings in the next independent experiment.</p>
 </div>
 </article>
 <nav class="pager"><a class="prev" href="experiment-server.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.2 服务器与后台任务</span><span lang="en">3.2 Servers and background jobs</span></a><a class="next" href="automate.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4 自动化</span><span lang="en">4 Research automation</span></a></nav>

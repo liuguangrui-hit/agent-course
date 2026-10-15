@@ -33,177 +33,204 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="论文表达">1.1 论文表达</h1>
-<p><span class="meta">课后深入，约 45 分钟。</span></p>
-<p>同一份数据既可以按实验逐项报告，也可以围绕一个发现展开。动笔之前，先确定希望读者记住什么。</p>
-<h2 id="选择核心发现">选择核心发现</h2>
-<p>练习里可以比较 GCE
-与交叉熵的最终准确率，也可以从训练轨迹开篇。前一种开法马上进入方法排名；后一种先让读者看到网络早期表现好、后期退步，再追问怎样保住已经学到的答案。</p>
-<p>选择一个开头，同时给后文分配职责。解释时间变化的曲线先出场，比较噪声水平的图随后出场，方法细节放在读者需要它的时候。暂时放不进主线的材料，先移到提纲之外，判断它是否回答了一个独立问题。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>比较同一结果的不同开篇，选择能引出研究问题的核心发现，并据此为后文各部分分配论证职责。</li>
+<li>分析范文段落的叙事功能，把这些功能迁移到自己的材料上，而不模仿其句式。</li>
+<li>对照重写前后的数据事实、标题与核心主张，检查重写是否保持了完整性。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 45 分钟。</span></p>
+<p>同一份数据既可以按实验逐项报告，也可以围绕一个发现展开论证。动笔之前，应先确定希望读者记住什么。</p>
+<h2 id="选择核心发现">核心发现的选择</h2>
+<p>以练习材料为例，可以从 GCE
+与交叉熵的最终准确率比较开篇，也可以从训练轨迹开篇。前一种写法直接进入方法排名；后一种先呈现网络早期表现良好、后期退步，再追问怎样保住已经学到的内容。</p>
+<p>选定开篇，也就为后文分配了职责。解释时间变化的曲线先出现，比较噪声水平的图随后出现，方法细节在读者需要时再交代。暂时放不进主线的材料先移出提纲，再判断它是否回答了一个独立的问题。</p>
 <pre class="text"><code>读完整稿件和结果。给三个开篇候选，每个说明读者最自然的下一问，以及哪张图能回答。
 挑其中一条，按问题与回答写全文提纲。每段只写一句结论和一个证据入口。</code></pre>
 <h2 id="标题与摘要">标题与摘要</h2>
-<p>标题要让大同行知道研究改变了什么认识。比较三个候选：一个说研究对象，一个说方法，一个直接说发现。读给同方向的同学听，看看哪一个能让对方提出与论文相关的问题。</p>
-<p>摘要可以沿五步展开：先给核心现象，接着点出解释，再说怎样检验，给关键结果，最后落到这项发现改变的选择。不同论文可以调整这五步；每一步都要有具体内容。</p>
-<p>以练习为例，开篇可以直接写网络很早找到正确答案，继续训练却退步。随后用训练曲线给读者一个具体画面，再引入损失函数怎样分配学习力度。把普遍背景压到理解这个现象所需的程度。</p>
-<h2 id="结果节按读者的疑问排">结果节按读者的疑问排</h2>
-<p>让每节开头先给这一节的回答，然后给证据。一个适合练习的顺序是：</p>
+<p>标题应让相关领域的读者知道研究改变了哪项认识。可以比较三个候选：一个陈述研究对象，一个陈述方法，一个直接陈述发现。读给同方向的同学听，观察哪一个能让对方提出与论文内容相关的问题。</p>
+<p>摘要可按五个步骤展开：核心现象，解释，检验方式，关键结果，以及这项发现所影响的研究选择。不同论文可以调整这五步，但每一步都要有具体内容。</p>
+<p>以练习论文为例，开篇可以直接陈述网络很早就学到正确答案，继续训练却出现退步。随后用训练曲线给出具体证据，再引入损失函数怎样分配学习力度。一般性背景只保留到理解这一现象所必需的程度。</p>
+<h2 id="结果节按读者的疑问排">按读者疑问安排结果节</h2>
+<p>每节开头先给出本节的结论，再给出证据。练习论文可采用如下顺序：</p>
 <ol type="1">
 <li>展示先上升后下降的训练轨迹，确认现象。</li>
-<li>比较不同损失留下的最终表现，提出解释。</li>
-<li>改变噪声比例，检查解释能否继续组织结果。</li>
-<li>讨论早停与样本选择怎样进一步区分解释。</li>
+<li>比较不同损失的最终表现，提出解释。</li>
+<li>改变噪声比例，检验该解释能否继续说明结果。</li>
+<li>讨论早停与样本选择怎样进一步区分不同解释。</li>
 </ol>
 <p>第 4
-步自然通向后续课程。文章的推进来自尚未被回答的问题，结尾因此能指出下一项有价值的实验。</p>
-<h2 id="范文的段落功能">范文的段落功能</h2>
-<p>读范文时，在每段旁边写它做了什么：建立矛盾，提出核心想法，排除另一种解释，或交代实现。随后用自己的材料完成相应的叙事功能。</p>
+步自然衔接后续课程。论文的推进依靠尚未回答的问题，结尾因此可以指出下一项有价值的实验。</p>
+<h2 id="范文的段落功能">范文的段落功能分析</h2>
+<p>阅读范文时，在每段旁注明它承担的功能：建立矛盾，提出核心想法，排除另一种解释，或交代实现细节。随后用自己的材料完成相应的叙事功能。</p>
 <pre class="text"><code>为 exemplar/ 中的范文做一张段落作用表，概括作用，不摘抄句子。
 再看自己的提纲：哪些段落反复承担同一个作用，哪些关键追问还没有回答？
 重排提纲后，另起一稿写开篇和第一个结果小节。</code></pre>
-<h2 id="重讲后的完整性核查">重讲后的完整性核查</h2>
-<p>把原稿的数据事实做成一页记录，另列用户此前纠正过的问题。重讲后逐项核对：数字的对象和分母是否一样，方法是否仍可复现，读者是否能从主张走到对应证据。</p>
-<p>把标题和核心主张在前后版本中并排列出，检查是否还在回答同一个问题。审阅意见怎样处理，见
+<h2 id="重讲后的完整性核查">重写后的完整性核查</h2>
+<p>把原稿的数据事实整理为一页记录，另列此前用户已纠正过的问题。重写后逐项核对：数字的对象和分母是否一致，方法是否仍可复现，读者能否从每项主张找到对应证据。</p>
+<p>把前后版本的标题和核心主张并排列出，检查它们是否仍在回答同一个问题。审阅意见的处理见
 <a href="writing-review.html">1.4 审稿返修</a>。</p>
 <h2 id="练习">练习</h2>
-<p>给同一个发现写三种开头：从结果开始，从一个例子开始，从竞争解释开始。请一位没有参加写作的读者读，然后只问对方下一步想知道什么。</p>
+<p>为同一个发现写三种开头：从结果开始，从一个例子开始，从竞争解释开始。请一位未参与写作的读者阅读，只询问对方接下来想知道什么。</p>
 <details>
 <summary>
-怎样判断
+判断标准
 </summary>
-<p>如果对方追问的是论文接下来能回答的问题，这个开头已经建立推进。若对方先问某个缩写是什么意思，补足必要背景；若对方只说做了很多工作，核心发现还不够清楚。</p>
+<p>如果读者追问的是论文后文能够回答的问题，这个开头已经建立了论证推进。若读者先问某个缩写的含义，应补足必要背景；若读者只感到做了很多工作，说明核心发现仍不够清楚。</p>
 </details>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>提纲只有话题，没有回答。</strong>
-把方法比较改成一句能被数据检验的结论，再决定用哪项证据展开。</p>
+<p><strong>提纲只列话题，没有结论。</strong>
+把方法比较改写成一句可由数据检验的结论，再决定用哪项证据展开。</p>
 </div>
 <div class="pitfall">
-<p><strong>范文变成句式模仿。</strong>
-要求它交段落作用表，再用自己的发现重新写。让读者理解并记住研究内容。</p>
+<p><strong>把范文分析变成句式模仿。</strong> 要求 Agent
+提交段落作用表，再用自己的发现重新写作，使读者理解并记住研究内容。</p>
 </div>
 <div class="pitfall">
-<p><strong>每轮返修只看最近的意见。</strong>
-把历次用户纠正汇成一页，重讲前重读，完稿后逐项查回归。</p>
+<p><strong>每轮返修只看最近一轮意见。</strong>
+把历次用户纠正汇总为一页，重写前重读，完稿后逐项检查是否出现回退。</p>
 </div>
-<h2 id="继续读">继续读</h2>
+<h2 id="继续读">延伸阅读</h2>
 <p><a href="https://www.microsoft.com/en-us/research/?p=186470">Simon
-Peyton Jones 的写作讲座</a>适合对照提纲；<a
+Peyton Jones 的写作讲座</a>可用于对照提纲；<a
 href="https://prod.lsa.umich.edu/content/dam/sweetland-assets/sweetland-documents/Graduates/DWG/The-Science-of-Scientific-Writing.pdf">Gopen
 与 Swan 的 The Science of Scientific
-Writing</a>可用来检查句子给读者的期待。</p>
+Writing</a>可用于检查句子结构给读者造成的预期。</p>
 </article>
 <article lang="en"><h1 id="structuring-a-paper">1.1 Structuring a paper</h1>
-<p><span class="meta">After-class deep dive, about 45
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Compare candidate openings for the same results by the questions
+each leads a reader to ask, and select a central finding on that
+basis.</li>
+<li>Analyze the argumentative function of each paragraph in an exemplar
+and reproduce that structure with different material.</li>
+<li>Check that a restructured paper preserves every factual result and
+the scope of its title and core claims.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 45
 minutes.</span></p>
-<p>You can present the same data as a list of experiments or build a
-paper around a finding readers want to understand. Before writing,
-decide what you want readers to remember.</p>
-<h2 id="choose-a-finding-to-lead-with">Choose a finding to lead
-with</h2>
-<p>In the exercise you could compare the final accuracy of GCE and
-cross-entropy, or you could open with the training trajectory. The first
-opening goes straight into a ranking of methods; the second shows the
-reader that the network does well early and gets worse later, then asks
-how to keep the answers it has already learned.</p>
-<p>Choosing an opening also assigns jobs to what follows. The curve that
-explains change over time comes first, the figure comparing noise levels
-follows, and method details appear when the reader needs them. Material
-that does not yet fit the main argument moves outside the outline for
-now, while you judge whether it answers a separate question.</p>
+<p>The same data can be presented as a list of experiments or as an
+argument built around a finding that readers want to understand. The
+decision about what readers should remember precedes the writing.</p>
+<h2 id="choose-a-finding-to-lead-with">Selecting the leading
+finding</h2>
+<p>In the exercise paper, the opening could compare the final accuracy
+of GCE and cross-entropy, or it could begin with the training
+trajectory. The first option leads directly into a ranking of methods.
+The second shows that the network performs well early and deteriorates
+later, and then asks how the correct answers learned early can be
+retained.</p>
+<p>The choice of opening also assigns roles to what follows. The curve
+that explains change over time comes first, the figure comparing noise
+levels follows, and method details appear where the reader needs them.
+Material that does not yet serve the main argument is set aside while
+the author judges whether it answers a separate question.</p>
 <pre class="text"><code>Read the whole draft and the results. Give three candidate openings, and for each say what the reader would most naturally ask next and which figure answers it.
 Choose one and write an outline of the full paper as questions and answers. For each paragraph, write one sentence stating its conclusion and identify the supporting evidence.</code></pre>
 <h2 id="writing-the-title-and-abstract">Writing the title and
 abstract</h2>
 <p>The title should tell readers in neighboring fields how the research
-changes our understanding. Compare three candidates: one names the
-object of study, one names the method, one states the finding directly.
-Read them to a classmate in the same area and see which one leads them
-to ask a question the paper deals with.</p>
-<p>An abstract can unfold in five steps: give the core phenomenon, point
-to the explanation, say how it was tested, give the key result, and end
-on the decision this finding informs. Different papers can adjust the
-five steps; each step needs specific content.</p>
-<p>In the exercise, the opening can say directly that the network finds
-the right answers early, yet gets worse with further training. The
-training curve then gives the reader a concrete picture, followed by how
-the loss function distributes learning effort. Cut general background
-down to what is needed to understand the phenomenon.</p>
-<h2 id="order-the-results-by-the-readers-questions">Order the results by
+changes their understanding. Compare three candidates: one naming the
+object of study, one naming the method and one stating the finding
+directly. A useful test is to read them to a colleague in the same area
+and observe which one prompts a question the paper actually
+addresses.</p>
+<p>An abstract can proceed in five steps: state the core phenomenon,
+indicate the explanation, describe how it was tested, give the key
+result, and close with the decision the finding informs. The steps can
+be adapted to different papers, but each must contain specific
+content.</p>
+<p>In the exercise, the opening can state directly that the network
+finds the correct answers early and deteriorates with further training.
+The training curve then gives the reader a concrete picture, followed by
+an account of how the loss function distributes learning effort. General
+background is reduced to what is needed to understand the
+phenomenon.</p>
+<h2 id="order-the-results-by-the-readers-questions">Ordering results by
 the reader’s questions</h2>
-<p>Start each section with that section’s answer, then give the
-evidence. One order that suits the exercise:</p>
+<p>Each section begins with its answer and then gives the evidence. One
+order suited to the exercise is:</p>
 <ol type="1">
-<li>Show the training trajectory that rises and then falls, confirming
+<li>Show the training trajectory that rises and then falls, establishing
 the phenomenon.</li>
-<li>Compare the final performance achieved with different losses, and
+<li>Compare the final performance obtained with different losses, and
 propose an explanation.</li>
-<li>Change the noise rate and check whether the explanation still
-accounts for the results.</li>
-<li>Discuss how early stopping and sample selection could separate
-explanations further.</li>
+<li>Vary the noise rate and check whether the explanation still accounts
+for the results.</li>
+<li>Discuss how early stopping and sample selection could further
+separate the explanations.</li>
 </ol>
-<p>Step 4 leads naturally into later lessons. A paper moves forward
-through questions not yet answered, so its ending can point to the next
-experiment worth doing.</p>
-<h2 id="analyze-each-paragraphs-role">Analyze each paragraph’s role</h2>
-<p>When reading the exemplar, write beside each paragraph what it does:
-sets up a tension, proposes the core idea, rules out another
-explanation, or explains the implementation. Then use your own material
-to do the same narrative job.</p>
+<p>Step 4 leads into later sessions of the course. A paper advances
+through questions not yet answered, so its conclusion can identify the
+next experiment worth doing.</p>
+<h2 id="analyze-each-paragraphs-role">Analyzing paragraph functions</h2>
+<p>When reading the exemplar, note beside each paragraph the function it
+serves: establishing a tension, proposing the core idea, ruling out an
+alternative explanation, or explaining the implementation. The same
+functions are then carried out with the student’s own material.</p>
 <pre class="text"><code>Make a table of paragraph functions for the exemplar in exemplar/, summarizing each job without copying sentences.
 Then look at my outline: which paragraphs repeat the same job, and which key follow-up questions are still unanswered?
 After reordering the outline, write the opening and the first results subsection as a new draft.</code></pre>
-<h2 id="check-completeness-after-restructuring">Check completeness after
-restructuring</h2>
-<p>Put the factual results in the original draft on one page, and list
-separately the problems the user has corrected before. After
-restructuring, check each item: is each number about the same object
-with the same denominator, can the method still be reproduced, can the
-reader get from each claim to its evidence?</p>
-<p>List the title and core claims of the old and new versions side by
-side and check that they still answer the same question. For how to
-handle review comments, see <a href="writing-review.html">1.4 Peer
+<h2 id="check-completeness-after-restructuring">Checking completeness
+after restructuring</h2>
+<p>Collect the factual results of the original draft on one page, and
+list separately the problems the user has corrected previously. After
+restructuring, check each item: whether each number still refers to the
+same object with the same denominator, whether the method can still be
+reproduced, and whether a reader can get from each claim to its
+evidence.</p>
+<p>Place the title and core claims of the old and new versions side by
+side and confirm that they still answer the same question. The handling
+of review comments is covered in <a href="writing-review.html">1.4 Peer
 review and revision</a>.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Write three openings for the same finding: one starting from the
-result, one from an example, one from a competing explanation. Have a
-reader who did not take part in the writing read them, then ask them
-only what they want to know next.</p>
+result, one from an example and one from a competing explanation. Give
+them to a reader who was not involved in the writing, and ask only what
+they would want to know next.</p>
 <details>
 <summary>
-How to judge
+Assessment criteria
 </summary>
-<p>If they ask about something the paper goes on to answer, the opening
-gives readers a reason to continue. If they first ask what an
-abbreviation means, add the necessary background; if they only say a lot
-of work was done, the core finding is still unclear.</p>
+<p>If the reader asks about something the paper goes on to answer, the
+opening gives a reason to continue. If the reader first asks what an
+abbreviation means, the necessary background is missing; if the reader
+says only that a great deal of work was done, the core finding is still
+unclear.</p>
 </details>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>The outline has only topics, no answers.</strong> Turn the
+<p><strong>An outline of topics without answers.</strong> Turn the
 method comparison into one conclusion the data can test, then decide
 which evidence develops it.</p>
 </div>
 <div class="pitfall">
-<p><strong>The exemplar turns into imitation of sentence
-patterns.</strong> Ask for a table of paragraph functions, then rewrite
-with your own finding. Readers should remember the research; the prose
-should guide them through it.</p>
+<p><strong>Imitating the exemplar’s sentence patterns.</strong> Ask for
+a table of paragraph functions, then rewrite with the paper’s own
+finding. Readers should remember the research; the prose should guide
+them through it.</p>
 </div>
 <div class="pitfall">
-<p><strong>Each round of revision looks only at the latest
-comments.</strong> Collect all the user’s past corrections on one page,
-reread it before restructuring, and check each for regressions after
-finishing.</p>
+<p><strong>Addressing only the latest comments in each
+revision.</strong> Collect all of the user’s past corrections on one
+page, reread it before restructuring and check each item for regressions
+afterwards.</p>
 </div>
 <h2 id="further-reading">Further reading</h2>
 <p><a href="https://www.microsoft.com/en-us/research/?p=186470">Simon
-Peyton Jones’s talk on writing</a> is good to compare against an
+Peyton Jones’s talk on writing</a> is useful to compare against an
 outline; <a
 href="https://prod.lsa.umich.edu/content/dam/sweetland-assets/sweetland-documents/Graduates/DWG/The-Science-of-Scientific-Writing.pdf">Gopen
-and Swan’s The Science of Scientific Writing</a> helps check what each
-sentence leads the reader to expect.</p>
+and Swan’s The Science of Scientific Writing</a> helps to check what
+each sentence leads the reader to expect.</p>
 </article>
 <nav class="pager"><a class="prev" href="writing.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1 写作绘图</span><span lang="en">1 Writing and figures</span></a><a class="next" href="writing-numbers.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.2 数据核查</span><span lang="en">1.2 Checking the numbers</span></a></nav>
 </main>

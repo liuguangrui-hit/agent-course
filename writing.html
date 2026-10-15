@@ -33,49 +33,54 @@
 </nav>
 <main>
 <article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ Python 环境</span><span class="chip new">+ LaTeX</span><span class="chip new">+ PDF 渲染</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skill</span></div><h1 id="写作绘图">1 写作绘图</h1>
+<h2 id="本节课目标">本节课目标</h2>
 <div class="goal">
-<p>把一篇重点不清的四页论文，重写为围绕核心发现展开的稿子。完成重讲稿和两张重新生成的数据图，取得独立编辑审稿意见，并提炼下次可调用的
-paper-retell Skill。</p>
+<p>完成本节课堂训练及课后练习后，学生应能：</p>
+<ol type="1">
+<li>从实验结果中识别核心发现，并按读者依次产生的问题组织论证顺序。</li>
+<li>将论文中的数字、表格与图追溯至数据行、配置和统计口径，判断图文是否一致。</li>
+<li>依据图所要回答的比较设计数据图，并在最终版面尺寸下检验其可读性和不确定性表达。</li>
+<li>设计职责、输入范围和审阅版本明确的独立审阅，并区分审阅完成与审阅通过。</li>
+<li>将有效的修订方法抽象为可复用规范，并在另一份研究材料上检验其迁移。</li>
+</ol>
+<p>课堂训练前四项能力的初步运用；按意见返修和第五项的迁移检验在课后独立完成。</p>
 </div>
-<p><span class="meta">课前完成准备，课上 60
-分钟，课后先复习再选做深入。</span></p>
+<p><span class="meta">课前完成准备，课堂 60
+分钟，课后完成复习、独立实践与迁移评价，另可选做深入专题。</span></p>
 <div class="stage-nav">
-<p><a href="#课前预备">课前预备</a> · <a
-href="#课上一小时">课上一小时</a> · <a
-href="#课后复习与拔高">课后复习与拔高</a></p>
+<p><a href="#课前预备">课前准备</a> · <a href="#课上一小时">课堂教学</a>
+· <a href="#课后复习与拔高">课后复习与扩展</a></p>
 </div>
-<p>训练标签错了四成，网络却很早就找到了大部分正确答案。继续训练，测试表现反而掉下去。练习论文把这个现象埋在背景和方法清单之后，读完摘要还不知道为什么值得看。</p>
-<p>这一课让 Agent
-围绕这个发现重写论文。材料中的实验已在本机跑过，原数据和运行脚本都在包里。课堂使用现成数据，把时间留给论文表达与核查。</p>
+<p>本节以一篇关于标签噪声学习的四页练习论文为分析材料。实验中训练标签有四成错误，网络在训练早期已能对大部分样本作出正确预测；继续训练后，测试表现反而下降。练习稿把这一现象放在背景介绍和方法清单之后，读者读完摘要仍不清楚研究的贡献。课程借此讨论两个问题：怎样围绕核心发现重新组织论文，以及怎样核查文本、图表与数据的一致性。</p>
+<p>材料中的实验已在本机完成，原始数据和运行脚本随材料提供。课堂直接使用现成数据，时间集中在论文表达与结果核查上。</p>
 <div class="download">
 <p><a href="downloads/lesson-1-zh.zip">下载练习材料</a> · <a
-href="downloads/lesson-1-answers-zh.zip">做完再看参考答案</a></p>
+href="downloads/lesson-1-answers-zh.zip">完成练习后查看参考答案</a></p>
 </div>
-<h2 id="课前预备">课前预备</h2>
-<p><span class="meta">预留 30 至 90 分钟，主要取决于 LaTeX
-下载。首次安装可提前一天开始。</span></p>
+<h2 id="课前预备">课前准备</h2>
+<p><span class="meta">预留 30 至 90 分钟，所需时间主要取决于 LaTeX
+下载。首次安装建议提前一天开始。</span></p>
 <div class="install">
-<p><strong>课前工具准备。</strong> Python 项目环境，LaTeX 和 PDF
-渲染器在这一步装好。课堂从已有论文开始，共同完成重讲与绘图，再做独立审稿。</p>
+<p><strong>课前工具准备。</strong> 本步骤安装 Python 项目环境、LaTeX 和
+PDF 渲染器。课堂从已有论文出发，依次完成重写、绘图和独立审阅。</p>
 </div>
 <pre class="text"><code>在 lesson-1 工作，读 AGENTS.md，保留原稿和 data/。
 检查 Python 项目环境，运行 code/plot_draft.py，编译 paper/main.tex，再把第一页渲染成图片。
 缺工具时报告官方来源、安装位置与下载体积，安装到约定位置，实际运行后再记录为可用。
 从官方入口取得 arXiv 1611.03530 的范文到 exemplar/，确认 PDF 能打开、标题与标识相符，先不分析讲法。
 把实际运行命令、页数和错误信息写到 preflight.md；稳定调用方法写入 AGENTS.md。</code></pre>
-<p>带到课堂的四项结果：能读
-CSV，能生成图，能编译原稿，能打开渲染页。另备好范文原件。<code>CLAUDE.md</code>
+<p>课前应确认四项结果：能读取
+CSV，能生成图，能编译原稿，能打开渲染页，并备好范文原件。<code>CLAUDE.md</code>
 用一行 <code>@AGENTS.md</code> 导入同一份约定，两家 Agent
 都从材料根目录启动。</p>
-<p>安装卡住时，把错误码和系统信息提前交给老师。课堂可先用包内
+<p>安装受阻时，应在课前把错误码和系统信息提交给授课教师。课堂可先用包内
 <code>preview/before.pdf</code>
-与两张成品对照图练讲法，记录尚未完成的编译检查，课后补做。不要在开课后重新下载整套
+与两张成品对照图练习论文表达，未完成的编译检查记为待补，课后完成。开课后不要重新下载整套
 LaTeX。</p>
-<h2 id="课上一小时">课上一小时</h2>
-<h3 id="先看同一份研究的两种讲法5-分钟">先看同一份研究的两种讲法，5
-分钟</h3>
-<p>打开课前的
-preflight.md，确认编译和渲染已有结果；随后直接比较两种讲法。</p>
+<h2 id="课上一小时">课堂教学</h2>
+<h3 id="先看同一份研究的两种讲法5-分钟">两种叙事结构的比较，5 分钟</h3>
+<p>先打开课前的
+preflight.md，确认编译和渲染已有结果，随后比较同一研究的两种写法。</p>
 <div class="pair">
 <figure>
 <img src="assets/img/paper-before.png" alt="初稿第一页" />
@@ -86,7 +91,7 @@ preflight.md，确认编译和渲染已有结果；随后直接比较两种讲�
 <figcaption aria-hidden="true">重讲后第一页</figcaption>
 </figure>
 </div>
-<p>初稿先铺深度学习的背景，读者要往后找才知道发现。重讲稿把网络先学会、后来退步的变化放到开头，接着回答三个问题：这个变化有多大，为什么不同损失会有差别，替代办法能否留下早期学到的东西。</p>
+<p>初稿先介绍深度学习背景，读者要读到后文才知道研究发现。修订稿把网络先学会、后来退步的变化放在开头，随后依次回答三个问题：这一变化有多大，不同损失为何表现不同，替代方法能否保留早期学到的内容。</p>
 <div class="pair">
 <figure>
 <img src="assets/img/fig-before.png" alt="初稿的数据图" />
@@ -97,13 +102,13 @@ preflight.md，确认编译和渲染已有结果；随后直接比较两种讲�
 <figcaption aria-hidden="true">重画的数据图</figcaption>
 </figure>
 </div>
-<p>图也按这个顺序读。第一张看训练过程，第二张看不同噪声比例下的比较。曲线和标注都围绕主要比较来安排，读者不用先辨认二十条线。</p>
-<h3 id="围绕核心发现组织论文8-分钟">围绕核心发现组织论文，8 分钟</h3>
-<p>让 Agent
-罗列工作，它很容易写成做了什么的清单。读者更关心研究改变了什么认识。先把那个发现写成一句能记住的话，再决定哪份证据先出现。</p>
-<p>范文在这里提供的是叙事顺序。看它怎样引出具体问题，给出答案，再引导读者阅读下一项证据。用自己的材料重新搭这条顺序，句子也重新写。</p>
-<p>数据核查与论文表达分别处理。重讲可以移动段落，却必须保留数据的版本与来源。数字和图均由脚本从数据生成；编辑审阅再判断读者是否能抓住发现。</p>
-<h3 id="练习一找到开头并重讲17-分钟">练习一，找到开头并重讲，17
+<p>图的顺序与正文一致。第一张图呈现训练过程，第二张图比较不同噪声比例下的结果。曲线与标注都围绕主要比较安排，读者无需先辨认二十条线。</p>
+<h3 id="围绕核心发现组织论文8-分钟">以核心发现组织论证，8 分钟</h3>
+<p>若只要求 Agent
+罗列工作，输出往往是一份按操作顺序排列的清单。读者更关心研究改变了哪项认识。因此应先把核心发现写成一句可以复述的话，再决定各项证据的出场顺序。</p>
+<p>范文在这里提供的是叙事结构：它怎样引出具体问题，给出回答，再把读者引向下一项证据。修订时用自己的材料重建这一结构，句子需要重新写，不能套用范文措辞。</p>
+<p>数据核查与论文表达分开处理。重写可以调整段落位置，但数据的版本与来源必须保持不变。数字和图均由脚本从数据生成；编辑审阅再判断读者能否把握核心发现。</p>
+<h3 id="练习一找到开头并重讲17-分钟">练习一：确定开篇并重写全文，17
 分钟</h3>
 <p>在写作 Agent 中发送：</p>
 <pre class="text"><code>读 paper/main.tex 与 data/，先理解全文。
@@ -111,74 +116,78 @@ preflight.md，确认编译和渲染已有结果；随后直接比较两种讲�
 列出本练习最值得开篇的三个发现，各带数据出处。选一个作为叙事中心，给三个题目。
 用其中最清楚的题目，先写一份每段一句话的提纲，再另起全文到 versions/v1/main.tex。
 图先沿用原图。编译 PDF，把提纲和编辑说明一并保存。原稿保留。</code></pre>
-<p>读提纲时，试着只看段首复述论文。若复述出来的是作者依次做了哪些事，提纲还要重排；若每段都在回答上一段留下的问题，可以写全文。</p>
-<p>课堂让 Agent
-自选一个题目完成初稿，你再改最关键的一处。到本段结束仍未编译出
-v1，就带提纲与已完成章节进入下一段，用包内 preview/after.pdf
-练审稿；自己的完整 v1
-课后补审，记录两份审阅对象。正式论文可以把题目和提纲单独拿出来讨论。</p>
-<h3 id="练习二让图回答同一个问题13-分钟">练习二，让图回答同一个问题，13
+<p>检验提纲的方法是只读各段首句，尝试复述论文。若复述的内容只是作者依次做了哪些工作，提纲仍需重排；若每段都在回答上一段留下的问题，即可展开全文。</p>
+<p>课堂由 Agent
+选定一个题目完成初稿，学生修改其中最关键的一处。本段结束时若尚未编译出
+v1，可带着提纲和已完成章节进入下一段，用包内 preview/after.pdf
+练习审阅；自己的完整 v1
+在课后补审，并分别记录两份审阅对象。在正式论文中，题目与提纲可以单独提交讨论。</p>
+<h3
+id="练习二让图回答同一个问题13-分钟">练习二：设计回答同一问题的数据图，13
 分钟</h3>
 <pre class="text"><code>读 code/plot_draft.py 和 style_table.md，用 data/ 重写 code/plot_paper.py。
 每张图先写一句它要回答的问题。按论文实际栏宽输出矢量 PDF，保留全部种子的数据来源。
 方法与颜色固定对应，说明均值和误差带的含义，把方法名放在读者能看清的位置。
 输出到 versions/v1/figures/，更新本版论文引用。编译并逐页查看渲染结果，修复重叠与出界。</code></pre>
-<p>看页面时，按实际阅读大小检查。最细的字能否读清，图注是否解释误差，主结论是否来自画出的量。画图脚本保留下来，换数据后继续生成。</p>
-<h3 id="练习三独立审阅与方法留档12-分钟">练习三，独立审阅与方法留档，12
+<p>检查渲染页时以实际阅读尺寸为准，判断三项：最小字号能否看清，图注是否说明误差的含义，主结论是否来自图中画出的量。保留绘图脚本，数据更新后可直接重新生成。</p>
+<h3 id="练习三独立审阅与方法留档12-分钟">练习三：独立审阅与方法留档，12
 分钟</h3>
-<p>在另一家 Agent 的新会话里发送：</p>
+<p>在另一家 Agent 的新会话中发送：</p>
 <pre class="text"><code>只读 versions/v1/main.pdf、style_table.md 与 exemplar/ 中的范文。
 先读题目和摘要，判断你想继续追问什么；若抓不住中心，先指出卡住的具体位置。
 再读全文，检查段落顺序和图文关系。每条意见定位到具体文本并给改进方向。
 只写 versions/v1/review.md，注明审阅文件和判定，不改稿。
 意见最后做主张检查：若要求缩小标题或核心主张，逐条说明必要证据；表达问题直接给重讲办法。</code></pre>
-<p>另一家提供不同视角，独立性还来自输入范围：它只看这一版及范文，自己作出判断。课堂先指出最该处理的一条意见，课后让原作者按意见生成
-<code>versions/v2/</code>，保留逐条处理说明。</p>
+<p>换用另一家 Agent
+提供了不同视角；审阅的独立性还取决于输入范围，即审阅者只读这一版论文和范文，并独立作出判断。课堂先确定最需要处理的一条意见，课后由原作者据意见生成
+<code>versions/v2/</code>，并保留逐条处理说明。</p>
 <p>最后发送：</p>
 <pre class="text"><code>先把这次有效的改稿方法写成最小 paper-retell Skill。
 内容涵盖范文分析与数据核查，以及整稿重讲和独立编辑审阅；调用已有脚本，去掉这次专用的文件名。
 用新会话检查能否找到 Skill 和构建入口；完整迁移测试放在课后另一篇材料上。</code></pre>
-<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<h3 id="检查与工作台小结5-分钟">课堂检查与本节小结，5 分钟</h3>
 <h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>润色让每句更顺，论文仍缺少核心发现。</strong>
-回到提纲，把读者要追问的问题排好，再从头重讲。</p>
+<p><strong>逐句润色后语言更通顺，论文仍缺少核心发现。</strong>
+回到提纲，按读者会追问的顺序排列问题，再从头重写。</p>
 </div>
 <div class="pitfall">
-<p><strong>数字能在数据里找到，就判正确。</strong>
-同一个数可能来自另一组。核查记录要同时写指标、配置与分母，详见 <a
+<p><strong>只要数字能在数据中找到，就判为正确。</strong>
+同一数值可能来自另一组配置。核查记录应同时写明指标、配置与分母，详见 <a
 href="writing-numbers.html">1.2</a>。</p>
 </div>
 <div class="pitfall">
-<p><strong>只看图文件，漏看成稿。</strong>
-图放进栏里会缩放。编译后查看整页，按最终尺寸判断可读性。</p>
+<p><strong>只检查图文件，不检查成稿。</strong>
+图放入栏中会被缩放。应在编译后查看整页，按最终尺寸判断可读性。</p>
 </div>
 <div class="pitfall">
-<p><strong>审过就接着用，稿件已经换版。</strong>
-意见绑定审阅文件；新版本重新交审，审阅记录同时写明通过还是退修。</p>
+<p><strong>稿件已经换版，仍沿用旧审阅结论。</strong>
+审阅意见绑定所审文件；新版本须重新提交审阅，审阅记录写明通过或退修。</p>
 </div>
-<h4 id="工作台小结">工作台小结</h4>
+<h4 id="工作台小结">本节小结</h4>
 <div class="bench">
 <p>Python 从数据生成图，LaTeX 把源稿编译为
 PDF，渲染器提供逐页检查所需的图片。<code>AGENTS.md</code>
-留下入口，paper-retell 留下做法。下一次改稿时，先给材料和范文，Agent
-就能按这些约定工作。</p>
+记录工具入口，paper-retell
+记录修订方法。下一次修订论文时，提供材料和范文后，Agent
+即可按这些约定工作。</p>
 </div>
-<h2 id="课后复习与拔高">课后复习与拔高</h2>
-<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
-<p>先不打开
-Agent，用五句话复述自己的稿子。先讲发现，再给关键证据和比较，接着讲解释，最后留下下一问。再打开课堂保存的版本，抽一个数字追回数据行，说明它属于哪种设置。把复述与发现的缺口写到
+<h2 id="课后复习与拔高">课后复习与扩展</h2>
+<p>概念复习、正反例分析及能力达成评价中的独立实践与迁移任务为本节必做内容；其余深入专题按研究需要选做。</p>
+<h3 id="先复盘15-分钟">概念复习，15 分钟</h3>
+<p>先不使用
+Agent，用五句话复述自己的稿件：先陈述发现，再给出关键证据和比较，接着给出解释，最后提出下一个问题。然后打开课堂保存的版本，选一个数字追溯到数据行，说明它属于哪种设置。把复述内容与核心发现之间的差距写入
 <code>review-after-class.md</code>。</p>
 <h3 id="正反例辨析15-分钟">正反例辨析，15 分钟</h3>
-<p>下面是两种练习提纲。甲先铺背景，接着罗列模型和实验，最后总结。乙从训练先变好后退步开始，再给曲线、比较损失，最后解释差异。选出更能带出研究问题的一份，再指出它还缺哪项数据依据。另看两张图：一张只画最好种子，另一张按同一设置保留全部种子。各写一句读者可以从中作出的判断。</p>
+<p>下面是两种练习提纲。甲先铺陈背景，接着罗列模型和实验，最后总结。乙从训练先变好后退步写起，再给出曲线、比较损失，最后解释差异。判断哪一份更能引出研究问题，并指出它还缺少哪项数据依据。另有两张图：一张只画最好的种子，另一张按同一设置保留全部种子。分别写一句读者能从图中得出的判断。</p>
 <details>
 <summary>
-写完判断，再看对照思路
+写完判断后，再查看参考思路
 </summary>
-<p>乙让后一段回答前一段的问题，但题目与曲线仍要对应同一实验。只画最好种子的图可展示那次运行的轨迹，不能据此估计典型表现；保留全部种子后还要说明汇总与误差的口径。</p>
+<p>乙让每一段回答前一段提出的问题，但题目与曲线仍须对应同一实验。只画最好种子的图可以展示那一次运行的轨迹，不能据此估计典型表现；保留全部种子后，还要说明汇总方式与误差的口径。</p>
 </details>
-<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
-<p>课堂交出一个明确版本的重讲稿和审阅记录，课后先按意见生成下一版，再选一条路径。换自己的材料重做时，保留整稿重讲的目标和数字核查，不只替换范例里的名词。</p>
+<h3 id="沿课堂往深处做">扩展学习</h3>
+<p>课堂产出一个版本明确的修订稿和审阅记录。课后先按审阅意见生成下一版，再选择一个专题。用自己的材料重做时，保留整稿重写的目标和数字核查，不能只替换范例中的名词。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -187,95 +196,125 @@ Agent，用五句话复述自己的稿子。先讲发现，再给关键证据和
 </colgroup>
 <thead>
 <tr>
-<th>路径</th>
-<th>接着解决什么</th>
-<th>交付</th>
+<th>专题</th>
+<th>扩展问题与建议时长</th>
+<th>提交材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="writing-story.html">1.1 论文表达</a>与<a
 href="writing-review.html">1.4 审稿返修</a></td>
-<td>45 分钟加 30 分钟，把审阅意见变成新的叙事</td>
+<td>45 分钟加 30 分钟，把审阅意见转化为新的叙事结构</td>
 <td>新版全文与逐条回复</td>
 </tr>
 <tr>
 <td><a href="writing-numbers.html">1.2 数据核查</a>与<a
 href="writing-figures.html">1.3 结果绘图</a></td>
-<td>35 分钟加 45 分钟，改一行数据后重建数字与图</td>
-<td>数据身份、脚本和实际成稿检查</td>
+<td>35 分钟加 45 分钟，修改一行数据后重建数字与图</td>
+<td>数据身份、脚本和成稿检查记录</td>
 </tr>
 <tr>
 <td><a href="writing-skills.html">1.5 经验留档</a></td>
 <td>25 分钟，在另一篇材料上测试 paper-retell</td>
-<td>Skill 及一次迁移测试</td>
+<td>Skill 及一次迁移测试记录</td>
 </tr>
 <tr>
 <td><a href="writing-submit.html">1.6 文献引用与刊会投稿</a></td>
-<td>30 分钟，把稿子整理为某一目标刊会的交付</td>
+<td>30 分钟，按某一目标刊会整理投稿材料</td>
 <td>引用核查与交付清单</td>
 </tr>
 </tbody>
 </table>
+<h3 id="能力达成评价">能力达成评价</h3>
+<p>评价分三个层次。课堂训练层面，检查提纲是否由读者问题推进，图是否回答预定比较，审阅记录是否绑定文件版本并给出判定。课后独立完成层面，学生按意见生成
+v2，对每项修改说明它回应的读者问题或数据核查结果。迁移层面，学生换用一篇自己的研究材料，独立确定核心发现，追溯三处数字，重新设计一张图，并用
+paper-retell
+完成一次修订；同时说明哪些判断可以沿用，哪些因材料不同而调整。评价依据为方法解释、核查结果及修订理由。</p>
 </article>
 <article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip new">+ Python env</span><span class="chip new">+ LaTeX</span><span class="chip new">+ PDF rendering</span><span class="chip new">+ AGENTS.md</span><span class="chip new">+ Skills</span></div><h1 id="writing-and-figures">1 Writing and figures</h1>
+<h2 id="learning-outcomes">Learning outcomes</h2>
 <div class="goal">
-<p>Restructure a four-page paper with an unclear main point around a
-single finding. You will produce a revised draft and two regenerated
-figures, receive an independent editorial review, and create a reusable
-paper-retell Skill.</p>
+<p>After completing this session and its review and extension work,
+students should be able to:</p>
+<ol type="1">
+<li>Identify the central finding of a set of results and organize a
+paper’s argument so that each section answers the question raised by the
+one before.</li>
+<li>Verify that numbers, figures and text agree with the source data by
+specifying each reported value through its metric, configuration and
+aggregation.</li>
+<li>Design figures around an explicit research question, with
+uncertainty and scales suited to the comparison and legible at final
+printed size.</li>
+<li>Commission and use an independent review whose inputs, reviewed
+version and verdict are recorded.</li>
+<li>Abstract an effective revision method into a reusable Skill and test
+whether it transfers to different material.</li>
+</ol>
 </div>
-<p><span class="meta">Prepare before class, spend 60 minutes in class,
-then review and choose an optional extension.</span></p>
+<p>The outcomes are assessed at three levels: the class exercises
+practice each method on a shared case, the review work requires students
+to complete the revision and checks independently, and the extension
+paths require the same methods to be applied to different material.</p>
+<p><span class="meta">Preparation before class, a 60-minute class
+session, then required review, independent work and transfer assessment,
+with optional further study.</span></p>
 <div class="stage-nav">
-<p><a href="#before-class">Before class</a> · <a href="#in-class">In
-class</a> · <a href="#after-class">After class: review and
-extension</a></p>
+<p><a href="#before-class">Preparation</a> · <a href="#in-class">Class
+session</a> · <a href="#after-class">Review and extension</a></p>
 </div>
-<p>Forty percent of the training labels are wrong, yet the network finds
-most of the right answers early. Keep training and test performance
-drops. The exercise paper buries this behind background and a list of
-methods, so after the abstract you still do not know why it is worth
-reading.</p>
-<p>In this lesson, you use an agent to restructure the paper. The
-experiment in the materials has already been run locally, and the raw
-data and run scripts are in the package. The class uses the existing
-data and focuses on presentation and verification.</p>
+<p>A research paper is organized around what its results change in the
+reader’s understanding, not around the order in which the work was done.
+This session treats that principle as a method that can be checked: the
+central finding is stated first, the evidence is ordered by the
+questions a reader will ask, and every number and figure is traced to
+its data.</p>
+<p>The case material is a four-page draft on learning with noisy labels.
+Its results show that when forty percent of the training labels are
+wrong, the network finds most of the correct answers early in training,
+and test performance declines as training continues. The draft places
+this finding behind general background and a list of methods, so the
+abstract does not tell the reader why the paper matters. The experiment
+has already been run locally, and the raw data and run scripts are
+included in the materials. The class works from the existing data and
+concentrates on presentation and verification.</p>
 <div class="download">
 <p><a href="downloads/lesson-1-en.zip">Download the exercise
 materials</a> · <a href="downloads/lesson-1-answers-en.zip">Reference
-answers, for after you finish</a></p>
+answers, for use after the exercises</a></p>
 </div>
-<h2 id="before-class">Before class</h2>
+<h2 id="before-class">Preparation</h2>
 <p><span class="meta">Allow 30 to 90 minutes, mostly for the LaTeX
-download. You can start the first install a day early.</span></p>
+download. The first installation can begin a day in advance.</span></p>
 <div class="install">
-<p><strong>Before-class setup.</strong> The Python project environment,
-LaTeX and a PDF renderer are installed in this step. The class starts
-from an existing paper; restructuring, plotting and reviewing are all
-done together in class.</p>
+<p><strong>Preparation.</strong> The Python project environment, LaTeX
+and a PDF renderer are installed at this stage. The class starts from
+the existing paper; restructuring, plotting and review are all carried
+out in class.</p>
 </div>
 <pre class="text"><code>Work in lesson-1, read AGENTS.md, and keep the original draft and data/ unchanged.
 Check the Python project environment, run code/plot_draft.py, compile paper/main.tex, then render the first page as an image.
 If a tool is missing, report its official source, install location and download size, install it in the agreed location, and record it as usable only after it has actually run.
 Get the arXiv 1611.03530 exemplar from the official source into exemplar/, confirm that the PDF opens and that its title and identifier match. Do not analyze its narrative structure yet.
 Write the commands actually run, the page count and any error messages into preflight.md; write reusable tool commands into AGENTS.md.</code></pre>
-<p>Bring four results to class: CSV can be read, figures can be
-generated, the original draft compiles, and the rendered page opens.
-Also have the exemplar original ready. <code>CLAUDE.md</code> imports
-the same conventions with one line, <code>@AGENTS.md</code>, and both
-agents start from the root of the materials.</p>
-<p>If installation gets stuck, send the error code and system
-information to the teacher in advance. In class you can practice
-structuring the paper with the packaged <code>preview/before.pdf</code>
-and the two before-and-after images, note the compilation check still to
-be done, and finish it after class. Do not re-download the whole of
-LaTeX after class has started.</p>
-<h2 id="in-class">In class</h2>
-<h3 id="two-ways-to-present-the-same-research-5-minutes">Two ways to
-present the same research, 5 minutes</h3>
-<p>Open the preflight.md from before class and confirm that compilation
-and rendering have results; then compare the two versions directly.</p>
+<p>Four results should be available at the start of class: the CSV can
+be read, the figures can be generated, the original draft compiles and
+the rendered page opens. The exemplar should also be in place.
+<code>CLAUDE.md</code> imports the same conventions with the single line
+<code>@AGENTS.md</code>, and both agents start from the root of the
+materials.</p>
+<p>If installation fails, send the error code and system information to
+the instructor in advance. In class, students without a working build
+can practice restructuring with the packaged
+<code>preview/before.pdf</code> and the two before-and-after images,
+record the compilation check as outstanding and complete it after class.
+LaTeX should not be downloaded again once class has begun.</p>
+<h2 id="in-class">Class session</h2>
+<h3 id="two-ways-to-present-the-same-research-5-minutes">Two
+presentations of the same research, 5 minutes</h3>
+<p>Confirm from preflight.md that compilation and rendering produced
+results, then compare the two versions.</p>
 <div class="pair">
 <figure>
 <img src="assets/img/paper-before.png" alt="First page of the draft" />
@@ -288,11 +327,12 @@ alt="First page after restructuring" />
 restructuring</figcaption>
 </figure>
 </div>
-<p>The draft opens with background on deep learning, and the reader has
-to search further on to learn the finding. The revised draft opens with
-the network learning early and declining later, and then answers three
-questions: how large the change is, why losses behave differently, and
-whether alternatives can keep what was learned early.</p>
+<p>The draft opens with background on deep learning, and the reader must
+read further to identify the central finding. The revised version opens
+with the observation that the network learns early and declines later,
+and then answers three questions in turn: how large the change is, why
+different losses behave differently, and whether alternatives can retain
+what was learned early.</p>
 <div class="pair">
 <figure>
 <img src="assets/img/fig-before.png" alt="Data figure in the draft" />
@@ -303,142 +343,152 @@ whether alternatives can keep what was learned early.</p>
 <figcaption aria-hidden="true">Redrawn data figure</figcaption>
 </figure>
 </div>
-<p>Read the figures in the same order. The first shows the training
-process, the second compares noise rates. Lines and labels each have a
-job, and the reader does not have to sort out twenty lines first.</p>
-<h3 id="build-the-paper-around-one-finding-8-minutes">Build the paper
+<p>The figures follow the same order. The first shows the training
+process and the second compares noise rates. Each line and label has a
+defined role, and the reader does not have to sort through twenty lines
+first.</p>
+<h3 id="build-the-paper-around-one-finding-8-minutes">Organizing a paper
 around one finding, 8 minutes</h3>
-<p>Ask an agent to describe the work, and it may simply list what was
-done. Readers care more about what the research changed in our
-understanding. First write that finding as one memorable sentence, then
-decide which evidence comes first.</p>
-<p>Use the exemplar to study narrative structure. Look at how it
-establishes a specific research question, how it gives the answer, and
-how it leads the reader to the next piece of evidence. Rebuild that
-order with your own material, and write the sentences anew.</p>
-<p>Check the numbers separately from the narrative. Restructuring may
-move paragraphs, but the underlying data and their provenance must stay
-the same. Numbers come from scripts and figures come from data; the
-editorial review then judges whether the reader can grasp the
+<p>An agent asked to describe a piece of work tends to list what was
+done. Readers are more concerned with what the research changes in their
+understanding. The first step is therefore to state that finding in one
+sentence that a reader can remember, and then to decide which evidence
+must come first.</p>
+<p>The exemplar is used to study narrative structure: how it establishes
+a specific research question, how it gives the answer, and how it leads
+the reader to the next piece of evidence. That order is then rebuilt
+with the case material, and the sentences are written anew rather than
+adapted.</p>
+<p>Numerical verification is kept separate from the narrative.
+Restructuring may move paragraphs, but the underlying data and their
+provenance must not change. Numbers come from scripts and figures from
+data; the editorial review then judges whether a reader can grasp the
 finding.</p>
 <h3
 id="exercise-1-choose-an-opening-and-restructure-the-draft-17-minutes">Exercise
-1: choose an opening and restructure the draft, 17 minutes</h3>
+1: selecting the opening and restructuring the draft, 17 minutes</h3>
 <p>In the writing agent, send:</p>
 <pre class="text"><code>Read paper/main.tex and data/, and understand the whole paper first.
 Read the arXiv 1611.03530 exemplar saved to exemplar/ before class, and analyze how its title, abstract and opening lead into the next question.
 List the three findings in this exercise most worth opening with, each with its data source. Choose one as the narrative center and give three titles.
 Using the clearest title, first write an outline with one sentence per paragraph, then rewrite the complete paper in versions/v1/main.tex.
 Keep the original figures for now. Compile the PDF and save the outline and editing notes with it. Keep the original draft.</code></pre>
-<p>When reading the outline, try summarizing the paper from its
-paragraph openings alone. If what comes out is the sequence of things
-the authors did, the outline needs reordering; if each paragraph answers
-the question left by the one before, you can write the full text.</p>
-<p>In class, let the agent choose a title itself and finish the first
-draft, then revise the most important point yourself. If v1 has not
-compiled by the end of this block, take the outline and finished
-sections into the next block and practice reviewing with the packaged
-preview/after.pdf; have your own complete v1 reviewed after class, and
-record both review targets. For a real paper, the title and outline can
-be discussed on their own.</p>
+<p>To evaluate the outline, summarize the paper from its paragraph
+openings alone. If the summary reproduces the sequence of things the
+authors did, the outline needs reordering; if each paragraph answers the
+question left by the one before, the full text can be written.</p>
+<p>In class, the agent selects the title and completes the first draft,
+and the student revises the most important point. If v1 has not compiled
+by the end of this block, carry the outline and finished sections into
+the next block and practice the review on the packaged
+preview/after.pdf; the student’s complete v1 is then reviewed after
+class, and both review targets are recorded. In a real paper, the title
+and outline may be discussed separately before drafting.</p>
 <h3
 id="exercise-2-make-the-figures-answer-the-same-question-13-minutes">Exercise
-2: make the figures answer the same question, 13 minutes</h3>
+2: designing figures that answer the same question, 13 minutes</h3>
 <pre class="text"><code>Read code/plot_draft.py and style_table.md, and rewrite code/plot_paper.py using data/.
 For each figure, first write one sentence stating the question it answers. Output vector PDFs at the paper&#39;s actual column width, keeping the data source for all seeds.
 Give each method a fixed color, state what the mean and the error band mean, and put method names where readers can see them.
 Output to versions/v1/figures/ and update this version&#39;s figure references. Compile and look at the rendered result page by page, fixing overlaps and anything out of bounds.</code></pre>
-<p>When looking at the pages, check them at actual reading size. Can the
-smallest text be read, does the caption explain the error, and does the
-main conclusion come from the quantity plotted? Keep the plotting
-script, so the figures can be regenerated when the data change.</p>
+<p>Inspect the pages at actual reading size. The criteria are whether
+the smallest text is legible, whether the caption explains the error
+measure, and whether the main conclusion follows from the quantity
+plotted. The plotting script is retained so that the figures can be
+regenerated when the data change.</p>
 <h3
 id="exercise-3-get-an-independent-review-and-save-the-method-12-minutes">Exercise
-3: get an independent review and save the method, 12 minutes</h3>
+3: independent review and recording the method, 12 minutes</h3>
 <p>In a new session of the other vendor’s agent, send:</p>
 <pre class="text"><code>Read only versions/v1/main.pdf, style_table.md and the exemplar in exemplar/.
 Read the title and abstract first and decide what you want to ask next; if the main finding is unclear, first point to the exact place where you got stuck.
 Then read the full paper and check paragraph order and how figures relate to the text. Tie every comment to specific text and give a direction for improvement.
 Write only versions/v1/review.md, naming the file reviewed and your verdict. Do not change the draft.
 End your comments with a claim check: if you ask to narrow the title or a core claim, give the evidence that makes it necessary for each one; for problems of expression, suggest how to restructure the text.</code></pre>
-<p>The other vendor offers a different view, and independence also comes
-from the input scope: it sees only this version and the exemplar and
-forms its own judgment. In class, first point out the comment that most
-needs handling; after class, have the original author produce
-<code>versions/v2/</code> from the comments, keeping a note on how each
-comment was handled.</p>
+<p>An agent from another vendor brings a different perspective, but
+independence also depends on the scope of the input: the reviewer sees
+only this version and the exemplar and forms its own judgment. In class,
+identify the comment that most needs to be addressed. After class, the
+original author produces <code>versions/v2/</code> from the comments and
+records how each comment was handled.</p>
 <p>Finally, send:</p>
 <pre class="text"><code>First write the revision method that worked this time into a minimal paper-retell Skill.
 Cover exemplar analysis, number checking, restructuring the complete draft and independent editorial review; call the existing scripts and drop the file names specific to this run.
 Use a new session to check that the Skill and the build command can be found; the full transfer test is done after class on another set of materials.</code></pre>
-<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+<h3 id="check-and-workbench-summary-5-minutes">Common errors and
 summary, 5 minutes</h3>
-<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h4>
+<h4 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h4>
 <div class="pitfall">
-<p><strong>Polishing makes every sentence smoother, but the paper still
-has no center.</strong> Go back to the outline, put the reader’s
-follow-up questions in order, and rewrite the full paper.</p>
+<p><strong>Polishing every sentence while the paper still lacks a
+center.</strong> Return to the outline, order the reader’s follow-up
+questions and rewrite the full paper.</p>
 </div>
 <div class="pitfall">
-<p><strong>Judging a number correct because it can be found in the
-data.</strong> The same value may come from another group. The check
-record must state the metric, the configuration and the denominator
-together; see <a href="writing-numbers.html">1.2</a>.</p>
+<p><strong>Accepting a number because it appears somewhere in the
+data.</strong> The same value may belong to another group. The
+verification record must state the metric, the configuration and the
+denominator together; see <a href="writing-numbers.html">1.2</a>.</p>
 </div>
 <div class="pitfall">
-<p><strong>Looking only at the figure file and missing the finished
-page.</strong> A figure is scaled when placed in a column. Look at the
-whole page after compiling and judge readability at final size.</p>
+<p><strong>Inspecting the figure file rather than the finished
+page.</strong> A figure is scaled when placed in a column. Inspect the
+whole page after compilation and judge legibility at final size.</p>
 </div>
 <div class="pitfall">
-<p><strong>Using a review after the draft has moved on to a new
-version.</strong> Comments are tied to the file reviewed; a new version
-goes back for review, and the review record states whether it passed or
-was returned for revision.</p>
+<p><strong>Applying a review to a draft that has since changed.</strong>
+Comments refer to the file reviewed. A new version is reviewed again,
+and the review record states whether it passed or was returned for
+revision.</p>
 </div>
-<h4 id="workbench-summary">Workbench summary</h4>
+<h4 id="workbench-summary">Method summary</h4>
 <div class="bench">
 <p>Python connects data to figures, LaTeX connects source to PDF, and
 the renderer produces page images for visual inspection.
-<code>AGENTS.md</code> keeps the entry points and paper-retell stores
-the method. The next time you revise a paper, give the agent the
-materials and an exemplar, and it can follow the saved method.</p>
+<code>AGENTS.md</code> records the entry points and the paper-retell
+Skill records the method. In a later revision, the agent is given the
+materials and an exemplar and can apply the recorded method.</p>
 </div>
-<h2 id="after-class">After class: review and extension</h2>
-<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
-<p>Without opening the agent, summarize your draft in five sentences.
-Give the finding first, then the key evidence and comparison, then the
+<h2 id="after-class">Review and extension</h2>
+<p>Conceptual review, analysis of contrasting examples, and the
+independent and transfer tasks specified in Assessment are required for
+this session. Other extension topics are optional, except for the
+required readings identified below.</p>
+<h3 id="review-first-15-minutes">Unaided review, 15 minutes</h3>
+<p>Without using the agent, summarize the draft in five sentences: the
+finding first, then the key evidence and comparison, then the
 explanation, and finally the next question. Then open the version saved
-in class, trace one number back to its data row, and say which setting
-it belongs to. Record omissions or errors in your summary in
+in class, trace one number back to its data row and state which setting
+it belongs to. Record omissions or errors in the summary in
 <code>review-after-class.md</code>.</p>
-<h3 id="compare-the-examples-15-minutes">Compare the examples, 15
-minutes</h3>
-<p>Here are two exercise outlines. A first lays out background, then
-lists models and experiments, and finally sums up. B starts from
-training that first improves and then gets worse, then gives the curves,
-compares losses, and finally explains the difference. Choose the one
-that better brings out the research question, then identify any missing
-supporting data. Also look at two figures: one plots only the best seed,
-the other keeps all seeds under the same setting. For each, write one
-sentence on what a reader can judge from it.</p>
+<h3 id="compare-the-examples-15-minutes">Analysis of contrasting
+examples, 15 minutes</h3>
+<p>Two outlines of the exercise paper are given. Outline A presents
+background, then lists models and experiments, and ends with a summary.
+Outline B starts from training that first improves and then
+deteriorates, then presents the curves, compares losses and finally
+explains the difference. Decide which better exposes the research
+question, and identify any supporting data that are missing. Two figures
+are also given: one plots only the best seed, the other keeps all seeds
+under the same setting. For each, write one sentence on what a reader
+can conclude from it.</p>
 <details>
 <summary>
-Write your judgment first, then see the comparison notes
+Record your judgment before reading the commentary
 </summary>
-<p>B lets each paragraph answer the question of the one before, but its
-title and curves must still correspond to the same experiment. A figure
-of only the best seed can show that run’s trajectory, but cannot be used
-to estimate typical performance; after keeping all seeds, you still have
-to state how results are aggregated and what the error means.</p>
+<p>B lets each paragraph answer the question raised by the one before,
+but its title and curves must still refer to the same experiment. A
+figure of the best seed alone shows that run’s trajectory but cannot be
+used to estimate typical performance; once all seeds are kept, the
+figure must still state how results are aggregated and what the error
+measure means.</p>
 </details>
 <h3 id="further-study">Further study</h3>
-<p>By the end of class, you should have a versioned draft and a review
-record. After class, first produce the next version from the comments,
-then choose one path. When you redo it with your own materials, keep the
-goal of restructuring the full draft and checking the numbers, rather
-than only swapping the nouns in the example.</p>
+<p>The class should have produced a versioned draft and a review record.
+After class, first produce the next version from the review comments,
+then choose one path. When the exercise is repeated with students’ own
+materials, the aim remains to restructure the complete draft and verify
+its numbers, rather than to substitute new nouns into the example.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -478,6 +528,16 @@ figures</td>
 </tr>
 </tbody>
 </table>
+<h3 id="assessment">Assessment</h3>
+<p>Attainment of the outcomes is judged from the student’s explanation
+of the method, not from the existence of the files. Students should be
+able to state the central finding of their revised paper and justify why
+the chosen evidence comes first; trace any reported number to its
+metric, configuration and data rows; explain what each figure allows a
+reader to conclude; and state which review verdict applies to which
+version. Transfer is assessed by applying the same methods to a
+different paper or to the paper-retell Skill on other material, and
+reporting where the method held and where it had to be changed.</p>
 </article>
 <nav class="pager"><a class="prev" href="setup.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">0 课前准备</span><span lang="en">0 Getting started</span></a><a class="next" href="writing-story.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.1 论文表达</span><span lang="en">1.1 Structuring a paper</span></a></nav>
 </main>

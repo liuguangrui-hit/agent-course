@@ -33,12 +33,21 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="文献引用与刊会投稿">1.6 文献引用与刊会投稿</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>引用能查到，还要查它是否支持正文。投稿 PDF
-编译成功，还要查它是否符合目标刊会的交付要求。这一节介绍成稿后的两类检查。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>区分引用的身份核查与含义核查，分别用结构化元数据和原文支持位置作出判断。</li>
+<li>依据目标刊会的当前要求核查实际
+PDF，包括版式、字体、元数据与匿名性。</li>
+<li>在篇幅受限时按叙事作用决定内容取舍，并保持模板要求不变。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 30 分钟。</span></p>
+<p>引用可以检索到，还要核查它是否支持正文中的说法。投稿 PDF
+编译成功，还要核查它是否符合目标刊会的交付要求。本节介绍成稿后的这两类检查。</p>
 <h2 id="文献引用">文献引用</h2>
-<p>对每条参考文献保存 DOI 或 arXiv
-标识，核对标题、作者与发表信息，再确认正文使用的是哪个版本。正式版与预印本的图表可能不同，笔记页码要跟着版本走。</p>
+<p>为每条参考文献保存 DOI 或 arXiv
+标识，核对标题、作者与发表信息，再确认正文使用的是哪个版本。正式版与预印本的图表可能不同，笔记中的页码须对应所用版本。</p>
 <pre class="text"><code>读取参考文献，逐条到出版社或书目接口核对。
 输出 exact，mismatch，unresolved 三类，保留查询 URL 和时间。
 题目检索返回的近似结果只作候选，进一步用作者和标识确认。
@@ -46,57 +55,70 @@
 <p><a
 href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref</a>、<a
 href="https://dblp.org/">DBLP</a> 和 <a
-href="https://info.arxiv.org/help/api/">arXiv</a>各有覆盖范围。某个接口没有记录时，继续核对出版方与作者公开页面，结论仍未确定就保留为待核。</p>
-<h2 id="再查引用关系">再查引用关系</h2>
-<p>从正文抽出依赖引用的主张，写成主张与出处表。按原文找到支持段落，记录证据是实验结果、理论推导还是作者讨论。综述转引的发现，追到原研究再判断。</p>
+href="https://info.arxiv.org/help/api/">arXiv</a>的覆盖范围各不相同。某个接口没有记录时，继续核对出版方与作者的公开页面；仍无法确定的，保留为待核。</p>
+<h2 id="再查引用关系">引用关系的核查</h2>
+<p>从正文中抽出依赖引用的主张，整理为主张与出处对照表。在原文中找到支持段落，记录证据类型：实验结果、理论推导或作者讨论。综述转引的发现须追溯到原始研究后再判断。</p>
 <pre class="text"><code>对正文每个带引用的结论，给出原文支持位置和证据类型。
 检查是否把作者的推测写成已证实结果，是否把一种设置的结果换成另一种设置。
 缺支撑时先找直接证据，找不到就列出需要补的原文证据或实验。</code></pre>
-<p>身份核查用结构化元数据，含义核查用全文。两者的通过状态分开保存。</p>
+<p>身份核查依据结构化元数据，含义核查依据全文。两者的通过状态分别保存。</p>
 <h2 id="刊会投稿">刊会投稿</h2>
-<p>确定目标届次，保存官方作者指南和模板入口，按当前要求检查页数、匿名与附件。需要删篇幅时，按叙事作用决定去留：删重复解释，移次要实验，保留核心证据。</p>
-<p>图在第一页的位置、字体要求和附录安排，都以目标模板及同类正式论文为准。把别处的惯例搬过来，容易让
-Agent 修错方向。</p>
-<h2 id="检查实际-pdf">检查实际 PDF</h2>
+<p>确定目标届次，保存官方作者指南和模板入口，按当前要求检查页数、匿名要求与附件。需要压缩篇幅时，按叙事作用决定取舍：删除重复解释，移出次要实验，保留核心证据。</p>
+<p>图在首页的位置、字体要求和附录安排，均以目标模板及同类正式论文为准。照搬其他刊会的惯例，容易使
+Agent 朝错误方向修改。</p>
+<h2 id="检查实际-pdf">实际 PDF 的检查</h2>
 <pre class="text"><code>完整构建本版 PDF，汇总未定义引用和超出版心等日志。
 读取字体与元数据，按目标刊会要求检查。
 逐页看渲染结果，检查图注位置、表格边界和链接。
 如需双盲，检查作者栏和致谢，再查链接、图内路径与 PDF 元数据。</code></pre>
-<p>代码仓库和补充材料也有身份信息。需要匿名发布时，先把拟公开文件打包，在本地核查完整内容，再由用户确认提交。</p>
+<p>代码仓库和补充材料同样可能含有身份信息。需要匿名发布时，先把拟公开的文件打包，在本地核查全部内容，再由用户确认提交。</p>
 <h2 id="练习">练习</h2>
-<p>复制练习稿，在其中一条引用里改错年份，另把一条真实引用挪到它无法支持的句子后。分别运行身份与含义核查，看看两处问题各由哪道检查发现。</p>
+<p>复制练习稿，把其中一条引用的年份改错，再把一条真实引用移到它无法支持的句子之后。分别运行身份核查与含义核查，观察两处问题各由哪一项检查发现。</p>
 <details>
 <summary>
 参考判断
 </summary>
-<p>错误年份应在元数据核对时出现。第二处文献身份仍然真实，要通过原文支持位置发现。两道检查分开，才能解释为什么一条引用通过了其中一道却仍不能使用。</p>
+<p>错误年份应在元数据核对时被发现。第二处引用的文献身份仍然真实，需要通过原文支持位置发现。两项检查分开进行，才能解释为何一条引用通过了其中一项检查，却仍不能使用。</p>
 </details>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>题目相似就判为同一篇。</strong>
-进一步对作者、标识和版本，保留候选与最终匹配的区别。</p>
+<p><strong>题目相似即判为同一篇文献。</strong>
+进一步核对作者、标识和版本，区分候选匹配与最终匹配。</p>
 </div>
 <div class="pitfall">
-<p><strong>为满足页数限制调小模板。</strong>
-把删减建议按叙事作用排序，修正文内容，保持模板要求。</p>
+<p><strong>为满足页数限制而缩小模板。</strong>
+按叙事作用排列删减建议，修改正文内容，保持模板要求不变。</p>
 </div>
 <div class="pitfall">
-<p><strong>匿名只查正文。</strong> 同时检查 PDF
+<p><strong>匿名检查只覆盖正文。</strong> 同时检查 PDF
 属性、图内文字与附件链接，按目标要求交付。</p>
 </div>
 </article>
 <article lang="en"><h1 id="citations-and-submission">1.6 Citations and submission</h1>
-<p><span class="meta">After-class deep dive, about 30
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Verify the identity and version of each reference against structured
+metadata, distinguishing candidate matches from confirmed ones.</li>
+<li>Assess whether a cited source supports the specific claim made in
+the text, and classify the type of evidence it provides.</li>
+<li>Check a compiled manuscript and its supplementary materials against
+a venue’s current submission and anonymity requirements.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 30
 minutes.</span></p>
-<p>Finding a reference does not establish that it supports the text. A
-PDF that compiles may still fail to meet the target venue’s submission
+<p>Locating a reference does not establish that it supports the text,
+and a PDF that compiles may still fail the target venue’s submission
 requirements. This section covers both checks once the draft is
 complete.</p>
-<h2 id="verify-reference-details">Verify reference details</h2>
-<p>For every reference, keep its DOI or arXiv identifier, check title,
-authors and publication details, then confirm which version the text
-uses. Figures and tables may differ between the published version and
-the preprint, and page numbers in notes follow the version.</p>
+<h2 id="verify-reference-details">Verifying reference details</h2>
+<p>For every reference, keep its DOI or arXiv identifier, check the
+title, authors and publication details, and confirm which version the
+text uses. Figures and tables may differ between the published version
+and the preprint, and page numbers in notes refer to a specific
+version.</p>
 <pre class="text"><code>Read the references and check each one against the publisher or a bibliographic API.
 Output three classes: exact, mismatch, unresolved, keeping the query URL and time.
 Approximate matches from a title search are only candidates; confirm further with authors and identifiers.
@@ -104,74 +126,75 @@ Keep a record of the version actually cited in the text.</code></pre>
 <p><a
 href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref</a>,
 <a href="https://dblp.org/">DBLP</a> and <a
-href="https://info.arxiv.org/help/api/">arXiv</a> each cover different
-ground. When one API has no record, keep checking the publisher’s and
-authors’ public pages; if the result is still uncertain, keep it as
+href="https://info.arxiv.org/help/api/">arXiv</a> cover different
+ground. When one API has no record, continue with the publisher’s and
+authors’ public pages; if the result remains uncertain, record it as
 pending.</p>
-<h2 id="then-check-what-each-citation-supports">Then check what each
+<h2 id="then-check-what-each-citation-supports">Checking what each
 citation supports</h2>
-<p>Pull out the claims in the text that rely on citations and make a
-table of claims and sources. Find the supporting passage in the original
+<p>Extract the claims in the text that rely on citations and tabulate
+claims against sources. Locate the supporting passage in the original
 and record whether the evidence is an experimental result, a theoretical
-derivation or the authors’ discussion. For findings cited through a
-review, trace them to the original study before judging.</p>
+derivation or the authors’ discussion. Findings cited through a review
+are traced to the original study before being judged.</p>
 <pre class="text"><code>For every cited conclusion in the text, give the supporting location in the original and the type of evidence.
 Check whether an author&#39;s speculation has been written as an established result, and whether a result from one setting has been swapped for another setting.
 Where support is missing, first look for direct evidence; if none is found, list the evidence from the original or the experiment that needs to be added.</code></pre>
-<p>Use structured metadata to check reference details and full text to
-check what a citation supports. Record the two outcomes separately.</p>
-<h2 id="check-the-venues-submission-requirements">Check the venue’s
+<p>Structured metadata are used to check reference details, and full
+texts to check what a citation supports. The two outcomes are recorded
+separately.</p>
+<h2 id="check-the-venues-submission-requirements">Checking the venue’s
 submission requirements</h2>
 <p>Identify the target conference year or journal issue and save the
 official author guidelines and template links. Check page count,
 anonymity and supplementary files against the current requirements. When
-cutting length, consider each passage’s role in the argument: cut
-repeated explanations, move secondary experiments, keep the core
+reducing length, consider each passage’s role in the argument: remove
+repeated explanations, move secondary experiments, and keep the core
 evidence.</p>
 <p>The position of figures on the first page, font requirements and
-appendix arrangements all follow the target template and published
-papers of the same type. Carrying over conventions from elsewhere easily
-leads the agent to fix things in the wrong direction.</p>
-<h2 id="check-the-actual-pdf">Check the actual PDF</h2>
+appendix arrangements follow the target template and published papers of
+the same type. Conventions carried over from elsewhere can lead the
+agent to make corrections in the wrong direction.</p>
+<h2 id="check-the-actual-pdf">Checking the actual PDF</h2>
 <pre class="text"><code>Build this version&#39;s PDF in full and collect log entries such as undefined references and content outside the text block.
 Read the fonts and metadata and check them against the target venue&#39;s requirements.
 Look at the rendered result page by page, checking caption placement, table borders and links.
 If double-blind review is required, check the author block, acknowledgments, links, paths inside figures and PDF metadata.</code></pre>
-<p>Code repositories and supplementary materials also carry identity
-information. When anonymous release is needed, first package the files
-to be made public, check their full content locally, and then have the
+<p>Code repositories and supplementary materials also carry identifying
+information. When anonymous release is required, package the files to be
+made public first, check their full content locally, and then have the
 user confirm the submission.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Copy the exercise draft, change the year in one citation to a wrong
-one, and move another real citation to a sentence it cannot support. Run
-the identity check and the meaning check separately and see which check
-finds each problem.</p>
+<p>Copy the exercise draft, change the year of one citation to an
+incorrect one, and move another genuine citation to a sentence it cannot
+support. Run the identity check and the support check separately and
+record which check detects each problem.</p>
 <details>
 <summary>
 Suggested analysis
 </summary>
-<p>The wrong year should show up in the metadata check. In the second
-case the reference is still genuine, so detecting the error requires
-checking the purported supporting passage in the source. Only with the
-two checks separate can you explain why a citation passed one of them
-and still cannot be used.</p>
+<p>The incorrect year should be detected by the metadata check. In the
+second case the reference is still genuine, so detecting the error
+requires checking the purported supporting passage in the source. Only
+when the two checks are kept separate can one explain why a citation
+passed one of them and still cannot be used.</p>
 </details>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Judging two papers the same because their titles are
-similar.</strong> Go further and match authors, identifiers and
-versions, keeping candidates distinct from the final match.</p>
+<p><strong>Treating two papers as the same because their titles are
+similar.</strong> Match authors, identifiers and versions as well, and
+keep candidates distinct from the final match.</p>
 </div>
 <div class="pitfall">
-<p><strong>Shrinking the template to get under the page limit.</strong>
-Rank cuts by their role in the argument, revise the content, and keep
-the template’s requirements.</p>
+<p><strong>Shrinking the template to meet the page limit.</strong> Rank
+cuts by their role in the argument, revise the content and keep the
+template’s requirements.</p>
 </div>
 <div class="pitfall">
-<p><strong>Checking anonymity only in the body text.</strong> Also check
+<p><strong>Checking anonymity in the body text only.</strong> Also check
 PDF properties, text inside figures and attachment links, and deliver as
-the target requires.</p>
+the venue requires.</p>
 </div>
 </article>
 <nav class="pager"><a class="prev" href="writing-skills.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.5 经验留档</span><span lang="en">1.5 Reusable methods</span></a><a class="next" href="explore.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2 知识库</span><span lang="en">2 Research knowledge bases</span></a></nav>

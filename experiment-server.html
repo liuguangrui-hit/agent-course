@@ -30,77 +30,99 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="服务器与后台任务">3.2 服务器与后台任务</h1>
-<p><span class="meta">课后深入，约 50 分钟。</span></p>
-<p>SSH
-启动实验后连接断了。任务究竟没启动，还是已经在服务器上跑？直接重试可能多跑一份。后台执行首先要能查询并确认任务状态。</p>
-<h2 id="先确认机器与目录">先确认机器与目录</h2>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>设计以唯一运行编号为依据的启动与查询机制，在状态未知时避免重复执行。</li>
+<li>依据进程状态、退出码、产物清单和数值有效性判断任务是否完成，区分成功、失败与未知。</li>
+<li>依据执行记录恢复或重跑任务，并说明资源分配和数据位置的约束。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 50 分钟。</span></p>
+<p>通过 SSH
+启动实验后连接中断，此时无法确定任务是没有启动，还是已在服务器上运行。直接重试可能多运行一份。后台执行的首要要求，是能够查询并确认任务状态。</p>
+<h2 id="先确认机器与目录">机器与目录的确认</h2>
 <p>沿用实验室的 SSH
-密钥与网络方案，给主机起短名，连接设置超时和心跳。第一次连接核对主机身份，再确认用户、工作目录与资源分配。</p>
+密钥与网络方案，为主机设置简短别名，并为连接设置超时和心跳。首次连接时核对主机身份，再确认用户、工作目录与资源分配。</p>
 <pre class="text"><code>Host lab
     HostName lab.example.edu
     User researcher
     ConnectTimeout 15
     ServerAliveInterval 15
     ServerAliveCountMax 2</code></pre>
-<p>示例地址需替换成自己的主机。密码和私钥保留在本地认证设施中。Tailscale
-或学校 VPN 只解决连接路径，服务器的使用权限和集群调度规则仍要遵守。</p>
-<h2 id="用运行编号启动">用运行编号启动</h2>
-<p>每次实验先分配唯一运行编号，把配置和日志放到对应目录。启动器收到同一编号时，先查是否已有运行、完成或失败记录。网络重试据此决定继续查询还是重新提交。</p>
-<p>集群有调度器时，优先使用作业编号与状态接口。普通实验室机器可用
-tmux，运行脚本负责写退出码和完成清单。启动返回作业标识后，Agent
-可以结束当前等待。</p>
+<p>示例地址须替换为自己的主机。密码和私钥保存在本地认证设施中。Tailscale
+或学校 VPN 只解决连接路径，服务器的使用权限和集群调度规则仍须遵守。</p>
+<h2 id="用运行编号启动">以运行编号启动</h2>
+<p>每次实验先分配唯一的运行编号，配置和日志放入对应目录。启动器收到同一编号时，先检查是否已有运行、完成或失败的记录；网络重试据此决定继续查询还是重新提交。</p>
+<p>集群配有调度器时，优先使用作业编号与状态接口。普通实验室机器可以使用
+tmux，由运行脚本负责写入退出码和完成清单。启动返回作业标识后，Agent
+即可结束当前等待。</p>
 <pre class="text"><code>为本轮准备独立目录，保存配置与执行提交。
 启动前检查该运行编号是否已存在。启动后立即返回任务标识。
 实验脚本把日志、退出码和产物清单写入本轮目录，只有校验完整后才写完成状态。
 连接失败时先按运行编号查询，确认未启动后再提交。</code></pre>
 <h2 id="状态与日志检查">状态与日志检查</h2>
-<p>日志静止可能是计算耗时，也可能是进程卡住。先查进程或作业状态，再结合心跳和阶段预期。监视器记录最后检查时间，成功、失败和状态未知分开报告。</p>
+<p>日志长时间不变，可能是计算耗时，也可能是进程卡住。先查看进程或作业状态，再结合心跳和各阶段的预期时长判断。监视器记录最近一次检查时间，并分别报告成功、失败和状态未知。</p>
 <p>日志中出现一行
-done，也要核对退出码、预期行数和数值有效性。程序可能在写完部分结果后失败，输出文件存在仍不足以判完成。</p>
-<p>监视器的检查间隔按任务时长设定。短演示可以更频繁，数小时实验通常隔几分钟查一次；任务结束后停止监视。</p>
-<h2 id="按执行记录恢复">按执行记录恢复</h2>
-<p>实验可恢复时，checkpoint
-记录训练状态、随机状态与优化器。续跑代码要确认数据与配置匹配。只能从头重跑时，新开运行编号，保留失败轮次及重跑关系。</p>
-<p>连接恢复后读取状态，不能凭上一段聊天推断完成位置。停任务时按确认过的作业编号或进程编号操作，先区分任务进程与共享服务。</p>
+done，仍须核对退出码、预期行数和数值有效性。程序可能在写出部分结果后失败，输出文件存在不足以判定任务完成。</p>
+<p>监视器的检查间隔按任务时长设定。短演示可以较频繁，数小时的实验通常隔几分钟检查一次；任务结束后停止监视。</p>
+<h2 id="按执行记录恢复">依据执行记录恢复</h2>
+<p>实验支持恢复时，checkpoint
+应记录训练状态、随机状态与优化器状态。续跑代码须确认数据与配置一致。只能从头重跑时，新建运行编号，保留失败轮次及其与重跑的关系。</p>
+<p>连接恢复后读取实际状态，不能凭上一段对话推断进度。停止任务时，按已确认的作业编号或进程编号操作，并先区分任务进程与共享服务。</p>
 <h2 id="资源与数据留在执行端">资源与数据留在执行端</h2>
-<p>先确认资源分配，再启动实验。看到 GPU
-空闲只是一次观测，不能保证它已经分给本任务。共享集群遵循调度器，普通服务器与同组成员约定占用。</p>
-<p>数据尽量在服务器直接取得，摘要与分析也在那里生成。只拉回必要的小结果、元数据和图片，模型权重等大文件留下明确位置与校验信息。</p>
+<p>先确认资源分配，再启动实验。观察到 GPU
+空闲只是一次观测，不能说明它已经分配给本任务。共享集群遵循调度器规则，普通服务器按组内约定占用资源。</p>
+<p>数据尽量在服务器上直接获取，摘要与分析也在服务器上生成。只取回必要的小型结果、元数据和图片；模型权重等大文件记录明确的位置与校验信息。</p>
 <h2 id="练习">练习</h2>
-<p>启动一个本课短运行，中途断开终端，再从新会话按运行编号查询。模拟一次未知状态：假设启动回包丢失，检查会不会重复启动。</p>
-<p>交付一张状态表，记录每次查询看到的进程、退出码与产物。根据这张表说明何时能安全重试，何时需要先核实。</p>
+<p>启动本课的一个短运行，中途断开终端，再从新会话按运行编号查询。模拟一次状态未知的情形：假设启动回执丢失，检查是否会重复启动。</p>
+<p>提交一张状态表，记录每次查询所见的进程、退出码与产物。据此说明何时可以安全重试，何时需要先行核实。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>启动没回包就再发一次。</strong>
-先按运行编号查执行端，避免重复消耗资源。</p>
+<p><strong>启动未收到回执就再次提交。</strong>
+先按运行编号查询执行端，避免重复消耗资源。</p>
 </div>
 <div class="pitfall">
-<p><strong>日志不动就杀任务。</strong>
-结合阶段时长与进程状态，先判定卡在哪里。</p>
+<p><strong>日志停止更新就终止任务。</strong>
+结合阶段时长与进程状态，先判断任务停在哪一步。</p>
 </div>
 <div class="pitfall">
-<p><strong>恢复时换了配置，沿用旧编号。</strong>
-身份变化新建运行，保留续跑或重跑关系。</p>
+<p><strong>恢复时更换了配置，仍沿用旧编号。</strong>
+身份改变时新建运行，并保留续跑或重跑关系。</p>
 </div>
-<p>继续看 <a
+<p>延伸阅读：<a
 href="https://github.com/tmux/tmux/wiki/Getting-Started">tmux 入门</a>
 与 <a href="https://tailscale.com/kb/1017/install">Tailscale
 官方安装</a>。</p>
 </article>
 <article lang="en"><h1 id="servers-and-background-jobs">3.2 Servers and background
 jobs</h1>
-<p><span class="meta">After-class deep dive, about 50
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Design a launch procedure based on unique run identifiers, so that a
+job’s status can be queried after a lost connection without starting a
+duplicate run.</li>
+<li>Determine whether a background job is running, complete or failed
+from process status, exit codes and verified outputs rather than from
+logs alone.</li>
+<li>Decide between resuming and rerunning a failed job, and record the
+relationship between the original run and its successor.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 50
 minutes.</span></p>
-<p>You start an experiment over SSH and the connection drops. Did the
-job never start, or is it already running on the server? Simply retrying
-may run a second copy. Background execution first has to resolve this
-uncertainty.</p>
-<h2 id="confirm-the-machine-and-directory-first">Confirm the machine and
-directory first</h2>
-<p>Use the lab’s SSH keys and network setup, give the host a short name,
-and set a timeout and keepalive for the connection. On first connection,
-check the host identity, then confirm the user, working directory and
-resource allocation.</p>
+<p>If an SSH connection drops while an experiment is being started, it
+is unclear whether the job never started or is already running on the
+server. A simple retry may start a second copy. Background execution
+must first resolve this uncertainty.</p>
+<h2 id="confirm-the-machine-and-directory-first">Confirming the machine
+and directory</h2>
+<p>Use the laboratory’s SSH keys and network setup, give the host a
+short name, and set a timeout and keepalive for the connection. On first
+connection, check the host identity, then confirm the user, the working
+directory and the resource allocation.</p>
 <pre class="text"><code>Host lab
     HostName lab.example.edu
     User researcher
@@ -108,80 +130,83 @@ resource allocation.</p>
     ServerAliveInterval 15
     ServerAliveCountMax 2</code></pre>
 <p>Replace the example address with your own host. Passwords and private
-keys stay in your local authentication setup. Tailscale or a university
-VPN only provides connectivity; the server’s usage permissions and the
+keys remain in the local authentication setup. Tailscale or a university
+VPN provides only connectivity; the server’s usage permissions and the
 cluster’s scheduling rules still apply.</p>
-<h2 id="start-with-a-run-id">Start with a run ID</h2>
-<p>Before each experiment, assign a unique run ID and put its
-configuration and logs in the matching directory. When the launcher
-receives the same ID, it first checks whether a running, finished or
-failed record already exists. A network retry uses this to decide
-whether to keep querying or resubmit.</p>
-<p>When the cluster has a scheduler, prefer its job IDs and status
-interface. On an ordinary lab machine you can use tmux, with the run
-script responsible for writing the exit code and the completion list.
-Once the launch returns a job identifier, the agent can stop
-waiting.</p>
+<h2 id="start-with-a-run-id">Launching with a run ID</h2>
+<p>Before each experiment, assign a unique run ID and place its
+configuration and logs in the corresponding directory. When the launcher
+receives an existing ID, it first checks for a running, finished or
+failed record. A retry after a network failure uses this check to decide
+whether to continue querying or to resubmit.</p>
+<p>When the cluster has a scheduler, its job IDs and status interface
+are preferred. On an ordinary laboratory machine, tmux can be used, with
+the run script responsible for writing the exit code and the completion
+list. Once the launch returns a job identifier, the agent no longer
+needs to wait.</p>
 <pre class="text"><code>Prepare a separate directory for this round, saving the configuration and execution commit.
 Before launching, check whether this run ID already exists. After launching, return the job identifier immediately.
 The experiment script writes the log, exit code and product list into this round&#39;s directory, and writes the completion status only after verifying they are complete.
 If the connection fails, first query by run ID, and resubmit only after confirming it did not start.</code></pre>
-<h2 id="check-status-as-well-as-logs">Check status as well as logs</h2>
-<p>A silent log may mean a long computation, or a stuck process. First
-check the process or job status, then interpret it alongside the
-heartbeat and the expected stage duration. The monitor records the last
-check time and reports success, failure and unknown status
-separately.</p>
-<p>Even when a log line says done, check the exit code, the expected
-number of rows and that values are valid. A program can fail after
-writing part of its results, so an existing output file is not enough to
-judge completion.</p>
-<p>Set the monitor’s check interval by job length. A short demonstration
-can be checked more often; an experiment of several hours is usually
-checked every few minutes. Stop monitoring when the job ends.</p>
-<h2 id="recover-from-the-run-records">Recover from the run records</h2>
+<h2 id="check-status-as-well-as-logs">Checking status as well as
+logs</h2>
+<p>A silent log may indicate a long computation or a stalled process.
+First check the process or job status, then interpret it together with
+the heartbeat and the expected duration of the current stage. The
+monitor records the time of the last check and reports success, failure
+and unknown status separately.</p>
+<p>Even when a log line reports completion, check the exit code, the
+expected number of rows and the validity of the values. A program can
+fail after writing part of its results, so the existence of an output
+file is not sufficient evidence of completion.</p>
+<p>The monitor’s check interval is set according to job length. A short
+demonstration can be checked more often; an experiment of several hours
+is usually checked every few minutes. Monitoring stops when the job
+ends.</p>
+<h2 id="recover-from-the-run-records">Recovering from run records</h2>
 <p>When an experiment can resume, the checkpoint records the training
-state, random state and optimizer. The resuming code must confirm that
-data and configuration match. When you can only rerun from scratch,
-assign a new run ID and keep the failed round and its relation to the
-rerun.</p>
-<p>After the connection comes back, read the status; do not infer how
-far it got from the previous conversation. When stopping a job, act on a
-confirmed job ID or process ID, and first tell the job’s processes apart
-from shared services.</p>
-<h2 id="keep-resources-and-data-on-the-execution-host">Keep resources
+state, the random state and the optimizer. The resuming code must
+confirm that the data and configuration match. When the run can only be
+restarted from the beginning, assign a new run ID and record the failed
+round and its relationship to the rerun.</p>
+<p>When the connection is restored, read the recorded status rather than
+inferring progress from the previous conversation. When stopping a job,
+act on a confirmed job ID or process ID, and first distinguish the job’s
+processes from shared services.</p>
+<h2 id="keep-resources-and-data-on-the-execution-host">Keeping resources
 and data on the execution host</h2>
-<p>Confirm the resource allocation before starting the experiment.
-Seeing a GPU idle is one observation; it does not guarantee the GPU is
-allocated to this job. On a shared cluster follow the scheduler; on an
-ordinary server, agree on usage with your group.</p>
-<p>Get data directly on the server wherever possible, and produce
-summaries and analyses there too. Pull back only the necessary small
-results, metadata and figures; large files such as model weights stay
-put, with a clear location and checksum.</p>
+<p>Confirm the resource allocation before starting the experiment. An
+idle GPU is an observation; it does not guarantee that the GPU is
+allocated to this job. On a shared cluster, follow the scheduler; on an
+ordinary server, agree usage with the research group.</p>
+<p>Obtain data directly on the server wherever possible, and produce
+summaries and analyses there as well. Transfer back only the necessary
+small results, metadata and figures; large files such as model weights
+remain in place, with a clear location and checksum.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Start a short run from this lesson, disconnect the terminal partway
+<p>Start a short run from this session, disconnect the terminal partway
 through, then query by run ID from a new session. Simulate an unknown
-status: suppose the launch reply was lost, and check whether the job
-would be launched twice.</p>
-<p>Hand in a status table recording the process, exit code and products
-seen at each query. From the table, explain when it is safe to retry and
-when you must verify first.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+status by assuming that the launch reply was lost, and check whether the
+job would be launched twice.</p>
+<p>Submit a status table recording the process, exit code and products
+observed at each query. From the table, explain when a retry is safe and
+when verification must come first.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Sending the launch again because no reply came back.</strong>
-First query the executor by run ID, to avoid using resources twice.</p>
+<p><strong>Resending a launch because no reply arrived.</strong> First
+query the executor by run ID, to avoid consuming resources twice.</p>
 </div>
 <div class="pitfall">
-<p><strong>Killing a job because the log is not moving.</strong> Combine
-the stage duration with the process status, and first judge where it is
-stuck.</p>
+<p><strong>Terminating a job because its log has stopped
+changing.</strong> Combine the stage duration with the process status,
+and first determine where the job has stalled.</p>
 </div>
 <div class="pitfall">
-<p><strong>Changing the configuration on recovery but keeping the old
+<p><strong>Changing the configuration on recovery while keeping the old
 ID.</strong> When the configuration or other run details change, create
-a new run, and keep its relation as a resume or a rerun.</p>
+a new run and record its relationship to the old one as a resume or a
+rerun.</p>
 </div>
 <p>Further reading: <a
 href="https://github.com/tmux/tmux/wiki/Getting-Started">Getting started

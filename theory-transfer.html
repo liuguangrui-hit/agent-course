@@ -31,17 +31,25 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="原点漂移与迁移">6.3 原点漂移与迁移</h1>
-<p><span class="meta">课后深入，约 60 分钟。</span></p>
-<p>一张榜在上周有用，这周收益消失。可能是原点升级，也可能是任务换了，或评审尺度变了。三种变化同时发生，单看一条总分曲线就分不清。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>完整记录原点身份，用锚定任务诊断原点漂移，并把原点、任务与评审的变化分开。</li>
+<li>设计迁移矩阵，以各原点自身的无经验与安慰剂基线判断经验是否迁移，并推导漂移对增量的影响界。</li>
+<li>针对经验迁移提出可检验的竞争预测，在固定尺度下比较经验学习与参数学习。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 60 分钟。</span></p>
+<p>一张经验榜上周有效，本周收益消失。原因可能是原点升级，也可能是任务改变或评审尺度改变。三种变化同时发生时，单看一条总分曲线无法区分。</p>
 <h2 id="原点的完整记录">原点的完整记录</h2>
 <p>闭源 Agent
-包括模型与厂商执行循环，还依赖可见工具和权限。记录产品版本与模型标识，注明可选参数、工具清单与执行时间，并保存能够取得的服务端信息。</p>
-<p>厂商未暴露的版本无法强行固定。用一组不参与学习的锚定任务定期测无经验表现，观测到变化后分段统计。锚定集用于漂移诊断，不能反复拿来挑经验。</p>
-<h2 id="建一张迁移矩阵">建一张迁移矩阵</h2>
-<p>在原点 A 学出
+包括模型与厂商的执行循环，还依赖可见的工具和权限。应记录产品版本与模型标识，注明可选参数、工具清单与执行时间，并保存能够取得的服务端信息。</p>
+<p>厂商未公开的版本无法强行固定。可用一组不参与学习的锚定任务定期测量无经验表现，观测到变化后分段统计。锚定集只用于诊断漂移，不能反复用于挑选经验。</p>
+<h2 id="建一张迁移矩阵">迁移矩阵</h2>
+<p>在原点 A 上学出
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>A</mi></msub><annotation encoding="application/x-tex">B_A</annotation></semantics></math>，在原点
-B 学出
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>B</mi></msub><annotation encoding="application/x-tex">B_B</annotation></semantics></math>，两份榜冻结。分别给两个原点评估：</p>
+B 上学出
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>B</mi></msub><annotation encoding="application/x-tex">B_B</annotation></semantics></math>，两份榜都冻结，再分别在两个原点上评估：</p>
 <table>
 <thead>
 <tr>
@@ -63,61 +71,77 @@ B 学出
 </tr>
 </tbody>
 </table>
-<p>每个执行原点都另有无经验和匹配安慰剂。迁移看相对本原点基线的增量，避免把原点
-B 本来更强解释成榜迁移成功。</p>
-<p>源榜收益接近零时，迁移率比值会很不稳定。优先报各格差值和区间，比例作为有适用条件的辅助量。</p>
-<h2 id="漂移对收益的影响可以界定">漂移对收益的影响可以界定</h2>
-<p>固定任务分布、预算与评审，对考虑的经验集合定义：</p>
+<p>每个执行原点都另设无经验组和匹配安慰剂组。迁移以相对本原点基线的增量来衡量，避免把原点
+B 本身更强误读为经验榜迁移成功。</p>
+<p>源榜收益接近零时，迁移率这一比值会很不稳定。应优先报告各格的差值和区间，比值只作为有适用条件的辅助量。</p>
+<h2 id="漂移对收益的影响可以界定">漂移对收益的影响界</h2>
+<p>固定任务分布、预算与评审，对所考虑的经验集合定义：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>=</mo><munder><mi mathvariant="normal">sup</mi><mi>B</mi></munder><mo stretchy="false" form="prefix">|</mo><msub><mi>J</mi><msup><mi>v</mi><mo>′</mo></msup></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">D=\sup_B|J_{v&#39;}(B)-J_v(B)|.</annotation></semantics></math></p>
 <p>令某张榜的无经验增量为
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Delta_v(B)=J_v(B)-J_v(\varnothing)</annotation></semantics></math>，由三角不等式：</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Delta_v(B)=J_v(B)-J_v(\varnothing)</annotation></semantics></math>，由三角不等式得：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><msub><mi mathvariant="normal">Δ</mi><msup><mi>v</mi><mo>′</mo></msup></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi mathvariant="normal">Δ</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>≤</mo><mn>2</mn><mi>D</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">|\Delta_{v&#39;}(B)-\Delta_v(B)|\le 2D.</annotation></semantics></math></p>
-<p>这条界说，两次原点表现的变化会同时进入有榜与无榜两项。实际只测有限的榜，得到的是这些榜上的漂移读数，不能把样本最大差直接当成整个经验空间的已知上界。</p>
+<p>这条界表明，原点表现的变化会同时进入有榜与无榜两项。实际只能测量有限张榜，得到的是这些榜上的漂移读数，不能把样本中的最大差直接当作整个经验空间的已知上界。</p>
 <h2 id="经验迁移的可检验预测">经验迁移的可检验预测</h2>
-<p>可以提出三条相互竞争的预测：通用操作经验被更强原点吸收，领域新规律仍有增量，绑定某种工具行为的经验随接口变化失效。</p>
-<p>先按经验来源与动作类型分层，再看新旧原点上的条目消融。原点更强并不意味着每条经验的收益必然降低；新能力也可能让原来无法执行的经验变得可用。</p>
-<p>因此，可以检验这样一条预测：原点越强，通用经验的收益越低。用同一张榜、共同任务与一致评审测新旧版本，再增加训练截止之后的新知识条目作比较。</p>
+<p>可以提出三条相互竞争的预测：通用操作经验被更强的原点吸收，领域新规律仍有增量，绑定特定工具行为的经验随接口变化而失效。</p>
+<p>先按经验来源与动作类型分层，再比较新旧原点上的条目消融结果。原点更强，并不意味着每条经验的收益必然降低；新能力也可能使原先无法执行的经验变得可用。</p>
+<p>因此可以检验这样一条预测：原点越强，通用经验的收益越低。用同一张榜、共同任务和一致的评审测量新旧版本，并加入训练截止之后的新知识条目作为比较。</p>
 <h2 id="固定尺度的跨范式比较">固定尺度的跨范式比较</h2>
-<p>要比较闭源原点外的经验学习与开放模型的参数学习，可以做一个二维设计。模型来源一轴，学习方式另一轴。开放模型也加经验榜，才能把原点能力和更新方式的作用分开。</p>
-<p>公平性至少报告两套预算：相同调用或采样次数，以及相同总资源成本。参数训练的预算包含训练开销；经验学习的预算则包括写榜与检索、搜索与评估。两套结果一并报告，研究主张继续由这个完整比较支撑。</p>
+<p>要比较闭源原点外的经验学习与开放模型的参数学习，可采用二维设计：一个维度是模型来源，另一个维度是学习方式。开放模型也加入经验榜，才能把原点能力与更新方式的作用分开。</p>
+<p>公平性至少要报告两套预算：相同的调用或采样次数，以及相同的总资源成本。参数训练的预算包含训练开销；经验学习的预算包括写榜与检索、搜索与评估。两套结果一并报告，研究主张由这一完整比较支撑。</p>
 <h2 id="练习">练习</h2>
-<p>用包内演算数据，比较同一张榜在两种原点记录下的内容差与总效应。用两次再评估的差异，定位需要重新测试的条目。</p>
-<p>再设计自己的迁移矩阵，写明哪一格用来测试保值，哪一格用来分开原点能力，哪项观测会要求重新学榜。</p>
+<p>用包内的演算数据，比较同一张榜在两种原点记录下的内容差与总效应。依据两次再评估的差异，确定需要重新测试的条目。</p>
+<p>再为自己的研究设计迁移矩阵，写明哪一格用来检验收益是否保持，哪一格用来分离原点能力，哪项观测会要求重新学习经验榜。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>新原点总分高，就宣布旧榜有用。</strong>
-比较该原点自己的无经验与安慰剂增量。</p>
+<p><strong>新原点总分更高，即宣布旧榜有效。</strong>
+比较该原点自身无经验组与安慰剂组基础上的增量。</p>
 </div>
 <div class="pitfall">
-<p><strong>榜、任务和评审同时更新。</strong>
-冻结其中两项，桥接比较第三项，变化分别留身份。</p>
+<p><strong>经验榜、任务和评审同时更新。</strong>
+冻结其中两项，用桥接比较检验第三项，各项变化分别记录身份。</p>
 </div>
 <div class="pitfall">
-<p><strong>迁移比值分母很小仍强调倍数。</strong>
-先报绝对差和不确定性，再解释比例。</p>
+<p><strong>迁移比值的分母很小，仍强调倍数。</strong>
+先报告绝对差和不确定性，再解释比例。</p>
 </div>
-<p>对照 <a href="https://arxiv.org/abs/2605.23904">SkillOpt</a>
-的技能优化，再回到原点边界、迁移设置和成本口径逐项比较。</p>
+<p>可对照 <a href="https://arxiv.org/abs/2605.23904">SkillOpt</a>
+的技能优化，逐项比较原点边界、迁移设置和成本口径。</p>
 </article>
 <article lang="en"><h1 id="origin-drift-and-transfer">6.3 Origin drift and transfer</h1>
-<p><span class="meta">After-class deep dive, about 60
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Record an origin as a complete system and use anchor tasks to detect
+drift without contaminating the selection of experience.</li>
+<li>Design and interpret a transfer matrix that measures increments over
+each origin’s own baselines, and derive the bound that origin drift
+places on a learning gain.</li>
+<li>Formulate testable predictions about which kinds of experience
+retain value across origins, and design fair comparisons across learning
+paradigms at a fixed budget.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 60
 minutes.</span></p>
-<p>A playbook helped last week, and this week the gain is gone. The
+<p>A playbook that helped last week may show no gain this week. The
 origin may have been upgraded, the tasks may have changed, or the
-scoring criteria may have changed. When all three change at once, one
-curve of total scores cannot tell them apart.</p>
-<h2 id="record-the-origin-as-a-whole">Record the origin as a whole</h2>
-<p>A closed-source agent includes the model and the vendor’s execution
-loop, and also depends on the visible tools and permissions. Record the
-product version, model identifier, optional parameters, tool list and
-time of execution, and save whatever server-side information you can
-get.</p>
-<p>You cannot pin a version that the vendor does not expose. Use a set
-of anchor tasks that take no part in learning to measure no-playbook
-performance regularly, and once a change is observed, compute statistics
-by segment. The anchor set is for drift diagnosis and must not be used
-again and again to choose experience.</p>
-<h2 id="build-a-transfer-matrix">Build a transfer matrix</h2>
+scoring criteria may have changed. When all three change together, a
+single curve of total scores cannot separate them.</p>
+<h2 id="record-the-origin-as-a-whole">Recording the origin as a
+whole</h2>
+<p>A closed-source agent comprises the model and the vendor’s execution
+loop, and also depends on the tools and permissions available to it.
+Record the product version, model identifier, optional parameters, tool
+list and time of execution, and save whatever server-side information is
+available.</p>
+<p>A version that the vendor does not expose cannot be pinned. A set of
+anchor tasks that take no part in learning is used to measure
+no-playbook performance at regular intervals, and once a change is
+observed, statistics are computed by segment. The anchor set serves
+drift diagnosis and must not be used repeatedly to select
+experience.</p>
+<h2 id="build-a-transfer-matrix">Constructing a transfer matrix</h2>
 <p>Learn
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>A</mi></msub><annotation encoding="application/x-tex">B_A</annotation></semantics></math>
 on origin A and
@@ -146,13 +170,13 @@ origins:</p>
 </tbody>
 </table>
 <p>Each executing origin also has its own no-playbook and
-matched-placebo groups. Transfer looks at the increment over that
-origin’s own baseline, so that origin B simply being stronger is not
-read as the playbook transferring successfully.</p>
+matched-placebo groups. Transfer is measured as the increment over that
+origin’s own baseline, so that a generally stronger origin B is not
+mistaken for successful transfer of the playbook.</p>
 <p>When the source playbook’s gain is close to zero, a transfer ratio
 becomes very unstable. Report the difference and interval in each cell
-first, and treat the ratio as an auxiliary quantity with conditions of
-use.</p>
+first, and treat the ratio as an auxiliary quantity with stated
+conditions of use.</p>
 <h2 id="the-effect-of-drift-on-gains-can-be-bounded">The effect of drift
 on gains can be bounded</h2>
 <p>Fix the task distribution, budget and reviewer, and for the set of
@@ -162,67 +186,69 @@ experience under consideration define:</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\Delta_v(B)=J_v(B)-J_v(\varnothing)</annotation></semantics></math>.
 By the triangle inequality:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><msub><mi mathvariant="normal">Δ</mi><msup><mi>v</mi><mo>′</mo></msup></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mi mathvariant="normal">Δ</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>≤</mo><mn>2</mn><mi>D</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">|\Delta_{v&#39;}(B)-\Delta_v(B)|\le 2D.</annotation></semantics></math></p>
-<p>This bound says that a change in origin performance enters both the
-with-playbook and the no-playbook terms. In practice you measure only a
-finite number of playbooks, which gives an estimate of drift on those
-playbooks; the largest difference in the sample cannot be taken as a
-known upper bound for the whole space of experience.</p>
-<h2 id="test-which-experience-retains-its-value">Test which experience
-retains its value</h2>
-<p>You can put forward three competing predictions: general operating
+<p>The bound expresses the fact that a change in origin performance
+enters both the with-playbook and the no-playbook terms. In practice
+only a finite number of playbooks are measured, which gives an estimate
+of drift on those playbooks; the largest difference in the sample cannot
+be taken as a known upper bound for the whole space of experience.</p>
+<h2 id="test-which-experience-retains-its-value">Testing which
+experience retains its value</h2>
+<p>Three competing predictions can be stated: general operating
 experience is absorbed by stronger origins, new regularities in a domain
-still add something, and experience tied to some tool behavior stops
-working when the interface changes.</p>
-<p>First stratify by source of experience and type of action, then look
-at entry ablations on the old and new origins. A stronger origin does
-not mathematically force every entry to lose value; new capabilities may
-also make previously unusable experience actionable.</p>
-<p>So take “the stronger the origin, the less general experience is
-worth” as a testable prediction. Test the old and new versions with the
-same playbook, shared tasks and a consistent reviewer, then add entries
-of new knowledge from after the training cutoff for comparison.</p>
+still add value, and experience tied to particular tool behavior ceases
+to work when the interface changes.</p>
+<p>First stratify by source of experience and type of action, then
+examine entry ablations on the old and new origins. A stronger origin
+does not mathematically force every entry to lose value; new
+capabilities may also make previously unusable experience
+actionable.</p>
+<p>The statement that general experience is worth less as the origin
+becomes stronger is therefore treated as a testable prediction. Test the
+old and new versions with the same playbook, shared tasks and a
+consistent reviewer, and then add entries containing new knowledge from
+after the training cutoff for comparison.</p>
 <h2 id="cross-paradigm-comparison-at-a-fixed-scale">Cross-paradigm
 comparison at a fixed scale</h2>
 <p>To compare experience learning outside a closed-source origin with
-parameter learning in an open model, you can use a two-dimensional
-design. Model source is one axis and learning method the other. Only
-when the open model also gets a playbook can you separate the effect of
-origin capability from that of the update method.</p>
+parameter learning in an open model, a two-factor design can be used,
+with model source on one axis and learning method on the other. Only
+when the open model also receives a playbook can the effect of origin
+capability be separated from that of the update method.</p>
 <p>For fairness, report at least two budgets: the same number of calls
 or samples, and the same total resource cost. Parameter training
 includes the training overhead; experience learning includes writing the
-playbook, retrieval, search and evaluation. Report both sets of results
-together, and use this full comparison to support the research
-claim.</p>
+playbook, retrieval, search and evaluation. Both sets of results are
+reported together, and the full comparison is used to support the
+research claim.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Using the worked-example data in the package, compare the content
 difference and total effect of the same playbook under the two origin
-records. Use the difference between the two re-evaluations to locate the
-entries that need retesting.</p>
+records. Use the difference between the two re-evaluations to identify
+the entries that require retesting.</p>
 <p>Then design your own transfer matrix, stating which cell tests
-whether value is kept, which cell separates origin capability, and which
-observation would require learning the playbook again.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+whether value is retained, which cell separates origin capability, and
+which observation would require the playbook to be learned again.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Declaring the old playbook useful because the new origin’s
-total score is higher.</strong> Compare the increments over that
-origin’s own no-playbook and placebo groups.</p>
+<p><strong>Concluding that the old playbook is useful because the new
+origin’s total score is higher.</strong> Compare the increments over
+that origin’s own no-playbook and placebo groups.</p>
 </div>
 <div class="pitfall">
-<p><strong>Playbook, tasks and reviewer all updated at once.</strong>
-Freeze two of them, use bridging tasks to compare the third, and give
-each change its own identity.</p>
+<p><strong>Updating the playbook, the tasks and the reviewer at
+once.</strong> Freeze two of them, use bridging tasks to compare the
+third, and give each change its own identity.</p>
 </div>
 <div class="pitfall">
-<p><strong>Emphasizing a ratio when the transfer ratio’s denominator is
-tiny.</strong> Report the absolute difference and its uncertainty first,
-then interpret the ratio.</p>
+<p><strong>Emphasizing a transfer ratio whose denominator is very
+small.</strong> Report the absolute difference and its uncertainty
+first, then interpret the ratio.</p>
 </div>
 <p>Compare the skill optimization in <a
-href="https://arxiv.org/abs/2605.23904">SkillOpt</a>, then go back over
-the origin boundary, the transfer setting and how cost is counted, item
-by item.</p>
+href="https://arxiv.org/abs/2605.23904">SkillOpt</a>, then review the
+origin boundary, the transfer setting and the cost accounting item by
+item.</p>
 </article>
 <nav class="pager"><a class="prev" href="theory-evaluation.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6.2 学习收益评估</span><span lang="en">6.2 Evaluating learning gains</span></a><a class="next" href="theory-usage.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6.4 用量与成本核算</span><span lang="en">6.4 Usage and cost accounting</span></a></nav>
 </main>

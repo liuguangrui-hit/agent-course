@@ -33,143 +33,165 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="结果绘图">1.3 结果绘图</h1>
-<p><span class="meta">课后深入，约 45 分钟。</span></p>
-<p>一张训练曲线要回答什么问题？把所有运行都画出来，还不足以回答这个问题。练习里的关键变化发生在早期峰值与最终结果之间，图应当清楚展示这个变化。</p>
-<h2 id="先决定比较关系">先决定比较关系</h2>
-<p>训练轨迹回答什么时候开始退步，按噪声比例汇总的图回答方法差距怎样变化。每个问题选适合的横轴，保留直接相关的方法和不确定性。</p>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>根据图要回答的比较选择横轴、分组和统计量，并说明舍弃部分数据的依据。</li>
+<li>区分标准差、置信区间与配对差区间的含义，在图注中写明统计量、重复单位和样本量。</li>
+<li>在最终栏宽和成稿中检验图的可读性，并核对图所用数据与正文的指标身份一致。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 45 分钟。</span></p>
+<p>设计训练曲线前，应先明确它要回答的问题。仅把所有运行都画出来，并不能回答问题。练习中的关键变化发生在早期峰值与最终结果之间，图应清楚呈现这一变化。</p>
+<h2 id="先决定比较关系">确定比较关系</h2>
+<p>训练轨迹回答何时开始退步，按噪声比例汇总的图回答方法差距怎样变化。每个问题选择合适的横轴，只保留直接相关的方法和不确定性。</p>
 <pre class="text"><code>读 data/，为两张图各写一个问题和一句回答。
 列出画出的指标、分组和种子数。再说明读者看图时要比较哪些位置。
 据此重写 plot_paper.py，保留底层数据与完整运行清单。</code></pre>
-<p>图注第一句告诉读者看到了什么，后面解释统计量和条件。主图取舍后的完整数据可以放到表格或附录，读者仍能找到。</p>
-<h2 id="用最终栏宽设计">用最终栏宽设计</h2>
+<p>图注首句说明读者看到的内容，其后解释统计量和条件。主图取舍之后，完整数据可放入表格或附录，读者仍能查到。</p>
+<h2 id="用最终栏宽设计">按最终栏宽设计</h2>
 <p>先从目标模板取得 <code>\columnwidth</code> 或
-<code>\textwidth</code>，再设置画布。用 8 英寸的默认图缩到 3.25
-英寸，原来 10 磅的字只剩约 4 磅。</p>
+<code>\textwidth</code>，再设置画布。8 英寸的默认图缩到 3.25
+英寸后，原来 10 磅的字只剩约 4 磅。</p>
 <pre class="python"><code>fig, ax = plt.subplots(figsize=(3.25, 2.3))
 plt.rcParams.update({&quot;font.size&quot;: 8, &quot;pdf.fonttype&quot;: 42})</code></pre>
 <p>具体字号按目标刊会要求调整。导出矢量
-PDF，编译后按实际阅读大小看最小标注。图在生成阶段与正文栏宽一致，插入时再用模板约定的尺寸。</p>
+PDF，编译后按实际阅读尺寸检查最小标注。图在生成阶段就与正文栏宽一致，插入时使用模板约定的尺寸。</p>
 <h2 id="均值与不确定性">均值与不确定性</h2>
-<p>均值给典型水平，标准差给这些种子之间的分散程度，置信区间给均值估计的不确定性。图注写明用哪一种，并说明独立重复的单位。</p>
-<p>比较两个方法时，方法各自的误差带重叠多少，不能直接代替配对差值的区间。若两边共用种子与数据划分，应先按种子相减，再看差值。第
-<a href="experiment-evidence.html">3.3 节</a>会把这个比较展开。</p>
-<p>小样本可以同时画散点，让读者看到五个种子各自的结果。曲线需要汇总时，保留均值与误差带，避免把每次运行都画成同等醒目的主线。</p>
-<h2 id="统一方法配色">统一方法配色</h2>
-<p>同一个方法在每张图里使用同一种颜色，由方法名映射。再配直接标注或线型，让黑白打印仍可区分。接近的线用外置图例或错开的标签，不能为了标注清楚而移动数据。</p>
-<p>连续大小使用有顺序的配色，方法类别使用离散配色。可以从 <a
+<p>均值表示典型水平，标准差表示各种子之间的离散程度，置信区间表示均值估计的不确定性。图注应写明使用哪一种，并说明独立重复的单位。</p>
+<p>比较两种方法时，各自误差带的重叠程度不能代替配对差值的区间。若两种方法共用种子与数据划分，应先按种子求差，再分析差值。<a
+href="experiment-evidence.html">3.3 节</a>将展开这一比较。</p>
+<p>样本量较小时可以同时画出散点，让读者看到五个种子各自的结果。曲线需要汇总时，保留均值与误差带，避免把每次运行都画成同等醒目的主线。</p>
+<h2 id="统一方法配色">方法配色的一致性</h2>
+<p>同一方法在每张图中使用同一种颜色，由方法名映射。再辅以直接标注或线型，使黑白打印时仍能区分。曲线相距很近时，使用外置图例或错开的标签，不能为了标注清楚而移动数据。</p>
+<p>连续量使用有序配色，方法类别使用离散配色。可以从 <a
 href="https://jfly.uni-koeln.de/color/">Okabe 与 Ito
-的方案</a>开始，再检查自己的图在色弱模拟中是否仍能区分。</p>
+的方案</a>开始，再检查图在色弱模拟下是否仍可区分。</p>
 <h2 id="坐标范围与数据筛选">坐标范围与数据筛选</h2>
-<p>比较柱长通常从零开始，折线图可以聚焦一段变化，但要把范围标清。不同子图要比较高度时，尽量共用纵轴；确需不同范围，在图注明确指出。删掉一个离群种子会改变结论，必须有预先定义的处理依据。</p>
-<p>绘图阶段若发现某个种子异常，回到运行记录查原因。原始数据保留，图脚本记录筛选条件，审阅者可以同时生成含全部种子的版本。</p>
-<h2 id="在成稿中检查">在成稿中检查</h2>
+<p>比较柱长时，纵轴通常从零开始；折线图可以聚焦一段变化，但须标明范围。不同子图需要比较高度时，尽量共用纵轴；确需不同范围，应在图注中明确说明。删除一个离群种子会改变结论时，必须有预先定义的处理依据。</p>
+<p>绘图阶段发现某个种子异常时，应回到运行记录查找原因。原始数据保留，绘图脚本记录筛选条件，审阅者可以同时生成包含全部种子的版本。</p>
+<h2 id="在成稿中检查">成稿检查</h2>
 <pre class="text"><code>编译本版论文，把每页渲染为图片并逐页看。
 检查图内最小字，标签遮挡，图文指向和图注位置。
 同时重算每条线的分组均值，确认图脚本用了预定指标。
 版面问题改脚本或排版，再生成，不手改图片。</code></pre>
-<p>机械核查发现拿错列，视觉检查发现字太小，两者都需要。只看漂亮的导出图，找不到它在论文中的实际效果。</p>
+<p>机械核查能发现取错数据列，视觉检查能发现字号过小，两者缺一不可。只看单独导出的图，无法判断它在论文中的实际效果。</p>
 <h2 id="练习">练习</h2>
-<p>对四成噪声下的最终准确率，分别画方法散点图和带误差条的横向图。再回到噪声比例曲线，说出三种图各能回答什么。为主文选一种，其余保留到分析记录。</p>
+<p>针对四成噪声下的最终准确率，分别画方法散点图和带误差条的横向图。再回到噪声比例曲线，说明三种图各自能回答什么问题。为正文选定一种，其余保留在分析记录中。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>为了平滑好看，悄悄处理数据。</strong>
-平滑写进脚本和图注，保留未平滑曲线供核对。</p>
+<p><strong>为使曲线平滑美观，未加说明地处理数据。</strong>
+把平滑方法写入脚本和图注，并保留未平滑曲线供核对。</p>
 </div>
 <div class="pitfall">
-<p><strong>把每种误差都叫误差棒。</strong>
-在图注写出统计量、重复单位和样本量。</p>
+<p><strong>把各种误差都称为误差棒。</strong>
+在图注中写明统计量、重复单位和样本量。</p>
 </div>
 <div class="pitfall">
-<p><strong>图和正文说的对象不同。</strong>
+<p><strong>图与正文描述的对象不同。</strong>
 核查图的数据筛选条件，再对照正文的指标身份。</p>
 </div>
-<p>继续读 <a href="https://doi.org/10.1371/journal.pcbi.1003833">Ten
+<p>延伸阅读：<a href="https://doi.org/10.1371/journal.pcbi.1003833">Ten
 Simple Rules for Better Figures</a> 与 <a
 href="https://clauswilke.com/dataviz/">Fundamentals of Data
 Visualization</a>。</p>
 </article>
 <article lang="en"><h1 id="plotting-results">1.3 Plotting results</h1>
-<p><span class="meta">After-class deep dive, about 45
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Derive the design of a figure from the comparison it must support,
+including the axes, the groups shown and the representation of
+uncertainty.</li>
+<li>Select and justify a summary statistic and uncertainty measure,
+stating the unit of independent replication.</li>
+<li>Evaluate a figure in the compiled paper at final size, and verify
+that the plotted quantities match the metric stated in the text.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 45
 minutes.</span></p>
-<p>Plotting every run does not tell the reader where to look. In the
-exercise, the key change happens between the early peak and the final
-result, and the figure should make that change clear.</p>
-<h2 id="decide-the-comparison-first">Decide the comparison first</h2>
+<p>Plotting every run does not tell the reader where to look. A figure
+is designed to make one comparison visible. In the exercise, the key
+change occurs between the early peak and the final result, and the
+figure should make that change clear.</p>
+<h2 id="decide-the-comparison-first">Defining the comparison first</h2>
 <p>The training trajectory answers when the decline begins; the figure
 aggregated by noise rate answers how the gap between methods changes.
-Choose a suitable horizontal axis for each question, and keep the
-directly relevant methods and their uncertainty.</p>
+Each question determines a suitable horizontal axis, and each figure
+keeps the directly relevant methods together with their uncertainty.</p>
 <pre class="text"><code>Read data/ and write one question and a one-sentence answer for each of the two figures.
 List the metrics plotted, the groups and the number of seeds. Then say which places the reader has to compare when looking at the figure.
 Rewrite plot_paper.py accordingly, keeping the underlying data and the full list of runs.</code></pre>
-<p>The first sentence of the caption tells the reader what they see; the
-rest explains the statistics and conditions. The full data left out of
-the main figure can go into a table or appendix, where readers can still
-find them.</p>
-<h2 id="design-for-the-final-column-width">Design for the final column
-width</h2>
-<p>First get <code>\columnwidth</code> or <code>\textwidth</code> from
-the target template, then set the canvas. A default 8-inch figure shrunk
-to 3.25 inches turns 10 pt text into about 4 pt.</p>
+<p>The first sentence of the caption tells the reader what is shown; the
+remainder explains the statistics and conditions. Full data omitted from
+the main figure can be given in a table or appendix, where readers can
+still find them.</p>
+<h2 id="design-for-the-final-column-width">Designing for the final
+column width</h2>
+<p>Obtain <code>\columnwidth</code> or <code>\textwidth</code> from the
+target template before setting the canvas. A default 8-inch figure
+reduced to 3.25 inches turns 10 pt text into about 4 pt.</p>
 <pre class="python"><code>fig, ax = plt.subplots(figsize=(3.25, 2.3))
 plt.rcParams.update({&quot;font.size&quot;: 8, &quot;pdf.fonttype&quot;: 42})</code></pre>
-<p>Adjust the exact font size to the target venue’s requirements. Export
-vector PDF, and after compiling check the smallest label at actual
-reading size. The figure matches the text column width when it is
-generated, and is inserted at the size the template specifies.</p>
+<p>The exact font size follows the target venue’s requirements. Export
+vector PDF, and after compilation check the smallest label at actual
+reading size. The figure is generated to match the text column width and
+inserted at the size the template specifies.</p>
 <h2 id="means-and-uncertainty">Means and uncertainty</h2>
 <p>The mean gives the typical level, the standard deviation gives
 variation across seeds, and a confidence interval gives the uncertainty
-of the mean estimate. The caption states which one is used and what the
-unit of independent replication is.</p>
-<p>When comparing two methods, how much their separate error bands
-overlap cannot stand in for the interval of the paired difference. If
-both share seeds and data splits, subtract by seed first, then look at
-the difference. <a href="experiment-evidence.html">Section 3.3</a>
-develops this comparison.</p>
-<p>With small samples you can also plot the points, so readers see the
-individual results for all five seeds. When curves need aggregating,
-keep the mean and the error band, and avoid drawing every run as an
-equally prominent main line.</p>
-<h2 id="use-consistent-method-colors">Use consistent method colors</h2>
+of the mean estimate. The caption states which is used and what the unit
+of independent replication is.</p>
+<p>When two methods are compared, the overlap of their separate error
+bands cannot substitute for the interval of the paired difference. If
+both share seeds and data splits, subtract by seed first and then
+examine the difference. <a href="experiment-evidence.html">Section
+3.3</a> develops this comparison.</p>
+<p>With small samples, individual points can also be plotted so that
+readers see the results for all five seeds. When curves are aggregated,
+keep the mean and the error band rather than drawing every run as an
+equally prominent line.</p>
+<h2 id="use-consistent-method-colors">Consistent method colors</h2>
 <p>The same method uses the same color in every figure, mapped from the
-method name. Add direct labels or line styles so it still reads in
+method name. Direct labels or line styles keep the figure readable in
 black-and-white print. For lines close together, use an external legend
-or staggered labels; never move data to make a label clearer.</p>
+or staggered labels; data are never moved to make a label clearer.</p>
 <p>Use an ordered palette for continuous magnitudes and a discrete
-palette for method categories. You can start from <a
-href="https://jfly.uni-koeln.de/color/">Okabe and Ito’s scheme</a>, then
-check that your figure remains distinguishable in a simulation of color
-vision deficiency.</p>
-<h2 id="let-the-reader-see-the-scale">Let the reader see the scale</h2>
-<p>Bar charts used to compare lengths should usually start at zero; line
-charts can focus on a range of change, but the range must be clearly
+palette for method categories. <a
+href="https://jfly.uni-koeln.de/color/">Okabe and Ito’s scheme</a> is a
+suitable starting point; check that the figure remains distinguishable
+in a simulation of color vision deficiency.</p>
+<h2 id="let-the-reader-see-the-scale">Making the scale visible</h2>
+<p>Bar charts that compare lengths should usually start at zero; line
+charts may focus on a range of change, but the range must be clearly
 marked. When panels are compared by height, share the vertical axis
-where possible; if different ranges are truly needed, say so explicitly
-in the caption. Removing an outlier seed changes the conclusion, so it
-needs a rule defined in advance.</p>
-<p>If a seed looks abnormal during plotting, go back to the run records
-to find the cause. Keep the raw data, have the plotting script record
-the filter conditions, and let the reviewer generate a version that
-includes all seeds.</p>
-<h2 id="check-in-the-compiled-paper">Check in the compiled paper</h2>
+where possible; if different ranges are genuinely required, state this
+in the caption. Removing an outlier seed changes the conclusion and
+therefore requires a rule defined in advance.</p>
+<p>If a seed appears abnormal during plotting, return to the run records
+to establish the cause. Keep the raw data, have the plotting script
+record the filter conditions, and allow the reviewer to generate a
+version that includes all seeds.</p>
+<h2 id="check-in-the-compiled-paper">Checking the compiled paper</h2>
 <pre class="text"><code>Compile this version of the paper, render each page as an image and look at them page by page.
 Check the smallest text inside figures, overlapping labels, references between text and figures, and caption placement.
 Also recompute the group mean of each line to confirm the plotting script used the intended metric.
 Fix layout problems in the script or the typesetting, then regenerate. Do not edit images by hand.</code></pre>
-<p>Mechanical checks find the wrong column; visual checks find text that
-is too small. You need both. Looking only at a nice exported figure does
-not show how it actually works in the paper.</p>
+<p>Mechanical checks detect a wrong column; visual checks detect text
+that is too small. Both are needed. An attractive exported figure does
+not show how the figure functions in the paper.</p>
 <h2 id="exercise">Exercise</h2>
 <p>For final accuracy at 40% noise, draw a scatter plot by method and a
-horizontal plot with error bars. Then go back to the noise-rate curve
-and say what each of the three figures can answer. Choose one for the
-main text and keep the others in the analysis record.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+horizontal plot with error bars. Then return to the noise-rate curve and
+state which question each of the three figures can answer. Choose one
+for the main text and keep the others in the analysis record.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Quietly processing data to make it smooth and
-pretty.</strong> Write the smoothing into the script and caption, and
+<p><strong>Processing data without disclosure to make a figure
+smooth.</strong> Write the smoothing into the script and caption, and
 keep the unsmoothed curve for checking.</p>
 </div>
 <div class="pitfall">
@@ -178,9 +200,9 @@ State the statistic, the unit of replication and the sample size in the
 caption.</p>
 </div>
 <div class="pitfall">
-<p><strong>The figure and the text are about different things.</strong>
-Check the figure’s data filter conditions, then compare them with the
-metric identity in the text.</p>
+<p><strong>A figure and its text referring to different
+quantities.</strong> Check the figure’s data filter conditions against
+the metric identity in the text.</p>
 </div>
 <p>Further reading: <a
 href="https://doi.org/10.1371/journal.pcbi.1003833">Ten Simple Rules for

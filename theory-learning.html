@@ -31,105 +31,127 @@
 </nav>
 <main>
 <article lang="zh"><h1 id="经验学习与策略表示">6.1 经验学习与策略表示</h1>
-<p><span class="meta">课后深入，约 75 分钟。</span></p>
-<p>一条经验能改变行为，就成为了策略的一部分。但经验究竟学到什么，需要从策略类、目标与更新规则分别说明。</p>
-<h2 id="固定原点定义可行经验">固定原点，定义可行经验</h2>
+<h2 id="学习目标">学习目标</h2>
+<div class="goal">
+<ol type="1">
+<li>在固定原点下定义经验集合诱导的策略类、单步与序贯目标，以及回报驱动的更新规则。</li>
+<li>运用有限候选集的集中不等式估计评估所需的任务量，并说明自适应选择使该保证失效的条件。</li>
+<li>设计条目消融与回报打乱对照，分析条目间交互作用和更新过程的收敛条件。</li>
+</ol>
+</div>
+<p><span class="meta">课后深入专题，约 75 分钟。</span></p>
+<p>一条经验能够改变行为，就成为策略的一部分。至于经验究竟学到了什么，需要分别从策略类、目标与更新规则加以说明。</p>
+<h2 id="固定原点定义可行经验">固定原点与可行经验</h2>
 <p>令
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">ℬ</mi><mrow><mi>K</mi><mo>,</mo><mi>L</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal B_{K,L}</annotation></semantics></math>
-是至多
+为至多
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>K</mi><annotation encoding="application/x-tex">K</annotation></semantics></math>
 条、总长不超过
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>
 的经验集合。原点
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><annotation encoding="application/x-tex">\mathcal A_v</annotation></semantics></math>
-固定到一个可观测版本，给出策略类：</p>
+固定为一个可观测的版本，由此得到策略类：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Π</mi><mi>v</mi></msub><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>π</mi><mi>B</mi></msub><mo>:</mo><mi>B</mi><mo>∈</mo><msub><mi mathvariant="script">ℬ</mi><mrow><mi>K</mi><mo>,</mo><mi>L</mi></mrow></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>π</mi><mi>B</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>y</mi><mo>∣</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi mathvariant="script">𝒜</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>y</mi><mo>∣</mo><mi>x</mi><mo>,</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\Pi_v=\{\pi_B:B\in\mathcal B_{K,L}\},\qquad
 \pi_B(y\mid x)=\mathcal A_v(y\mid x,B).</annotation></semantics></math></p>
 <p>单步任务分布为
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>，回报有界且方向固定，例如
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">r\in[0,1]</annotation></semantics></math>
-越大越好。目标是：</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">r\in[0,1]</annotation></semantics></math>，越大越好。目标为：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi mathvariant="double-struck">𝔼</mi><mrow><mi>x</mi><mo>∼</mo><mi>D</mi><mo>,</mo><mspace width="0.167em"></mspace><mi>y</mi><mo>∼</mo><msub><mi>π</mi><mi>B</mi></msub></mrow></msub><mo stretchy="false" form="prefix">[</mo><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mo>,</mo><mspace width="2.0em"></mspace><msup><mi>B</mi><mo>*</mo></msup><mo>∈</mo><mrow><mi mathvariant="normal">arg</mi><mo>&#8289;</mo></mrow><munder><mi mathvariant="normal">max</mi><mi>B</mi></munder><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">J_v(B)=\mathbb E_{x\sim D,\,y\sim\pi_B}[r(x,y)],\qquad
 B^*\in\arg\max_B J_v(B).</annotation></semantics></math></p>
-<p>原点的无经验表现是
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J_v(\varnothing)</annotation></semantics></math>。经验带来的增量在同一任务分布与执行预算下比较。榜的容量约束给出一个明确搜索空间，也让不同方法有可比的输入成本。</p>
-<h2 id="更新规则还需要评价与选择">更新规则还需要评价与选择</h2>
+<p>原点在无经验条件下的表现为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J_v(\varnothing)</annotation></semantics></math>。经验带来的增量须在同一任务分布与执行预算下比较。经验榜的容量约束给出明确的搜索空间，也使不同方法的输入成本可以比较。</p>
+<h2 id="更新规则还需要评价与选择">更新规则中的评价与选择</h2>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>U</mi><mi>ϕ</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>B</mi><mi>t</mi></msub><mo>,</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><msub><mi>y</mi><mi>t</mi></msub><mo>,</mo><msub><mi>r</mi><mi>t</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">B_{t+1}=U_\phi(B_t,x_t,y_t,r_t).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">U_\phi</annotation></semantics></math>
-可以提议新增条目，再用验证任务比较候选；也可以先从失败中提炼多个做法，分别试验后选择。是否使用梯度，不决定它能否构成回报驱动的策略学习。重要的是反馈怎样影响更新，以及目标是否指向未来回报。</p>
-<p>为检验这一点，训练一个使用打乱回报的更新器作对照。回报在训练任务之间打乱，不能只在最后算分时打乱。两者在同一正常评估集上的差异，才反映正确反馈的作用。</p>
-<h2 id="单步与序贯的区别">单步与序贯的区别</h2>
-<p>论文回放中，一份材料给一次预测，作答不改变下一篇材料，适合先建情境老虎机模型。研究执行则有状态
+可以先提议新增条目，再用验证任务比较候选；也可以先从失败中提炼多种做法，分别试验后选择。是否使用梯度，并不决定它是否构成回报驱动的策略学习。关键在于反馈怎样影响更新，以及目标是否指向未来回报。</p>
+<p>为检验这一点，可训练一个使用打乱回报的更新器作为对照。回报须在训练任务之间打乱，不能只在最终计分时打乱。两者在同一正常评估集上的差异，才反映正确反馈的作用。</p>
+<h2 id="单步与序贯的区别">单步与序贯问题</h2>
+<p>在论文回放中，每份材料对应一次预测，作答不影响下一篇材料，适合先建立情境老虎机模型。研究执行则有状态
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math>、动作
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>t</mi></msub><annotation encoding="application/x-tex">a_t</annotation></semantics></math>
 与转移
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math>：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi mathvariant="double-struck">𝔼</mi><mrow><msub><mi>π</mi><mi>B</mi></msub><mo>,</mo><mi>P</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">[</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></munderover><msup><mi>γ</mi><mi>t</mi></msup><msub><mi>r</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">J_v(B)=\mathbb E_{\pi_B,P}\left[\sum_{t=0}^{T-1}\gamma^t r_t\right].</annotation></semantics></math></p>
-<p>动作可能是选一个实验，实验结果改变已知证据，再决定下一个实验。迟来的回报需要分给前面的选择。可以用预算内的最终判别正确率为主目标，再把运行成功与成本作单独指标，避免系统只学会挑容易完成的任务。</p>
-<p>只从最终成功轨迹抽经验，会漏掉因选择不当而早早失败的轨迹。训练记录应包含失败与终止原因。</p>
-<h2 id="有限候选集能给出什么保证">有限候选集能给出什么保证</h2>
-<p>先考虑事前固定的
+<p>动作可能是选择一个实验，实验结果改变已知证据，再决定下一个实验。延迟到来的回报需要分配给之前的选择。可以把预算内的最终判别正确率作为主要目标，把运行成功率与成本作为单独的指标，以免系统只学会挑选容易完成的任务。</p>
+<p>若只从最终成功的轨迹中提取经验，会遗漏因选择不当而过早失败的轨迹。训练记录应包含失败与终止原因。</p>
+<h2 id="有限候选集能给出什么保证">有限候选集的保证</h2>
+<p>先考虑事先固定的
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
 张候选榜。每张榜在
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-个独立任务上测有界回报，任务未用于产生这组候选。由 Hoeffding
-不等式与并合界，概率至少
+个独立任务上测量有界回报，这些任务未参与生成这组候选。由 Hoeffding
+不等式与并合界，以至少
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>δ</mi></mrow><annotation encoding="application/x-tex">1-\delta</annotation></semantics></math>
-时，所有候选都满足：</p>
+的概率，所有候选同时满足：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mover><mi>J</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>≤</mo><mi>ϵ</mi><mo>=</mo><msqrt><mfrac><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>M</mi><mi>/</mi><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><mi>n</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">|\widehat J(B)-J(B)|\le
 \epsilon=\sqrt{\frac{\log(2M/\delta)}{2n}}.</annotation></semantics></math></p>
-<p>因此按平均分选出的榜，与这组候选中最优榜的真实回报差至多
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">2\epsilon</annotation></semantics></math>。反过来，要把每张榜的误差压到
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϵ</mi><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math>，需要：</p>
+<p>因此，按平均分选出的榜与这组候选中最优榜的真实回报之差至多为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">2\epsilon</annotation></semantics></math>。反之，要把每张榜的误差控制在
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϵ</mi><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math>
+以内，需要：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mfrac><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>M</mi><mi>/</mi><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><msup><mi>ϵ</mi><mn>2</mn></msup></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">n\ge\frac{\log(2M/\delta)}{2\epsilon^2}.</annotation></semantics></math></p>
-<p>这是固定候选、独立评估下的比较保证。不断读取验证成绩再生成新榜时，候选依赖了这些任务，需要新的确认集或覆盖自适应选择的分析。</p>
-<p>文本越长，可表达的候选越多。容量约束把表达能力和估计难度接在一起，但上述界通常很保守，实际仍要画样本量与稳定性的关系。</p>
-<h2 id="有限状态不推出单调改进">有限状态不推出单调改进</h2>
-<p>把经验榜和更新器状态合在一起，固定任务分布与更新规则后，可以分析它形成的随机过程。即使只有两张榜，更新每次都切换到另一张，也会来回振荡。</p>
-<p>要证明收敛，还需说明转移结构；要证明收敛到高回报状态，还需说明选择机制与目标的关系。候选验证、保留当前最好版本和独立确认各有作用，任何一项都要对应明确假设。</p>
+<p>这是固定候选、独立评估条件下的比较保证。若不断读取验证成绩再生成新榜，候选就依赖于这些任务，需要新的确认集，或采用能覆盖自适应选择的分析。</p>
+<p>文本越长，可表达的候选越多。容量约束把表达能力与估计难度联系起来，但上述界通常相当保守，实际仍需画出样本量与稳定性的关系。</p>
+<h2 id="有限状态不推出单调改进">有限状态不蕴含单调改进</h2>
+<p>把经验榜与更新器状态合在一起，在固定任务分布与更新规则下，可以分析由此形成的随机过程。即使只有两张榜，若每次更新都切换到另一张，过程也会来回振荡。</p>
+<p>要证明收敛，还须说明转移结构；要证明收敛到高回报状态，还须说明选择机制与目标之间的关系。候选验证、保留当前最好版本和独立确认各有作用，每一项都须对应明确的假设。</p>
 <h2 id="条目信用分配与消融">条目信用分配与消融</h2>
 <p>对条目
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mi>i</mi></msub><annotation encoding="application/x-tex">e_i</annotation></semantics></math>，可以比较完整榜与移除该条目的榜：</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mi>i</mi></msub><annotation encoding="application/x-tex">e_i</annotation></semantics></math>，可以比较完整榜与移除该条目后的榜：</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>i</mi></msub><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo>\</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>e</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\Delta_i=J(B)-J(B\setminus\{e_i\}).</annotation></semantics></math></p>
-<p>用同长度安慰剂替换被移除部分，可减少篇幅变化带来的混淆。多个条目会相互作用，因此
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Δ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\Delta_i</annotation></semantics></math>
-依赖当前榜，不能把每条分数简单相加当成全榜收益。</p>
-<p>声明使用了哪条经验是可观察线索。随机关闭条目、替换条目内容或做成组消融，才是在改变原因。</p>
+<p>用等长的安慰剂替换被移除的部分，可以减少篇幅变化带来的混淆。多个条目之间存在交互作用，<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Δ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\Delta_i</annotation></semantics></math>
+依赖于当前的榜，不能把各条的分数简单相加作为全榜收益。</p>
+<p>声明使用了哪条经验，只是可观察的线索。随机关闭条目、替换条目内容或成组消融，才是对原因的干预。</p>
 <h2 id="练习">练习</h2>
-<p>设有八张事前候选榜，回报在零到一之间。取
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\delta=0.05</annotation></semantics></math>，算出每张榜误差不超过
+<p>设有八张事先确定的候选榜，回报介于零到一之间。取
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\delta=0.05</annotation></semantics></math>，计算使每张榜误差不超过
 0.1
-所需的任务量，再与每张只测六题比较。解释为什么小试跑适合发现设计问题，却还不足以判定小幅收益。</p>
-<p>再设计一个两条经验互相依赖的例子，说明单条消融为什么不能直接加总。包内
+所需的任务量，再与每张只测六题的情形比较。解释为何小规模试跑适合发现设计问题，却不足以判定小幅收益。</p>
+<p>再设计一个两条经验相互依赖的例子，说明单条消融的结果为何不能直接相加。包内的
 <code>theory_checks.py</code> 会复算样本量与两状态振荡。</p>
 <h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>写出上确界，就说算法达到上界。</strong>
-分别报告可行空间、搜索方法和达到的经验回报。</p>
+<p><strong>写出上确界即宣称算法达到上界。</strong>
+分别报告可行空间、搜索方法和实际达到的经验回报。</p>
 </div>
 <div class="pitfall">
-<p><strong>把同题多次采样当成很多独立任务。</strong>
+<p><strong>把同一题的多次采样当作多个独立任务。</strong>
 按任务聚类，区分任务间泛化与任务内随机性。</p>
 </div>
 <div class="pitfall">
-<p><strong>发现一条经验有用，就认为整榜每条都贡献。</strong>
-对候选条目做消融，保留交互作用。</p>
+<p><strong>发现一条经验有用，即认为全榜每条都有贡献。</strong>
+对候选条目做消融，并保留交互作用。</p>
 </div>
 <p>理论背景可从 <a
 href="http://incompleteideas.net/book/the-book-2nd.html">Sutton 与 Barto
-的 Reinforcement Learning</a>的策略与回报定义读起，再对照 <a
+的 Reinforcement Learning</a>中关于策略与回报的定义读起，再对照 <a
 href="https://arxiv.org/abs/2303.11366">Reflexion</a> 和 <a
 href="https://arxiv.org/abs/2507.19457">GEPA</a> 的实际更新方式。</p>
 </article>
 <article lang="en"><h1 id="learning-through-experience">6.1 Learning through
 experience</h1>
-<p><span class="meta">After-class deep dive, about 75
+<h2 id="learning-outcomes">Learning outcomes</h2>
+<div class="goal">
+<p>After this section, students should be able to:</p>
+<ol type="1">
+<li>Define the policy class, objective and update rule of a learning
+system built on a fixed origin, for both single-step and sequential
+tasks.</li>
+<li>Derive and apply the finite-candidate comparison bound to plan
+evaluation sample sizes, and state the conditions under which it
+holds.</li>
+<li>Design interventions, such as shuffled-reward training and entry
+ablations, that test the role of feedback and the contribution of
+individual entries.</li>
+</ol>
+</div>
+<p><span class="meta">Extension reading and exercises, about 75
 minutes.</span></p>
 <p>Once a playbook entry can change behavior, it has become part of the
-policy. To explain what is learned, define the policy class, objective
-and update rule.</p>
-<h2 id="fix-the-origin-and-define-the-allowable-playbooks">Fix the
-origin and define the allowable playbooks</h2>
+policy. An account of what is learned therefore requires a definition of
+the policy class, the objective and the update rule.</p>
+<h2 id="fix-the-origin-and-define-the-allowable-playbooks">Fixing the
+origin and defining the admissible playbooks</h2>
 <p>Let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="script">ℬ</mi><mrow><mi>K</mi><mo>,</mo><mi>L</mi></mrow></msub><annotation encoding="application/x-tex">\mathcal B_{K,L}</annotation></semantics></math>
 be the set of playbooks with at most
@@ -150,46 +172,48 @@ higher is better. The objective is:</p>
 B^*\in\arg\max_B J_v(B).</annotation></semantics></math></p>
 <p>The origin’s performance without experience is
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>⌀</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">J_v(\varnothing)</annotation></semantics></math>.
-The increment from experience is compared under the same task
-distribution and execution budget. The playbook’s capacity constraint
-gives an explicit search space, and also gives different methods
-comparable input costs.</p>
+The increment due to experience is compared under the same task
+distribution and execution budget. The capacity constraint on the
+playbook defines an explicit search space and also gives different
+methods comparable input costs.</p>
 <h2 id="the-update-rule-also-needs-evaluation-and-selection">The update
-rule also needs evaluation and selection</h2>
+rule also requires evaluation and selection</h2>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>U</mi><mi>ϕ</mi></msub><mo stretchy="false" form="prefix">(</mo><msub><mi>B</mi><mi>t</mi></msub><mo>,</mo><msub><mi>x</mi><mi>t</mi></msub><mo>,</mo><msub><mi>y</mi><mi>t</mi></msub><mo>,</mo><msub><mi>r</mi><mi>t</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">B_{t+1}=U_\phi(B_t,x_t,y_t,r_t).</annotation></semantics></math></p>
 <p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>ϕ</mi></msub><annotation encoding="application/x-tex">U_\phi</annotation></semantics></math>
 can propose new entries and then compare candidates on validation tasks;
-it can also first distill several methods from failures, try each, and
-then choose. Whether it uses gradients does not decide whether it can be
-reward-driven policy learning. What matters is how feedback affects the
-update, and whether the objective concerns future reward.</p>
-<p>To test this, train an updater that uses shuffled rewards as a
+it can also first distill several methods from failures, try each and
+then choose. Whether it uses gradients does not determine whether it
+constitutes reward-driven policy learning. What matters is how feedback
+affects the update and whether the objective concerns future reward.</p>
+<p>To test this, an updater trained with shuffled rewards serves as a
 control. Rewards are shuffled across training tasks, not only when
-scores are computed at the end. Compare the two on the same unshuffled
-evaluation set to assess the role of correct feedback.</p>
-<h2 id="single-step-versus-sequential">Single-step versus
-sequential</h2>
-<p>In paper replay, each piece of material gets one prediction and the
-answer does not change the next paper, so a contextual bandit is a
-useful initial model. Research execution has a state
+scores are computed at the end. The two are compared on the same
+unshuffled evaluation set to assess the role of correct feedback.</p>
+<h2 id="single-step-versus-sequential">Single-step and sequential
+problems</h2>
+<p>In paper replay, each piece of material receives one prediction and
+the answer does not change the next paper, so a contextual bandit is a
+useful first model. Research execution has a state
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math>,
 an action
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>t</mi></msub><annotation encoding="application/x-tex">a_t</annotation></semantics></math>
 and a transition
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>J</mi><mi>v</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi mathvariant="double-struck">𝔼</mi><mrow><msub><mi>π</mi><mi>B</mi></msub><mo>,</mo><mi>P</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">[</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>T</mi><mo>−</mo><mn>1</mn></mrow></munderover><msup><mi>γ</mi><mi>t</mi></msup><msub><mi>r</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">J_v(B)=\mathbb E_{\pi_B,P}\left[\sum_{t=0}^{T-1}\gamma^t r_t\right].</annotation></semantics></math></p>
-<p>An action may be choosing an experiment; the experimental result
-changes the known evidence, which then decides the next experiment. A
-delayed reward has to be assigned to earlier choices. You can use the
-rate of correct final discrimination within budget as the main
-objective, and treat run success and cost as separate metrics, so the
-system does not just learn to pick tasks that are easy to complete.</p>
-<p>Distilling experience only from trajectories that finally succeeded
-misses trajectories that failed early because of poor choices. Training
-records should include failures and reasons for termination.</p>
+<p>An action may be the choice of an experiment; the experimental result
+changes the available evidence, which in turn determines the next
+experiment. A delayed reward must be assigned to earlier choices. The
+rate of correct final discrimination within budget can serve as the main
+objective, with run success and cost treated as separate metrics, so
+that the system does not simply learn to select tasks that are easy to
+complete.</p>
+<p>Distilling experience only from trajectories that eventually
+succeeded misses trajectories that failed early because of poor choices.
+Training records should include failures and the reasons for
+termination.</p>
 <h2 id="what-a-finite-candidate-set-can-guarantee">What a finite
 candidate set can guarantee</h2>
-<p>First consider
+<p>Consider first
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
 candidate playbooks fixed in advance. Each is measured for bounded
 reward on
@@ -200,65 +224,67 @@ Hoeffding’s inequality and the union bound, with probability at least
 all candidates satisfy:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mover><mi>J</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>≤</mo><mi>ϵ</mi><mo>=</mo><msqrt><mfrac><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>M</mi><mi>/</mi><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><mi>n</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">|\widehat J(B)-J(B)|\le
 \epsilon=\sqrt{\frac{\log(2M/\delta)}{2n}}.</annotation></semantics></math></p>
-<p>So the playbook chosen by average score has a true reward at most
+<p>Hence the playbook chosen by average score has a true reward at most
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">2\epsilon</annotation></semantics></math>
-below the best playbook in this candidate set. Conversely, to bring each
-playbook’s error down to
+below the best playbook in this candidate set. Conversely, reducing each
+playbook’s error to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϵ</mi><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math>
-you need:</p>
+requires:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mfrac><mrow><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>M</mi><mi>/</mi><mi>δ</mi><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mn>2</mn><msup><mi>ϵ</mi><mn>2</mn></msup></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">n\ge\frac{\log(2M/\delta)}{2\epsilon^2}.</annotation></semantics></math></p>
 <p>This is a comparison guarantee for fixed candidates and independent
-evaluation. When you keep reading validation scores and generating new
-playbooks, the candidates depend on those tasks, and you need a new
-confirmation set or an analysis that covers adaptive selection.</p>
-<p>The longer the text, the more candidates it can express. The capacity
-constraint links expressive power to the difficulty of estimation, but
-the bound above is usually very conservative, and in practice you still
-need to plot the relation between sample size and stability.</p>
+evaluation. When validation scores are read repeatedly and new playbooks
+are generated from them, the candidates depend on those tasks, and a new
+confirmation set or an analysis covering adaptive selection is
+required.</p>
+<p>Longer text can express more candidates. The capacity constraint
+links expressive power to the difficulty of estimation, but the bound
+above is usually very conservative, and in practice the relation between
+sample size and stability must still be plotted.</p>
 <h2 id="finite-states-do-not-imply-monotone-improvement">Finite states
 do not imply monotone improvement</h2>
-<p>Combine the playbook and the updater’s state, fix the task
-distribution and the update rule, and you can analyze the random process
-they form. Even with only two playbooks, an update that switches to the
-other one every time oscillates back and forth.</p>
-<p>To prove convergence you also need to describe the transition
-structure; to prove convergence to a high-reward state you also need to
-describe how the selection mechanism relates to the objective. Candidate
-validation, keeping the current best version and independent
-confirmation each play a part, and each must correspond to an explicit
-assumption.</p>
-<h2 id="measure-entry-contributions-through-interventions">Measure entry
-contributions through interventions</h2>
+<p>Combining the playbook and the updater’s state, and fixing the task
+distribution and the update rule, gives a random process that can be
+analyzed. Even with only two playbooks, an update that always switches
+to the other one oscillates indefinitely.</p>
+<p>A proof of convergence also requires a description of the transition
+structure; a proof of convergence to a high-reward state further
+requires a description of how the selection mechanism relates to the
+objective. Candidate validation, retaining the current best version and
+independent confirmation each contribute, and each must correspond to an
+explicit assumption.</p>
+<h2 id="measure-entry-contributions-through-interventions">Measuring
+entry contributions through interventions</h2>
 <p>For entry
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mi>i</mi></msub><annotation encoding="application/x-tex">e_i</annotation></semantics></math>,
-compare the full playbook with the playbook with that entry removed:</p>
+compare the full playbook with the playbook from which that entry has
+been removed:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Δ</mi><mi>i</mi></msub><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo>\</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>e</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">}</mo><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\Delta_i=J(B)-J(B\setminus\{e_i\}).</annotation></semantics></math></p>
 <p>Replacing the removed part with a placebo of the same length reduces
 confounding from the change in length. Entries interact, so
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Δ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\Delta_i</annotation></semantics></math>
-depends on the current playbook, and adding up each entry’s score does
-not give the gain of the whole playbook.</p>
-<p>A claim about which entry was used is an observable clue. Randomly
-disabling entries, replacing their content or ablating groups of entries
-directly tests the proposed cause.</p>
+depends on the current playbook, and the sum of the individual entries’
+scores does not give the gain of the whole playbook.</p>
+<p>A claim about which entry was used is an observable indication.
+Randomly disabling entries, replacing their content or ablating groups
+of entries tests the proposed cause directly.</p>
 <h2 id="exercise">Exercise</h2>
 <p>Suppose there are eight candidate playbooks fixed in advance, with
 rewards between zero and one. Taking
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\delta=0.05</annotation></semantics></math>,
-work out the number of tasks needed for each playbook’s error to be at
-most 0.1, then compare with testing each on only six questions. Explain
-why small trial runs are good for finding design problems but not enough
-to establish a small gain.</p>
-<p>Then design an example where two playbook entries depend on each
-other, and explain why single-entry ablations cannot simply be added up.
-The packaged <code>theory_checks.py</code> recomputes the sample size
-and the two-state oscillation.</p>
-<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
-fix them</h2>
+compute the number of tasks needed for each playbook’s error to be at
+most 0.1, and compare this with testing each on only six questions.
+Explain why small trial runs are useful for detecting design problems
+but insufficient to establish a small gain.</p>
+<p>Then construct an example in which two playbook entries depend on
+each other, and explain why single-entry ablations cannot simply be
+added. The packaged <code>theory_checks.py</code> recomputes the sample
+size and the two-state oscillation.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common errors and
+corrections</h2>
 <div class="pitfall">
-<p><strong>Writing down the supremum and saying the algorithm reaches
-the bound.</strong> Report the feasible space, the search method and the
-empirical reward achieved separately.</p>
+<p><strong>Writing down the supremum and claiming that the algorithm
+attains it.</strong> Report the feasible space, the search method and
+the empirical reward achieved separately.</p>
 </div>
 <div class="pitfall">
 <p><strong>Treating many samples of the same question as many
@@ -266,7 +292,7 @@ independent tasks.</strong> Cluster by task, and separate generalization
 across tasks from randomness within a task.</p>
 </div>
 <div class="pitfall">
-<p><strong>Finding one entry useful and assuming every entry on the
+<p><strong>Inferring from one useful entry that every entry in the
 playbook contributes.</strong> Ablate candidate entries and account for
 their interactions.</p>
 </div>
@@ -275,7 +301,8 @@ return in <a
 href="http://incompleteideas.net/book/the-book-2nd.html">Sutton and
 Barto’s Reinforcement Learning</a>, then compare with how <a
 href="https://arxiv.org/abs/2303.11366">Reflexion</a> and <a
-href="https://arxiv.org/abs/2507.19457">GEPA</a> actually update.</p>
+href="https://arxiv.org/abs/2507.19457">GEPA</a> actually perform
+updates.</p>
 </article>
 <nav class="pager"><a class="prev" href="theory.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6 编排理论</span><span lang="en">6 Orchestration theory</span></a><a class="next" href="theory-evaluation.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6.2 学习收益评估</span><span lang="en">6.2 Evaluating learning gains</span></a></nav>
 </main>
