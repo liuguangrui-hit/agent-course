@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>权限与沙箱 · 用 Agent 做科研</title>
+<title>权限与沙箱 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,383 +17,217 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="safety-sandbox.html" class="cur sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandbox</span></a>
-<a href="safety-hooks.html" class="sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥</span><span lang="en">Hooks and secrets</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="safety-sandbox.html" class="cur sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandboxes</span></a>
+<a href="safety-hooks.html" class="sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥管理</span><span lang="en">Hooks and secret management</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
 <article lang="zh"><h1 id="权限与沙箱">5.1 权限与沙箱</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>这一节把权限的几层讲清楚：对话里选的权限模式，配置文件里的规则，操作系统层面的沙箱。它们各管一段，缺一层就有一段没人管。</p>
-<h2 id="权限模式">权限模式</h2>
-<p>Claude Code 的输入框旁可以选权限模式：</p>
+<p><span class="meta">课后深入，约 60 分钟。</span></p>
+<p>允许
+<code>uv run</code>，究竟允许了什么？它启动的脚本可以再启动程序，也可以使用环境里的凭据。理解这一点，才能判断权限表的实际范围。</p>
+<h2 id="四类能力与权限边界">四类能力与权限边界</h2>
 <table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr>
-<th>模式</th>
-<th>改文件</th>
-<th>运行命令</th>
-<th>适合</th>
+<th>能力</th>
+<th>需要检查的边界</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Manual</td>
-<td>问</td>
-<td>问，只读的少数命令除外</td>
-<td>第一次接触一个项目，想看清每一步</td>
+<td>读文件</td>
+<td>模型直接读取工具，子进程可见目录</td>
 </tr>
 <tr>
-<td>Accept edits</td>
-<td>不问</td>
-<td>问，允许表里的不问</td>
-<td>日常写作和改代码</td>
+<td>写文件</td>
+<td>工作目录、临时目录和挂载点</td>
 </tr>
 <tr>
-<td>Plan</td>
-<td>不改</td>
-<td>只读的命令</td>
-<td>先让它想清楚方案，不动手</td>
+<td>访问网络</td>
+<td>可连接目标、协议与代理路径</td>
 </tr>
 <tr>
-<td>跳过权限检查</td>
-<td>不问</td>
-<td>不问</td>
-<td>只在本身隔离的环境里</td>
+<td>产生外部效果</td>
+<td>凭据的作用域，远端允许的动作</td>
 </tr>
 </tbody>
 </table>
-<p>Codex
-有对应的设置：只读，可写工作目录，完全放行，另有何时向你请求批准的选项。</p>
-<p>模式是粗调，规则是细调。日常用 Accept
-edits，再用规则把常用命令放行，危险命令拒绝，是最省心的组合。</p>
-<h2 id="规则的写法">规则的写法</h2>
-<p>规则写在项目的 <code>.claude/settings.json</code> 里：</p>
-<pre class="text"><code>{
-  &quot;permissions&quot;: {
-    &quot;deny&quot;: [
-      &quot;Bash(rm -rf:*)&quot;,
-      &quot;Bash(sudo:*)&quot;,
-      &quot;Read(~/.ssh/**)&quot;
-    ],
-    &quot;allow&quot;: [
-      &quot;Bash(git commit:*)&quot;,
-      &quot;Bash(git push:*)&quot;,
-      &quot;Bash(uv run:*)&quot;,
-      &quot;Bash(ssh lab:*)&quot;
-    ]
-  }
-}</code></pre>
-<p>拒绝优先于允许：同一条命令同时匹配两边，以拒绝为准。规则按前缀匹配，<code>Bash(git push:*)</code>
-放行所有以 git push 开头的命令。前缀规则只认这一种写法：拒绝了 rm
--rf，换个写法删除仍可能漏过去，所以拒绝表管住常见的危险写法，兜底靠沙箱。</p>
-<p>写规则的顺序：先写拒绝表，想清楚什么事无论如何都不能做；再看这个项目实际用了哪些命令，挑天天用的写进允许表；剩下的保持询问。不要一开始就写一张大允许表。</p>
-<p>规则可以放三个地方：用户目录下对所有项目生效；项目里的
-<code>.claude/settings.json</code>
-随项目走，可以提交进仓库；<code>.claude/settings.local.json</code>
-只在你这台电脑上生效，不提交。项目特有的规则放项目里。</p>
-<h2 id="沙箱管什么">沙箱管什么</h2>
-<p>权限规则检查的是 Agent
-要发起的那条命令。命令运行起来之后，它可能调用别的程序：一个 Python
-脚本里读了你的密钥文件，一个安装脚本往系统目录里写了东西。这些规则看不到。</p>
-<p>沙箱在操作系统层面把整条命令连同它调用的一切关起来：</p>
-<ul>
-<li>文件：只能写项目文件夹，系统临时目录，以及你另外加进来的目录；</li>
-<li>网络：只能直接连你列出的域名，名单外的会先停下来问你；设了严格名单就直接拒绝。</li>
-</ul>
-<pre class="text"><code>{
-  &quot;sandbox&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;allowUnsandboxedCommands&quot;: false,
-    &quot;excludedCommands&quot;: [&quot;ssh lab:*&quot;],
-    &quot;network&quot;: { &quot;allowedDomains&quot;: [&quot;github.com&quot;, &quot;arxiv.org&quot;, &quot;api.openalex.org&quot;] }
-  }
-}</code></pre>
-<p><code>allowUnsandboxedCommands</code> 设成
-false，命令被沙箱拦下后不能自己换到沙箱外重试。<code>excludedCommands</code>
-列出整条在沙箱外运行的命令：ssh
-不走网站名单，放进沙箱就连不上服务器；它到了服务器上做什么，本机的沙箱也管不到，所以服务器那头的权限另外管。字段随版本会有变化，让
-Agent 按当前官方文档核对。</p>
-<p>沙箱只管命令和它启动的程序；Claude
-自己读写文件的工具不在沙箱里，归上面的权限规则管，所以两层都要配。沙箱支持
-macOS、Linux 和 WSL2，Windows 上要在 WSL2 里运行 Claude Code
-才有。开了沙箱后，沙箱内的命令可以少问几次，因为它即使出错也碰不到外面。</p>
-<h2 id="两家的对应">两家的对应</h2>
-<table>
-<thead>
-<tr>
-<th>要做的事</th>
-<th>Claude Code</th>
-<th>Codex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>项目配置文件</td>
-<td><code>.claude/settings.json</code></td>
-<td><code>.codex/config.toml</code></td>
-</tr>
-<tr>
-<td>只让它想，不让它改</td>
-<td>Plan 模式</td>
-<td>只读沙箱，<code>codex exec</code> 的默认</td>
-</tr>
-<tr>
-<td>只写项目文件夹</td>
-<td>开沙箱</td>
-<td>可写工作目录，交互使用时的默认</td>
-</tr>
-<tr>
-<td>限制网络</td>
-<td>沙箱的域名名单</td>
-<td>沙箱默认不联网，按需打开</td>
-</tr>
-</tbody>
-</table>
-<p>两家同时用时，让一家按另一家的配置写一份对应的，再让另一家检查是否一致。</p>
-<h2 id="无人值守时">无人值守时</h2>
-<p>夜里没人点同意，所以第 4
-课的定时任务要么事先放行需要的命令，要么在更宽的模式下运行。后一种一定要配沙箱，并且写权限只给项目文件夹。一条实用的规矩：无人值守能用的权限，不超过你白天在
-Accept edits 下放行的范围。</p>
+<p>权限模式是这些边界的起点。当前配置可能同时来自组织、用户和项目，需要读取最终有效值，再解释实际生效范围。</p>
+<h2 id="命令规则只覆盖特定入口">命令规则只覆盖特定入口</h2>
+<p>拒绝一个删除命令的写法，可以挡住那种工具请求。其他脚本也能执行删除，允许的
+shell
+还可以组合命令。规则应按任务选择最小入口，进程层再限制目录和网络。</p>
+<p>只读资料任务优先用只读执行环境。需要写入的任务只挂载专用输出目录。高权限发布凭据不要放进会读取外部资料的执行进程。</p>
+<h2 id="沙箱行为测试">沙箱行为测试</h2>
+<p>macOS，Linux，Windows 的隔离机制和支持范围不同。当前 Agent
+的某种默认模式，也可能被组织配置覆盖。先记录版本和生效配置，再测试读写，子进程与网络。</p>
+<p>练习材料提供配置起点，具体字段按 <a
+href="https://code.claude.com/docs/en/settings">Claude 权限</a>、<a
+href="https://code.claude.com/docs/en/sandboxing">Claude 沙箱</a>和 <a
+href="https://developers.openai.com/codex/security">Codex
+安全说明</a>核对。配置解析成功之后仍要做行为测试。</p>
+<pre class="text"><code>在演示目录内为每条边界建一个用例，包含预期与实际结果。
+直接工具和子进程分别尝试读取普通测试文件。
+允许目录写入应成功，预定隔离目录写入应失败。
+测试一个允许网络目标与一个未允许目标，记录实际行为。</code></pre>
+<p>测试只能说明这些路径在当前配置下怎样工作。新增工具、改变启动方式或更新版本，重测受影响路径。</p>
+<h2 id="ssh-例外是另一项能力">SSH 例外是另一项能力</h2>
+<p>把 SSH
+放到本机沙箱外，它会拿到本机进程可用的连接能力；远端命令又受服务器账号控制。最小化远端账号权限，限定工作目录，使用集群已有的调度与网络管理。</p>
+<p>如果一次任务只需查询作业状态，可提供只返回固定字段的查询入口。给任意远端
+shell 的权限比查询状态宽，配置说明应当明确这个选择。</p>
+<h2 id="按信息流组织角色">按信息流组织角色</h2>
+<p>外部资料进入阅读角色，带来源的笔记进入分析角色，批准的产物进入发布角色。来源标签贯穿传递，发布操作核对目标与授权。</p>
+<p>摘要和结构化 JSON
+也可能包含不可信要求。把资料格式变整齐，并没有改变来源。权限在执行端落实，模型判断再谨慎也只是其中一层。</p>
 <h2 id="练习">练习</h2>
-<p>把你的工作台按本节的顺序重新配一遍：先拒绝表，再看一周的运行日志写允许表，最后开沙箱。用第
-4
-课的收工流程跑一次，记下还有哪些命令被询问，决定它们是放行还是保持询问。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>从第 4
+课选一次收工，逐项列出读写文件、网络和凭据。给每项动作找最小可用入口。然后换一个入口运行同样的无害测试，记录哪里发生了权限扩张。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>一开始就写大允许表。</strong>
-凭想象把能想到的命令全放行，其中就有不该放的。先拒绝表，再按实际用到的命令写允许表。</p>
+<p><strong>把两家的配置逐字段翻译。</strong>
+先写所需能力，再分别实现与实测同一种语义。</p>
 </div>
 <div class="pitfall">
-<p><strong>只有规则没有沙箱。</strong> 规则放行了 uv
-run，被运行的脚本里读了密钥文件，规则看不到。放手无人值守之前开沙箱。</p>
+<p><strong>名单只写域名，忽略外部工具例外。</strong>
+把沙箱外命令和连接器分别列进能力表。</p>
 </div>
 <div class="pitfall">
-<p><strong>照抄过期的配置。</strong>
-配置字段随版本变化，网上抄来的配置可能已经不生效，你以为有保护其实没有。让
-Agent 按当前官方文档写，写完实际测试一次被拒绝。</p>
+<p><strong>本机目录隔离等于远端隔离。</strong>
+远端账号与进程另做边界测试。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/settings">Claude Code
-权限与设置</a></li>
-<li><a href="https://code.claude.com/docs/en/sandboxing">Claude Code
-沙箱</a></li>
-<li><a href="https://developers.openai.com/codex/security">Codex
-安全与沙箱</a></li>
-</ul>
 </article>
-<article lang="en"><h1 id="permissions-and-sandbox">5.1 Permissions and sandbox</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>This section explains the layers of permissions: the mode you choose
-in a conversation, rules in configuration files, and the
-operating-system sandbox. Each governs a part. Leave out a layer and
-that part goes unguarded.</p>
-<h2 id="permission-modes">Permission modes</h2>
-<p>Claude Code lets you choose a permission mode beside the input
-box:</p>
+<article lang="en"><h1 id="permissions-and-sandboxes">5.1 Permissions and sandboxes</h1>
+<p><span class="meta">After-class deep dive, about 60
+minutes.</span></p>
+<p>When you allow <code>uv run</code>, what exactly have you allowed?
+The script it starts can start other programs, and can use the
+credentials in the environment. Understanding this helps you assess the
+actual scope of a permission table.</p>
+<h2 id="four-capabilities-and-their-boundaries">Four capabilities and
+their boundaries</h2>
 <table>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
-<th>Mode</th>
-<th>File edits</th>
-<th>Commands</th>
-<th>Suited to</th>
+<th>Capability</th>
+<th>Boundary to check</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Manual</td>
-<td>Ask</td>
-<td>Ask, except a few read-only commands</td>
-<td>A first look at a project, seeing every step</td>
+<td>Reading files</td>
+<td>The model’s direct read tools, and the directories a subprocess can
+see</td>
 </tr>
 <tr>
-<td>Accept edits</td>
-<td>Don’t ask</td>
-<td>Ask, except allowed commands</td>
-<td>Daily writing and code changes</td>
+<td>Writing files</td>
+<td>Working directory, temporary directories and mount points</td>
 </tr>
 <tr>
-<td>Plan</td>
-<td>No edits</td>
-<td>Read-only commands</td>
-<td>Thinking through a plan before acting</td>
+<td>Network access</td>
+<td>Reachable targets, protocols and proxy paths</td>
 </tr>
 <tr>
-<td>Skip permission checks</td>
-<td>Don’t ask</td>
-<td>Don’t ask</td>
-<td>Only in an isolated environment</td>
+<td>External effects</td>
+<td>The scope of credentials, and the actions the remote side
+allows</td>
 </tr>
 </tbody>
 </table>
-<p>Codex has corresponding settings: read-only, writable working
-directory, unrestricted, plus options for when to ask you for
-approval.</p>
-<p>Modes make broad choices; rules refine them. Accept edits with rules
-allowing common commands and denying dangerous ones is the easiest daily
-setup.</p>
-<h2 id="rule-syntax">Rule syntax</h2>
-<p>Rules go in the project’s <code>.claude/settings.json</code>:</p>
-<pre class="text"><code>{
-  &quot;permissions&quot;: {
-    &quot;deny&quot;: [
-      &quot;Bash(rm -rf:*)&quot;,
-      &quot;Bash(sudo:*)&quot;,
-      &quot;Read(~/.ssh/**)&quot;
-    ],
-    &quot;allow&quot;: [
-      &quot;Bash(git commit:*)&quot;,
-      &quot;Bash(git push:*)&quot;,
-      &quot;Bash(uv run:*)&quot;,
-      &quot;Bash(ssh lab:*)&quot;
-    ]
-  }
-}</code></pre>
-<p>Deny takes precedence over allow. A command matching both is denied.
-Rules match prefixes: <code>Bash(git push:*)</code> allows all commands
-starting with git push. A prefix rule recognizes only that form: denying
-rm -rf may miss deletion written another way. Use the deny list for
-common dangerous forms and the sandbox as the backstop.</p>
-<p>Write the deny list first: what must never happen? Then look at
-commands this project actually uses and put everyday ones in the allow
-list. Leave the rest asking. Do not start with a large allow list.</p>
-<p>Rules can live in three places: in your user directory for all
-projects; in <code>.claude/settings.json</code> to travel with the
-project and be committed; or in <code>.claude/settings.local.json</code>
-for this computer only, uncommitted. Project-specific rules belong in
-the project.</p>
-<h2 id="what-the-sandbox-governs">What the sandbox governs</h2>
-<p>Permission rules check the command the agent wants to start. Once
-running, it may call other programs: a Python script reads your key
-file, or an installer writes to a system directory. The rules do not see
-this.</p>
-<p>The sandbox confines the command and everything it calls at the
-operating-system level:</p>
-<ul>
-<li>Files: write only to the project folder, system temporary
-directories, and directories you add;</li>
-<li>Network: connect directly only to listed domains; unlisted ones ask
-you first. A strict list refuses them outright.</li>
-</ul>
-<pre class="text"><code>{
-  &quot;sandbox&quot;: {
-    &quot;enabled&quot;: true,
-    &quot;allowUnsandboxedCommands&quot;: false,
-    &quot;excludedCommands&quot;: [&quot;ssh lab:*&quot;],
-    &quot;network&quot;: { &quot;allowedDomains&quot;: [&quot;github.com&quot;, &quot;arxiv.org&quot;, &quot;api.openalex.org&quot;] }
-  }
-}</code></pre>
-<p>With <code>allowUnsandboxedCommands</code> false, a blocked command
-cannot retry outside the sandbox on its own.
-<code>excludedCommands</code> lists whole commands that run outside it.
-ssh does not use the website list and cannot reach the server inside the
-sandbox. The local sandbox cannot govern what ssh does on the server
-either; manage server-side permissions separately. Fields may change by
-version. Have the agent check current official documentation.</p>
-<p>The sandbox governs only commands and programs they start. Claude’s
-own file-reading and writing tools are outside it and governed by
-permission rules, so configure both layers. The sandbox supports macOS,
-Linux and WSL2. On Windows, run Claude Code inside WSL2 to use it.
-Sandboxed commands can ask less often because even a mistake cannot
-touch what is outside.</p>
-<h2 id="matching-the-two-vendors">Matching the two vendors</h2>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>Aim</th>
-<th>Claude Code</th>
-<th>Codex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Project configuration</td>
-<td><code>.claude/settings.json</code></td>
-<td><code>.codex/config.toml</code></td>
-</tr>
-<tr>
-<td>Think without editing</td>
-<td>Plan mode</td>
-<td>Read-only sandbox, the <code>codex exec</code> default</td>
-</tr>
-<tr>
-<td>Write only to the project folder</td>
-<td>Enable sandbox</td>
-<td>Writable working directory, the interactive default</td>
-</tr>
-<tr>
-<td>Limit network</td>
-<td>Sandbox domain list</td>
-<td>Sandbox has no network by default; enable as needed</td>
-</tr>
-</tbody>
-</table>
-<p>When using both, have one write equivalent settings based on the
-other’s configuration, then have the other check consistency.</p>
-<h2 id="unattended-work">Unattended work</h2>
-<p>Nobody can approve prompts at night. Session 4’s scheduled tasks must
-either have needed commands allowed beforehand or use a broader mode.
-The latter needs a sandbox with writes limited to the project folder. A
-practical rule: unattended permissions should not exceed what you allow
-under Accept edits during the day.</p>
+<p>The permission mode is the starting point for these boundaries. The
+current configuration may come from the organization, the user and the
+project at once, so read the final effective values before explaining
+the scope actually in force.</p>
+<h2 id="command-rules-cover-only-specific-entry-points">Command rules
+cover only specific entry points</h2>
+<p>Denying one way of writing a delete command blocks that kind of tool
+request. Other scripts can also delete, and an allowed shell can combine
+commands. Allow only the commands the task needs, and the process layer
+then limits directories and networks.</p>
+<p>Tasks that only read source material should use a read-only execution
+environment where possible. For tasks that need to write files, mount
+only a dedicated output directory with write access. Do not put
+high-privilege publishing credentials into an execution process that
+reads external material.</p>
+<h2 id="test-the-sandboxs-actual-behavior">Test the sandbox’s actual
+behavior</h2>
+<p>macOS, Linux and Windows differ in isolation mechanisms and what they
+support. A default mode of the current agent may also be overridden by
+organization configuration. First record the version and the effective
+configuration, then test reads and writes, subprocesses and the
+network.</p>
+<p>The exercise materials provide a configuration starting point; check
+specific fields against <a
+href="https://code.claude.com/docs/en/settings">Claude permissions</a>,
+the <a href="https://code.claude.com/docs/en/sandboxing">Claude
+sandbox</a> and <a
+href="https://developers.openai.com/codex/security">Codex security</a>.
+Even after the configuration parses, you still need behavioral
+tests.</p>
+<pre class="text"><code>In the demonstration directory, create one test case for each boundary, with the expected and actual results.
+Try to read an ordinary test file with the direct tool and with a subprocess, separately.
+Writing to an allowed directory should succeed; writing to the designated isolated directory should fail.
+Test one allowed network target and one not allowed, and record the actual behavior.</code></pre>
+<p>Tests only show how these paths work under the current configuration.
+When you add tools, change how things are started or update versions,
+retest the affected paths.</p>
+<h2 id="an-ssh-exception-is-another-capability">An SSH exception is
+another capability</h2>
+<p>Put SSH outside the local sandbox and it gets the connection ability
+available to local processes; remote commands are then controlled by the
+server account. Minimize the remote account’s permissions, restrict the
+working directory, and use the cluster’s existing scheduling and network
+management.</p>
+<p>If a task only needs to query job status, provide a query entry that
+returns only fixed fields. Access to an arbitrary remote shell grants
+more capability than a status query, and the configuration notes should
+state this choice clearly.</p>
+<h2 id="organize-roles-by-information-flow">Organize roles by
+information flow</h2>
+<p>External material goes to the reading role, notes with sources go to
+the analysis role, and approved products go to the publishing role. The
+source label travels with every handoff, and publishing checks the
+target and authorization.</p>
+<p>Summaries and structured JSON can also contain untrusted requests.
+Making material tidier does not change its source. Permissions are
+enforced at the executor; however careful the model’s judgment, it is
+only one layer.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Reconfigure your workbench in this order: deny list, allow list based
-on a week’s run logs, then sandbox. Run Session 4’s wrap-up workflow
-once. Record commands that still ask, and decide whether to allow them
-or keep asking.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Choose one finishing step from Lesson 4 and list, item by item, the
+files it reads and writes, the network and the credentials. Find the
+smallest usable entry point for each action. Then run the same harmless
+test through another entry point and record where permissions
+expanded.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Starting with a large allow list.</strong> Allowing every
-command you can imagine includes ones you should not allow. Start with
-deny, then allow commands actually used.</p>
+<p><strong>Translating one vendor’s configuration into the other’s field
+by field.</strong> First write the capability needed, then implement and
+test the required behavior separately in each.</p>
 </div>
 <div class="pitfall">
-<p><strong>Rules without a sandbox.</strong> Rules allow uv run, but the
-script reads a key file unseen by the rules. Enable the sandbox before
-unattended work.</p>
+<p><strong>The allowlist names only domains and ignores exceptions for
+external tools.</strong> List commands outside the sandbox and
+connectors separately in the capability table.</p>
 </div>
 <div class="pitfall">
-<p><strong>Copying outdated configuration.</strong> Fields change by
-version. Copied settings may no longer work, leaving you with protection
-you only think you have. Have the agent use current official
-documentation and test an actual denial afterwards.</p>
+<p><strong>Treating local directory isolation as remote
+isolation.</strong> Test the remote account and processes as a separate
+boundary.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/settings">Claude Code
-permissions and settings</a></li>
-<li><a href="https://code.claude.com/docs/en/sandboxing">Claude Code
-sandbox</a></li>
-<li><a href="https://developers.openai.com/codex/security">Codex
-security and sandbox</a></li>
-</ul>
 </article>
-<nav class="pager"><a class="prev" href="safety.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5 选修 编排安全</span><span lang="en">5 Elective: Safety</span></a><a class="next" href="safety-hooks.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.2 Hooks 与密钥</span><span lang="en">5.2 Hooks and secrets</span></a></nav>
+<nav class="pager"><a class="prev" href="safety.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5 安全控制</span><span lang="en">5 Safety controls</span></a><a class="next" href="safety-hooks.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.2 Hooks 与密钥管理</span><span lang="en">5.2 Hooks and secret management</span></a></nav>
 </main>
 </div>
 </body>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>把做法留下来 · 用 Agent 做科研</title>
+<title>经验留档 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,264 +17,117 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
-<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
-<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
-<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
-<a href="writing-skills.html" class="cur sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
-<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文表达</span><span lang="en">Structuring a paper</span></a>
+<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数据核查</span><span lang="en">Checking the numbers</span></a>
+<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">结果绘图</span><span lang="en">Plotting results</span></a>
+<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿返修</span><span lang="en">Peer review and revision</span></a>
+<a href="writing-skills.html" class="cur sub"><span class="num">1.5</span><span lang="zh">经验留档</span><span lang="en">Reusable methods</span></a>
+<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">文献引用与刊会投稿</span><span lang="en">Citations and submission</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="把做法留下来">1.5 把做法留下来</h1>
+<article lang="zh"><h1 id="经验留档">1.5 经验留档</h1>
 <p><span class="meta">课后深入，约 25 分钟。</span></p>
-<p>一次成功的改稿，如果下次还要从头讲一遍要求，就只是一次成功。把要求和流程存进文件，Agent
-每次开工自己去读，这次的经验才会变成你的工具。存的地方有两个：<code>AGENTS.md</code>
-和 Skill。</p>
-<h2 id="三个层次">三个层次</h2>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>放在哪里</th>
-<th>什么时候加载</th>
-<th>适合放什么</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>对话里说</td>
-<td>只在这次对话</td>
-<td>这一次的具体任务</td>
-</tr>
-<tr>
-<td><code>AGENTS.md</code></td>
-<td>每次开工都读，一直占着上下文</td>
-<td>长期不变的约定：文件放哪，什么不能改，写作的基本口味</td>
-</tr>
-<tr>
-<td>Skill</td>
-<td>用到时才加载</td>
-<td>一整套做法：步骤，对照表，脚本</td>
-</tr>
-</tbody>
-</table>
-<p>判断的办法：一条要求是不是每次都适用。原稿只读，数字来自数据，这些每次都适用，放
-<code>AGENTS.md</code>。怎样重讲一篇论文是一套九步的流程，只有改论文时才用，做成
+<p>第二次改论文时，如果还要完整重复上次的要求，说明经验尚未形成可调用的方法。找出反复有效的判断，将它们保存为后续任务能加载的约定或
 Skill。</p>
-<h2 id="agents.md-与-claude.md">AGENTS.md 与 CLAUDE.md</h2>
-<p>Codex 每次开工读项目里的 <code>AGENTS.md</code>，Claude Code 读
-<code>CLAUDE.md</code>。两家共用一套约定的办法，是只维护
-<code>AGENTS.md</code>，在 <code>CLAUDE.md</code> 里只写一行：</p>
-<pre class="text"><code>@AGENTS.md</code></pre>
-<p><code>@</code> 表示把那个文件的内容引进来。子文件夹里也可以有自己的
-<code>AGENTS.md</code>，只在那个文件夹里工作时生效。个人的长期偏好，比如回答用中文，放在用户目录的全局配置里，不放进项目。</p>
-<p><code>AGENTS.md</code>
-最常见的问题是越写越长。每出一次问题就加一条，几周后几百行，互相重复甚至矛盾，Agent
-反而不照做了。两条纪律：只放稳定的约定，不放操作步骤和一次性的调试记录；加新条之前，先删掉重复的，合并相近的。参考答案里的
-<code>AGENTS.md</code> 只有五行。</p>
-<h2 id="skill-的结构">Skill 的结构</h2>
-<p>一个 Skill 是一个文件夹，里面至少有一个 <code>SKILL.md</code>：</p>
-<pre class="text"><code>paper-retell/
-├── SKILL.md            必需：说明和步骤
-├── style_table.md      对照表，SKILL.md 里引用
-└── check_numbers.py    脚本，步骤里调用</code></pre>
-<p><code>SKILL.md</code> 开头是一段元数据：</p>
-<pre class="text"><code>---
-name: paper-retell
-description: Retell an academic paper from title to conclusion around its single most
-  striking result, redraw its data figures at final size, and check every number against
-  the data. Use when asked to revise, rewrite, polish or de-AI a paper draft.
----</code></pre>
-<p><code>description</code> 最重要。Agent 平时只看到每个 Skill
-的名字和这段描述，靠它判断什么时候该用。描述写清两件事：这个 Skill
-做什么，什么样的请求应该触发它。描述太笼统，比如 helps with
-writing，它就几乎不会被自动调用。</p>
-<p>元数据下面是正文：分步骤写清做法，引用同文件夹里的对照表和脚本。参考答案里有完整的
-<code>paper-retell</code>，可以直接看。</p>
-<h2 id="放在哪里怎么调用">放在哪里，怎么调用</h2>
+<h2 id="稳定约定与可调用方法">稳定约定与可调用方法</h2>
+<p>项目约定写每次都适用的事：原件放在哪里，编译入口是什么，哪些数据不能覆盖。Skill
+写只在某类任务中使用的方法：怎样分析范文，怎样从数据核对到整稿重讲，交给谁审。</p>
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr>
-<th></th>
-<th>Claude Code</th>
-<th>Codex</th>
+<th>位置</th>
+<th>放什么</th>
+<th>什么时候读</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>本项目可用</td>
-<td><code>.claude/skills/&lt;名字&gt;/</code></td>
-<td><code>.agents/skills/&lt;名字&gt;/</code></td>
-</tr>
-<tr>
-<td>所有项目可用</td>
-<td><code>~/.claude/skills/&lt;名字&gt;/</code></td>
-<td><code>~/.codex/skills/&lt;名字&gt;/</code></td>
-</tr>
-</tbody>
-</table>
-<p>两家的 <code>SKILL.md</code>
-格式相同。只维护一份，在另一处放一个指向它的链接；如果某一家的版本不认链接，就复制一份，改动时两边一起更新：</p>
-<pre class="text"><code>把 .claude/skills/paper-retell 链接到 .agents/skills/paper-retell，让 Codex 也能用同一个 Skill。</code></pre>
-<p>调用有两种方式：Agent 根据描述自动判断，或者你直接点名。在 Claude
-Code 里输入 <code>/paper-retell</code> 就会加载它；在任何一家里说用
-paper-retell 改这篇论文，也会加载。</p>
-<h2 id="什么时候做-skill">什么时候做 Skill</h2>
-<p>第三次粘贴同一段要求时，就该做成 Skill
-了。而且要在一次成功之后做，不要在开始之前凭想象写。最好的 Skill
-是从一次真实的成功里提炼出来的：</p>
-<pre class="text"><code>回顾这次对话里我们改论文的全过程，哪些步骤是有效的，哪些是我纠正过你的。
-把有效的步骤和我的纠正整理成一个 Skill，名字叫 paper-retell，放在 .claude/skills/ 下。
-description 要写清楚什么样的请求应该用它。</code></pre>
-<h2 id="测试一个-skill">测试一个 Skill</h2>
-<p>做好以后，开一个新对话，只说一句简短的请求，比如帮我改一下这篇论文的写法，看它是否自动用上了
-Skill，是否按步骤走。没有用上，多半是描述没写清；用上了但跳了步骤，就把那一步在正文里写得更明确。</p>
-<h2 id="练习">练习</h2>
-<p>把参考答案里的 <code>skills/paper-retell</code> 复制到你自己项目的
-<code>.claude/skills/</code> 下，用一篇你自己的论文测试。然后改它的
-<code>description</code>，让它在用户说润色一下摘要时不触发，只在要求改整篇论文时触发。</p>
-<details>
-<summary>
-提示
-</summary>
-<p>在 description 里写明触发和不触发的边界，例如 Use when asked to
-revise or rewrite a whole paper. For edits to a single paragraph or the
-abstract alone, do not use this skill.
-改完在新对话里分别用两种说法测试。</p>
-</details>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
-<div class="pitfall">
-<p><strong>AGENTS.md 当日记写。</strong> 每次出问题都追加一条，几百行后
-Agent 不再照做。只留稳定约定，加之前先删重。</p>
-</div>
-<div class="pitfall">
-<p><strong>把流程塞进 AGENTS.md。</strong> 九步的改稿流程写进
-<code>AGENTS.md</code>，每次对话都要背着它，写代码时也背着。流程做成
-Skill，用到时才加载。</p>
-</div>
-<div class="pitfall">
-<p><strong>描述写得太泛。</strong> helps with writing 这样的描述，Agent
-不知道什么时候该用，结果从来不用。写清做什么和什么时候用。</p>
-</div>
-<div class="pitfall">
-<p><strong>Skill 里写死本机路径。</strong> 写着 /Users/你的名字/ 的
-Skill，换台电脑或者分享给同学就失效。路径一律相对于项目或者 Skill
-自己的文件夹。</p>
-</div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/skills">Claude Code Skills
-文档</a></li>
-<li><a href="https://developers.openai.com/codex/skills">Codex Agent
-Skills 文档</a></li>
-<li><a href="https://agents.md/">AGENTS.md</a>：多家 Agent
-共用的项目约定文件格式。</li>
-</ul>
-</article>
-<article lang="en"><h1 id="keeping-the-method">1.5 Keeping the method</h1>
-<p><span class="meta">Self-study, about 25 minutes.</span></p>
-<p>A successful revision that you have to explain from scratch next time
-stays a one-off success. Save the requirements and the workflow in files
-the agent reads on its own whenever it starts work, and what worked this
-time becomes your tool. There are two places to keep them:
-<code>AGENTS.md</code> and Skills.</p>
-<h2 id="three-layers">Three layers</h2>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>Where it lives</th>
-<th>When it loads</th>
-<th>What belongs there</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Said in the conversation</td>
-<td>Only in this conversation</td>
-<td>The specific task at hand</td>
+<td>本次任务卡</td>
+<td>当前材料和交付位置</td>
+<td>开始这件事时</td>
 </tr>
 <tr>
 <td><code>AGENTS.md</code></td>
-<td>Read at the start of every job, always taking up context</td>
-<td>Lasting conventions: where files go, what must not change, your
-basic taste in writing</td>
+<td>稳定的工程约定</td>
+<td>项目开工时</td>
 </tr>
 <tr>
-<td>Skill</td>
-<td>Loaded only when needed</td>
-<td>A whole method: steps, a style table, scripts</td>
+<td><code>SKILL.md</code> 及附件</td>
+<td>完整方法、模板与脚本入口</td>
+<td>命中相应任务时</td>
+</tr>
+<tr>
+<td>运行记录</td>
+<td>这一次发生了什么</td>
+<td>复现或复盘时</td>
 </tr>
 </tbody>
 </table>
-<p>To decide, ask whether a requirement applies every time. The draft is
-read-only, and numbers come from data: these apply every time, so they
-go in <code>AGENTS.md</code>. Retelling a paper is a nine-step workflow
-used only when revising a paper, so it becomes a Skill.</p>
-<h2 id="agents.md-and-claude.md">AGENTS.md and CLAUDE.md</h2>
-<p>Codex reads the project’s <code>AGENTS.md</code> at the start of
-every job; Claude Code reads <code>CLAUDE.md</code>. To give both agents
-one set of conventions, maintain only <code>AGENTS.md</code> and put a
-single line in <code>CLAUDE.md</code>:</p>
-<pre class="text"><code>@AGENTS.md</code></pre>
-<p>The <code>@</code> pulls in that file’s contents. Subfolders can have
-their own <code>AGENTS.md</code>, which applies only when working in
-that folder. Lasting personal preferences, such as answering in Chinese,
-go in the global configuration in your home directory, outside the
-project.</p>
-<p>The most common problem with <code>AGENTS.md</code> is that it keeps
-growing. Add a line every time something goes wrong, and a few weeks
-later it runs to hundreds of lines that repeat and even contradict each
-other, and the agent stops following it. Two rules keep it in check:
-hold only stable conventions, never operating steps or one-off debugging
-notes; and before adding a line, delete duplicates and merge similar
-ones. The <code>AGENTS.md</code> in the reference answers is five lines
-long.</p>
-<h2 id="how-a-skill-is-built">How a Skill is built</h2>
-<p>A Skill is a folder holding at least one <code>SKILL.md</code>:</p>
-<pre class="text"><code>paper-retell/
-├── SKILL.md            required: description and steps
-├── style_table.md      style table, referenced from SKILL.md
-└── check_numbers.py    script, called from the steps</code></pre>
-<p><code>SKILL.md</code> opens with a block of metadata:</p>
-<pre class="text"><code>---
+<p>每次增加约定前先删重。反复出现的问题，优先看能否修进生成脚本或检查器。</p>
+<h2 id="提炼可复用方法">提炼可复用方法</h2>
+<pre class="text"><code>回顾这次改稿的产物和我的纠正，提炼 paper-retell Skill。
+说明输入与适用任务，再列出关键判断、需要调用的脚本及交付条件。
+把本次论文的专用配置留在项目里，Skill 使用相对路径。</code></pre>
+<p>入口至少有名称与描述：</p>
+<pre class="yaml"><code>---
 name: paper-retell
-description: Retell an academic paper from title to conclusion around its single most
-  striking result, redraw its data figures at final size, and check every number against
-  the data. Use when asked to revise, rewrite, polish or de-AI a paper draft.
+description: Retell a complete research paper around its central finding, verify results against data, and hand the new version to an independent editorial reader.
 ---</code></pre>
-<p>The <code>description</code> matters most. Day to day, the agent sees
-only each Skill’s name and this description, and uses them to decide
-when to reach for it. A description says two things clearly: what the
-Skill does, and which requests should trigger it. Make it too vague,
-such as “helps with writing”, and it almost never gets called
-automatically.</p>
-<p>Below the metadata comes the body, which lays out the method step by
-step and refers to the style table and script in the same folder. The
-reference answers include the complete <code>paper-retell</code>, ready
-to read.</p>
-<h2 id="where-to-put-it-and-how-to-call-it">Where to put it and how to
-call it</h2>
+<p>描述影响 Skill
+在哪些任务中被发现。正文再解释方法，附件提供表达表和脚本。对于只改一句话的请求，Skill
+应能判断无需启动全文流程。</p>
+<h2 id="两家共用时检查入口">两家共用时检查入口</h2>
+<p>Claude Code 使用自己的 <code>CLAUDE.md</code> 入口，可用
+<code>@AGENTS.md</code> 导入共用约定。Skill 通常放在项目
+<code>.claude/skills/</code>；Codex 的项目技能可放在
+<code>.agents/skills/</code>。用户级目录按各自当前文档配置，避免从旧文章照抄。</p>
+<p>同一份内容可以链接或复制到各入口。复制时写明哪一份是维护源，每次改动同步。是否发现并加载，用新会话验证。具体入口见
+<a href="https://code.claude.com/docs/en/skills">Claude Code Skills</a>
+与 <a href="https://developers.openai.com/codex/skills">Codex
+Skills</a>。</p>
+<h2 id="三次测试判断能不能复用">三次测试，判断能不能复用</h2>
+<p>第一篇用刚完成的稿子，检查 Skill
+能否被调用。第二篇换一份结构相似的材料，检查是否还依赖第一篇的隐含信息。第三次只给摘要编辑任务，检查它能否选择合适的工作量。</p>
+<p>再记录一次失败。若 Skill
+跳过核数，先查入口是否实际加载，再查脚本路径和停止条件。把失败原因修到对应位置，不要一再追加务必遵守之类的叮嘱。</p>
+<h2 id="练习">练习</h2>
+<p>把参考答案中的 <code>skills/paper-retell</code>
+装到自己的练习项目，新开会话完成三次测试。每次只记录触发结果、调用文件与缺失环节。比较修改前后，留下能迁移的最小版本。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
+<div class="pitfall">
+<p><strong>把整段聊天存成 Skill。</strong>
+读者不知道哪些是方法，哪些只是这次的决定。提炼输入和判断，运行过程另存。</p>
+</div>
+<div class="pitfall">
+<p><strong>Skill 写死这台电脑的路径。</strong>
+换项目就失败。路径相对于项目或 Skill 文件夹，机器信息由配置提供。</p>
+</div>
+<div class="pitfall">
+<p><strong>内容写得完整，却从未在新会话调用。</strong>
+新会话实测入口，再换材料测方法。两项分别通过才算可复用。</p>
+</div>
+</article>
+<article lang="en"><h1 id="reusable-methods">1.5 Reusable methods</h1>
+<p><span class="meta">After-class deep dive, about 25
+minutes.</span></p>
+<p>If on your second paper revision you have to state every requirement
+from the first time again, that experience has not yet become a tool.
+First find the judgments that kept working, then save them where the
+next session can find them.</p>
+<h2 id="stable-conventions-and-callable-methods">Stable conventions and
+callable methods</h2>
+<p>Project conventions record what applies every time: where originals
+live, how to compile the paper, which data must not be overwritten. A
+Skill records methods used only for a certain kind of task: how to
+analyze an exemplar, how to check data and restructure the full draft,
+whom to hand it to for review.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -283,96 +136,101 @@ call it</h2>
 </colgroup>
 <thead>
 <tr>
-<th></th>
-<th>Claude Code</th>
-<th>Codex</th>
+<th>Location</th>
+<th>What goes there</th>
+<th>When it is read</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Available in this project</td>
-<td><code>.claude/skills/&lt;name&gt;/</code></td>
-<td><code>.agents/skills/&lt;name&gt;/</code></td>
+<td>This task card</td>
+<td>Current materials and delivery location</td>
+<td>When starting this piece of work</td>
 </tr>
 <tr>
-<td>Available in every project</td>
-<td><code>~/.claude/skills/&lt;name&gt;/</code></td>
-<td><code>~/.codex/skills/&lt;name&gt;/</code></td>
+<td><code>AGENTS.md</code></td>
+<td>Stable engineering conventions</td>
+<td>When work on the project starts</td>
+</tr>
+<tr>
+<td><code>SKILL.md</code> and attachments</td>
+<td>The full method, templates and script entry points</td>
+<td>When a matching task comes up</td>
+</tr>
+<tr>
+<td>Run record</td>
+<td>What happened this time</td>
+<td>When reproducing or reviewing</td>
 </tr>
 </tbody>
 </table>
-<p>Both use the same <code>SKILL.md</code> format. Keep one copy and put
-a link to it in the other location. If one vendor’s version doesn’t
-follow links, copy it instead, and update both copies whenever you
-change it:</p>
-<pre class="text"><code>Link .claude/skills/paper-retell to .agents/skills/paper-retell so Codex can use the same Skill.</code></pre>
-<p>There are two ways to call a Skill: the agent decides from the
-description on its own, or you name it. Typing
-<code>/paper-retell</code> in Claude Code loads it, and so does saying
-“use paper-retell to revise this paper” in either app.</p>
-<h2 id="when-to-make-a-skill">When to make a Skill</h2>
-<p>The third time you paste the same requirements, it is time to make a
-Skill. Make it after a success; don’t write one in advance from
-imagination. The best Skills are distilled from a real success:</p>
-<pre class="text"><code>Go over how we revised the paper in this conversation: which steps worked, and where I corrected you.
-Turn the steps that worked and my corrections into a Skill called paper-retell, saved under .claude/skills/.
-The description must say clearly which requests should use it.</code></pre>
-<h2 id="testing-a-skill">Testing a Skill</h2>
-<p>Once it is built, open a new conversation and make one short request,
-such as “help me improve the writing of this paper”, then watch whether
-it picks up the Skill on its own and follows the steps. If it doesn’t
-use the Skill, the description is most likely unclear. If it uses the
-Skill but skips a step, write that step more explicitly in the body.</p>
+<p>Before adding a convention, remove duplicates first. For a problem
+that keeps recurring, first see whether it can be fixed in the
+generation script or the checker.</p>
+<h2 id="extract-a-reusable-method">Extract a reusable method</h2>
+<pre class="text"><code>Look back over the products of this revision and my corrections, and distill a paper-retell Skill.
+State its inputs, the tasks it applies to, the key judgments, the scripts to call and the delivery conditions.
+Leave the configuration specific to this paper in the project, and use relative paths in the Skill.</code></pre>
+<p>The Skill needs at least a name and a description:</p>
+<pre class="yaml"><code>---
+name: paper-retell
+description: Retell a complete research paper around its central finding, verify results against data, and hand the new version to an independent editorial reader.
+---</code></pre>
+<p>The description helps the agent discover the Skill for relevant
+tasks. The body then explains the method, and attachments provide the
+style table and scripts. For a request to change one sentence, the Skill
+should be able to judge that the full-paper process is not needed.</p>
+<h2 id="check-the-entry-points-when-both-vendors-share-it">Check the
+entry points when both vendors share it</h2>
+<p>Claude Code uses its own <code>CLAUDE.md</code> entry and can import
+shared conventions with <code>@AGENTS.md</code>. Skills usually go in
+the project’s <code>.claude/skills/</code>; Codex project skills can go
+in <code>.agents/skills/</code>. Configure user-level directories
+according to each vendor’s current docs, rather than copying from old
+articles.</p>
+<p>The same content can be linked or copied to each entry point. When
+copying, state which copy is the maintained source and sync every
+change. Check in a new session that the agent discovers and loads it.
+For specific entry points, see <a
+href="https://code.claude.com/docs/en/skills">Claude Code Skills</a> and
+<a href="https://developers.openai.com/codex/skills">Codex
+Skills</a>.</p>
+<h2 id="three-tests-to-judge-whether-it-can-be-reused">Three tests to
+judge whether it can be reused</h2>
+<p>The first uses the draft you just finished, to check that the Skill
+can be called. The second switches to material with a similar structure,
+to check whether it still relies on hidden information from the first.
+The third gives only an abstract-editing task, to check whether it
+chooses an appropriate amount of work.</p>
+<p>Then record one failure. If the Skill skips the number check, first
+check whether the entry was actually loaded, then the script paths and
+stop conditions. Fix the cause of failure in the right place, rather
+than adding yet another “must follow”.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Copy <code>skills/paper-retell</code> from the reference answers into
-<code>.claude/skills/</code> in your own project and test it on a paper
-of your own. Then change its <code>description</code> so it does not
-trigger when the user says “polish the abstract”, and triggers only when
-asked to revise the whole paper.</p>
-<details>
-<summary>
-Hint
-</summary>
-<p>State the boundary between triggering and not triggering in the
-description, for example: Use when asked to revise or rewrite a whole
-paper. For edits to a single paragraph or the abstract alone, do not use
-this skill. Then test both phrasings, each in a new conversation.</p>
-</details>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Install <code>skills/paper-retell</code> from the reference answers
+in your own exercise project, and do the three tests in new sessions.
+Each time, record only whether it triggered, which files it used and
+which steps were missing. Compare before and after your changes, and
+keep the smallest version that transfers.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Writing AGENTS.md like a diary.</strong> Append a line every
-time something goes wrong, and after a few hundred lines the agent stops
-following it. Keep only stable conventions, and remove duplicates before
-adding.</p>
+<p><strong>Saving a whole chat as a Skill.</strong> The reader cannot
+tell the reusable method from decisions specific to this task. Distill
+the inputs and judgments, and save the run separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>Stuffing a workflow into AGENTS.md.</strong> Put the
-nine-step revision workflow in <code>AGENTS.md</code> and every
-conversation carries it, even while writing code. Turn workflows into
-Skills, loaded only when needed.</p>
+<p><strong>The Skill hard-codes this computer’s paths.</strong> It fails
+in another project. Paths are relative to the project or the Skill
+folder, and machine information comes from configuration.</p>
 </div>
 <div class="pitfall">
-<p><strong>A description that’s too broad.</strong> With a description
-like “helps with writing”, the agent can’t tell when to use the Skill,
-so it never does. Say what it does and when to use it.</p>
+<p><strong>The content is complete but has never been called in a new
+session.</strong> Test the entry in a new session, then test the method
+on other material. It is reusable only when both pass.</p>
 </div>
-<div class="pitfall">
-<p><strong>Local paths hard-coded in a Skill.</strong> A Skill that says
-/Users/yourname/ breaks on another computer or when shared with a
-labmate. Make every path relative to the project or to the Skill’s own
-folder.</p>
-</div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/skills">Claude Code Skills
-documentation</a></li>
-<li><a href="https://developers.openai.com/codex/skills">Codex Agent
-Skills documentation</a></li>
-<li><a href="https://agents.md/">AGENTS.md</a>: a project conventions
-file format shared by many agents.</li>
-</ul>
 </article>
-<nav class="pager"><a class="prev" href="writing-review.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.4 审稿与返修</span><span lang="en">1.4 Review and revision</span></a><a class="next" href="writing-submit.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.6 引用与投稿</span><span lang="en">1.6 References and submission</span></a></nav>
+<nav class="pager"><a class="prev" href="writing-review.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.4 审稿返修</span><span lang="en">1.4 Peer review and revision</span></a><a class="next" href="writing-submit.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.6 文献引用与刊会投稿</span><span lang="en">1.6 Citations and submission</span></a></nav>
 </main>
 </div>
 </body>

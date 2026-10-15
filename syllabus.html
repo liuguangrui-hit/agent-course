@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>课程大纲 · 用 Agent 做科研</title>
+<title>课程大纲 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,338 +17,394 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html" class="cur"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
 <article lang="zh"><h1 id="课程大纲">课程大纲</h1>
-<h2 id="课程目标">课程目标</h2>
-<p>面向研究生和带研究生的老师。让有科研经验但近年少写代码的人，能指挥
-Claude Code 与 Codex 这类 Agent
-写稿、读文献和做实验，并把这些步骤接成能自己运行的流程。</p>
-<p>完成课程后，你能够：</p>
-<ol type="1">
-<li>为一个科研任务建项目文件夹，用文件把材料、约定和产物交代给
-Agent。</li>
-<li>用 Agent
-把一篇论文从题目到结论整体重讲，把实验数据画成能投稿的图，让另一家的
-Agent 审稿，并把这套做法做成 Skill。</li>
-<li>用 Agent 把一批论文整理成可追溯的知识库，从中提出能检验的问题。</li>
-<li>指挥 Agent
-在本机或远程服务器上完成一次能重跑的实验，读懂结果能说明什么。</li>
-<li>把以上步骤接成定时运行的流程，认出 Agent
-最常见的几类失败，并为每类加上检查。</li>
-</ol>
-<h2 id="安排">安排</h2>
+<h2 id="课程主线">课程主线</h2>
+<p>课程沿用带噪标签学习的小实验。第 1 课把已有研究写清楚，第 2
+课发现尚未解决的问题，第 3 课做判别实验，第 4
+课把这个过程接成可恢复的循环。材料选得小，是为了让你在课堂上看完数据，也看完
+Agent 怎样犯错。</p>
+<p>同样的做法可以用于材料筛选、计算生物学和社会科学。换成自己的方向时，保留任务之间的关系：哪份原件支持哪条判断，哪次实验能改变这条判断，改变以后谁要接着处理。</p>
+<h2 id="每堂课的三个阶段">每堂课的三个阶段</h2>
+<h3 id="课前准备">课前准备</h3>
+<p>首次上课前先走完<a href="setup.html">第 0
+课</a>。以后每课按自己的预备卡安装新增工具并下载材料与依赖，完成登录后运行一次基本可用性检查。安装耗时长的提前一天开始，实际时间取决于网络与设备。课前只需要确认东西能用，复杂配置与学术判断留到课堂。</p>
+<p>每课带一份
+preflight.md：系统与版本，实际文件位置，已通过的检查，未解决的错误。开课前把卡住的环节告诉老师，按本课备用材料继续学习。下载和登录问题另行补齐，不占用全班的一小时。</p>
+<h3 id="课堂学习">课堂学习</h3>
+<p>每堂课固定 60
+分钟。第一段先看准备记录与成品，随后讲清本课的关键判断。中间几段操作只用已经取得的材料和短运行，结果一出现就核查。最后五分钟检查易错点，把成果与下一步写进文件。</p>
+<p>这一小时会共同处理配置合并，判断证据是否可比，设计判别实验，练习状态恢复，并分析怎样识别学习效应。完整训练、整批文献获取和长期调度放到课后执行；课堂会先讲清它们的计划与完成判据。</p>
+<h3 id="课后复习与深入练习">课后复习与深入练习</h3>
+<p>先花 15 分钟关掉 Agent 复述课堂，再打开文件核查。接着用 15 至 20
+分钟判断一组正反例，写出理由后再看对照思路。最后沿课堂同一个问题选一条深入路径，把新方法用到自己的材料上。</p>
+<p>复习和拔高分别有产物。复盘写入
+review-after-class.md，深入练习留下推导、实验或配置的实际记录。深入页是选做菜单，可分次完成；一次课后不用走完所有路径。</p>
+<h2 id="六堂课怎样递进">六堂课怎样递进</h2>
 <table>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
 <thead>
 <tr>
 <th>课</th>
-<th>时长</th>
-<th>下课时你有</th>
-<th>暗线：这课装上的工具</th>
-<th>对应目标</th>
+<th>课前预备</th>
+<th>课上 60 分钟</th>
+<th>课后复习后的拔高方向</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>0 课前准备</td>
-<td>自学 30 分钟</td>
-<td>能和 Agent 对话的项目文件夹</td>
-<td>Claude Code，Codex</td>
-<td>1</td>
+<td>1 写作绘图</td>
+<td>30 至 90 分钟，装编译与画图环境，下载范文，重建原稿</td>
+<td>从叙事中心重讲整稿，核图后审阅，提炼 Skill</td>
+<td>叙事返修或数字重建，Skill 迁移或引用交付</td>
 </tr>
 <tr>
-<td>1 Agent 写作</td>
-<td>60 分钟，课后深入约 3.5 小时</td>
-<td>重讲过的论文，两张能投稿的数据图，一个改论文的 Skill</td>
-<td>Python 环境，LaTeX，PDF 渲染，AGENTS.md，Skill</td>
-<td>1，2</td>
+<td>2 知识库</td>
+<td>20 至 45 分钟，浏览器与知识库登录，三份全文到本地</td>
+<td>核原件身份，分工读三篇，把分歧变成判别问题</td>
+<td>版本差异、反例传播或复筛校准</td>
 </tr>
 <tr>
-<td>2 Agent 探索</td>
-<td>60 分钟，课后深入约 1.5 小时</td>
-<td>论文知识库，三个能检验的问题</td>
-<td>Ego 浏览器，Obsidian，文献接口，Sub-agent</td>
-<td>3</td>
+<td>3 实验分析</td>
+<td>20 至 40 分钟，Git 与锁定环境可用，预览可读</td>
+<td>冻结预测并修改代码，再做短运行、配对比较与审查</td>
+<td>版本复现、远端恢复或区间与机制推导</td>
 </tr>
 <tr>
-<td>3 Agent 实验</td>
-<td>60 分钟，课后深入约 1.5 小时</td>
-<td>一次先写预测，在服务器上跑完，能重跑的实验</td>
-<td>Git 与 GitHub，SSH 与 Tailscale，tmux 后台任务，监视器</td>
-<td>4</td>
+<td>4 自动化</td>
+<td>15 至 30 分钟，找齐前课成果，准备命令入口与本地页</td>
+<td>模拟故障，单次定时审阅与接续，设计经验检验</td>
+<td>调度接管、经验三组检验或结果投影</td>
 </tr>
 <tr>
-<td>4 Agent 自动化与自进化</td>
-<td>60 分钟，课后深入约 1.5 小时</td>
-<td>夜里自己跑、早上看结果页的研究循环</td>
-<td>定时任务，无人值守调用，手机通知，经验榜，GitHub Pages</td>
-<td>5</td>
+<td>5 安全控制</td>
+<td>20 至 40 分钟，下载组件与扫描器，备份配置</td>
+<td>分角色配权限，实测允许与拒绝，检查 Hook 覆盖</td>
+<td>换入口与执行端重测，验证交付入口</td>
 </tr>
 <tr>
-<td>5 选修 编排安全</td>
-<td>60 分钟，课后深入约 1 小时</td>
-<td>工作台的权限表和两道自动检查</td>
-<td>权限规则，沙箱，Hooks，密钥管理</td>
-<td>5</td>
-</tr>
-<tr>
-<td>6 选修 编排理论</td>
-<td>60 分钟，课后深入约 30 分钟</td>
-<td>一本用量账本，一个算得出来的编排决策</td>
-<td>用量账本</td>
-<td>5</td>
+<td>6 编排理论</td>
+<td>10 至 20 分钟，标准库与材料可读，带一条经验</td>
+<td>定义原点与学习对象，拆三组效应，设计可检验预测</td>
+<td>策略与信用分配，效应识别与迁移，成本</td>
 </tr>
 </tbody>
 </table>
-<p>每堂课分两部分。课堂核心 60
-分钟，讲这一课最重要的一件事并当堂做出来；课后深入是几节自学内容，每节
-25 到 45
-分钟，讲清原理，给出更多任务卡，练习和参考答案。时长可按现场微调。四堂必修按顺序上，后一堂会用到前一堂做出的东西；两堂选修在第四堂之后任选。</p>
-<h2 id="每堂课怎么上">每堂课怎么上</h2>
+<p>四堂必修按顺序完成。第 5、6 课为选修，在第 4 课之后各自展开，选第 6
+课无需先完成第 5
+课。每堂课的页面给出准备检查要求和逐段分钟数，并提供正反例与深入页入口。</p>
+<h2 id="怎样判断学会了">怎样判断学会了</h2>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
-<th>时间</th>
-<th>做什么</th>
+<th>成果</th>
+<th>当堂检查</th>
+<th>课后换自己的材料</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>开课第 1 分钟</td>
-<td>发出装工具任务卡：Agent 在后台装这一课的工具</td>
+<td>重讲稿</td>
+<td>读者能复述一个发现，数字能追到数据</td>
+<td>换范文与材料，完整重讲并回应独立审阅</td>
 </tr>
 <tr>
-<td>0 至 5 分钟</td>
-<td>看成品：先看这堂课最后要做出来的东西</td>
+<td>知识库</td>
+<td>抽一条结论，能找到版本与页码</td>
+<td>加一篇反例，让受影响认识与问题更新</td>
 </tr>
 <tr>
-<td>5 至 15 分钟</td>
-<td>讲：这一课的做法，以及新装的工具让 Agent 多了什么本事</td>
+<td>实验</td>
+<td>结果对应事前预测和执行身份</td>
+<td>增加能区分竞争解释的对照</td>
 </tr>
 <tr>
-<td>15 至 50 分钟</td>
-<td>做：三段练习，每段先演示，再各自动手</td>
+<td>研究循环</td>
+<td>中断后恢复，重复请求不产生额外效果</td>
+<td>接上少量调度，保留失败与停止记录</td>
 </tr>
 <tr>
-<td>50 至 55 分钟</td>
-<td>最容易出错的地方</td>
+<td>安全边界</td>
+<td>允许成功，预定越界动作被挡住</td>
+<td>换入口后重测同一边界</td>
 </tr>
 <tr>
-<td>55 至 60 分钟</td>
-<td>回顾要点，看一眼工作台多了什么，布置用自己的材料再做一遍</td>
+<td>学习方案</td>
+<td>三组比较分开总收益和内容差</td>
+<td>在未见任务上测量，给出区间与下一项实验</td>
 </tr>
 </tbody>
 </table>
-<p>讲的部分不超过十分钟，其余时间都在动手。装工具和讲课同时进行：任务卡开课就发，Agent
-装的时候你在听讲，装完它会自己验证一遍，并把用法写进项目的
-<code>AGENTS.md</code>。需要你本人登录或授权的几步，GitHub，图书馆，服务器，最好课前先确认账号能用。每段练习给一张任务卡，复制给
-Agent
-就能开始。任务卡都写清四件事：读什么，做什么，存到哪，做到哪里停。</p>
-<h2 id="考核">考核</h2>
-<p>每堂课带走的成果就是作业，课后换成自己的材料再做一遍。结课作品是用自己的课题搭一个小工作台：包含前四堂的产物，在一次无人值守的运行之后交出一个结果页面。</p>
-<h2 id="需要准备">需要准备</h2>
-<ul>
-<li>一台 Mac 或 Windows 电脑。</li>
-<li>Claude 的 Pro 或以上订阅，和含 Codex 的 ChatGPT 套餐。第 1
-课起一家写，另一家审；只有一家的，审稿那一步用同一家开一个只读稿件的新对话代替，效果差一些。</li>
-<li>第 2 课：学校图书馆的机构登录账号，用来让浏览器替 Agent
-拿订阅论文的全文。</li>
-<li>第 3 课：一个 GitHub 账号；最好有一台能 SSH
-登录的服务器，没有的话用本机也能完成。</li>
-<li>第 4 课：手机上装好 Claude 应用或者一个能收推送的通知应用。</li>
-<li>其余工具都是免费软件，课上由 Agent 自己装。</li>
-</ul>
+<p>结课作品是自己的一个小工作台。交付一轮完整研究记录，再演示一次中断恢复。自动完成的步数只反映运行情况，研究问题有没有得到回答要看证据。</p>
+<h2 id="课前共同条件">课前共同条件</h2>
+<p>准备一台 Windows、macOS 或 Linux 电脑，先按<a href="setup.html">第 0
+课</a>完成安装与首次文件读写。两家 Agent
+用于分开写作与审阅；暂时只有一家时，用独立新会话完成练习，并注明执行者。</p>
+<p>第 2 课需要取得课堂的开放全文；涉及订阅材料时提前完成机构登录。第 3
+课可全程用本机，GitHub 与服务器按已有条件选用。第 4
+课的真实通知和部署不作为开课条件。课程不要求购买 API
+额度或新增云服务器，系统授权和账号登录由你本人完成。</p>
+<h2 id="课程参考">课程参考</h2>
+<p>课程结构参考 <a
+href="https://agents4science.github.io/Class/">UChicago AI Agents for
+Science</a> 的科研项目实践，以及 <a
+href="https://carpentries.github.io/lesson-development-training/instructor/episodes.html">Carpentries
+的分节设计</a>。进阶内容对照 <a
+href="https://llmagents-learning.org/f24">Berkeley LLM Agents</a>、<a
+href="https://huggingface.co/learn/agents-course/en/unit1/introduction">Hugging
+Face Agents Course</a> 和 <a
+href="https://www.deeplearning.ai/courses/evaluating-ai-agents">DeepLearning.AI
+Evaluating AI Agents</a>。<a
+href="https://missing.csail.mit.edu/2026/agentic-coding/">MIT Missing
+Semester 的 Agentic Coding</a>可对照看工具怎样进入真实工作。工具操作参考
+<a href="https://anthropic.skilljar.com/claude-code-in-action">Anthropic
+官方课程</a> 与 <a
+href="https://learn.chatgpt.com/docs/codex/cli">OpenAI Codex CLI
+教程</a>。</p>
 </article>
 <article lang="en"><h1 id="syllabus">Syllabus</h1>
-<h2 id="aim">Aim</h2>
-<p>For graduate students and the people who supervise them. Researchers
-who know their field but have not written much code lately learn to
-direct agents such as Claude Code and Codex through writing, reading the
-literature and running experiments, and to join these steps into a
-workflow that runs on its own.</p>
-<p>By the end of the course you will be able to:</p>
-<ol type="1">
-<li>Set up a project folder for a research task and use files to hand an
-agent its material, conventions and outputs.</li>
-<li>Use agents to retell a paper from title to conclusion, redraw its
-experimental data as submission-ready figures, have another vendor’s
-agent review it, and package the method as a Skill.</li>
-<li>Use agents to turn a set of papers into a traceable knowledge base
-and draw testable questions from it.</li>
-<li>Direct an agent through a rerunnable experiment, locally or on a
-remote server, and read what the result does and does not show.</li>
-<li>Join these steps into a scheduled workflow, recognise the most
-common ways agents fail, and add a check for each.</li>
-</ol>
-<h2 id="schedule">Schedule</h2>
+<h2 id="the-research-thread">The research thread</h2>
+<p>The course follows a small experiment on learning with noisy labels.
+Lesson 1 writes up existing research clearly, Lesson 2 finds an open
+question, Lesson 3 designs and runs an experiment to distinguish
+explanations, and Lesson 4 connects the process into a loop that can
+recover. The materials are small so that in class you can see all the
+data, and also see exactly how the agent makes mistakes.</p>
+<p>The same approach works for materials screening, computational
+biology and the social sciences. When you switch to your own field, keep
+the relations between tasks: which source supports which judgment, which
+experiment could change that judgment, and who has to act once it
+changes.</p>
+<h2 id="the-three-stages-of-every-lesson">The three stages of every
+lesson</h2>
+<h3 id="before-class-prepare-the-tools-and-materials">Before class:
+prepare the tools and materials</h3>
+<p>Before the first class, work through <a href="setup.html">Lesson
+0</a>. For each later lesson, follow its preparation card to install the
+new tools, download materials and dependencies, log in, and run a basic
+functionality check. Start long installs a day early; the actual time
+depends on your network and machine. Before class you only need to
+confirm that things work. Complex configuration and academic judgment
+are left for class.</p>
+<p>Bring a preflight.md to every lesson: system and versions, file
+locations, checks that passed, unresolved errors. Tell the instructor
+where you got stuck before class starts, and continue with that lesson’s
+backup materials. Download and login problems are fixed separately,
+outside the shared class hour.</p>
+<h3 id="in-class-work-through-the-key-decisions">In class: work through
+the key decisions</h3>
+<p>Every class lasts exactly 60 minutes. The first block looks at
+preparation records and completed examples, then explains the lesson’s
+central decision. The middle blocks use only materials already obtained
+and short runs, and results are checked as soon as they appear. The last
+five minutes check common mistakes and save the outputs and next steps
+in files.</p>
+<p>In the hour we work through how to merge configuration, compare
+evidence, design an experiment that separates explanations, recover
+state, and identify a learning effect. Full training, bulk literature
+retrieval and long-term scheduling run after class; in class we first
+make their plans and completion criteria clear.</p>
+<h3 id="after-class-recall-compare-and-extend">After class: recall,
+compare and extend</h3>
+<p>First spend 15 minutes without the agent, recalling what you learned,
+then open the files and check. Next spend 15 to 20 minutes comparing
+examples of sound and flawed approaches, writing your reasons before
+reading the comparison notes. Finally choose one path that goes deeper
+into the same question as the class, and apply the new method to your
+own materials.</p>
+<p>Review and extension each produce a record. The review goes into
+review-after-class.md; the deeper exercise leaves an actual record of a
+derivation, experiment or configuration. The further-study pages offer
+optional paths and can be done over several sessions; you need not
+finish every path after one class.</p>
+<h2 id="how-the-six-lessons-build">How the six lessons build</h2>
 <table>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
 </colgroup>
 <thead>
 <tr>
-<th>Session</th>
-<th>Length</th>
-<th>You leave with</th>
-<th>The hidden thread: tools added</th>
-<th>Outcomes</th>
+<th>Lesson</th>
+<th>Before class</th>
+<th>60 minutes in class</th>
+<th>Extension after the review</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>0 Setup</td>
-<td>30 min, self-paced</td>
-<td>A project folder you can talk to an agent in</td>
-<td>Claude Code, Codex</td>
-<td>1</td>
+<td>1 Writing and figures</td>
+<td>30 to 90 minutes: install compilation and plotting tools, download
+the exemplar, rebuild the original draft</td>
+<td>Restructure the draft around its central finding, check figures,
+review the draft and create a Skill</td>
+<td>Revising the narrative or regenerating numbers, testing a Skill on
+new material or preparing citations and submission files</td>
 </tr>
 <tr>
-<td>1 Writing with Agents</td>
-<td>60 min, plus about 3.5 h self-study</td>
-<td>A retold paper, two submission-ready data figures, a Skill for
-revising papers</td>
-<td>Python environment, LaTeX, PDF rendering, AGENTS.md, Skill</td>
-<td>1, 2</td>
+<td>2 Research knowledge bases</td>
+<td>20 to 45 minutes: log in to the browser and knowledge base, download
+three full texts</td>
+<td>Check the identity of originals, split the reading of three papers,
+turn a disagreement into a testable question</td>
+<td>Version differences, propagation of a counterexample, or rescreening
+calibration</td>
 </tr>
 <tr>
-<td>2 Exploring with Agents</td>
-<td>60 min, plus about 1.5 h self-study</td>
-<td>A literature knowledge base, three testable questions</td>
-<td>Ego browser, Obsidian, literature APIs, Sub-agent</td>
-<td>3</td>
+<td>3 Experimental analysis</td>
+<td>20 to 40 minutes: Git and a locked environment working, previews
+readable</td>
+<td>Freeze predictions, change code, short runs, paired comparison and
+review</td>
+<td>Reproducing a versioned run, recovering remote jobs, or working
+through intervals and mechanisms</td>
 </tr>
 <tr>
-<td>3 Experimenting with Agents</td>
-<td>60 min, plus about 1.5 h self-study</td>
-<td>A rerunnable experiment, predicted first and completed on a
-server</td>
-<td>Git and GitHub, SSH and Tailscale, tmux background jobs,
-monitor</td>
-<td>4</td>
+<td>4 Research automation</td>
+<td>15 to 30 minutes: gather earlier lessons’ products, prepare a
+command entry point and local page</td>
+<td>Simulate a failure, one scheduled review and handover, design an
+experience test</td>
+<td>Scheduling takeover, three-group test of experience, or a public
+view of the results</td>
 </tr>
 <tr>
-<td>4 Automation and Self-Evolution</td>
-<td>60 min, plus about 1.5 h self-study</td>
-<td>A research loop that runs overnight, with a results page to read in
-the morning</td>
-<td>Scheduled tasks, headless calls, phone notifications, playbook,
-GitHub Pages</td>
-<td>5</td>
+<td>5 Safety controls</td>
+<td>20 to 40 minutes: download components and scanner, back up
+configuration</td>
+<td>Assign permissions by role, test allowed and denied actions, check
+Hook coverage</td>
+<td>Retest with another entry point and executor, verify the delivery
+entry point</td>
 </tr>
 <tr>
-<td>5 Elective: Orchestration Safety</td>
-<td>60 min, plus about 1 h self-study</td>
-<td>A permission table for the workbench and two automatic checks</td>
-<td>Permission rules, sandbox, Hooks, secret management</td>
-<td>5</td>
-</tr>
-<tr>
-<td>6 Elective: Orchestration Theory</td>
-<td>60 min, plus about 30 min self-study</td>
-<td>A usage ledger and an orchestration decision you can compute</td>
-<td>Usage ledger</td>
-<td>5</td>
+<td>6 Orchestration theory</td>
+<td>10 to 20 minutes: standard library and materials readable, bring one
+candidate playbook entry</td>
+<td>Define the origin and what can be learned, decompose effects using
+three groups, design a testable prediction</td>
+<td>Policy and credit assignment, effect identification and transfer,
+cost</td>
 </tr>
 </tbody>
 </table>
-<p>Each session has two parts. The 60-minute core class covers the one
-thing that matters most and builds it in the room. Self-study sections
-follow, 25 to 45 minutes each, with the reasoning, more task cards,
-exercises and answers. Timings can shift a little on the day. The four
-core sessions run in order, since each uses what the previous one built.
-The electives can follow session four in either order.</p>
-<h2 id="how-a-session-runs">How a session runs</h2>
+<p>Take the four required lessons in order. Lessons 5 and 6 are
+electives that each follow Lesson 4 independently; Lesson 6 does not
+require Lesson 5. Each lesson’s own page gives the preparation check,
+minutes for every block, examples to compare and links to further
+study.</p>
+<h2 id="how-to-tell-you-have-learned-it">How to tell you have learned
+it</h2>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
-<th>Time</th>
-<th>What happens</th>
+<th>Product</th>
+<th>Check in class</th>
+<th>After class, with your own materials</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>First minute</td>
-<td>Send the tool installation task card: the agent installs this
-session’s tools in the background</td>
+<td>Restructured draft</td>
+<td>A reader can restate one finding, and the numbers trace back to
+data</td>
+<td>Switch exemplar and materials, restructure the full paper, and
+respond to an independent review</td>
 </tr>
 <tr>
-<td>0 to 5 min</td>
-<td>See the finished product the session builds toward</td>
+<td>Knowledge base</td>
+<td>Pick one conclusion and find its version and page</td>
+<td>Add a counterexample paper and update the affected conclusions and
+questions</td>
 </tr>
 <tr>
-<td>5 to 15 min</td>
-<td>Talk: the method, and what the new tools let the agent do</td>
+<td>Experiment</td>
+<td>Results are linked to the predictions recorded in advance and to the
+code and data used</td>
+<td>Add a control that separates competing explanations</td>
 </tr>
 <tr>
-<td>15 to 50 min</td>
-<td>Do: three exercises, each a short demo then hands-on</td>
+<td>Research loop</td>
+<td>Recover after an interruption with no duplicated effect</td>
+<td>Add a small schedule and retain records of failures and stops</td>
 </tr>
 <tr>
-<td>50 to 55 min</td>
-<td>Where agents go wrong most</td>
+<td>Safety boundary</td>
+<td>Allowed actions succeed; preset out-of-bounds actions are
+blocked</td>
+<td>Retest the same boundary through another entry point</td>
 </tr>
 <tr>
-<td>55 to 60 min</td>
-<td>Key points, what the workbench gained, and redoing it on your own
-material</td>
+<td>Learning plan</td>
+<td>Three-group comparisons separate the total gain from the content
+difference</td>
+<td>Measure on unseen tasks, give an interval and the next
+experiment</td>
 </tr>
 </tbody>
 </table>
-<p>Talking takes at most ten minutes; the rest is hands-on. Tool
-installation happens alongside the talk: send the card at the start,
-listen while the agent installs, and let it test the tools and write
-their use into the project’s <code>AGENTS.md</code>. For steps that need
-your login or authorization, such as GitHub, the library and the server,
-check your accounts work before class. Each exercise comes with a task
-card you paste to the agent. Every card says four things: what to read,
-what to do, where to save it, and where to stop.</p>
-<h2 id="assessment">Assessment</h2>
-<p>What you build in each session is the assignment; afterwards, redo it
-with your own material. The final piece is a small workbench for your
-own research topic. It holds the outputs of the four core sessions and,
-after one unattended run, produces a results page.</p>
-<h2 id="what-you-need">What you need</h2>
-<ul>
-<li>A Mac or Windows computer.</li>
-<li>Claude Pro or above, and a ChatGPT plan that includes Codex. From
-Session 1, one vendor writes and the other reviews. If you have only
-one, use a new conversation with the same vendor that reads only the
-draft for the review; it works less well.</li>
-<li>For Session 2: your university library’s institutional login, so the
-browser can get subscription full texts for the agent.</li>
-<li>For Session 3: a GitHub account, and ideally a server you can SSH
-into. Without one, you can complete the work locally.</li>
-<li>For Session 4: Claude on your phone or a notification app that can
-receive pushes.</li>
-<li>All other tools are free software, installed by the agent during
-class.</li>
-</ul>
+<p>The final project is a small workbench of your own. Hand in the
+record of one complete round of research, then demonstrate one recovery
+from interruption. The number of automated steps describes execution;
+whether the research question was answered depends on the evidence.</p>
+<h2 id="shared-requirements-before-class">Shared requirements before
+class</h2>
+<p>Prepare a Windows, macOS or Linux computer and complete installation
+and the first file read and write following <a href="setup.html">Lesson
+0</a>. Agents from two vendors are used to separate writing from review;
+if you have only one for now, do the exercises with a separate new
+session and note who did what.</p>
+<p>Lesson 2 needs the class’s open-access full texts; if subscription
+material is involved, finish institutional login in advance. Lesson 3
+can run entirely on your own machine; use GitHub and servers if you
+already have them. Real notifications and deployment are not
+prerequisites for Lesson 4. The course does not require buying API
+credit or renting additional cloud servers, and you complete system
+authorization and account logins yourself.</p>
+<h2 id="course-references">Course references</h2>
+<p>The course structure draws on the research projects in <a
+href="https://agents4science.github.io/Class/">UChicago AI Agents for
+Science</a> and <a
+href="https://carpentries.github.io/lesson-development-training/instructor/episodes.html">the
+Carpentries’ episode design</a>. The advanced material draws on <a
+href="https://llmagents-learning.org/f24">Berkeley LLM Agents</a>, the
+<a
+href="https://huggingface.co/learn/agents-course/en/unit1/introduction">Hugging
+Face Agents Course</a> and <a
+href="https://www.deeplearning.ai/courses/evaluating-ai-agents">DeepLearning.AI
+Evaluating AI Agents</a>. <a
+href="https://missing.csail.mit.edu/2026/agentic-coding/">Agentic Coding
+in MIT’s Missing Semester</a> shows how the tools enter real work. For
+tool operation, see <a
+href="https://anthropic.skilljar.com/claude-code-in-action">Anthropic’s
+official course</a> and the <a
+href="https://learn.chatgpt.com/docs/codex/cli">OpenAI Codex CLI
+tutorial</a>.</p>
 </article>
 <nav class="pager"><a class="prev" href="index.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh"> 首页</span><span lang="en"> Home</span></a><a class="next" href="toolbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh"> 工具箱</span><span lang="en"> Toolbox</span></a></nav>
 </main>

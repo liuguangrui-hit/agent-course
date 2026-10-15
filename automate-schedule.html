@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>定时与无人值守 · 用 Agent 做科研</title>
+<title>定时调度与无人值守 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,280 +17,243 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="automate-schedule.html" class="cur sub"><span class="num">4.1</span><span lang="zh">定时与无人值守</span><span lang="en">Scheduling and headless runs</span></a>
-<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验榜</span><span lang="en">Playbooks</span></a>
-<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果页</span><span lang="en">The results page</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="automate-schedule.html" class="cur sub"><span class="num">4.1</span><span lang="zh">定时调度与无人值守</span><span lang="en">Scheduling and unattended runs</span></a>
+<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验管理与评估</span><span lang="en">Managing and evaluating playbooks</span></a>
+<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果展示</span><span lang="en">Presenting results</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="定时与无人值守">4.1 定时与无人值守</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>让 Agent
-自己按时开工，有几种做法，区别在于在哪台机器上跑、电脑要不要开着。这一节先讲选哪种，再讲无人值守时最要紧的三件事：状态写在文件里，一件事只有一个对话在干，限定它能写哪里。</p>
-<h2 id="三种定时">三种定时</h2>
+<article lang="zh"><h1 id="定时调度与无人值守">4.1 定时调度与无人值守</h1>
+<p><span class="meta">课后深入，约 65 分钟。</span></p>
+<p>课堂用 wake_review.py
+接过一次短延迟唤醒，查了主机与时区，并核对只读审阅结果。现在把这一次扩成可暂停的周期运行。调度器按时触发任务，却不保证上一轮已经结束。它也不替你判断一次失败请求有没有产生效果。长期运行还需要执行协议。</p>
+<h2 id="从状态转移定义一轮">从状态转移定义一轮</h2>
 <table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr>
-<th>做法</th>
-<th>在哪跑</th>
-<th>电脑要醒着吗</th>
-<th>适合</th>
+<th>当前阶段</th>
+<th>转入下一阶段的依据</th>
+<th>恢复动作</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>桌面应用的定时任务</td>
-<td>你的电脑</td>
-<td>要，应用也要开着</td>
-<td>刚开始，想在应用里看到每次运行</td>
+<td>已选题</td>
+<td>问题与预测已保存并冻结</td>
+<td>核对文件身份，继续准备执行</td>
 </tr>
 <tr>
-<td>对话里的循环</td>
-<td>你的电脑，一个开着的对话</td>
-<td>要</td>
-<td>几个小时内反复检查一件事</td>
+<td>已提交执行</td>
+<td>有作业标识，执行端可查询</td>
+<td>查相同标识，确认是否已运行</td>
 </tr>
 <tr>
-<td>服务器上的 cron 加命令行版</td>
-<td>服务器</td>
-<td>不要</td>
-<td>长期每晚运行</td>
+<td>已运行</td>
+<td>退出码和预期输出校验完成</td>
+<td>重做校验，保留失败清单</td>
+</tr>
+<tr>
+<td>已审阅</td>
+<td>意见对应当前结果身份且有判定</td>
+<td>稿件有变化就重新交审</td>
+</tr>
+<tr>
+<td>已归档</td>
+<td>页面与记账行都对应本轮</td>
+<td>检查唯一键，补未完成输出</td>
 </tr>
 </tbody>
 </table>
-<p><strong>桌面应用的定时任务</strong>最省事。在 Claude
-桌面版里直接说每晚十点按 LOOP.md
-跑开工，它会建好；侧栏里能看到每次运行的记录，可以暂停和手动触发，详见<a
-href="https://code.claude.com/docs/en/desktop-scheduled-tasks">定时任务文档</a>。到点时电脑睡着或者应用没开，这一次就跳过。Codex
-应用里也有类似的自动化。</p>
-<p><strong>对话里的循环</strong>，比如 Claude Code 的
-<code>/loop</code>，适合今天下午每半小时看一次实验这种短期的事。它在同一个对话里反复运行，跑久了上下文会变长，不适合跑一周。</p>
-<p><strong>服务器上的 cron</strong>
-最稳：服务器不关机，你的笔记本合上也不影响。cron 每晚调用一次命令行版的
-Agent：</p>
-<pre class="text"><code>0 22 * * * cd ~/label-noise-lab &amp;&amp; ~/.local/bin/claude -p &quot;按 LOOP.md 跑开工&quot; --permission-mode acceptEdits &gt;&gt; logs/loop.log 2&gt;&amp;1</code></pre>
-<p>cron
-运行时没有你登录终端时的环境：命令要写完整路径，服务器上要先用同一个用户登录过一次
-Claude，用到的命令要事先写进项目设置的允许表。装好后先手动执行一次这一行，确认能跑通，再交给
-cron。</p>
-<h2 id="命令行版">命令行版</h2>
-<p><code>claude -p</code> 和 <code>codex exec</code> 让 Agent
-不经对话框、在命令行里完成一件事，答案打印出来或者写进文件。第 4
-课收工时用它请 Codex 审稿。审稿只读不写，<code>codex exec</code>
-默认就是只读沙箱，意见由 <code>-o</code> 存成文件：</p>
-<pre class="text"><code>codex exec -o runs/7/review.md &quot;读 runs/7/ 下的 prediction.md，results/ 和 result.md，按 review_task.md 审查。&quot;</code></pre>
-<p>无人值守时没有人点同意，所以权限要事先给好，同时要收得紧：</p>
-<ul>
-<li>只给它这个项目文件夹和第 2 课知识库的写权限，其他地方只读；</li>
-<li>允许它运行的命令列清楚，比如 git，uv，ssh；</li>
-<li>不给它完全跳过权限检查的模式，除非整个运行环境本身是隔离的。</li>
-</ul>
-<p>权限怎么配，第 5 课讲。</p>
-<h2 id="状态写在文件里">状态写在文件里</h2>
-<p>每次定时开工都是一个新对话，关于上一轮它只知道文件里写的。<code>STATE.md</code>
-至少记这几样：</p>
-<pre class="text"><code>当前轮次：7
-阶段：开工完成，实验运行中
-正在干的对话：开工 2026-10-13 22:00，开始于 22:01
-服务器 tmux 会话：lab-7
-上一轮结论：带噪验证集早停晚 14 轮，见 runs/6/result.md
-下一步：收工</code></pre>
-<p>每一步做完立刻写回。中途崩了，下一个对话从这里接上，而不是从头再来。</p>
-<h2 id="一件事只有一个对话在干">一件事只有一个对话在干</h2>
-<p>定时任务按时开工，不管上一个还在不在跑。先读 STATE.md
-看进度还不够：两个对话可能同时读到没人在干，然后同时开工。要用一个只有一方能成功的动作来占位，建文件夹就是：</p>
-<pre class="text"><code>用 mkdir 建一个 .lock 文件夹，并在里面写上开工时间。建不成说明有别的对话在干：
-锁的最近活动在 6 小时以内，直接退出，什么都不改；超过 6 小时，说明上一轮可能崩了，推一条通知给我，然后退出。
-建成了再开始干。这把锁管整整一轮：开工结束不删，监视器盯实验时定时更新锁里的活动时间，第二天早上的收工核对是同一轮后接手，收工最后一步才删掉 .lock。</code></pre>
-<p>换人接手也是同样的道理：原来的对话先停掉它的监视器和定时唤醒，新的对话再接手。两个对话同时盯着同一件事，很容易一个覆盖另一个的结果。</p>
-<h2 id="额度">额度</h2>
-<p>订阅有用量上限，常见的是几小时一个窗口加一周的总量。夜里跑到一半额度用完，命令行版会报错退出。三条办法：</p>
-<ul>
-<li>开工前先查额度，不够就把等待写进状态，推通知，退出；</li>
-<li>报额度错误时不要立刻重试，等到重置时间；</li>
-<li>有多个账号的，夜里的长任务用不常用的那个，白天交互用的账号留给你自己。</li>
-</ul>
+<p>外部动作成功后，状态写入前可能崩溃。写状态提前也有风险：状态显示完成，动作实际未发生。外部系统用请求键识别同一动作，用状态查询确认结果。恢复先按这个键查询：已完成就推进状态，未发生才执行，仍未知就等待核查。</p>
+<h2 id="本地动作的恢复机制">本地动作的恢复机制</h2>
+<p>包内 <code>recovery_demo.py</code>
+用原子文件替换模拟一项本地产物。它先检查预定运行编号的产物，内容匹配就复用；没有产物才创建。状态写入失败后，下一次通过产物核对恢复。</p>
+<pre class="text"><code>准备动作及其身份
+检查对应产物是否已存在
+执行动作并校验效果
+原子写入新状态
+追加有唯一事件键的记录</code></pre>
+<p>日志记录每次恢复尝试，效果文件始终对应同一个运行编号。</p>
+<h2 id="写锁与接管">写锁与接管</h2>
+<p>原子建目录能让两个同时开工者只有一个先获得锁。持有者写入 owner
+和运行编号，释放前确认归属。新会话接管前核对旧会话、监视器与实际作业。</p>
+<p>如果采用租约，旧持有者在网络恢复后仍可能写入。需要在共享写入端验证递增的接管代号，拒绝旧代号。示例目录锁不提供这项强保证，因此超时锁人工核查，演示任务在同一台机器中串行恢复。</p>
+<h2 id="调度方式与执行环境">调度方式与执行环境</h2>
+<p>桌面定时便于查看运行，要求相应应用和电脑可执行任务。服务器调度适合长期后台，环境变量和命令路径需显式设置。云端调度有自己的文件系统和连接权限，先确认它能取得哪些材料。</p>
+<pre class="text"><code>为本循环提出一种调度方式，说明执行机器、时区和每次输入。
+先列出具体时间表与工具授权范围，再做一次手动触发和失败恢复，确认日志和输出均可查看，并找到暂停与删除入口。
+明确最大轮数、运行预算和何种状态停止，再建立长期调度。</code></pre>
+<p>Claude 的可用调度入口见<a
+href="https://code.claude.com/docs/en/desktop-scheduled-tasks">官方定时说明</a>，Codex
+见<a href="https://learn.chatgpt.com/docs/quickstart">官方文档</a>。</p>
+<h2 id="无人值守调用的交接">无人值守调用的交接</h2>
+<p>一个任务给一份自成一体的指令，输入与输出通过文件。只读审阅者读取指定版本，最终意见由调用端保存。调用退出状态、会话标识与产物身份一并记录。</p>
+<p>在自己的项目中，使用所选 Agent
+的官方非交互入口，再给执行器加超时、权限与结果核查。</p>
+<p>额度耗尽写成等待状态，按可确认的恢复时间继续。未知恢复时间留为空，不靠反复重试猜测。接管时若旧会话仍会被叫醒，两边就可能重复启动同一轮。因此先停止旧会话的监视与唤醒，再让新会话接管。</p>
 <h2 id="练习">练习</h2>
-<p>把练习 2 的定时任务从桌面应用搬到服务器的 cron
-上，用命令行版跑。合上笔记本过一夜，第二天看通知和结果页。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>给循环选两个故障点：启动已成功但回包丢失，结果页已生成但归档状态未更新。分别写出恢复查询与唯一键。演示一次，检查最终产物和所有失败尝试是否都能追溯。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>用对话里的循环跑一周。</strong>
-同一个对话反复醒来，上下文越积越长。长期任务用桌面定时任务或者
-cron，每次新对话。</p>
+<p><strong>时间到了就开始新轮次。</strong>
+调度先看当前状态，仍在执行则查询或退出。</p>
 </div>
 <div class="pitfall">
-<p><strong>无人值守给了全部权限。</strong>
-半夜没人看着，它在错误的文件夹里批量改了文件。写权限只给项目文件夹，命令列白名单。</p>
+<p><strong>把失败重试写成无条件重复。</strong>
+每个有副作用的动作都要有身份与核查办法。</p>
 </div>
 <div class="pitfall">
-<p><strong>状态只写在最后。</strong>
-干到一半崩了，状态文件还是上一轮的，下一个对话从头重来，把实验又跑一遍。每一步做完立刻写回。</p>
+<p><strong>过期锁直接删。</strong>
+确认持有者已经停止，记录接管，再让新执行者写入。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/headless">Claude Code
-无人值守模式</a></li>
-<li><a href="https://developers.openai.com/codex/cli">Codex
-命令行</a></li>
-</ul>
 </article>
-<article lang="en"><h1 id="scheduling-and-headless-runs">4.1 Scheduling and headless
+<article lang="en"><h1 id="scheduling-and-unattended-runs">4.1 Scheduling and unattended
 runs</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>There are several ways to have the agent start on time. They differ
-in where they run and whether your computer must stay awake. This
-section covers choosing one, then three essentials for unattended work:
-state in files, one conversation per task, and limits on where it can
-write.</p>
-<h2 id="three-ways-to-schedule">Three ways to schedule</h2>
+<p><span class="meta">After-class deep dive, about 65
+minutes.</span></p>
+<p>In class you connected one short-delay wake-up with wake_review.py,
+checked the host and time zone, and verified the read-only review
+result. Now extend that single run into a periodic run that can be
+paused. A scheduler wakes a task on time, but does not guarantee the
+previous round has finished. Nor does it judge for you whether a failed
+request had an effect. Long-running workflows need an execution protocol
+as well as a scheduler.</p>
+<h2 id="define-a-round-by-its-state-transitions">Define a round by its
+state transitions</h2>
 <table>
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
-<th>Method</th>
-<th>Where it runs</th>
-<th>Must your computer stay awake?</th>
-<th>Suited to</th>
+<th>Current stage</th>
+<th>Basis for moving to the next stage</th>
+<th>Recovery action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Desktop app scheduled tasks</td>
-<td>Your computer</td>
-<td>Yes, with the app open too</td>
-<td>Starting out, seeing each run in the app</td>
+<td>Topic chosen</td>
+<td>Question and prediction saved and frozen</td>
+<td>Check file identity, continue preparing execution</td>
 </tr>
 <tr>
-<td>A loop in a conversation</td>
-<td>Your computer, in an open conversation</td>
-<td>Yes</td>
-<td>Repeated checks over a few hours</td>
+<td>Execution submitted</td>
+<td>A job identifier exists and the executor can be queried</td>
+<td>Query the same identifier to confirm whether it ran</td>
 </tr>
 <tr>
-<td>Server cron with a command-line agent</td>
-<td>Server</td>
-<td>No</td>
-<td>Long-term nightly runs</td>
+<td>Ran</td>
+<td>Exit code and expected outputs verified</td>
+<td>Redo verification, keep the failure list</td>
+</tr>
+<tr>
+<td>Reviewed</td>
+<td>Comments correspond to the current result identity and give a
+verdict</td>
+<td>If the draft changed, send it for review again</td>
+</tr>
+<tr>
+<td>Archived</td>
+<td>Page and ledger rows both correspond to this round</td>
+<td>Check the unique key, fill in unfinished outputs</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Desktop app scheduled tasks</strong> are easiest. Tell Claude
-desktop to start work following LOOP.md at ten each night, and it
-creates the task. The sidebar shows runs and lets you pause or trigger
-it manually; see the <a
-href="https://code.claude.com/docs/en/desktop-scheduled-tasks">scheduled
-task documentation</a>. If the computer is asleep or the app is closed
-at the time, that run is skipped. Codex has similar automations.</p>
-<p><strong>Loops in conversations</strong>, such as Claude Code’s
-<code>/loop</code>, suit short jobs like checking an experiment every
-half hour this afternoon. They run repeatedly in the same conversation.
-Context grows over time, so they do not suit a week-long run.</p>
-<p><strong>Server cron</strong> is the most reliable. The server stays
-on and closing your laptop has no effect. cron calls the command-line
-agent once each night:</p>
-<pre class="text"><code>0 22 * * * cd ~/label-noise-lab &amp;&amp; ~/.local/bin/claude -p &quot;Follow LOOP.md to start work&quot; --permission-mode acceptEdits &gt;&gt; logs/loop.log 2&gt;&amp;1</code></pre>
-<p>cron does not have the environment of your signed-in terminal. Use
-full command paths, sign in to Claude on the server once as the same
-user, and put needed commands in the project’s allow list beforehand.
-Try the command manually once before giving it to cron.</p>
-<h2 id="command-line-agents">Command-line agents</h2>
-<p><code>claude -p</code> and <code>codex exec</code> finish a task from
-the command line without a chat window. They print the answer or write
-it to files. Session 4 uses this to ask Codex for a review when wrapping
-up. Reviewing is read-only. <code>codex exec</code> defaults to a
-read-only sandbox, and <code>-o</code> saves its comments:</p>
-<pre class="text"><code>codex exec -o runs/7/review.md &quot;Read prediction.md, results/ and result.md under runs/7/, and review them following review_task.md.&quot;</code></pre>
-<p>Nobody can click approval during an unattended run. Give permissions
-in advance, keeping them tight:</p>
-<ul>
-<li>Allow writes only to this project folder and the Session 2 knowledge
-base; make other locations read-only;</li>
-<li>List allowed commands explicitly, such as git, uv and ssh;</li>
-<li>Do not use a mode that skips permission checks entirely unless the
-whole runtime is isolated.</li>
-</ul>
-<p>Session 5 covers configuring permissions.</p>
-<h2 id="state-lives-in-files">State lives in files</h2>
-<p>Each scheduled run is a new conversation. It knows about the last
-round only through files. <code>STATE.md</code> needs at least:</p>
-<pre class="text"><code>Current round: 7
-Stage: startup complete, experiment running
-Active conversation: startup 2026-10-13 22:00, began at 22:01
-Server tmux session: lab-7
-Last round&#39;s conclusion: noisy-validation early stopping was 14 epochs later; see runs/6/result.md
-Next step: wrap up</code></pre>
-<p>Write back immediately after each step. If it crashes midway, the
-next conversation picks up here rather than starting over.</p>
-<h2 id="one-conversation-per-task">One conversation per task</h2>
-<p>A scheduled task starts on time whether the last one is still running
-or not. Reading STATE.md is not enough: two conversations may both read
-that nobody is working, then both start. Claim the task with an action
-only one can succeed at, such as creating a folder:</p>
-<pre class="text"><code>Use mkdir to create a .lock folder and write the start time inside it. If creation fails, another conversation is working:
-if the lock&#39;s last activity is under 6 hours old, exit without changing anything; if over 6 hours old, the last round may have crashed. Send me a notification, then exit.
-Start work only after creating the lock. The lock covers the whole round: kick-off does not delete it, the monitor refreshes its activity time while watching the experiment, and the next morning&#39;s wrap-up takes over the same round. Wrap-up deletes .lock as its very last step.</code></pre>
-<p>A handover follows the same rule: the old conversation stops its
-monitors and scheduled wake-ups before the new one takes over. Two
-conversations watching the same task can easily overwrite each other’s
-results.</p>
-<h2 id="quotas">Quotas</h2>
-<p>Subscriptions have usage limits, often a window of a few hours plus a
-weekly total. If quota runs out overnight, the command-line agent exits
-with an error. Three ways to handle it:</p>
-<ul>
-<li>Check quota before starting. If insufficient, record the wait in the
-state file, notify, and exit;</li>
-<li>Do not retry a quota error at once; wait for the reset time;</li>
-<li>If you have several accounts, use a less-used one for long overnight
-work and leave your daytime account for you.</li>
-</ul>
+<p>After an external action succeeds, the process may crash before the
+state is written. Writing the state early is risky too: the state says
+done but the action never happened. External systems recognize the same
+action by a request key and confirm the result by a status query.
+Recovery first queries by this key: if done, advance the state; if it
+did not happen, execute it; if still unknown, wait for a check.</p>
+<h2 id="recovering-a-local-file-action">Recovering a local file
+action</h2>
+<p>The packaged <code>recovery_demo.py</code> simulates a local output
+file with atomic file replacement. It first checks the output for the
+intended run ID, reusing it if the content matches and creating it only
+when there is none. If writing the state fails, the next run recovers by
+checking the output.</p>
+<pre class="text"><code>Prepare the action and its identity
+Check whether the corresponding output already exists
+Execute the action and verify its effect
+Write the new state atomically
+Append a record with a unique event key</code></pre>
+<p>The log records every recovery attempt, and the effect file always
+corresponds to the same run ID.</p>
+<h2 id="write-locks-and-session-handoff">Write locks and session
+handoff</h2>
+<p>Creating a directory atomically lets only one of two processes
+starting simultaneously get the lock first. The holder writes the owner
+and run ID, and confirms ownership before releasing. Before a new
+session takes over, it checks the old session, the monitor and the
+actual job.</p>
+<p>With a lease, the old holder may still write after its network comes
+back. The shared write point needs to verify a monotonically increasing
+takeover token and reject stale tokens. The example directory lock does
+not give this strong guarantee, so a timed-out lock is checked by hand,
+and the demonstration task recovers serially on one machine.</p>
+<h2 id="choose-a-scheduler-for-the-execution-environment">Choose a
+scheduler for the execution environment</h2>
+<p>Desktop scheduling makes runs easy to watch, but requires the app and
+the computer to be able to run the task. Server scheduling suits
+long-term background work, but environment variables and command paths
+must be set explicitly. Cloud scheduling has its own file system and
+connection permissions, so first confirm which materials it can
+reach.</p>
+<pre class="text"><code>Propose one way of scheduling this loop, stating the executing machine, the time zone and the input for each run.
+First list the concrete timetable and the scope of tool authorization, then do one manual trigger and one failure recovery, confirming the log, outputs, and the controls for pausing and deleting the schedule.
+Set the maximum number of rounds, the run budget and which states cause a stop, and only then create the long-term schedule.</code></pre>
+<p>For Claude’s available scheduling options, see the <a
+href="https://code.claude.com/docs/en/desktop-scheduled-tasks">official
+guide to scheduled tasks</a>; for Codex, see the <a
+href="https://learn.chatgpt.com/docs/quickstart">official docs</a>.</p>
+<h2 id="handoffs-for-unattended-runs">Handoffs for unattended runs</h2>
+<p>Each task gets one self-contained instruction, with input and output
+through files. A read-only reviewer reads the specified version, and the
+caller saves the final comments. The call’s exit status, session
+identifier and product identity are recorded together.</p>
+<p>In your own project, use the official non-interactive interface of
+the agent you chose, then add a timeout, permissions and a result check
+to the executor.</p>
+<p>Running out of quota is written as a waiting state, and work
+continues at a recovery time that can be confirmed. If the reset time is
+unknown, leave it blank rather than inferring it from repeated retries.
+During a takeover, if the old session can still be woken, both sides may
+start the same round. So first stop the old session’s monitoring and
+wake-ups, then let the new session take over.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Move Exercise 2’s scheduled tasks from the desktop app to server cron
-with the command-line agent. Close your laptop for the night and check
-notifications and the results page next morning.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Choose two failure points in the loop: the launch succeeded but the
+reply was lost, and the results page was generated but the archive state
+was not updated. Write the recovery query and unique key for each.
+Demonstrate once, and check that the final products and all failed
+attempts can be traced.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Running a conversation loop for a week.</strong> The same
-conversation keeps waking and accumulating context. Use desktop
-scheduled tasks or cron for long jobs, with a new conversation each
-time.</p>
+<p><strong>Starting a new round because the time has come.</strong> The
+scheduler looks at the current state first; if something is still
+running, it queries or exits.</p>
 </div>
 <div class="pitfall">
-<p><strong>Full permissions for unattended work.</strong> Nobody watches
-at midnight as it changes files in the wrong folder in bulk. Allow
-writes only in the project folder and list allowed commands.</p>
+<p><strong>Writing failure retries as unconditional repeats.</strong>
+Every action with side effects needs an identity and a way to check
+it.</p>
 </div>
 <div class="pitfall">
-<p><strong>Writing state only at the end.</strong> A crash midway leaves
-last round’s state. The next conversation starts over and reruns the
-experiment. Write back after every step.</p>
+<p><strong>Deleting an expired lock outright.</strong> Confirm the
+holder has stopped, record the takeover, then let the new executor
+write.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/headless">Claude Code
-headless mode</a></li>
-<li><a href="https://developers.openai.com/codex/cli">Codex CLI</a></li>
-</ul>
 </article>
-<nav class="pager"><a class="prev" href="automate.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4 Agent 自动化与自进化</span><span lang="en">4 Automation and Self-Evolution</span></a><a class="next" href="automate-playbook.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.2 经验榜</span><span lang="en">4.2 Playbooks</span></a></nav>
+<nav class="pager"><a class="prev" href="automate.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4 自动化</span><span lang="en">4 Research automation</span></a><a class="next" href="automate-playbook.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.2 经验管理与评估</span><span lang="en">4.2 Managing and evaluating playbooks</span></a></nav>
 </main>
 </div>
 </body>

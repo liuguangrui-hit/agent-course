@@ -1,3 +1,3 @@
-# 用 Agent 做科研 · Research with Agents
+# Agent 科研 · AI Agents for Research
 
 课程网站 Course site: https://liuguangrui.top/agent-course/

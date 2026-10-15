@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>引用与投稿 · 用 Agent 做科研</title>
+<title>文献引用与刊会投稿 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,224 +17,164 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
-<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
-<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
-<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
-<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
-<a href="writing-submit.html" class="cur sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文表达</span><span lang="en">Structuring a paper</span></a>
+<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数据核查</span><span lang="en">Checking the numbers</span></a>
+<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">结果绘图</span><span lang="en">Plotting results</span></a>
+<a href="writing-review.html" class="sub"><span class="num">1.4</span><span lang="zh">审稿返修</span><span lang="en">Peer review and revision</span></a>
+<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">经验留档</span><span lang="en">Reusable methods</span></a>
+<a href="writing-submit.html" class="cur sub"><span class="num">1.6</span><span lang="zh">文献引用与刊会投稿</span><span lang="en">Citations and submission</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="引用与投稿">1.6 引用与投稿</h1>
+<article lang="zh"><h1 id="文献引用与刊会投稿">1.6 文献引用与刊会投稿</h1>
 <p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>论文写好以后，还有一段很容易被轻视的路：引用是否真实，格式是否合规，匿名是否干净，PDF
-能否被投稿系统接受。这些检查枯燥，正适合交给
-Agent，前提是让它用工具查，而不是凭记忆答。</p>
-<h2 id="每一条引用都要核实">每一条引用都要核实</h2>
-<p>Agent
-写论文时会补引用，补出来的引用看起来非常像真的：作者是这个领域的人，题目像他会写的，年份和会议也合理，但这篇论文不存在。也有半真半假的：论文存在，年份或者会议写错，或者引的是
-arXiv 版而正式版早已发表。</p>
-<p>规则只有一条：参考文献里的每一条，都要用外部数据源对上。</p>
-<pre class="text"><code>写 code/verify_refs.py：读取论文的参考文献，对每一条用题目到 Crossref 和 arXiv 的公开接口查询，
-比对作者，年份和发表处。输出一张表，分完全对上，部分不符和查不到三类，部分不符的指出是哪一项。
-查不到的不要删，列出来给我看。</code></pre>
-<p>BibTeX 条目也不要让 Agent 凭记忆写。从 DBLP 或出版社页面导出，或者让
-Agent 按 DOI
-去取。练习论文的七条引用都是真实的，可以先拿它试一遍脚本。</p>
-<h2 id="模板和篇幅">模板和篇幅</h2>
-<p>用刊会官方的最新模板，不要拿去年的版本或者别人改过的版本。页数超了，删内容，不压格式：调小字号，改页边距，大量使用负的
-<code>\vspace</code>，都可能直接被拒稿。</p>
-<p>删什么，回到 1.1
-的原则：主次分明，敢于取舍。次要的实验移到附录或者直接不写，重复的限定只留一处，附录里不再复述正文已经讲过的设计。</p>
-<pre class="text"><code>论文超出页数限制 0.6 页。不要改格式和字号。
-列出可以删减的内容，按对主要结论的重要性从低到高排，每项估计能省多少行。先给我看，不要动手。</code></pre>
-<h2 id="匿名">匿名</h2>
-<p>双盲投稿要检查的不只是作者栏：</p>
-<ul>
-<li>致谢和基金号；</li>
-<li>正文里的 our previous work，以及第一人称引用自己的论文；</li>
-<li>代码和数据的链接，GitHub 用户名会暴露身份；</li>
-<li>PDF 的元数据，作者字段常常带着你的名字；</li>
-<li>图里的水印和文件路径。</li>
-</ul>
-<pre class="text"><code>按双盲要求检查 versions/v2/main.pdf：正文，脚注，图中文字，链接和 PDF 元数据里有没有能识别作者的信息。
-用工具读取 PDF 元数据，不要只看正文。列出发现的每一处。</code></pre>
-<h2 id="编译和-pdf-检查">编译和 PDF 检查</h2>
-<p>投稿前让 Agent 把这些都跑一遍：</p>
-<ul>
-<li>编译日志里的警告：未定义的引用，未定义的标签，超出版心的行。</li>
-<li>PDF 里的字体是否全部嵌入，有没有 Type 3 字体。</li>
-<li>每一页渲染成图片，逐页看一遍：图和图注是否在同一页，表格有没有出界，第一页的版式是否合乎这个刊会的惯例。</li>
-</ul>
-<pre class="text"><code>完整编译 versions/v2/main.tex，汇总日志里的所有警告并逐条修复。
-用 pdffonts 一类工具检查字体嵌入，确认没有 Type 3 字体。
-把每一页渲染成图片逐页检查版面，列出问题。修复超出版心的行时不要缩小字号。</code></pre>
-<p>关于第一页：多数会议论文第一页没有图。要放的话照刊会的惯例来，双栏的刊会通常放在右栏，用单栏宽的图，不在标题下放通栏大图。拿不准时，翻几篇这个刊会去年的论文看。</p>
+<p>引用能查到，还要查它是否支持正文。投稿 PDF
+编译成功，还要查它是否符合目标刊会的交付要求。这一节介绍成稿后的两类检查。</p>
+<h2 id="文献引用">文献引用</h2>
+<p>对每条参考文献保存 DOI 或 arXiv
+标识，核对标题、作者与发表信息，再确认正文使用的是哪个版本。正式版与预印本的图表可能不同，笔记页码要跟着版本走。</p>
+<pre class="text"><code>读取参考文献，逐条到出版社或书目接口核对。
+输出 exact，mismatch，unresolved 三类，保留查询 URL 和时间。
+题目检索返回的近似结果只作候选，进一步用作者和标识确认。
+为正文实际引用的版本保留记录。</code></pre>
+<p><a
+href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref</a>、<a
+href="https://dblp.org/">DBLP</a> 和 <a
+href="https://info.arxiv.org/help/api/">arXiv</a>各有覆盖范围。某个接口没有记录时，继续核对出版方与作者公开页面，结论仍未确定就保留为待核。</p>
+<h2 id="再查引用关系">再查引用关系</h2>
+<p>从正文抽出依赖引用的主张，写成主张与出处表。按原文找到支持段落，记录证据是实验结果、理论推导还是作者讨论。综述转引的发现，追到原研究再判断。</p>
+<pre class="text"><code>对正文每个带引用的结论，给出原文支持位置和证据类型。
+检查是否把作者的推测写成已证实结果，是否把一种设置的结果换成另一种设置。
+缺支撑时先找直接证据，找不到就列出需要补的原文证据或实验。</code></pre>
+<p>身份核查用结构化元数据，含义核查用全文。两者的通过状态分开保存。</p>
+<h2 id="刊会投稿">刊会投稿</h2>
+<p>确定目标届次，保存官方作者指南和模板入口，按当前要求检查页数、匿名与附件。需要删篇幅时，按叙事作用决定去留：删重复解释，移次要实验，保留核心证据。</p>
+<p>图在第一页的位置、字体要求和附录安排，都以目标模板及同类正式论文为准。把别处的惯例搬过来，容易让
+Agent 修错方向。</p>
+<h2 id="检查实际-pdf">检查实际 PDF</h2>
+<pre class="text"><code>完整构建本版 PDF，汇总未定义引用和超出版心等日志。
+读取字体与元数据，按目标刊会要求检查。
+逐页看渲染结果，检查图注位置、表格边界和链接。
+如需双盲，检查作者栏和致谢，再查链接、图内路径与 PDF 元数据。</code></pre>
+<p>代码仓库和补充材料也有身份信息。需要匿名发布时，先把拟公开文件打包，在本地核查完整内容，再由用户确认提交。</p>
 <h2 id="练习">练习</h2>
-<p>用 <code>verify_refs.py</code>
-的思路检查练习论文的参考文献。然后故意把其中一条的年份改错，再加一条编造的引用，看脚本能否把两处都找出来。</p>
+<p>复制练习稿，在其中一条引用里改错年份，另把一条真实引用挪到它无法支持的句子后。分别运行身份与含义核查，看看两处问题各由哪道检查发现。</p>
 <details>
 <summary>
-参考结果
+参考判断
 </summary>
-<p>年份改错的那条会显示为部分不符，指出年份；编造的那条查不到。注意
-Crossref
-按题目检索会返回最相近的结果，相近不等于相同，脚本要比对题目的相似度，低于阈值就算查不到，否则编造的引用会被一篇题目相近的真论文顶替。</p>
+<p>错误年份应在元数据核对时出现。第二处文献身份仍然真实，要通过原文支持位置发现。两道检查分开，才能解释为什么一条引用通过了其中一道却仍不能使用。</p>
 </details>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>编造的引用。</strong>
-作者，题目，会议都像真的，论文不存在。每一条都用外部数据源核实，查不到的交给人看。</p>
+<p><strong>题目相似就判为同一篇。</strong>
+进一步对作者、标识和版本，保留候选与最终匹配的区别。</p>
 </div>
 <div class="pitfall">
-<p><strong>引了 arXiv 版。</strong> 论文早已正式发表，参考文献还写着
-arXiv 预印本。核实时同时查正式发表版本。</p>
+<p><strong>为满足页数限制调小模板。</strong>
+把删减建议按叙事作用排序，修正文内容，保持模板要求。</p>
 </div>
 <div class="pitfall">
-<p><strong>用缩格式凑篇幅。</strong> Agent
-修复超页的第一反应往往是缩字号和间距。明确禁止，要求删内容。</p>
+<p><strong>匿名只查正文。</strong> 同时检查 PDF
+属性、图内文字与附件链接，按目标要求交付。</p>
 </div>
-<div class="pitfall">
-<p><strong>元数据泄露身份。</strong> 正文全部匿名了，PDF
-属性里作者一栏还是你的名字。用工具检查元数据。</p>
-</div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a
-href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref
-REST API</a>：按题目或 DOI 查询文献元数据。</li>
-<li><a href="https://info.arxiv.org/help/api/index.html">arXiv
-API</a>：查询预印本。</li>
-<li><a
-href="https://dblp.org/">DBLP</a>：计算机领域论文的权威书目，可导出
-BibTeX。</li>
-</ul>
 </article>
-<article lang="en"><h1 id="references-and-submission">1.6 References and submission</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>Once the paper is written, there is still a stretch of road that is
-easy to underrate: are the references real, does the format comply, is
-the anonymization clean, will the submission system accept the PDF.
-These checks are tedious, which makes them a good fit for an agent, as
-long as it checks with tools and never answers from memory.</p>
-<h2 id="verify-every-reference">Verify every reference</h2>
-<p>Agents add references while writing a paper, and the references they
-add look very real: the authors work in the field, the title sounds like
-something they would write, the year and venue are plausible, and the
-paper does not exist. Some are half true: the paper exists, but the year
-or venue is wrong, or the citation points to the arXiv version long
-after the published version came out.</p>
-<p>There is one rule: match every entry in the bibliography against an
-external data source.</p>
-<pre class="text"><code>Write code/verify_refs.py: read the paper&#39;s references and look up each one by title through the public Crossref and arXiv APIs,
-comparing authors, year and venue. Output a table sorted into three groups: full match, partial mismatch and not found. For partial mismatches, name the field that differs.
-Don&#39;t delete the ones not found. List them for me to see.</code></pre>
-<p>Don’t let the agent write BibTeX entries from memory either. Export
-them from DBLP or the publisher’s page, or have the agent fetch them by
-DOI. All seven references in the exercise paper are real, so you can try
-the script on it first.</p>
-<h2 id="template-and-length">Template and length</h2>
-<p>Use the venue’s latest official template, never last year’s or a copy
-someone else has modified. If you are over the page limit, cut content
-and leave the format alone: a smaller font, changed margins or heavy use
-of negative <code>\vspace</code> can each get the paper rejected
-outright.</p>
-<p>For what to cut, go back to the principle from 1.1: make the main
-point stand out, and be willing to let things go. Move minor experiments
-to the appendix or drop them, keep a repeated caveat in one place only,
-and don’t restate in the appendix a design the main text already
-explained.</p>
-<pre class="text"><code>The paper is 0.6 pages over the page limit. Don&#39;t change the format or font size.
-List what could be cut, ordered from least to most important to the main conclusion, with an estimate of how many lines each saves. Show me first and don&#39;t change anything.</code></pre>
-<h2 id="anonymization">Anonymization</h2>
-<p>A double-blind submission needs checks well beyond the author
-block:</p>
-<ul>
-<li>acknowledgments and grant numbers;</li>
-<li>“our previous work” in the text, and citing your own papers in the
-first person;</li>
-<li>links to code and data, where a GitHub username reveals who you
-are;</li>
-<li>PDF metadata, whose author field often carries your name;</li>
-<li>watermarks and file paths in figures.</li>
-</ul>
-<pre class="text"><code>Check versions/v2/main.pdf against double-blind rules: is there anything in the text, footnotes, figure text, links or PDF metadata that could identify the authors?
-Read the PDF metadata with a tool; don&#39;t look only at the text. List every instance you find.</code></pre>
-<h2 id="compilation-and-pdf-checks">Compilation and PDF checks</h2>
-<p>Before submitting, have the agent run through all of these:</p>
-<ul>
-<li>Warnings in the compile log: undefined citations, undefined labels,
-lines running past the text block.</li>
-<li>Whether every font in the PDF is embedded, and whether any are Type
-3.</li>
-<li>Every page rendered as an image and looked at one by one: is each
-figure on the same page as its caption, does any table overflow, does
-the first page follow the venue’s conventions.</li>
-</ul>
-<pre class="text"><code>Do a full compile of versions/v2/main.tex, collect every warning in the log, and fix them one by one.
-Check font embedding with a tool such as pdffonts and confirm there are no Type 3 fonts.
-Render every page as an image, check the layout page by page, and list the problems. When fixing lines that run past the text block, don&#39;t shrink the font.</code></pre>
-<p>On the first page: most conference papers have no figure on page one.
-If you want one, follow the venue’s convention. Two-column venues
-usually put it in the right column at single-column width, with no
-full-width figure under the title. When unsure, look through a few of
-the venue’s papers from last year.</p>
+<article lang="en"><h1 id="citations-and-submission">1.6 Citations and submission</h1>
+<p><span class="meta">After-class deep dive, about 30
+minutes.</span></p>
+<p>Finding a reference does not establish that it supports the text. A
+PDF that compiles may still fail to meet the target venue’s submission
+requirements. This section covers both checks once the draft is
+complete.</p>
+<h2 id="verify-reference-details">Verify reference details</h2>
+<p>For every reference, keep its DOI or arXiv identifier, check title,
+authors and publication details, then confirm which version the text
+uses. Figures and tables may differ between the published version and
+the preprint, and page numbers in notes follow the version.</p>
+<pre class="text"><code>Read the references and check each one against the publisher or a bibliographic API.
+Output three classes: exact, mismatch, unresolved, keeping the query URL and time.
+Approximate matches from a title search are only candidates; confirm further with authors and identifiers.
+Keep a record of the version actually cited in the text.</code></pre>
+<p><a
+href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref</a>,
+<a href="https://dblp.org/">DBLP</a> and <a
+href="https://info.arxiv.org/help/api/">arXiv</a> each cover different
+ground. When one API has no record, keep checking the publisher’s and
+authors’ public pages; if the result is still uncertain, keep it as
+pending.</p>
+<h2 id="then-check-what-each-citation-supports">Then check what each
+citation supports</h2>
+<p>Pull out the claims in the text that rely on citations and make a
+table of claims and sources. Find the supporting passage in the original
+and record whether the evidence is an experimental result, a theoretical
+derivation or the authors’ discussion. For findings cited through a
+review, trace them to the original study before judging.</p>
+<pre class="text"><code>For every cited conclusion in the text, give the supporting location in the original and the type of evidence.
+Check whether an author&#39;s speculation has been written as an established result, and whether a result from one setting has been swapped for another setting.
+Where support is missing, first look for direct evidence; if none is found, list the evidence from the original or the experiment that needs to be added.</code></pre>
+<p>Use structured metadata to check reference details and full text to
+check what a citation supports. Record the two outcomes separately.</p>
+<h2 id="check-the-venues-submission-requirements">Check the venue’s
+submission requirements</h2>
+<p>Identify the target conference year or journal issue and save the
+official author guidelines and template links. Check page count,
+anonymity and supplementary files against the current requirements. When
+cutting length, consider each passage’s role in the argument: cut
+repeated explanations, move secondary experiments, keep the core
+evidence.</p>
+<p>The position of figures on the first page, font requirements and
+appendix arrangements all follow the target template and published
+papers of the same type. Carrying over conventions from elsewhere easily
+leads the agent to fix things in the wrong direction.</p>
+<h2 id="check-the-actual-pdf">Check the actual PDF</h2>
+<pre class="text"><code>Build this version&#39;s PDF in full and collect log entries such as undefined references and content outside the text block.
+Read the fonts and metadata and check them against the target venue&#39;s requirements.
+Look at the rendered result page by page, checking caption placement, table borders and links.
+If double-blind review is required, check the author block, acknowledgments, links, paths inside figures and PDF metadata.</code></pre>
+<p>Code repositories and supplementary materials also carry identity
+information. When anonymous release is needed, first package the files
+to be made public, check their full content locally, and then have the
+user confirm the submission.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Check the exercise paper’s references using the approach of
-<code>verify_refs.py</code>. Then deliberately change the year in one
-entry and add a made-up reference, and see whether the script catches
-both.</p>
+<p>Copy the exercise draft, change the year in one citation to a wrong
+one, and move another real citation to a sentence it cannot support. Run
+the identity check and the meaning check separately and see which check
+finds each problem.</p>
 <details>
 <summary>
-Expected result
+Suggested analysis
 </summary>
-<p>The entry with the wrong year shows up as a partial mismatch, with
-the year named; the made-up one comes back as not found. Note that a
-Crossref title search returns the closest match, and close is different
-from identical. The script has to compare title similarity and count
-anything below a threshold as not found. Otherwise a real paper with a
-similar title stands in for the made-up reference.</p>
+<p>The wrong year should show up in the metadata check. In the second
+case the reference is still genuine, so detecting the error requires
+checking the purported supporting passage in the source. Only with the
+two checks separate can you explain why a citation passed one of them
+and still cannot be used.</p>
 </details>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Made-up references.</strong> The authors, title and venue all
-look real, and the paper does not exist. Verify every entry against an
-external data source, and hand the ones not found to a person.</p>
+<p><strong>Judging two papers the same because their titles are
+similar.</strong> Go further and match authors, identifiers and
+versions, keeping candidates distinct from the final match.</p>
 </div>
 <div class="pitfall">
-<p><strong>Citing the arXiv version.</strong> The paper was formally
-published long ago, and the bibliography still lists the arXiv preprint.
-When verifying, look up the published version as well.</p>
+<p><strong>Shrinking the template to get under the page limit.</strong>
+Rank cuts by their role in the argument, revise the content, and keep
+the template’s requirements.</p>
 </div>
 <div class="pitfall">
-<p><strong>Shrinking the format to fit the page limit.</strong> An
-agent’s first move when a paper runs over is usually to shrink the font
-and spacing. Forbid it explicitly and require cuts to the content.</p>
+<p><strong>Checking anonymity only in the body text.</strong> Also check
+PDF properties, text inside figures and attachment links, and deliver as
+the target requires.</p>
 </div>
-<div class="pitfall">
-<p><strong>Metadata gives you away.</strong> The text is fully
-anonymized, yet the author field in the PDF properties still holds your
-name. Check the metadata with a tool.</p>
-</div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a
-href="https://www.crossref.org/documentation/retrieve-metadata/rest-api/">Crossref
-REST API</a>: look up bibliographic metadata by title or DOI.</li>
-<li><a href="https://info.arxiv.org/help/api/index.html">arXiv API</a>:
-look up preprints.</li>
-<li><a href="https://dblp.org/">DBLP</a>: the authoritative bibliography
-for computer science papers, with BibTeX export.</li>
-</ul>
 </article>
-<nav class="pager"><a class="prev" href="writing-skills.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.5 把做法留下来</span><span lang="en">1.5 Keeping the method</span></a><a class="next" href="explore.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2 Agent 探索</span><span lang="en">2 Exploring with Agents</span></a></nav>
+<nav class="pager"><a class="prev" href="writing-skills.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.5 经验留档</span><span lang="en">1.5 Reusable methods</span></a><a class="next" href="explore.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2 知识库</span><span lang="en">2 Research knowledge bases</span></a></nav>
 </main>
 </div>
 </body>

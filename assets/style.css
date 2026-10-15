@@ -86,3 +86,11 @@ details summary { cursor: pointer; font-weight: 600; color: var(--accent); }
 .install { border: 1px solid #bfe0cf; background: #eefaf3; border-radius: 10px; padding: 4px 18px; margin: 16px 0; }
 .install p:first-child strong { color: #1f7a4d; }
 .bench { border-left: 4px solid #1f7a4d; padding: 2px 16px; margin: 24px 0; }
+.edition-note { font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.math.display { display: block; overflow-x: auto; padding: 8px 0; }
+math[display="block"] { margin: 10px 0; }
+article p code, article td code { overflow-wrap: anywhere; }
+
+.stage-nav p { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 14px; }
+.stage-nav a { text-decoration: none; border-bottom: 1px solid #b9dccd; }
+h2[id] { scroll-margin-top: 72px; }

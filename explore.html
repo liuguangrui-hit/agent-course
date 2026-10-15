@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent 探索 · 用 Agent 做科研</title>
+<title>知识库 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,171 +17,128 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html" class="cur"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">拿到全文</span><span lang="en">Getting the full text</span></a>
-<a href="explore-vault.html" class="sub"><span class="num">2.2</span><span lang="zh">知识库怎么搭</span><span lang="en">Building the knowledge base</span></a>
-<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与提问</span><span lang="en">Parallel screening and questions</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html" class="cur"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">文献获取</span><span lang="en">Finding full texts</span></a>
+<a href="explore-vault.html" class="sub"><span class="num">2.2</span><span lang="zh">知识库搭建</span><span lang="en">Building a knowledge base</span></a>
+<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与选题</span><span lang="en">Parallel screening and research questions</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip new">+ Ego 浏览器</span><span class="chip new">+ Obsidian</span><span class="chip new">+ 文献接口</span><span class="chip new">+ Sub-agent</span></div><h1 id="agent-探索">2 Agent 探索</h1>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip new">+ Ego 浏览器</span><span class="chip new">+ Obsidian</span><span class="chip new">+ 文献接口</span><span class="chip new">+ Sub-agent</span></div><h1 id="知识库">2 知识库</h1>
 <div class="goal">
-<p>一小时后，你有一个关于带噪标签学习的知识库：十四篇论文的全文，每篇一页笔记，每条结论带原文页码；几页概念页把论文连在一起，一张表列出论文之间的分歧；最后是三个能用第
-1 课那个小实验检验的问题，每个都写好了预测。</p>
+<p>把文献中的分歧转化为可用实验检验的问题。课堂完成三篇论文的证据链，写出一个带竞争解释的研究问题；课后扩到材料清单中的十四篇，再留下三个候选问题。</p>
 </div>
-<p><span class="meta">课堂核心 60 分钟。课后深入 2.1 至 2.3
-共约一个半小时，按需选读。</span></p>
+<p><span class="meta">课前完成准备，课上 60
+分钟，课后先复习再选做深入。</span></p>
+<div class="stage-nav">
+<p><a href="#课前预备">课前预备</a> · <a
+href="#课上一小时">课上一小时</a> · <a
+href="#课后复习与拔高">课后复习与拔高</a></p>
+</div>
+<p>两篇论文都在带噪标签下比较鲁棒损失，方法的排名却反过来了。Agent
+很容易把它们压成一句各有优劣。研究从追问开始：数据相同吗，学习率日程相同吗，取的是最后一轮还是最好一轮？</p>
+<p>你需要一个能把这些问题追回原文的知识库。关系图帮助查找材料，证据表则说明材料能支持哪些判断。</p>
 <div class="download">
-<p><a href="downloads/lesson-2-zh.zip">下载第 2 课练习材料</a></p>
+<p><a href="downloads/lesson-2-zh.zip">下载第 2 课材料</a></p>
 </div>
-<p>练习材料的核心是一份论文清单 <code>papers.md</code>：十二篇在 arXiv
-上，两篇在出版社网站上，订阅内容要图书馆的机构登录才能下载。另有一个空的知识库骨架和一个做好的示例库。课题接着第
-1 课：训练标签有错时，网络先学规律后记错误，什么办法能挡住后一段。</p>
-<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<p><code>papers.md</code>
+给出十四篇核对过身份的论文。<code>preview/</code>
+是六篇实读笔记组成的示例库，未包含受限全文。课堂选三篇，全文在课前取得；缺失项提前报告。预览可用于证据组织演练，原件核查另记待补。</p>
+<h2 id="课前预备">课前预备</h2>
+<p><span class="meta">预留 20 至 45
+分钟；机构登录或全文下载可能需要更久，提前一天检查。</span></p>
 <div class="install">
-<p><strong>本课暗线：让 Agent
-能出门找资料，回来存成你也能读的知识库。</strong> 第 1 课里 Agent
-用的都是你放进文件夹的东西。这一课添四样：一个替它登录出版社的浏览器，一个你和它共用的笔记库，一组查论文元数据的接口，以及把几十篇论文分给多个助手并行读的
-Sub-agent。</p>
+<p><strong>课前工具准备。</strong> 装好浏览器与
+Obsidian，完成所需登录，把三份原件下载到本地。怎样核对版本、分工阅读和处理分歧，留在课堂一起做。</p>
 </div>
-<p>在 Claude 里打开 <code>lesson-2</code> 文件夹，先发：</p>
-<pre class="text"><code>先读 ../lesson-1/AGENTS.md，把里面的工具用法抄进本文件夹的 AGENTS.md。
-这个项目还要从网上拿论文全文，并把读书笔记存成 Obsidian 知识库。检查并补上：
-1. Ego Lite 浏览器和它给 Agent 用的 ego-browser Skill，按 https://lite.ego.app/ 的说明装；
-2. Obsidian，把本文件夹下的 vault/ 设成一个库；
-3. 确认你能调用 arXiv 和 OpenAlex 的公开接口，各查一篇论文的题目给我看；
-4. 派一个 Sub-agent 读 papers.md 的前三行，只回报它读到了几篇，证明并行助手能用。
-装之前列出打算装什么、装在哪，等我同意。需要我在图形界面里点的步骤，停下来告诉我点哪里。
-装完在 AGENTS.md 里补几行：论文元数据先查接口，订阅全文用 Ego 浏览器，笔记写在 vault/ 的哪里。</code></pre>
-<p>Ego
-装好后打开它，用你学校图书馆的账号登录一次出版社或者图书馆门户。之后
-Agent 用这个浏览器时，沿用你已登录的状态，不需要你把密码告诉它。用
-Windows 的话，可以用 Claude in Chrome 扩展代替 Ego，道理相同。</p>
-<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
-<p>打开练习材料里 <code>preview/</code> 下的示例库，用 Obsidian
-打开。左边是论文页，一篇一页；中间是概念页，比如记忆化，早停，鲁棒损失，每页开头一段综述，下面列出哪些论文说了什么，链接回论文页；<code>conflicts.md</code>
-是一张表，列出两篇论文在各自什么设定下，给出了相反的结果或相反的做法。打开关系图，论文和概念连成一张网，孤立的点是还没和别的页面连起来的论文。</p>
-<p><code>questions.md</code>
-里是三个问题。每个问题写成一个题目加一段摘要，摘要里给出预测的结果和数字，最后一行注明它从哪几页笔记里来。</p>
-<h2 id="讲10-分钟">讲，10 分钟</h2>
-<p><strong>先定名单，再拿全文。</strong> 让 Agent
-上网搜索论文，它会给你一些看起来很像真的题目和作者。名单要从文献接口来：arXiv
-和 OpenAlex 返回的是数据库里真实存在的记录，每条带 arXiv 编号或
-DOI，可以核对。名单定了再下载全文，每一篇都核对页数和首页题目。</p>
-<p><strong>浏览器是 Agent 的手。</strong>
-订阅论文要机构登录，有协议页、跳转和下载按钮。普通的命令行下载拿不到，或者拿到一个登录页。让
-Agent
-驱动一个你已登录的浏览器，它就能像你一样点进去下载。遇到真人验证，它停下来叫你，你点完它接着干。</p>
-<p><strong>一个对话读不了几十篇。</strong>
-对话越长，早先读的论文越模糊。把论文分给
-Sub-agent，每个只读三四篇，按同一个模板写笔记到文件，主对话只看笔记，不看原文。</p>
-<p><strong>知识库要能被你读。</strong> 笔记存成 Obsidian 里的 Markdown
-文件，你在 Obsidian 里读，Agent
-在文件夹里读写，两边看到的是同一份。每条结论写清原文页码，你随时能翻回去核对。</p>
-<h2 id="练习-1拿到十四篇全文15-分钟">练习 1：拿到十四篇全文，15
-分钟</h2>
-<pre class="text"><code>读 papers.md。arXiv 上的论文用 arXiv 接口下载 PDF；只在出版社网站上的，用 Ego 浏览器按 DOI 打开，下载全文。
-全部存到 vault/sources/，文件名用第一作者姓加年份。
-每个 PDF 核对两件事：页数大于零，首页或第二页上能找到论文题目里的词。对不上的，说明拿到的是什么。
-结果写进 vault/sources/manifest.csv：编号，题目，来源，文件名，页数，题目核对是否通过。
-遇到真人验证时停下来叫我；协议和同意页面可以点同意。</code></pre>
-<p>两篇出版社论文是这一段的重点：看 Ego 窗口里 Agent
-怎样自己点开图书馆登录，找到下载按钮。</p>
-<h2 id="练习-2并行读写成知识库20-分钟">练习 2：并行读，写成知识库，20
-分钟</h2>
-<pre class="text"><code>把 vault/sources/ 里的十四篇论文分成四组，每组交给一个 Sub-agent。
-每个 Sub-agent 只读自己那几篇，按 vault/templates/paper.md 的模板，每篇写一页笔记到 vault/papers/：
-研究的问题，实验设定，主要结果带数字，每条结论注明原文页码，和我们课题的关系一句话。
-Sub-agent 只返回写了哪些文件，不把笔记内容贴回来。
-全部写完后，你读所有笔记，建三到五个概念页到 vault/concepts/，每页一段综述，下面列出相关论文说了什么，用 [[双链]] 链回论文页。
-再写 vault/conflicts.md：哪两篇论文在什么设定下结论相反，各自的数字和页码。</code></pre>
-<p>写完后在 Obsidian 里抽两页笔记，按页码翻回原文，看数字对不对。</p>
-<h2 id="练习-3提三个能检验的问题10-分钟">练习 3：提三个能检验的问题，10
-分钟</h2>
-<p>开一个新对话，只给它知识库，不给它我们之前的对话：</p>
-<pre class="text"><code>只读 vault/ 下的概念页和 conflicts.md，以及 ../lesson-1/ 里的实验代码和结果，不读别的。
-提三个研究问题，每个都能用 ../lesson-1/code/run_experiment.py 改几行、在笔记本上一小时内检验。
-每个问题写成一个论文题目加一段摘要，摘要里写明预测的结果和数字，以及什么结果会推翻它。
-最后一行注明它来自哪几页笔记。存到 vault/questions.md。</code></pre>
-<p>然后在 Codex 里查新：</p>
-<pre class="text"><code>读 vault/questions.md 和 vault/papers/。逐个判断这三个问题是否已经被知识库里的某篇论文回答了；
-再用 OpenAlex 按关键词查一次，列出最接近的三篇论文和它们与这个问题的差别。不要改问题本身，结论写到 vault/novelty.md。</code></pre>
-<p>被查出已有答案的问题，回到 Claude 换一个。留下来的三个问题，第 3
-课会挑一个真的去跑。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<pre class="text"><code>读上一课 AGENTS.md，保留 Python 与 PDF 工具入口。
+检查已授权浏览器和 Obsidian，安装缺项并由我完成登录。
+用 Obsidian 打开本课 vault/，确认本机可读取一条 arXiv 或 OpenAlex 元数据。
+从 papers.md 取编号 2，5，11 的全文到 vault/sources/，先检查能打开和标题相符，不提前写论文页。
+确认当前 Agent 有独立助手入口；没有时记下，课堂改用三个独立新会话分工。
+把文件位置、可用入口和未解决项写到 preflight.md，不保存登录凭据。</code></pre>
+<p>开课前应能打开三份 PDF，空知识库和
+<code>preview/vault/</code>。原件的版本身份，关键数字与解释仍由课堂核查。</p>
+<p>若缺全文，提前说明缺哪一份。课堂先用包内实读笔记练证据组织，原件核查记为待补；课后拿到全文再完成对应检查。现场不等待登录页、下载队列或整批接口查询。</p>
+<h2 id="课上一小时">课上一小时</h2>
+<h3 id="查看分歧记录5-分钟">查看分歧记录，5 分钟</h3>
+<p>先看
+preflight.md，说明用自己的原件还是用预览演练，再进入同一条分歧。</p>
+<p>示例库的 <code>conflicts.md</code> 记录 SCE 与 GCE
+的排序反转，也保留了两篇论文各自的设置和页码。它没有把一切差异归到某一个原因：学习率和其他训练参数也变了。</p>
+<p>这张表提供一个实验入口。在同一实现里固定其他设置，只改日程，看看排序是否随之变化。相比摘要里一句性能优越，这个问题能直接决定下一项工作。</p>
+<h3 id="论文页概念页与问题页10-分钟">论文页、概念页与问题页，10
+分钟</h3>
+<p>论文页记录原作者在具体设置下观察到什么。概念页综合多篇论文，说明哪些认识已经相互支持，哪些依赖条件。问题页再提出你的解释，并写出能区分它与另一种解释的实验。</p>
+<p>三层用链接连接。原文观察、跨论文归纳和自己的推测各有身份，更新时就知道该动哪一层。一个概念页写得流畅，还需要逐条能追到论文页。</p>
+<h3 id="练习一核对三份原件10-分钟">练习一，核对三份原件，10 分钟</h3>
+<pre class="text"><code>从 papers.md 选编号 2，5，11，核对对应 PDF 的标题，作者与版本。
+保存到 vault/sources/，记录来源 URL，取得时间，SHA-256 和 PDF 页数。
+标明后面页码按 PDF 顺序页还是印刷页计。
+若缺全文，记录可用入口与当前原因，先用 preview/ 中对应笔记练习，不冒充已读全文。</code></pre>
+<p>同一篇论文的不同版本可以共存，记录各自身份。版本不同，表号和数字也可能不同。</p>
+<h3
+id="练习二分工阅读并建立证据表20-分钟">练习二，分工阅读并建立证据表，20
+分钟</h3>
+<pre class="text"><code>三篇论文分给独立阅读助手，每个只读指定文件，写一份论文页。
+每项结果记录设置，指标，数值与原文位置。原作者解释单独写，自己的推测另列。
+主会话抽查一条核心结果与一条方法条件，再合并为一个鲁棒损失概念页。
+把不能直接比较的条件列入 conflicts.md，说明需要怎样的同条件实验。</code></pre>
+<p>助手只交文件位置和未解决项。主会话遇到关键矛盾，回读相关原文。最后由一个会话负责合并概念页，避免多个写作者覆盖同一结论。</p>
+<h3
+id="练习三从分歧走到可检验问题10-分钟">练习三，从分歧走到可检验问题，10
+分钟</h3>
+<pre class="text"><code>只读当前知识库，提出一个研究问题。
+写两种竞争解释，分别预测哪项可测结果会不同。
+给出最小实验、主要指标和事前判据，注明来自哪些证据行。
+另请一个新会话先找最近的一项先例，分别比较问题与干预，再核对指标和结论，其余查新留到 2.3。
+存为 questions.md 和 novelty.md。</code></pre>
+<p>课堂结束时看一件事：若实验结果呈现 A 的预测，你会更新哪条认识；若呈现
+B
+的预测，又会更新哪条。两种结果都能更新知识库，问题就有继续做的价值。</p>
+<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>下载到的不是那篇论文。</strong>
-出版社的通用下载链接有时给的是版权协议表格、投稿检查表，甚至参考文献里的另一篇论文；慢的网站会给一个零页的残缺文件。文件名对，内容不对。每个
-PDF 都核对页数和首页题目，对不上就换来源：预印本，作者主页，机构库。</p>
+<p><strong>把设置不同的结果叫矛盾。</strong>
+先把比较单位对齐。暂时无法对齐的，记录为条件差异，再设计同条件实验。</p>
 </div>
 <div class="pitfall">
-<p><strong>把同意页当成验证码，或者反过来。</strong>
-登录途中弹出的隐私、cookie 和授权同意页，Agent
-可以自己点同意；真人验证和图片验证码才需要你。在任务卡里写清这条分工，它就不会每一页都停下来问你，也不会去硬闯验证码。</p>
+<p><strong>把笔记写成结论的二次来源。</strong>
+概念页保留通向原文的链，关键判断回读原文抽查。</p>
 </div>
 <div class="pitfall">
-<p><strong>一个对话读几十篇。</strong>
-读到第二十篇，前十篇已经记不清，概念页里会出现张冠李戴的数字。论文交给
-Sub-agent 分组读，笔记落成文件，主对话只读笔记。</p>
+<p><strong>让引用数决定全部阅读名单。</strong>
+先按问题覆盖方法与负结果，再看引用关系补漏，新工作另开一轮检索。</p>
 </div>
 <div class="pitfall">
-<p><strong>笔记没有页码。</strong>
-没有页码的结论没法核对，过一个月连你自己也不敢用。模板里把页码设成必填项。</p>
+<p><strong>查新后只说没有完全一样的工作。</strong>
+给出最近先例的逐项对照，说明新实验会多回答哪一问。</p>
 </div>
-<div class="pitfall">
-<p><strong>问题从对话里来，不从文献里来。</strong>
-你在同一个对话里聊过自己的想法，它提出的问题就会悄悄向你的想法靠拢，看起来都很好，其实是你说过的话。提问题用一个只读知识库的新对话，每个问题注明来自哪几页笔记。</p>
-</div>
-<div class="pitfall">
-<p><strong>名单收得太窄。</strong>
-一开始就让它只要最相关的五篇，后来发现漏了一条线，补起来比删多余的难得多。名单宁宽勿窄，读完再删。</p>
-</div>
-<div class="promo">
-<p><strong>在 AI 科学家里。</strong> <a
-href="https://github.com/liuguangrui-hit/ai-scientist">AI
-科学家</a>把读过的论文存成一片文献森林：每篇论文拆成设定、结果和主张，按时间截断，用早先的论文去预测后来论文的结果，猜得准的认识才算学会了。本课的知识库是它的一个小样，问题来自文献而不是来自对话，这条规矩也是从那里来的。</p>
-</div>
-<h2 id="工作台多了什么">工作台多了什么</h2>
+<h4 id="工作台小结">工作台小结</h4>
 <div class="bench">
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>Agent 因此能做的事</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ego 浏览器</td>
-<td>用你的登录状态打开出版社网站，下载订阅全文</td>
-</tr>
-<tr>
-<td>Obsidian</td>
-<td>你和它共用一个知识库，双链把论文和概念连起来</td>
-</tr>
-<tr>
-<td>文献接口</td>
-<td>按关键词和引用关系查真实存在的论文，带可核对的编号</td>
-</tr>
-<tr>
-<td>Sub-agent</td>
-<td>几十篇论文分组并行读，主对话不被原文塞满</td>
-</tr>
-</tbody>
-</table>
-<p>加上第 1 课装的工具，你的 Agent
-已经能自己找资料和读资料，也能写稿，画图，编译，再自己检查。下一课让它的实验离开你的笔记本，到服务器上跑。</p>
+<p>浏览器用于获取外部原件，文献接口提供可复查标识，Obsidian 让你与 Agent
+共读同一批文件，Sub-agent
+让独立阅读可以扩展。现在可追溯的单位是一条带设置的证据，下一课据此设计实验。</p>
 </div>
-<h2 id="换成你自己的方向">换成你自己的方向</h2>
-<p>挑一个你熟悉的小方向，让 Agent 先用 OpenAlex
-查近三年引用最多的二十篇，你删掉不相干的，再走一遍练习 1 到
-3。用你自己的判断去检验它提出的三个问题：哪个你愿意让学生去做，为什么。</p>
-<h2 id="课后深入">课后深入</h2>
+<h2 id="课后复习与拔高">课后复习与拔高</h2>
+<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
+<p>关掉概念页，画出课堂的一条证据链：从原件到论文页，再到概念页与问题页。凭记忆写每一步负责什么，再打开文件核对。抽一条结果回到原文，检查版本、页码和设置，补完课堂标为待核的项目，写入
+<code>review-after-class.md</code>。</p>
+<h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
+<p>甲笔记写两篇论文排名相反，所以机制互相否定。乙笔记把日程、噪声和选择轮次分别列出，提出固定其他设置只改日程的实验。判断两份笔记各能支持哪一层结论。再给乙增加一篇反例，沿链接列出哪些页面需要重新判断，哪些原文记录应当保留。</p>
+<details>
+<summary>
+写完更新清单，再看对照思路
+</summary>
+<p>甲把条件差异直接当成机制冲突。乙先记录观察，再提出可区分的解释。反例进入后，原件和历史观察保留，当前概念、竞争解释与实验问题按依赖关系复查；改了一个概念标题不算完成更新。</p>
+</details>
+<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
+<p>先把课堂三篇补成完整证据链，再选一条路径。扩到十四篇时沿用同一模板，在自己的方向上最后留下三个各有竞争解释和判别指标的问题。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -190,257 +147,218 @@ href="https://github.com/liuguangrui-hit/ai-scientist">AI
 </colgroup>
 <thead>
 <tr>
-<th>节</th>
-<th>内容</th>
-<th>时长</th>
+<th>路径</th>
+<th>接着解决什么</th>
+<th>交付</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="explore-fulltext.html">2.1 拿到全文</a></td>
-<td>文献接口怎么用；Ego 浏览器与机构登录；各类出版社的坑；下载核对</td>
-<td>30 分钟</td>
+<td><a href="explore-fulltext.html">2.1 文献获取</a></td>
+<td>45 分钟，比较预印本与正式版的一条结果</td>
+<td>两份身份记录与差异说明</td>
 </tr>
 <tr>
-<td><a href="explore-vault.html">2.2 知识库怎么搭</a></td>
-<td>文件夹结构与笔记模板；概念页和分歧表；新论文进来怎么合并</td>
-<td>30 分钟</td>
+<td><a href="explore-vault.html">2.2 知识库搭建</a></td>
+<td>55 分钟，用反例追踪一条认识怎样更新</td>
+<td>更新前后链接与受影响问题</td>
 </tr>
 <tr>
-<td><a href="explore-parallel.html">2.3 并行复筛与提问</a></td>
-<td>Sub-agent 什么时候用，任务怎么写；干净上下文提问；查新</td>
-<td>30 分钟</td>
+<td><a href="explore-parallel.html">2.3 并行复筛与选题</a></td>
+<td>50 分钟，用共同样本校准后扩展阅读</td>
+<td>复筛分歧、合并记录与近邻工作比较</td>
 </tr>
 </tbody>
 </table>
-<section id="要点" class="keypoints">
-<h2>要点</h2>
-<ul>
-<li>名单从文献接口来，全文用登录过的浏览器拿，每个 PDF
-核对页数和题目。</li>
-<li>几十篇论文交给 Sub-agent 分组读，笔记落成文件，每条结论带页码。</li>
-<li>知识库存成你也能读的 Markdown，分歧单独列表。</li>
-<li>提问题用只读知识库的新对话，每个问题写好预测，查新后再留。</li>
-</ul>
-</section>
 </article>
-<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip new">+ Ego browser</span><span class="chip new">+ Obsidian</span><span class="chip new">+ Literature APIs</span><span class="chip new">+ Sub-agents</span></div><h1 id="exploring-with-agents">2 Exploring with Agents</h1>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip new">+ Ego browser</span><span class="chip new">+ Obsidian</span><span class="chip new">+ Literature APIs</span><span class="chip new">+ Sub-agents</span></div><h1 id="research-knowledge-bases">2 Research knowledge bases</h1>
 <div class="goal">
-<p>In an hour you will have a knowledge base on learning with noisy
-labels: fourteen full papers, a page of notes for each, and a source
-page number for every claim. A few concept pages connect the papers, and
-a table lists their disagreements. You will also have three questions
-you can test with the small experiment from Session 1, each with a
-prediction written down.</p>
+<p>Turn a disagreement in the literature into a question you can test
+with an experiment. In class you build the evidence chain for three
+papers and write one research question with competing explanations;
+after class you extend to the fourteen papers in the materials list and
+develop three candidate questions.</p>
 </div>
-<p><span class="meta">Core class: 60 minutes. Self-study sections 2.1 to
-2.3 take about an hour and a half in total; read what you
-need.</span></p>
+<p><span class="meta">Prepare before class, spend 60 minutes in class,
+then review and choose an optional extension.</span></p>
+<div class="stage-nav">
+<p><a href="#before-class">Before class</a> · <a href="#in-class">In
+class</a> · <a href="#after-class">After class: review and
+extension</a></p>
+</div>
+<p>Two papers both compare robust losses under noisy labels, yet their
+rankings of the methods are reversed. An agent may reduce this to a
+vague summary: each has strengths and weaknesses. Research starts by
+asking further: were the data the same, was the learning-rate schedule
+the same, did they take the last epoch or the best one?</p>
+<p>You need a knowledge base that traces these questions back to the
+originals. The graph helps you find related material; the evidence table
+shows which conclusions it can support.</p>
 <div class="download">
-<p><a href="downloads/lesson-2-en.zip">Download the Session 2
+<p><a href="downloads/lesson-2-en.zip">Download the Lesson 2
 materials</a></p>
 </div>
-<p>The exercise centres on a paper list, <code>papers.md</code>: twelve
-papers on arXiv and two on publisher sites, where downloading the
-subscription content needs your library’s institutional login. There is
-also an empty knowledge base structure and a finished example. The topic
-follows Session 1: when training labels are wrong, the network learns
-patterns first, then memorizes errors. What can stop that second
-phase?</p>
-<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
-tools at the start: send the card in 1 minute</h2>
+<p><code>papers.md</code> lists fourteen papers whose identities have
+been checked. <code>preview/</code> is a sample knowledge base
+containing notes from six papers read in full, and it contains no
+restricted full texts. The class chooses three papers whose full texts
+you get before class; report anything missing in advance. The preview
+can be used to rehearse organizing evidence, with checks against the
+originals recorded as still to be done.</p>
+<h2 id="before-class">Before class</h2>
+<p><span class="meta">Allow 20 to 45 minutes; institutional login or
+full-text downloads may take longer, so check a day early.</span></p>
 <div class="install">
-<p><strong>This session’s hidden thread: let the agent find material and
-bring it back as a knowledge base you can read too.</strong> In Session
-1 the agent used only what you put in the folder. This session adds four
-things: a browser that signs in to publishers for it, a shared notes
-folder, APIs for paper metadata, and Sub-agents that split dozens of
-papers among assistants to read in parallel.</p>
+<p><strong>Before-class setup.</strong> Install the browser and
+Obsidian, complete the necessary logins, and download the three
+originals locally. How to check versions, split the reading and handle
+disagreements is left for class.</p>
 </div>
-<p>Open the <code>lesson-2</code> folder in Claude and send:</p>
-<pre class="text"><code>First read ../lesson-1/AGENTS.md and copy its tool instructions into this folder&#39;s AGENTS.md.
-This project also needs to get full papers online and save reading notes as an Obsidian knowledge base. Check and set up:
-1. The Ego Lite browser and its ego-browser Skill for agents, following https://lite.ego.app/;
-2. Obsidian, with vault/ under this folder opened as a vault;
-3. Access to the public arXiv and OpenAlex APIs: look up one paper with each and show me its title;
-4. A Sub-agent: have one read the first three lines of papers.md and report only how many papers it found, to show the parallel assistant works.
-Before installing, list what you plan to install and where, and wait for my OK. If I need to click something in a graphical interface, stop and tell me where to click.
-Then add a few lines to AGENTS.md: use APIs for paper metadata first, Ego for subscription full texts, and where in vault/ to write notes.</code></pre>
-<p>Once Ego is installed, open it and sign in to a publisher or library
-portal with your university library account. When the agent uses this
-browser later, it reuses your login; you do not need to tell it your
-password. On Windows you can use the Claude in Chrome extension instead
-of Ego. The idea is the same.</p>
-<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
-minutes</h2>
-<p>Open the example knowledge base under <code>preview/</code> in
-Obsidian. On the left are paper pages, one per paper. In the middle are
-concept pages, such as memorization, early stopping and robust losses.
-Each opens with a short overview, then lists what each paper says and
-links back to its page. <code>conflicts.md</code> is a table of pairs of
-papers that reach opposite results or recommend opposite approaches
-under their respective settings. Open the graph view: papers and
-concepts form a network. Isolated points are papers that have yet to be
-connected to other pages.</p>
-<p><code>questions.md</code> holds three questions. Each is a title and
-an abstract with predicted results and numbers. Its last line says which
-notes it came from.</p>
-<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
-<p><strong>Settle the list before getting the full texts.</strong> Ask
-an agent to search the web for papers and it may give you titles and
-authors that look real. Get the list from literature APIs: arXiv and
-OpenAlex return records that actually exist in a database, each with an
-arXiv ID or DOI you can check. Settle the list, then download the full
-texts. Check every paper’s page count and first-page title.</p>
-<p><strong>The browser is the agent’s hand.</strong> Subscription papers
-need an institutional login, with agreement pages, redirects and
-download buttons. A command-line download fails or returns a login page.
-Give the agent a browser you have signed in to, and it can click through
-and download as you would. At human verification, it stops and calls
-you. Once you click through, it continues.</p>
-<p><strong>One conversation cannot read dozens of papers.</strong> As it
-grows longer, the papers read early on become hazy. Split them among
-Sub-agents. Each reads three or four and writes notes to files using the
-same template. The main conversation reads only the notes, not the
-originals.</p>
-<p><strong>You need to be able to read the knowledge base.</strong>
-Notes are Markdown files in Obsidian. You read them in Obsidian; the
-agent reads and writes them in the folder. Both see the same files. Give
-each claim a source page number so you can check it at any time.</p>
-<h2 id="exercise-1-get-fourteen-full-texts-15-minutes">Exercise 1: get
-fourteen full texts, 15 minutes</h2>
-<pre class="text"><code>Read papers.md. For papers on arXiv, download PDFs through the arXiv API. For papers only on publisher sites, open their DOIs in Ego and download the full texts.
-Save everything to vault/sources/, using the first author&#39;s surname and the year as the filename.
-Check two things for each PDF: it has more than zero pages, and words from the paper&#39;s title appear on the first or second page. If it doesn&#39;t match, say what you downloaded instead.
-Write the results to vault/sources/manifest.csv: ID, title, source, filename, page count, and whether the title check passed.
-Stop and call me at human verification; you can accept agreement and consent pages.</code></pre>
-<p>The two publisher papers are the focus here: watch the Ego window as
-the agent opens the library login and finds the download button.</p>
-<h2
-id="exercise-2-read-in-parallel-and-build-a-knowledge-base-20-minutes">Exercise
-2: read in parallel and build a knowledge base, 20 minutes</h2>
-<pre class="text"><code>Split the fourteen papers in vault/sources/ into four groups, one per Sub-agent.
-Each Sub-agent reads only its assigned papers and uses vault/templates/paper.md to write one page of notes per paper to vault/papers/:
-the question, experimental setting, main results with numbers, a source page number for each claim, and one sentence on how it relates to our topic.
-Sub-agents return only the list of files they wrote, without pasting the notes back.
-Once all are done, read all the notes and create three to five concept pages in vault/concepts/. Each has one overview paragraph, then a list of what the relevant papers say, with [[wikilinks]] back to the paper pages.
-Also write vault/conflicts.md: which pairs of papers reach opposite conclusions under which settings, with each one&#39;s numbers and page numbers.</code></pre>
-<p>When it is done, pick two notes pages in Obsidian, turn to the cited
-pages in the papers, and check the numbers.</p>
-<h2 id="exercise-3-propose-three-testable-questions-10-minutes">Exercise
-3: propose three testable questions, 10 minutes</h2>
-<p>Start a new conversation. Give it only the knowledge base, not your
-earlier conversation:</p>
-<pre class="text"><code>Read only the concept pages and conflicts.md under vault/, and the experiment code and results in ../lesson-1/. Read nothing else.
-Propose three research questions. Each must be testable by changing a few lines in ../lesson-1/code/run_experiment.py and running it on a laptop within an hour.
-Write each as a paper title and an abstract. In the abstract, give predicted results and numbers, and say what result would refute it.
-On the last line, name the notes pages it came from. Save to vault/questions.md.</code></pre>
-<p>Then check novelty in Codex:</p>
-<pre class="text"><code>Read vault/questions.md and vault/papers/. For each question, judge whether a paper in the knowledge base has already answered it.
-Then search OpenAlex by keywords and list the three closest papers and how they differ from this question. Don&#39;t change the questions. Write your conclusions to vault/novelty.md.</code></pre>
-<p>If a question already has an answer, return to Claude and replace it.
-In Session 3 you will pick one of the three remaining questions and
-actually run it.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<pre class="text"><code>Read the previous lesson&#39;s AGENTS.md and keep the Python and PDF tool entries.
+Check the authorized browser and Obsidian, install what is missing, and let me do the logins.
+Open this lesson&#39;s vault/ in Obsidian and confirm this machine can read one arXiv or OpenAlex metadata record.
+Get the full texts of items 2, 5 and 11 in papers.md into vault/sources/. First check that they open and their titles match; do not write paper pages yet.
+Confirm whether the current agent has an entry for independent helpers; if not, note it, and in class we will split the work across three separate new sessions.
+Write file locations, available entry points and unresolved items into preflight.md. Do not save login credentials.</code></pre>
+<p>Before class you should be able to open the three PDFs, the empty
+knowledge base and <code>preview/vault/</code>. The version identity of
+the originals, key numbers and interpretations are still checked in
+class.</p>
+<p>If a full text is missing, say which one in advance. In class you
+first practice organizing evidence with the packaged reading notes,
+recording the check against the original as still to be done; after
+class, once you have the full text, finish the corresponding check. In
+class, nobody waits for login pages, download queues or bulk API
+queries.</p>
+<h2 id="in-class">In class</h2>
+<h3 id="documenting-a-disagreement-5-minutes">Documenting a
+disagreement, 5 minutes</h3>
+<p>First look at preflight.md and say whether you are using your own
+originals or rehearsing with the preview, then move to the same
+disagreement.</p>
+<p>The sample knowledge base’s <code>conflicts.md</code> records the
+reversed ranking of SCE and GCE and keeps each paper’s settings and page
+numbers. It does not attribute every difference to a single cause: the
+learning rate and other training parameters also changed.</p>
+<p>This table offers an entry point for an experiment. In one
+implementation, fix the other settings, change only the schedule, and
+see whether the ranking changes with it. Compared with “superior
+performance” in an abstract, this question directly decides the next
+piece of work.</p>
+<h3 id="separate-evidence-into-three-layers-10-minutes">Separate
+evidence into three layers, 10 minutes</h3>
+<p>A paper page records what the original authors observed under
+specific settings. A concept page synthesizes several papers,
+identifying conclusions supported across studies and those that depend
+on particular conditions. A question page then proposes your explanation
+and describes an experiment that can distinguish it from another
+explanation.</p>
+<p>The three layers are connected by links. Original observations,
+cross-paper generalizations and your own speculation are recorded
+separately, so when something is updated you know which layer to touch.
+A concept page that reads smoothly still has to trace back, line by
+line, to paper pages.</p>
+<h3 id="exercise-1-check-the-three-originals-10-minutes">Exercise 1:
+check the three originals, 10 minutes</h3>
+<pre class="text"><code>From papers.md, choose items 2, 5 and 11 and check the title, authors and version of each corresponding PDF.
+Save them to vault/sources/, recording the source URL, time obtained, SHA-256 and PDF page count.
+State whether later page numbers follow the PDF page order or the printed page numbers.
+If a full text is missing, record the available entry point and the current reason, and practice first with the corresponding note in preview/, without pretending the full text has been read.</code></pre>
+<p>Different versions of the same paper can coexist, each with its own
+recorded identity. When versions differ, table numbers and values may
+differ too.</p>
+<h3
+id="exercise-2-split-the-reading-and-build-the-evidence-table-20-minutes">Exercise
+2: split the reading and build the evidence table, 20 minutes</h3>
+<pre class="text"><code>Give the three papers to independent reading helpers. Each reads only its assigned file and writes one paper page.
+For each result, record the setting, metric, value and location in the original. Write the original authors&#39; explanation separately, and list my own speculation separately again.
+The main session spot-checks one core result and one method condition, then merges them into a single concept page on robust losses.
+List conditions that cannot be compared directly in conflicts.md, stating what experiment under matched conditions is needed.</code></pre>
+<p>Helpers hand in only file locations and unresolved items. When the
+main session meets a key contradiction, it rereads the relevant
+original. In the end one session is responsible for merging the concept
+page, so several writers do not overwrite the same conclusion.</p>
+<h3
+id="exercise-3-from-disagreement-to-a-testable-question-10-minutes">Exercise
+3: from disagreement to a testable question, 10 minutes</h3>
+<pre class="text"><code>Read only the current knowledge base and propose one research question.
+Write two competing explanations, and for each predict which measurable result would differ.
+Give the minimal experiment, the main metric and the criteria set in advance, noting which evidence rows they come from.
+Also ask a new session to find the single nearest precedent and compare it item by item on question, intervention, metric and conclusion; leave the rest of the novelty search for 2.3.
+Save as questions.md and novelty.md.</code></pre>
+<p>At the end of class, look at one thing: if the experiment shows A’s
+prediction, which conclusion would you update; if it shows B’s
+prediction, what would change? If either result would change the
+knowledge base, the question is worth pursuing.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+summary, 5 minutes</h3>
+<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h4>
 <div class="pitfall">
-<p><strong>The downloaded file is not the paper.</strong> A publisher’s
-generic download link sometimes returns a copyright form, submission
-checklist, or even another paper from the references. A slow site may
-return a broken file with zero pages. The filename is right but the
-content is wrong. Check each PDF’s page count and first-page title. If
-they don’t match, try a preprint, the author’s site or an institutional
-repository.</p>
+<p><strong>Calling results from different settings a
+contradiction.</strong> Align the unit of comparison first. What cannot
+be aligned yet is recorded as a difference in conditions, then design an
+experiment under matched conditions.</p>
 </div>
 <div class="pitfall">
-<p><strong>Treating consent as a CAPTCHA, or the reverse.</strong> The
-agent can accept privacy, cookie and authorization consent pages during
-login. Human verification and image CAPTCHAs need you. State this
-division in the task card so it does not stop at every page or try to
-force its way through a CAPTCHA.</p>
+<p><strong>Writing notes as a secondary source of conclusions.</strong>
+Concept pages keep the chain to the originals, and key judgments are
+spot-checked by rereading the original.</p>
 </div>
 <div class="pitfall">
-<p><strong>Reading dozens of papers in one conversation.</strong> By
-paper twenty, the first ten are hazy, and concept pages start
-attributing numbers to the wrong papers. Have Sub-agents read groups of
-papers and save notes to files. The main conversation reads only the
-notes.</p>
+<p><strong>Letting citation counts decide the whole reading
+list.</strong> First cover methods and negative results by question,
+then fill gaps through citation relations, and run a separate search for
+new work.</p>
 </div>
 <div class="pitfall">
-<p><strong>Notes without page numbers.</strong> A claim without a page
-number cannot be checked. A month later, even you will hesitate to use
-it. Make page numbers a required template field.</p>
+<p><strong>Saying only “no identical work exists” after a novelty
+search.</strong> Give an item-by-item comparison with the nearest
+precedent and say which extra question the new experiment answers.</p>
 </div>
-<div class="pitfall">
-<p><strong>Questions come from the conversation instead of the
-literature.</strong> If you discussed your ideas in the same
-conversation, the agent’s questions drift toward them. They look good,
-but they are things you already said. Propose questions in a new
-conversation that reads only the knowledge base, and name the notes
-pages each question came from.</p>
-</div>
-<div class="pitfall">
-<p><strong>The list is too narrow.</strong> Ask for only the five most
-relevant papers at the start, and later you find a whole line of work
-missing. Filling gaps is harder than removing extras. Start broad and
-cut after reading.</p>
-</div>
-<div class="promo">
-<p><strong>Inside the AI Scientist.</strong> The <a
-href="https://github.com/liuguangrui-hit/ai-scientist">AI Scientist</a>
-stores papers it has read as a literature forest. Each paper is broken
-into settings, results and claims. With a time cutoff, it uses earlier
-papers to predict later results; only insights that predict correctly
-count as learned. This session’s knowledge base is a small version of
-that. The rule that questions come from literature rather than
-conversation comes from there too.</p>
-</div>
-<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<h4 id="workbench-summary">Workbench summary</h4>
 <div class="bench">
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Tool</th>
-<th>What it lets the agent do</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ego browser</td>
-<td>Open publisher sites with your login and download subscription full
-texts</td>
-</tr>
-<tr>
-<td>Obsidian</td>
-<td>Share a knowledge base with you, with wikilinks connecting papers
-and concepts</td>
-</tr>
-<tr>
-<td>Literature APIs</td>
-<td>Find real papers by keywords and citations, with IDs you can
-check</td>
-</tr>
-<tr>
-<td>Sub-agent</td>
-<td>Read dozens of papers in groups in parallel, without filling the
-main conversation with originals</td>
-</tr>
-</tbody>
-</table>
-<p>With the tools from Session 1, your agent can now find and read
-material, write a paper, draw figures, compile, and check the pages
-itself. Next session, its experiments leave your laptop and run on a
-server.</p>
+<p>The browser connects you to external originals, literature APIs leave
+identifiers that can be rechecked, Obsidian lets you and the agent read
+the same files, and Sub-agents let independent reading scale. The
+traceable unit is now a piece of evidence with its setting, and the next
+lesson turns it into an experiment.</p>
 </div>
-<h2 id="now-with-your-own-direction">Now with your own direction</h2>
-<p>Pick a small direction you know. Have the agent use OpenAlex to find
-the twenty most-cited papers from the last three years. Remove the
-irrelevant ones, then repeat exercises 1 to 3. Use your own judgment to
-assess its three questions: which would you give a student, and why?</p>
-<h2 id="self-study-sections">Self-study sections</h2>
+<h2 id="after-class">After class: review and extension</h2>
+<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
+<p>Close the concept page and draw one evidence chain from class: from
+the original to the paper page, then to the concept page and the
+question page. From memory, write what each step is responsible for,
+then open the files and check. Take one result back to the original,
+check the version, page and setting, finish the items marked as pending
+in class, and write it all into <code>review-after-class.md</code>.</p>
+<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
+minutes</h3>
+<p>Note A says the two papers rank the methods in opposite order, so the
+papers’ proposed mechanisms contradict each other. Note B lists the
+schedule, the noise and the selected epoch separately, and proposes an
+experiment that fixes the other settings and changes only the schedule.
+Judge which level of conclusion each note can support. Then add a
+counterexample paper to B, and following the links, list which pages
+need to be judged again and which records of the originals should be
+kept.</p>
+<details>
+<summary>
+Write your update list first, then see the comparison notes
+</summary>
+<p>A treats a difference in conditions directly as a conflict between
+mechanisms. B records observations first, then proposes explanations
+that can be told apart. When the counterexample comes in, the originals
+and past observations are kept, and the current synthesis, competing
+explanations and experiment questions are rechecked along their
+dependencies; changing one concept title does not count as finishing the
+update.</p>
+</details>
+<h3 id="further-study">Further study</h3>
+<p>First complete the evidence chain for the three class papers, then
+choose one path. When extending to fourteen papers, use the same
+template, and in your own field end with three questions, each with
+competing explanations and a discriminating metric.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -449,50 +367,36 @@ assess its three questions: which would you give a student, and why?</p>
 </colgroup>
 <thead>
 <tr>
-<th>Section</th>
-<th>Content</th>
-<th>Time</th>
+<th>Path</th>
+<th>Next task</th>
+<th>Deliverable</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="explore-fulltext.html">2.1 Getting the full text</a></td>
-<td>Literature APIs; Ego and institutional login; publisher pitfalls;
-checking downloads</td>
-<td>30 minutes</td>
+<td><a href="explore-fulltext.html">2.1 Finding full texts</a></td>
+<td>45 minutes: compare one result between the preprint and the
+published version</td>
+<td>Two identity records and a note on the differences</td>
 </tr>
 <tr>
-<td><a href="explore-vault.html">2.2 Building the knowledge
-base</a></td>
-<td>Folder structure and note templates; concept pages and conflict
-tables; merging new papers</td>
-<td>30 minutes</td>
+<td><a href="explore-vault.html">2.2 Building a knowledge base</a></td>
+<td>55 minutes: use a counterexample to trace how one understanding is
+updated</td>
+<td>Links before and after the update, and the affected questions</td>
 </tr>
 <tr>
-<td><a href="explore-parallel.html">2.3 Parallel screening and
+<td><a href="explore-parallel.html">2.3 Parallel screening and research
 questions</a></td>
-<td>When to use Sub-agents and how to write their tasks; questions with
-a fresh context; novelty checks</td>
-<td>30 minutes</td>
+<td>50 minutes: calibrate on a shared sample, then extend the
+reading</td>
+<td>Rescreening disagreements, merge record and a comparison with
+closely related work</td>
 </tr>
 </tbody>
 </table>
-<section id="key-points" class="keypoints">
-<h2>Key points</h2>
-<ul>
-<li>Get the list from literature APIs and full texts through a browser
-you have signed in to. Check each PDF’s page count and title.</li>
-<li>Split dozens of papers among Sub-agents; save notes as files and
-give every claim a page number.</li>
-<li>Use Markdown you can read for the knowledge base, and list
-disagreements separately.</li>
-<li>Propose questions in a new conversation that reads only the
-knowledge base. Write a prediction for each, and keep them after
-checking novelty.</li>
-</ul>
-</section>
 </article>
-<nav class="pager"><a class="prev" href="writing-submit.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.6 引用与投稿</span><span lang="en">1.6 References and submission</span></a><a class="next" href="explore-fulltext.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.1 拿到全文</span><span lang="en">2.1 Getting the full text</span></a></nav>
+<nav class="pager"><a class="prev" href="writing-submit.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.6 文献引用与刊会投稿</span><span lang="en">1.6 Citations and submission</span></a><a class="next" href="explore-fulltext.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.1 文献获取</span><span lang="en">2.1 Finding full texts</span></a></nav>
 </main>
 </div>
 </body>

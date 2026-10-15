@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>知识库怎么搭 · 用 Agent 做科研</title>
+<title>知识库搭建 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,253 +17,190 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">拿到全文</span><span lang="en">Getting the full text</span></a>
-<a href="explore-vault.html" class="cur sub"><span class="num">2.2</span><span lang="zh">知识库怎么搭</span><span lang="en">Building the knowledge base</span></a>
-<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与提问</span><span lang="en">Parallel screening and questions</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="explore-fulltext.html" class="sub"><span class="num">2.1</span><span lang="zh">文献获取</span><span lang="en">Finding full texts</span></a>
+<a href="explore-vault.html" class="cur sub"><span class="num">2.2</span><span lang="zh">知识库搭建</span><span lang="en">Building a knowledge base</span></a>
+<a href="explore-parallel.html" class="sub"><span class="num">2.3</span><span lang="zh">并行复筛与选题</span><span lang="en">Parallel screening and research questions</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="知识库怎么搭">2.2 知识库怎么搭</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>知识库的用处是让下一次提问站在这一次的阅读上。它要同时满足两个读者：你，在
-Obsidian 里翻；Agent，在文件夹里读写。两边读的是同一批 Markdown
-文件，所以结构要简单到两边都不会走错。</p>
-<h2 id="文件夹结构">文件夹结构</h2>
+<article lang="zh"><h1 id="知识库搭建">2.2 知识库搭建</h1>
+<p><span class="meta">课后深入，约 55 分钟。</span></p>
+<p>一篇新论文推翻了你原来的理解。知识库里哪些页面应该变化？若答案只是再加一篇笔记，它还只是阅读档案。</p>
+<h2 id="从一条观察开始">从一条观察开始</h2>
+<p>论文页中的每条结果给一个稳定标识。内容写清研究对象与干预、比较项与指标，并注明出处。作者的解释与结果分开，自己的解释再单列。</p>
+<pre class="text"><code>E01
+对象与条件：数据集，模型，训练与选择规则
+干预与比较：具体改变了什么，其余怎样一致
+观察：指标与数值，重复单位和不确定性
+出处：文件版本，PDF 顺序页，表号或段落
+解释：作者怎样解释，证据支持到哪一步</code></pre>
+<p>同一个结果在三个段落里出现，仍是一条证据。三篇论文复用同一个数据集，也要记录依赖关系，避免把相关证据当成三次独立重复。</p>
+<h2 id="概念页的综合与更新">概念页的综合与更新</h2>
+<p>概念页开头用几句话说当前认识，后面给支撑和反例，链接到论文页的证据标识。读者应当看得出这段综合依赖哪些观察。</p>
+<p>当多篇结果表面相反，按条件分层：噪声模型、训练预算与选择规则是否相同。无法统一时保留两种解释，再写一个能区分它们的问题。</p>
+<pre class="text"><code>新增论文进入后，先列它改变了概念页哪句话。
+同方向的新证据合入对应位置，条件不同的补条件差异，反方向的进入分歧表。
+更新开头的综合，使它覆盖现有证据。保留修改原因与来源。</code></pre>
+<h2 id="分歧怎样变成实验">分歧怎样变成实验</h2>
+<p>示例库的排序反转涉及多处训练设置。知识库先记录两个观察，再提出竞争解释：优化日程改变方法行为，或模型选择方式造成表面差别。</p>
+<p>实验可以形成一个二维设计。横向改优化日程，纵向改选轮次规则，其他设置保持一致。若只在一个轴变化时反转，下一步就围绕这个轴继续检验。</p>
+<p>这一步把知识库从材料集合变成研究依据。每个新问题都应说明它要解决哪一处不确定性。</p>
+<h2 id="反例与依赖更新">反例与依赖更新</h2>
+<p>给一条证据加入新状态，例如待复核或被新版本替代。沿链接列出受影响的概念页和问题。先处理核心主张直接依赖的部分，再处理展示页。</p>
+<p>可以让 Agent
+生成受影响清单，但由一个合并者更新共享综述。已经完成的实验保留当时问题与预测，后来的反例只追加更新说明，历史不重写。</p>
+<pre class="text"><code>把 E01 标为待复核，找出引用它的概念和问题。
+逐项判断：结论仍有其他独立证据、需要补一项实验，或当前无法继续使用。
+保存影响清单，再按清单更新，不改原件与旧实验预测。</code></pre>
+<h2 id="文件夹保持简单">文件夹保持简单</h2>
 <pre class="text"><code>vault/
-├── sources/        PDF 原件和 manifest.csv，只增不改
-├── papers/         一篇论文一页笔记
-├── concepts/       概念页，把论文连起来
-├── templates/      笔记模板
-├── conflicts.md    论文之间的分歧
-└── questions.md    从知识库里提出的问题</code></pre>
-<p>在 <code>AGENTS.md</code>
-里写清这几条：原件只增不改；论文页一篇一页，文件名和 PDF
-对应；结论必须带页码；概念页只引用论文页，不直接引用 PDF。</p>
-<h2 id="论文页模板">论文页模板</h2>
-<pre class="text"><code>---
-title: A Closer Look at Memorization in Deep Networks
-authors: Arpit et al.
-year: 2017
-source: sources/arpit2017.pdf   # 相对 vault/ 根目录
----
-## 问题
-## 设定
-## 主要结果
-- 结论一句话，数字。p. 页码
-## 和本课题的关系</code></pre>
-<p>模板固定，Sub-agent
-写出来的笔记格式就统一，后面合并和检索都省事。页码那一项最重要：没有页码的结论，过后很难复核。</p>
-<h2 id="概念页">概念页</h2>
-<p>论文页回答这篇论文说了什么，概念页回答关于这件事，现在知道什么。一页概念页的样子：</p>
-<pre class="text"><code># 早停
-
-一段综述：带噪标签下，网络在前几轮先拟合干净样本，之后才开始记住错误标签，所以按验证准确率选停止点，有望停在记住错误标签之前。
-分歧在于验证集本身也带噪声时这个办法还灵不灵。
-
-- [[arpit2017]]：先学规律后记噪声。
-- [[liu2020]]：早期学习正则化，不靠停止点也能挡住记忆。
-- ...</code></pre>
-<p>概念页的数量要少。三五个概念把十几篇论文连起来，比三十个概念各挂一篇论文有用。在
-Obsidian 的关系图里，孤立的论文就是还没想清它和谁有关的论文。</p>
-<h2 id="分歧表">分歧表</h2>
-<p>分歧是知识库里最值钱的部分，好问题大多从这里来。单独存一张表：</p>
-<table>
-<thead>
-<tr>
-<th>论文 A</th>
-<th>论文 B</th>
-<th>在什么设定下</th>
-<th>A 说</th>
-<th>B 说</th>
-<th>可能的原因</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-<p>可能的原因一栏让 Agent 填它的猜测，并标明是猜测。第 3
-课挑问题时，先看这张表。</p>
-<h2 id="新论文进来">新论文进来</h2>
-<p>知识库会长大。每加一篇论文：</p>
-<pre class="text"><code>读 vault/papers/新论文.md。它和哪几个概念页有关？把它的结论合并进去：
-如果它说的和已有内容一致，在已有条目后补一个链接，不重复写；如果是新内容，加一条；如果冲突，写进 conflicts.md。
-不要在概念页末尾追加一段关于这篇论文的总结。</code></pre>
-<p>最后一句针对一个常见毛病：Agent
-喜欢在末尾追加，几十篇之后概念页变成论文摘要的流水账。合并的要求是改写已有的综述，让它同时覆盖旧的和新的，并且不比原来长多少。</p>
-<h2 id="用-obsidian-读">用 Obsidian 读</h2>
-<p>Obsidian
-是免费的桌面应用，打开一个文件夹就是一个库。课上用到的只有三样：</p>
-<ul>
-<li>双链：<code>[[文件名]]</code>
-跳到另一页，打开反向链接面板能看到谁链接了这一页。</li>
-<li>关系图：看哪些论文和概念连在一起，哪些孤立。</li>
-<li>搜索：全文搜一个词，比如一个数据集名，看哪些论文用过。</li>
-</ul>
-<p>插件很多，课上不需要。Agent 不依赖 Obsidian 本身，它只读写文件；关掉
-Obsidian 也照样工作。</p>
+  sources/       原件及文件清单
+  papers/        带证据标识的论文页
+  concepts/      当前综合与分歧
+  questions.md   带来源的问题
+  updates/       影响清单和更新原因</code></pre>
+<p>Obsidian 的双链适合浏览，普通 Markdown
+链接适合稳定交付。文件移动后查引用，证据标识保持稳定。关系图用来发现孤立材料，不能单凭节点多就判断认识更完整。</p>
 <h2 id="练习">练习</h2>
-<p>往练习 2
-的知识库里加两篇你自己挑的论文，按上面的合并任务卡更新概念页。比较更新前后的概念页，看它是改写了综述还是在末尾追加。</p>
+<p>选概念页中的一条重要判断，给它添加一篇反方向论文。交出三个文件：新证据页，更新后的概念页，受影响问题清单。请同学只看清单，检查是否能指出哪项实验应当先补。</p>
 <details>
 <summary>
-如果它还是在末尾追加
+检查标准
 </summary>
-<p>在任务卡里给一个长度上限，比如综述段不超过一百五十字，并要求它先说明这篇论文改变了综述的哪一句。改不动综述的论文，只补链接。</p>
+<p>综合段发生了有理由的变化；旧证据仍能追溯；新增解释写明是推测；问题清单能指出补证办法。四项都完成，更新才落实到研究决策。</p>
 </details>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>概念页变成流水账。</strong>
-每篇论文在末尾追加一段，几十篇后没人读得下去。合并就是改写综述，不是追加。</p>
+<p><strong>把推测写成论文发现。</strong>
+用独立字段记录观察、作者解释与自己的解释。</p>
 </div>
 <div class="pitfall">
-<p><strong>概念太多。</strong>
-每篇论文造两三个新概念，关系图里全是孤点。先用已有概念，实在装不下再新建。</p>
+<p><strong>每篇新论文都追加到概念页末尾。</strong>
+先说它改变哪句话，再重写综合，来源链接留在对应位置。</p>
 </div>
 <div class="pitfall">
-<p><strong>直接改原件。</strong> Agent 在 PDF
-旁边写了一个同名笔记，或者为了提取文字把 PDF
-转换覆盖了。原件只增不改，写进 <code>AGENTS.md</code>。</p>
+<p><strong>只更新笔记，没有更新依赖它的问题。</strong>
+维护受影响清单，按主张依赖查到实验入口。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://help.obsidian.md/">Obsidian 帮助文档</a></li>
-</ul>
+<p><a href="https://help.obsidian.md/">Obsidian
+官方帮助</a>中的双链与反向链接，可用来查找谁正在引用一条证据。</p>
 </article>
-<article lang="en"><h1 id="building-the-knowledge-base">2.2 Building the knowledge
-base</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>A knowledge base lets your next question build on what you read this
-time. It serves two readers: you, browsing in Obsidian, and the agent,
-reading and writing in the folder. Both read the same Markdown files, so
-the structure needs to be simple enough for neither to get lost.</p>
-<h2 id="folder-structure">Folder structure</h2>
+<article lang="en"><h1 id="building-a-knowledge-base">2.2 Building a knowledge base</h1>
+<p><span class="meta">After-class deep dive, about 55
+minutes.</span></p>
+<p>A new paper overturns your earlier understanding. Which pages in the
+knowledge base should change? If the answer is only “add one more note”,
+it is still just a reading archive.</p>
+<h2 id="start-from-one-observation">Start from one observation</h2>
+<p>Give each result on a paper page a stable identifier. Its content
+states the object of study, the intervention, the comparison, the metric
+and the source. The authors’ explanation is kept apart from the result,
+and your own explanation is listed separately again.</p>
+<pre class="text"><code>E01
+Object and conditions: dataset, model, training and selection rules
+Intervention and comparison: what exactly changed, and how everything else was kept the same
+Observation: metric and value, unit of replication and uncertainty
+Source: file version, PDF page in sequence, table number or paragraph
+Explanation: how the authors explain it, and how far the evidence supports it</code></pre>
+<p>A result that appears in three paragraphs is still one piece of
+evidence. When three papers reuse the same dataset, record that
+dependence as well, so related evidence is not counted as three
+independent replications.</p>
+<h2 id="concept-pages-hold-the-current-understanding">Concept pages hold
+the current understanding</h2>
+<p>A concept page opens with a few sentences on the current
+understanding, followed by support and counterexamples, linked to the
+evidence identifiers on paper pages. Readers should be able to see which
+observations the synthesis depends on.</p>
+<p>When several results appear to point in opposite directions, stratify
+by condition: are the noise model, training budget and selection rule
+the same? When they cannot be reconciled, keep both explanations, then
+write a question that can tell them apart.</p>
+<pre class="text"><code>When a new paper comes in, first list which sentence of the concept page it changes.
+New evidence in the same direction goes in the corresponding place; evidence under different conditions adds a condition difference; evidence in the opposite direction goes into the disagreement table.
+Update the opening synthesis so it covers the existing evidence. Keep the reason for the change and its source.</code></pre>
+<h2 id="how-a-disagreement-becomes-an-experiment">How a disagreement
+becomes an experiment</h2>
+<p>The ranking reversal in the sample knowledge base involves several
+training settings. The knowledge base first records the two
+observations, then proposes competing explanations: the optimization
+schedule changes how the methods behave, or the way models are selected
+creates an apparent difference.</p>
+<p>Use a two-factor design: vary the optimization schedule along one
+axis and the epoch-selection rule along the other, keeping all other
+settings fixed. If the reversal appears only when one axis changes, the
+next step keeps testing along that axis.</p>
+<p>This step turns the knowledge base from a collection of material into
+a basis for research. Every new question can point to the uncertainty it
+is resolving.</p>
+<h2 id="propagate-updates-from-counterexamples">Propagate updates from
+counterexamples</h2>
+<p>Give a piece of evidence a new status, such as pending recheck or
+superseded by a new version. Following the links, list the affected
+concept pages and questions. First address the evidence on which core
+claims depend directly, then the display pages.</p>
+<p>You can let the agent generate the list of affected items, but one
+editor updates the shared synthesis. Completed experiments keep the
+question and prediction of the time; later counterexamples only append
+an update note, and history is not rewritten.</p>
+<pre class="text"><code>Mark E01 as pending recheck and find the concepts and questions that cite it.
+Judge each: the conclusion still has other independent evidence, it needs one more experiment, or it cannot be used for now.
+Save the impact list, then update according to the list, without changing originals or old experiment predictions.</code></pre>
+<h2 id="keep-the-folders-simple">Keep the folders simple</h2>
 <pre class="text"><code>vault/
-├── sources/        Original PDFs and manifest.csv; add, never change
-├── papers/         One page of notes per paper
-├── concepts/       Concept pages connecting papers
-├── templates/      Note templates
-├── conflicts.md    Disagreements between papers
-└── questions.md    Questions drawn from the knowledge base</code></pre>
-<p>Put these rules in <code>AGENTS.md</code>: add originals, never
-change them; one page per paper, with a filename matching the PDF; every
-claim needs a page number; concept pages cite paper pages, not PDFs
-directly.</p>
-<h2 id="paper-page-template">Paper page template</h2>
-<pre class="text"><code>---
-title: A Closer Look at Memorization in Deep Networks
-authors: Arpit et al.
-year: 2017
-source: sources/arpit2017.pdf   # Relative to the vault/ root
----
-## Question
-## Setting
-## Main results
-- One-sentence conclusion, number. p. page number
-## Relation to this topic</code></pre>
-<p>A fixed template keeps Sub-agents’ notes consistent and makes merging
-and searching easier. Page numbers matter most: a claim without one is
-hard to check later.</p>
-<h2 id="concept-pages">Concept pages</h2>
-<p>A paper page answers what this paper says. A concept page answers
-what we now know about this subject. An example:</p>
-<pre class="text"><code># Early stopping
-
-Overview: with noisy labels, networks fit clean samples in the first few epochs, then start memorizing wrong labels. Choosing a stopping point by validation accuracy may stop them before that memorization.
-The disagreement is whether this still works when the validation set is noisy too.
-
-- [[arpit2017]]: learns patterns before memorizing noise.
-- [[liu2020]]: early-learning regularization can block memorization without a stopping point.
-- ...</code></pre>
-<p>Keep concept pages few. Three to five concepts connecting a dozen
-papers are more useful than thirty concepts with one paper each. In
-Obsidian’s graph view, an isolated paper is one whose connections you
-have yet to work out.</p>
-<h2 id="conflict-table">Conflict table</h2>
-<p>Disagreements are the most valuable part of the knowledge base. Most
-good questions come from them. Keep a separate table:</p>
-<table>
-<thead>
-<tr>
-<th>Paper A</th>
-<th>Paper B</th>
-<th>Setting</th>
-<th>A says</th>
-<th>B says</th>
-<th>Possible reason</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-<p>Have the agent put its guesses in the possible reason column and mark
-them as guesses. Start with this table when choosing a question in
-Session 3.</p>
-<h2 id="when-a-new-paper-arrives">When a new paper arrives</h2>
-<p>The knowledge base grows. Each time you add a paper:</p>
-<pre class="text"><code>Read vault/papers/new-paper.md. Which concept pages does it relate to? Merge its conclusions into them:
-If it agrees with existing content, add a link to the existing entry without repeating it. If it adds something new, add an entry. If it conflicts, record that in conflicts.md.
-Don&#39;t append a summary of this paper to the end of a concept page.</code></pre>
-<p>The last line addresses a common habit: agents like appending, and
-after dozens of papers a concept page becomes a list of abstracts.
-Merging means rewriting the existing overview to cover both old and new
-work without making it much longer.</p>
-<h2 id="reading-with-obsidian">Reading with Obsidian</h2>
-<p>Obsidian is a free desktop app. Open a folder and it becomes a vault.
-The class uses only three features:</p>
-<ul>
-<li>Wikilinks: <code>[[filename]]</code> jumps to another page. The
-backlinks panel shows who links to this page.</li>
-<li>Graph view: see which papers and concepts connect, and which are
-isolated.</li>
-<li>Search: search all text for a term, such as a dataset name, to see
-which papers used it.</li>
-</ul>
-<p>There are many plugins, but you do not need them for class. The agent
-does not depend on Obsidian itself; it just reads and writes files. It
-works with Obsidian closed too.</p>
+  sources/       originals and the file list
+  papers/        paper pages with evidence identifiers
+  concepts/      current synthesis and disagreements
+  questions.md   questions with their sources
+  updates/       impact lists and reasons for updates</code></pre>
+<p>Obsidian’s wikilinks are good for browsing; plain Markdown links are
+good for stable delivery. After moving files, check references, and keep
+evidence identifiers stable. Use the graph view to find isolated
+material; more nodes alone do not mean the understanding is more
+complete.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Add two papers you choose to the knowledge base from Exercise 2.
-Update the concept pages with the merge task card above. Compare the
-pages before and after: did it rewrite the overview or append to the
-end?</p>
+<p>Pick one important judgment on a concept page and add a paper
+pointing the other way. Hand in three files: the new evidence page, the
+updated concept page and the list of affected questions. Have a
+classmate look only at the list and check whether it shows which
+experiment should be added first.</p>
 <details>
 <summary>
-If it still appends to the end
+Checking criteria
 </summary>
-<p>Give a length limit in the task card, such as an overview paragraph
-of at most 150 characters, and ask it to say first which sentence the
-new paper changes. If a paper does not change the overview, add only a
-link.</p>
+<p>The synthesis changed for a stated reason; old evidence can still be
+traced; new explanations are marked as speculation; the question list
+shows how to add evidence. All four are needed for the update to inform
+research decisions.</p>
 </details>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Concept pages become a running list.</strong> A paragraph
-appended for every paper becomes unreadable after dozens. Merging means
-rewriting the overview, not appending.</p>
+<p><strong>Writing speculation as a paper’s finding.</strong> Use
+separate fields for the observation, the authors’ explanation and your
+own explanation.</p>
 </div>
 <div class="pitfall">
-<p><strong>Too many concepts.</strong> Two or three new concepts per
-paper leave the graph full of isolated points. Use existing concepts
-first; create a new one only when they do not fit.</p>
+<p><strong>Appending every new paper to the end of the concept
+page.</strong> First say which sentence it changes, then rewrite the
+synthesis, with source links in the right places.</p>
 </div>
 <div class="pitfall">
-<p><strong>Changing originals.</strong> The agent writes a note with the
-same name beside a PDF, or overwrites the PDF while converting it to
-extract text. Add originals, never change them. Put this in
-<code>AGENTS.md</code>.</p>
+<p><strong>Updating the notes but not the questions that depend on
+them.</strong> Maintain the list of affected items and follow claim
+dependencies through to the experimental plan.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://help.obsidian.md/">Obsidian help</a></li>
-</ul>
+<p>Wikilinks and backlinks in <a
+href="https://help.obsidian.md/">Obsidian’s official help</a> can be
+used to find what is citing a piece of evidence.</p>
 </article>
-<nav class="pager"><a class="prev" href="explore-fulltext.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.1 拿到全文</span><span lang="en">2.1 Getting the full text</span></a><a class="next" href="explore-parallel.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.3 并行复筛与提问</span><span lang="en">2.3 Parallel screening and questions</span></a></nav>
+<nav class="pager"><a class="prev" href="explore-fulltext.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">2.1 文献获取</span><span lang="en">2.1 Finding full texts</span></a><a class="next" href="explore-parallel.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">2.3 并行复筛与选题</span><span lang="en">2.3 Parallel screening and research questions</span></a></nav>
 </main>
 </div>
 </body>

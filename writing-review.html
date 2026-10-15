@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>审稿与返修 · 用 Agent 做科研</title>
+<title>审稿返修 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,280 +17,170 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文的讲法</span><span lang="en">How a paper is told</span></a>
-<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数字从数据来</span><span lang="en">Numbers come from data</span></a>
-<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">数据图</span><span lang="en">Data figures</span></a>
-<a href="writing-review.html" class="cur sub"><span class="num">1.4</span><span lang="zh">审稿与返修</span><span lang="en">Review and revision</span></a>
-<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">把做法留下来</span><span lang="en">Keeping the method</span></a>
-<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">引用与投稿</span><span lang="en">References and submission</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="writing-story.html" class="sub"><span class="num">1.1</span><span lang="zh">论文表达</span><span lang="en">Structuring a paper</span></a>
+<a href="writing-numbers.html" class="sub"><span class="num">1.2</span><span lang="zh">数据核查</span><span lang="en">Checking the numbers</span></a>
+<a href="writing-figures.html" class="sub"><span class="num">1.3</span><span lang="zh">结果绘图</span><span lang="en">Plotting results</span></a>
+<a href="writing-review.html" class="cur sub"><span class="num">1.4</span><span lang="zh">审稿返修</span><span lang="en">Peer review and revision</span></a>
+<a href="writing-skills.html" class="sub"><span class="num">1.5</span><span lang="zh">经验留档</span><span lang="en">Reusable methods</span></a>
+<a href="writing-submit.html" class="sub"><span class="num">1.6</span><span lang="zh">文献引用与刊会投稿</span><span lang="en">Citations and submission</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="审稿与返修">1.4 审稿与返修</h1>
-<p><span class="meta">课后深入，约 30 分钟。需要 Claude 和 Codex
-两家。</span></p>
-<p>请别人审稿的价值在于他和你看问题的角度不同。两个 Agent
-之间也是这样：同一个模型写完再审，它会认同自己的每一个选择。这一节讲怎样安排一次真正有用的
-Agent 审稿，以及拿到意见后怎样改。</p>
-<h2 id="为什么要跨厂商">为什么要跨厂商</h2>
-<p>同一家的模型训练数据和偏好相近，写出来的句子在它看来都顺。Claude
-写、Claude 审，常见的结果是挑出几个错别字，然后说整体很好。换成 Codex
-审，它对 Claude 的措辞习惯没有那么宽容，反过来也一样。</p>
-<p>安排很简单：两家的桌面应用打开同一个文件夹，一家写，一家审，意见通过文件交接。不需要复制粘贴，也不需要让它们直接对话。第
-4 课会讲怎样用命令行让这一步自动发生。</p>
-<h2 id="审稿指令怎么写">审稿指令怎么写</h2>
-<p>一条好的编辑审稿指令：</p>
-<pre class="text"><code>你是 NeurIPS 的领域主席。只看 versions/v1/main.pdf 和 style_table.md，不看其他版本。
-先只读题目和摘要，判断审稿人会不会想读下去，说明理由。
-再逐节指出还在防守的句子，重复的限定和读者看不懂的地方，指到具体句子并说明往哪个方向改，不要替我重写。
-不审证据是否充分，不要求补充限定。
-意见存成 versions/v1/review.md，第一行写明审的是哪个文件。不要改任何文件。</code></pre>
-<p>它包含六个要素：</p>
-<ol type="1">
-<li>角色和目标刊会：领域主席，NeurIPS。</li>
-<li>输入只给这一版：一个 PDF 和对照表。</li>
-<li>第一道关口：先单独判断题目和摘要。</li>
-<li>定位到句子，只给方向，不替你重写。</li>
-<li>划清范围：不审证据，不要求加限定。</li>
-<li>交接：写到哪个文件，注明审的版本，不改稿。</li>
-</ol>
-<p>两点特别要注意。</p>
-<p><strong>先过题目和摘要这一关。</strong>
-这是真实审稿人的第一反应。题目和摘要不吸引人，后面写得再好也会被带着挑剔读。让审稿
-Agent 先单独判断这一关，过不了就直接退回，不必逐节细看。</p>
-<p><strong>不要让它要求补充限定。</strong> Agent
-审稿时有一个强烈倾向：建议你说明局限，补充条件，弱化结论。这类意见每一条都显得严谨，照改几轮，论文就回到满篇
-may
-的样子。编辑审稿只管读者愿不愿意读，读不读得懂；证据是否充分是科学审稿的事，分开做，分开给指令。</p>
-<h2 id="版本绑定">版本绑定</h2>
-<p>审稿意见只对它审的那一版有效。规则：</p>
-<ul>
-<li>意见文件的第一行写明审的是哪个文件，最好带上修改时间。</li>
-<li>稿子改了，旧意见就过期了，下一版要重审。</li>
-<li>意见存在被审的版本文件夹里，<code>versions/v1/review.md</code> 对应
-<code>versions/v1/main.pdf</code>，不会张冠李戴。</li>
-</ul>
-<p>审完不等于通过。review.md
-存在，只说明审过了；通过与否看意见里的判定。</p>
-<h2 id="按意见返修">按意见返修</h2>
-<p>拿到意见后，有三个做法。</p>
-<p><strong>先列意见，再动手。</strong> 让写作的 Agent
-先把每条意见列出来，说明打算怎样处理，你看过再改。不同意的意见在这一步就可以划掉。</p>
-<p><strong>重讲，不修补。</strong>
-只改被点到的句子，结果是在原句上打补丁，稿子越来越碎。按意见整体重讲一遍，被点到的问题在重讲中自然消失。</p>
-<p><strong>每一轮意见都重读。</strong> 第三轮时，Agent
-往往只读最近一轮意见，第一轮你纠正过的问题又回来了。历次意见都存档，重讲前全部重读。</p>
-<pre class="text"><code>读 versions/ 下所有的 review.md，从最早的一轮开始。列出每条意见及它是否已在后续版本中解决。
-然后按仍未解决的意见和全部已解决的意见，把论文整体重讲一遍，存到下一个版本文件夹。
-重讲后逐条说明处理方式，并确认此前解决过的问题没有重新出现。</code></pre>
-<h2 id="把纠正过的问题记下来">把纠正过的问题记下来</h2>
-<p>每次你亲手纠正 Agent 的一个表达问题，就把它记进
-<code>style_table.md</code>：问题，例子，改法，来源和日期。这张表会越来越长，越来越贴合你的口味。写作的
-Agent 写之前读它，审稿的 Agent
-审的时候对照它。练习材料里的那张表，就是这样一条一条攒出来的。</p>
-<h2 id="什么时候停">什么时候停</h2>
-<p>编辑审稿可以无限进行下去，每一轮总能挑出点什么。给它一个停止规则：审稿判定通过就交给你看；连续三轮不通过，也交给你，附上仍未解决的意见，由你裁定。你看稿时先看题目和摘要，自己有没有想读下去的冲动。</p>
+<article lang="zh"><h1 id="审稿返修">1.4 审稿返修</h1>
+<p><span class="meta">课后深入，约 30 分钟。</span></p>
+<p>有审稿文件，只能说明完成过审阅。你还需要知道它读的是哪一版，判断依据是什么，以及稿件是否通过。</p>
+<h2 id="明确审阅职责">明确审阅职责</h2>
+<p>编辑审稿判断读者能否抓住中心，科学审稿判断证据能否支撑主张。两项工作分别给输入，分别保存意见。一次审阅只有一个明确职责，意见才容易采用。</p>
+<p>本节做编辑审稿。给审阅者本版
+PDF、表达约定和实际使用的范文，让它先读题目与摘要，再读全文。审阅者使用独立新会话，优先换一家厂商，避免沿用作者的解释。</p>
+<pre class="text"><code>以目标读者的身份审阅 versions/v1/main.pdf。
+先只读题目和摘要，写出你理解的核心发现和最想追问的问题，再判断开头是否成立。
+随后读全文，定位叙事断点、重复段落和图文脱节，每条说明改进方向。
+将意见写到 versions/v1/review.md，首行注明文件身份，给出通过或退修判定。
+只改意见文件。最后附主张检查。</code></pre>
+<p>检查审阅者的输入，确认它只拿到了当前这一版和范文，再看它是否独立复述出了核心发现。</p>
+<h2 id="定位问题与改写建议">定位问题与改写建议</h2>
+<p>一条可处理的意见包括所在节，具体句子或段落，读者卡在哪里，以及改写方向。比如读完开篇仍不知道为什么比较两种损失，就应当把先学会后退步的现象提前，并让第一张图回答这个问题。</p>
+<p>像整体很好、建议进一步提升逻辑这类空泛意见，直接删去。定位到文本，作者才能判断意见是否成立。</p>
+<p>意见以主张检查收尾：逐条列出要求缩小标题或核心主张的建议，说明依据。</p>
+<p>例如，练习稿想说明有界损失能避免后期记住错误标签，审阅者却因为只见过合成数据而要求改小标题。先问需要哪项实验才能支撑原来那个问题：增加真实图像数据，改变噪声机制，再直接测错误标签拟合率。把要回答的问题保留下来并补足证明，这就是按原尺度补证。</p>
+<p>如果新增证据否定了主张，或主张本身无法检验，再说明怎样改写。表达难懂则回到提纲重讲。主张检查把这几种意见分清，作者才知道下一步该改文字还是做实验。</p>
+<h2 id="审阅版本记录">审阅版本记录</h2>
+<p>把审阅的 PDF 路径和 SHA-256
+写进意见。稿件改到下一版，复制旧意见作为历史输入，新意见仍要针对新文件作出判定。</p>
+<pre class="text"><code>读取本版 PDF 的 SHA-256，写进审阅记录。
+返修时保留原版，生成 versions/v2/，逐条写处理说明。
+标题与核心主张前后并排展示，若变小，说明是哪条证据要求的。</code></pre>
+<p>编辑审阅读最终稿及范文，作者返修时读历次用户意见和编辑意见。科学审稿历史单独保留，避免编辑者把整篇写成对质疑的逐项辩护。</p>
+<h2 id="按意见重讲">按意见重讲</h2>
+<p>先把仍未解决的问题按叙事关系合并。同一个开篇问题可能在摘要、引言和结论出现三次，一次重排主线即可同时处理。随后按新提纲重写全文，逐项核对数据事实与已纠正问题。</p>
+<p>遇到意见冲突，在回复里写清采用哪种讲法及理由。连续几轮围绕口味来回摆动时，把两种完整写法交给人判断。课程用三轮作为人工裁定点，避免无限编辑。</p>
 <h2 id="练习">练习</h2>
-<p>为你自己的目标刊会写一条审稿指令，用它审练习 1 得到的
-<code>versions/v1/main.pdf</code>。然后故意在指令里删掉不要求补充限定这一句，再审一次，比较两份意见。</p>
-<details>
-<summary>
-通常会看到什么
-</summary>
-<p>删掉那一句后，意见里会多出好几条类似 the authors should clarify that
-results are limited to synthetic data 或 consider softening the claim in
-the title
-的建议。每一条单独看都有道理，合起来会把论文推回初稿的样子。这就是要把编辑审稿和科学审稿分开的原因。</p>
-</details>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>从真实审稿意见里挑三条，改写为可执行的编辑意见。请同学只看意见定位问题，再让作者据此重讲。若对方找不到原处或不知道要改变什么，意见还不够具体。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>审稿意见把限定加回来。</strong> 审稿 Agent
-建议说明局限，弱化结论，照改几轮，满篇限定又回来了。编辑审稿明确不审证据，不要求补充限定。</p>
+<p><strong>作者把自己的解释也交给审阅者。</strong>
+先让审阅者单独读稿，留下第一反应，再由作者回复。</p>
 </div>
 <div class="pitfall">
-<p><strong>审的是旧版本。</strong> 稿子已经改到 v3，审稿 Agent
-读的还是文件夹里的 v1。指令里写死要审的文件，意见第一行写明版本。</p>
+<p><strong>意见要求缩小标题，却没有给理由。</strong>
+退回补依据，按上面的例子先列需要增加的实验。</p>
 </div>
 <div class="pitfall">
-<p><strong>只改被点到的句子。</strong>
-每条意见改一处，十条意见打十个补丁，整篇读起来像拼接的。按意见整体重讲。</p>
+<p><strong>修改完成就宣布审稿通过。</strong>
+修改者报告处理情况，审阅者针对新版本给判定，两份记录分别保存。</p>
 </div>
-<div class="pitfall">
-<p><strong>改过的问题又回来。</strong>
-第一轮纠正过的题目问题，第三轮重讲时又出现了，因为它只读了最近一轮意见。每轮重讲前读全部历次意见。</p>
-</div>
-<div class="pitfall">
-<p><strong>审稿无限循环。</strong>
-每一轮都能挑出新问题，稿子在两种风格之间来回摆。设定轮次上限，超过就交给人裁定。</p>
-</div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a
-href="https://neurips.cc/Conferences/2025/ReviewerGuidelines">NeurIPS
-Reviewer
-Guidelines</a>：真实审稿人被要求关注什么，可以拿来写科学审稿的指令。</li>
-</ul>
 </article>
-<article lang="en"><h1 id="review-and-revision">1.4 Review and revision</h1>
-<p><span class="meta">Self-study, about 30 minutes. Needs both Claude
-and Codex.</span></p>
-<p>A colleague’s review is worth having because they see the paper from
-a different angle. The same holds between two agents: when the model
-that wrote a paper also reviews it, it agrees with every choice it made.
-This page covers how to set up an agent review that actually helps, and
-how to revise once the comments come in.</p>
-<h2 id="why-use-a-second-vendor">Why use a second vendor</h2>
-<p>Models from one vendor share similar training data and preferences,
-so every sentence one of them writes reads smoothly to it. When Claude
-writes and Claude reviews, the usual outcome is a few typos and a
-verdict that the paper is good overall. Codex reviewing is less
-forgiving of Claude’s phrasing habits, and the reverse holds too.</p>
-<p>The setup is simple. Open the same folder in both desktop apps; one
-writes, the other reviews, and the comments pass between them as files.
-No copying and pasting, and no need for them to talk to each other
-directly. Session 4 shows how to make this step happen automatically
-from the command line.</p>
-<h2 id="writing-the-review-instruction">Writing the review
-instruction</h2>
-<p>A good editorial review instruction:</p>
-<pre class="text"><code>You are an area chair for NeurIPS. Look only at versions/v1/main.pdf and style_table.md, no other versions.
-First read only the title and abstract and judge whether a reviewer would want to read on, and why.
-Then go section by section and point out sentences that still hedge, repeated caveats and anything a reader would not follow, quoting the exact sentence and saying which way to change it. Don&#39;t rewrite it for me.
-Don&#39;t judge whether the evidence is sufficient, and don&#39;t ask for added caveats.
-Save your comments as versions/v1/review.md, with the first line naming the file you reviewed. Don&#39;t change any files.</code></pre>
-<p>It has six parts:</p>
-<ol type="1">
-<li>Role and target venue: an area chair at NeurIPS.</li>
-<li>Input, this version only: one PDF and the style table.</li>
-<li>A first gate: judge the title and abstract on their own.</li>
-<li>Pin each comment to a sentence and give a direction, without
-rewriting.</li>
-<li>Scope: no judging the evidence, no requests for caveats.</li>
-<li>Handoff: which file to write, which version was read, no edits to
-the paper.</li>
-</ol>
-<p>Two of these need special care.</p>
-<p><strong>Clear the title and abstract gate first.</strong> This is a
-real reviewer’s first reaction. If the title and abstract don’t draw
-them in, they read everything after with a critical eye, however well it
-is written. Have the reviewing agent judge this gate on its own first.
-If the paper fails it, send it straight back without a
-section-by-section read.</p>
-<p><strong>Don’t let it ask for added caveats.</strong> Agents reviewing
-a paper have a strong pull toward suggesting you state limitations, add
-conditions and soften conclusions. Each such comment looks rigorous, and
-after a few rounds of following them the paper is back to “may” in every
-sentence. An editorial review covers only whether readers want to read
-on and whether they can follow. Whether the evidence suffices is the job
-of a scientific review: run it separately, with its own instruction.</p>
-<h2 id="tie-each-review-to-a-version">Tie each review to a version</h2>
-<p>A review applies only to the version it read. The rules:</p>
-<ul>
-<li>The first line of the review file names the file reviewed, ideally
-with its modification time.</li>
-<li>Once the paper changes, the old comments are out of date, and the
-next version gets a fresh review.</li>
-<li>Comments live in the folder of the version they review:
-<code>versions/v1/review.md</code> goes with
-<code>versions/v1/main.pdf</code>, so comments never get attached to the
-wrong draft.</li>
-</ul>
-<p>A finished review is not a pass. The existence of review.md shows
-only that a review happened. Whether the paper passed depends on the
-verdict inside.</p>
-<h2 id="revising-from-the-comments">Revising from the comments</h2>
-<p>Once you have the comments, three habits help.</p>
-<p><strong>List the comments before touching anything.</strong> Have the
-writing agent list every comment first and say how it plans to handle
-each one, and read the list before it revises. You can strike out the
-comments you disagree with at this step.</p>
-<p><strong>Retell, don’t patch.</strong> Changing only the sentences the
-comments point to patches the original text, and the paper grows more
-fragmented each round. Retell the whole paper following the comments,
-and the problems they pointed to disappear in the retelling.</p>
-<p><strong>Reread every round of comments.</strong> By round three the
-agent tends to read only the latest comments, and a problem you
-corrected in round one comes back. Archive every round and reread them
-all before each retell.</p>
-<pre class="text"><code>Read every review.md under versions/, starting from the earliest round. List each comment and whether a later version has resolved it.
-Then retell the whole paper, following the comments still open and every comment already resolved, and save it to the next version folder.
-After the retell, say how you handled each comment, and confirm that no previously resolved problem has come back.</code></pre>
-<h2 id="record-the-problems-you-corrected">Record the problems you
-corrected</h2>
-<p>Each time you correct one of the agent’s phrasing problems by hand,
-add it to <code>style_table.md</code>: the problem, an example, the fix,
-the source and the date. The table keeps growing and fits your taste
-more closely over time. The writing agent reads it before writing, and
-the reviewing agent checks against it while reviewing. The table in the
-exercise materials was built up this way, one entry at a time.</p>
-<h2 id="when-to-stop">When to stop</h2>
-<p>An editorial review can go on forever, since every round finds
-something. Give it a stopping rule: when the review passes the paper, it
-comes to you to read; after three failed rounds in a row, it also comes
-to you, with the unresolved comments attached, and you decide. When you
-read the paper, start with the title and abstract and ask yourself
-whether you feel the urge to read on.</p>
+<article lang="en"><h1 id="peer-review-and-revision">1.4 Peer review and revision</h1>
+<p><span class="meta">After-class deep dive, about 30
+minutes.</span></p>
+<p>A review file shows only that a review took place. You also need to
+know which version they read, what their judgment rests on, and whether
+the verdict is a pass.</p>
+<h2 id="give-the-reviewer-a-clear-question">Give the reviewer a clear
+question</h2>
+<p>An editorial review judges whether readers can identify the main
+finding; a scientific review judges whether the evidence supports the
+claims. Give the two jobs separate inputs and save their comments
+separately. Comments are easy to act on when each review has one clear
+responsibility.</p>
+<p>This section focuses on editorial review. Give the reviewer this
+version’s PDF, the style conventions and the exemplar actually used, and
+have it read the title and abstract first, then the whole paper. The
+reviewer uses a separate new session, preferably from another vendor, so
+it does not inherit the author’s explanations.</p>
+<pre class="text"><code>Review versions/v1/main.pdf as a member of the target readership.
+First read only the title and abstract, write down the core finding as you understand it and the question you most want to ask, then assess whether the opening works.
+Then read the whole paper and locate narrative breaks, repeated paragraphs and figures disconnected from the text, giving a direction for improvement for each.
+Write the comments to versions/v1/review.md, with the file identity on the first line and a verdict of pass or return for revision.
+Change only the comments file. End with a claim check.</code></pre>
+<p>Check the reviewer’s input to confirm it received only this version
+and the exemplar, then see whether it restated the core finding
+independently.</p>
+<h2 id="make-comments-specific-and-actionable">Make comments specific
+and actionable</h2>
+<p>A comment that can be acted on includes the section, the specific
+sentence or paragraph, where the reader got stuck, and the direction of
+the rewrite. For example, if after the opening you still do not know why
+two losses are compared, the phenomenon of learning first and getting
+worse later should come earlier, and the first figure should answer that
+question.</p>
+<p>Delete empty comments like “overall very good” and “suggest further
+improving the logic”. Only when a comment points to the text can the
+author judge whether it holds.</p>
+<p>Comments end with a claim check: list every suggestion to narrow the
+title or a core claim, and give its grounds.</p>
+<p>For example, the exercise draft wants to show that a bounded loss
+avoids memorizing wrong labels later in training, but the reviewer asks
+for a narrower title because only synthetic data were shown. First ask
+which experiments would support the original question: add real image
+data, change the noise mechanism, and measure directly the rate at which
+the model fits incorrect labels. This adds evidence for the original
+scope of the claim while preserving the research question.</p>
+<p>Only if new evidence refutes the claim, or the claim itself cannot be
+tested, do you say how to rewrite it. If the expression is hard to
+follow, go back to the outline and restructure the text. The claim check
+separates these kinds of comments, so the author knows whether the next
+step is to change the text or run an experiment.</p>
+<h2 id="tie-each-review-to-a-specific-version">Tie each review to a
+specific version</h2>
+<p>Write the path and SHA-256 of the reviewed PDF into the comments.
+When the draft moves to the next version, copy the old comments as
+historical input, and the new comments still give a verdict on the new
+file.</p>
+<pre class="text"><code>Read the SHA-256 of this version&#39;s PDF and write it into the review record.
+When revising, keep the original version, produce versions/v2/, and write how each comment was handled.
+Show the title and core claims before and after side by side; if their scope was reduced, state which evidence required it.</code></pre>
+<p>The editorial reviewer reads the final draft and the exemplar; when
+revising, the author reads all past user comments and editorial
+comments. The scientific review history is kept separately, so the
+editor does not turn the whole paper into a point-by-point defense
+against objections.</p>
+<h2 id="revise-in-response-to-the-review">Revise in response to the
+review</h2>
+<p>First merge the unresolved problems by how they affect the narrative.
+The same opening problem may appear three times, in the abstract,
+introduction and conclusion, and one reordering of the main line handles
+them all. Then generate the full text from the new outline and check
+every factual result and verify that previously corrected problems have
+not returned.</p>
+<p>When comments conflict, state in the response which approach to the
+narrative you adopted and why. When several rounds swing back and forth
+over taste, give both complete versions to a person to decide. The
+course uses three rounds as the point for human decision, to avoid
+endless editing.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Write a review instruction for your own target venue and use it to
-review the <code>versions/v1/main.pdf</code> you produced in Exercise 1.
-Then deliberately delete the line telling it not to ask for added
-caveats, review again, and compare the two sets of comments.</p>
-<details>
-<summary>
-What you usually see
-</summary>
-<p>With that line gone, the comments gain several suggestions like “the
-authors should clarify that results are limited to synthetic data” or
-“consider softening the claim in the title”. Each one makes sense on its
-own. Together they push the paper back toward the draft. That is why
-editorial review and scientific review are kept apart.</p>
-</details>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Pick three comments from a real review and rewrite them as actionable
+editorial comments. Have a classmate locate the problems from the
+comments alone, then have the author revise accordingly. If the
+classmate cannot find the place or does not know what to change, the
+comment is not yet specific enough.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Review comments bring the caveats back.</strong> The
-reviewing agent suggests stating limitations and softening conclusions.
-Follow it for a few rounds and caveats are everywhere again. An
-editorial review explicitly leaves the evidence alone and asks for no
-added caveats.</p>
+<p><strong>The author hands its own explanations to the reviewer as
+well.</strong> Have the reviewer read the draft alone first and record
+its first reaction, then let the author respond.</p>
 </div>
 <div class="pitfall">
-<p><strong>Reviewing an old version.</strong> The paper is already at
-v3, and the reviewing agent is still reading the v1 in the folder. Name
-the exact file to review in the instruction, and have the first line of
-the comments state the version.</p>
+<p><strong>A comment asks to narrow the title without giving a
+reason.</strong> Return it for justification, and as in the example
+above, first list the experiments that would need to be added.</p>
 </div>
 <div class="pitfall">
-<p><strong>Changing only the sentences the comments point to.</strong>
-One fix per comment means ten patches for ten comments, and the whole
-paper reads as if stitched together. Retell the whole paper following
-the comments.</p>
+<p><strong>Declaring the review passed once the changes are
+done.</strong> The reviser reports how each comment was handled, the
+reviewer gives a verdict on the new version, and the two records are
+saved separately.</p>
 </div>
-<div class="pitfall">
-<p><strong>Fixed problems come back.</strong> The title problem
-corrected in round one reappears in the round-three retell, because the
-agent read only the latest comments. Read every past round of comments
-before each retell.</p>
-</div>
-<div class="pitfall">
-<p><strong>Endless review loops.</strong> Every round finds new
-problems, and the paper swings back and forth between two styles. Set a
-cap on the number of rounds; past it, a person decides.</p>
-</div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a
-href="https://neurips.cc/Conferences/2025/ReviewerGuidelines">NeurIPS
-Reviewer Guidelines</a>: what real reviewers are asked to look for. Use
-it to write the instruction for a scientific review.</li>
-</ul>
 </article>
-<nav class="pager"><a class="prev" href="writing-figures.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.3 数据图</span><span lang="en">1.3 Data figures</span></a><a class="next" href="writing-skills.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.5 把做法留下来</span><span lang="en">1.5 Keeping the method</span></a></nav>
+<nav class="pager"><a class="prev" href="writing-figures.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">1.3 结果绘图</span><span lang="en">1.3 Plotting results</span></a><a class="next" href="writing-skills.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">1.5 经验留档</span><span lang="en">1.5 Reusable methods</span></a></nav>
 </main>
 </div>
 </body>

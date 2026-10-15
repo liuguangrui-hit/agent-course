@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用 Agent 做科研</title>
+<title>Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,27 +17,23 @@
 <a href="index.html" class="cur"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="用-agent-做科研">用 Agent 做科研</h1>
-<p><span class="subtitle">从一篇稿子到一位 AI 科学家</span></p>
-<p>面向研究生和带研究生的老师。四堂实践课，外加两堂选修。每堂课堂核心一小时，下课时手里有一个当堂做出来、能接着用的东西；课后还有几节深入内容，按需自学，把这一课的本事练扎实。</p>
+<article lang="zh"><h1 id="agent-科研">Agent 科研</h1>
+<p>一篇稿子改得顺了，数字却还停在旧版本。一批论文读完了，问起某条结论的出处，又要从头翻。实验顺利跑了一夜，早上才发现漏掉了能区分两种解释的对照。</p>
 <p>Agent
-已经能读文件和跑代码，也能查资料和写网页。真正拉开差距的是会不会组织它干活：给它什么材料，让谁写谁审，什么时候放手让它自己跑，什么时候必须停下来看一眼。这门课练的就是这件事。</p>
-<p>课程有两条线。明线是科研的四步：写作，探索，实验，自动化。暗线是
-Agent 的工具：从第 1 课起，每堂课一开始先让 Agent
-自己装上这一课要用的几样工具，你在一旁听课；装好的软件一直留在电脑上，用法记在项目的
-<code>AGENTS.md</code> 里，下一课开头由 Agent
-抄进新的文件夹接着用。写作要的工具最少，所以放在最前面；之后添浏览器和知识库，再添服务器和后台任务，最后是定时任务和结果网页。到第
-4 课，这些工具连成一个能自己转起来的科研工作台。全部工具列在<a
-href="toolbox.html">工具箱</a>。</p>
+能加快这些工作。研究者要学会让每一步留下依据，供后续工作使用。这门课从一篇四页论文开始，带你搭起一个自己的科研工作台。你会练习用
+Agent
+重讲论文并核查数字，阅读文献时追问证据，在实验前明确结果的判断标准。</p>
+<p>四堂必修按顺序上，每堂课分三段：课前备好材料，课上一小时共同解决难题，课后从复习走向深入。第
+5、6 课为选修，分别讲安全控制与编排理论，也沿用同样的节奏。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -47,79 +43,49 @@ href="toolbox.html">工具箱</a>。</p>
 <thead>
 <tr>
 <th>课</th>
-<th>下课时你有</th>
-<th>暗线：这课装上的工具</th>
+<th>核心问题</th>
+<th>学习成果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="setup.html">0 课前准备</a></td>
-<td>一个能和 Agent 对话的项目文件夹</td>
-<td>Claude Code，Codex</td>
+<td>怎样让 Agent 在正确的文件夹里开始工作</td>
+<td>两个能用的 Agent，一份会议纪要和核查记录</td>
 </tr>
 <tr>
-<td><a href="writing.html">1 Agent 写作</a></td>
-<td>一篇从题目到结论重讲过的论文，两张能投稿的数据图，一个改论文的
-Skill</td>
-<td>Python 环境，LaTeX，PDF 渲染，AGENTS.md，Skill</td>
+<td><a href="writing.html">1 写作绘图</a></td>
+<td>同一份研究，怎样写得清楚、有吸引力</td>
+<td>重讲稿、两张数据图与改稿 Skill</td>
 </tr>
 <tr>
-<td><a href="explore.html">2 Agent 探索</a></td>
-<td>一个方向的论文知识库，三个能检验的问题</td>
-<td>Ego 浏览器，Obsidian，文献接口，Sub-agent</td>
+<td><a href="explore.html">2 知识库</a></td>
+<td>读过的论文，怎样支持一个新问题</td>
+<td>能追回原文的知识库和实验问题</td>
 </tr>
 <tr>
-<td><a href="experiment.html">3 Agent 实验</a></td>
-<td>一次先写下预测，在服务器上跑完，能重跑的实验</td>
-<td>Git 与 GitHub，SSH 与 Tailscale，tmux 后台任务，监视器</td>
+<td><a href="experiment.html">3 实验分析</a></td>
+<td>哪个实验能分开两种解释</td>
+<td>事前预测、配对结果与可重跑记录</td>
 </tr>
 <tr>
-<td><a href="automate.html">4 Agent 自动化与自进化</a></td>
-<td>一个夜里自己跑、早上看结果页的研究循环</td>
-<td>定时任务，无人值守调用，手机通知，经验榜，GitHub Pages</td>
+<td><a href="automate.html">4 自动化</a></td>
+<td>怎样衔接每一轮研究</td>
+<td>能中断恢复的循环与待检验的经验</td>
 </tr>
 <tr>
-<td><a href="safety.html">5 选修 编排安全</a></td>
-<td>你的工作台的权限表和两道自动检查</td>
-<td>权限规则，沙箱，Hooks，密钥管理</td>
+<td><a href="safety.html">5 安全控制</a></td>
+<td>读到外部内容时，权限怎样仍握在手里</td>
+<td>能实测的权限边界和自动检查</td>
 </tr>
 <tr>
-<td><a href="theory.html">6 选修 编排理论</a></td>
-<td>一本用量账本，一个算得出来的编排决策</td>
-<td>用量账本</td>
+<td><a href="theory.html">6 编排理论</a></td>
+<td>Agent 的权重不变，系统怎样学习</td>
+<td>经验学习的形式化与一份对照实验方案</td>
 </tr>
 </tbody>
 </table>
-<p>每堂课都有一个当堂能看见的目标，几节课后深入，一份可下载的练习材料，一段
-Agent 最容易出错的地方和对应的办法。最后一部分最值钱，它们来自每天和
-Agent 一起干活踩过的坑，很少写在官方文档里。</p>
-<p>开始之前，先花半小时做完<a
-href="setup.html">课前准备</a>。课程安排和目标见<a
-href="syllabus.html">课程大纲</a>。</p>
-</article>
-<article lang="en"><h1 id="research-with-agents">Research with Agents</h1>
-<p><span class="subtitle">From one draft to an AI scientist</span></p>
-<p>For graduate students and the people who supervise them. Four
-hands-on sessions and two electives. Each has a one-hour core class, and
-you leave with something you built in the room and can keep using;
-self-study sections after each class take the skill further, at your own
-pace.</p>
-<p>Agents can already read files and run code, search the literature and
-build web pages. What separates people now is whether they can organise
-that work: what material to hand over, who writes and who reviews, when
-to let the agent run on its own, and when to stop and look. That is what
-this course practises.</p>
-<p>The course has two threads. The visible one follows four research
-steps: writing, exploration, experiments and automation. The hidden
-thread is the agent’s tools. From Session 1, start each class by having
-the agent install the few tools it needs while you listen. The software
-stays on your computer. Its use goes into the project’s
-<code>AGENTS.md</code>, which the agent copies into the next session’s
-folder at the start. Writing needs the fewest tools, so it comes first.
-Then you add a browser and knowledge base, servers and background jobs,
-and finally scheduled tasks and results pages. By Session 4 these tools
-form a research workbench that runs on its own. All tools are listed in
-the <a href="toolbox.html">Toolbox</a>.</p>
+<h2 id="教学安排">教学安排</h2>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -128,63 +94,160 @@ the <a href="toolbox.html">Toolbox</a>.</p>
 </colgroup>
 <thead>
 <tr>
-<th>Session</th>
-<th>You leave with</th>
-<th>The hidden thread: tools added</th>
+<th>阶段</th>
+<th>做什么</th>
+<th>阶段成果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="setup.html">0 Setup</a></td>
-<td>A project folder you can talk to an agent in</td>
-<td>Claude Code, Codex</td>
+<td>课前预备</td>
+<td>安装软件并下载依赖与材料，完成登录后跑最小可用检查</td>
+<td>preflight.md 与能打开的本地材料</td>
 </tr>
 <tr>
-<td><a href="writing.html">1 Writing with Agents</a></td>
-<td>A paper retold from title to conclusion, two submission-ready data
-figures, and a Skill for revising papers</td>
-<td>Python environment, LaTeX, PDF rendering, AGENTS.md, Skill</td>
+<td>课上一小时</td>
+<td>一起分析问题，配置复杂规则，执行短练习，再检查结果</td>
+<td>一份注明版本和来源的课堂成果</td>
 </tr>
 <tr>
-<td><a href="explore.html">2 Exploring with Agents</a></td>
-<td>A knowledge base for one research direction, and three testable
-questions</td>
-<td>Ego browser, Obsidian, literature APIs, Sub-agent</td>
-</tr>
-<tr>
-<td><a href="experiment.html">3 Experimenting with Agents</a></td>
-<td>A rerunnable experiment, predicted first and completed on a
-server</td>
-<td>Git and GitHub, SSH and Tailscale, tmux background jobs,
-monitor</td>
-</tr>
-<tr>
-<td><a href="automate.html">4 Automation and Self-Evolution</a></td>
-<td>A research loop that runs overnight, with a results page to read in
-the morning</td>
-<td>Scheduled tasks, headless calls, phone notifications, playbook,
-GitHub Pages</td>
-</tr>
-<tr>
-<td><a href="safety.html">5 Elective: Orchestration Safety</a></td>
-<td>A permission table for your workbench and two automatic checks</td>
-<td>Permission rules, sandbox, Hooks, secret management</td>
-</tr>
-<tr>
-<td><a href="theory.html">6 Elective: Orchestration Theory</a></td>
-<td>A usage ledger and an orchestration decision you can compute</td>
-<td>Usage ledger</td>
+<td>课后复习与拔高</td>
+<td>先复述和核查，再辨析正反例，最后选一条深入路径</td>
+<td>复盘记录与一次相连的扩展练习</td>
 </tr>
 </tbody>
 </table>
-<p>Every session has a goal you can see by the end of the hour, several
-self-study sections, a downloadable case, and a section on where agents
-go wrong most and what to do about it. That last part is the most
-valuable. It comes from working with agents every day, and little of it
-is in the official docs.</p>
-<p>Before the first session, spend half an hour on <a
-href="setup.html">Setup</a>. The schedule and learning outcomes are in
-the <a href="syllabus.html">Syllabus</a>.</p>
+<p>工具逐课累积。第 1 课准备编译和画图环境，第 2 课加浏览器与知识库，第
+3 课接版本管理和后台执行，第 4
+课连起调度与结果页。安装下载提前完成；课堂一起练习怎样使用工具，并讨论必需的研究判断。调用方法留在项目文件里，换一个对话也能接手。<a
+href="toolbox.html">工具箱</a>按阶段列出了所需工具。</p>
+<p>课程面向研究生和研究生导师。第一课从文件和成品上手；后几课逐步要求你判断证据、设计对照，并推导一个学习系统成立的条件。准备好后，从<a
+href="setup.html">第 0 课</a>开始。授课安排见<a
+href="syllabus.html">课程大纲</a>。</p>
+</article>
+<article lang="en"><h1 id="ai-agents-for-research">AI Agents for Research</h1>
+<p><span class="subtitle">Build each research step on
+evidence</span></p>
+<p>A draft finally reads well, but its numbers are still from an old
+version. You have read a batch of papers, and when someone asks where a
+conclusion came from, you start searching again. An experiment ran
+smoothly overnight, and in the morning you notice it lacked the control
+that could separate two explanations.</p>
+<p>Agents can speed up these tasks. Researchers need to ensure that each
+step produces evidence the next step can use. Starting with a four-page
+paper, this course helps you build your own research workbench. You will
+use an agent to restructure a paper and check its numbers, read the
+literature and examine its evidence, and decide before each experiment
+how its results will be judged.</p>
+<p>Take the four required lessons in order. Each has three parts:
+preparation before class, a one-hour class for working through the
+harder problems together, and review followed by optional further study.
+Lessons 5 and 6 are electives on safety controls and orchestration
+theory, with the same structure.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>The question it answers</th>
+<th>What you take away</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="setup.html">0 Getting started</a></td>
+<td>How to get an agent working in the right folder</td>
+<td>Two working agents, meeting minutes and a fact-check report</td>
+</tr>
+<tr>
+<td><a href="writing.html">1 Writing and figures</a></td>
+<td>How to present the same research clearly and engagingly</td>
+<td>A restructured draft, two data figures and a revision Skill</td>
+</tr>
+<tr>
+<td><a href="explore.html">2 Research knowledge bases</a></td>
+<td>How papers you have read can support a new question</td>
+<td>A knowledge base linked to source papers, and questions to test</td>
+</tr>
+<tr>
+<td><a href="experiment.html">3 Experimental analysis</a></td>
+<td>Which experiment can separate two explanations</td>
+<td>Predictions recorded in advance, paired results and a reproducible
+record</td>
+</tr>
+<tr>
+<td><a href="automate.html">4 Research automation</a></td>
+<td>How one round of research can lead into the next by itself</td>
+<td>A recoverable research loop and candidate playbook entries to
+test</td>
+</tr>
+<tr>
+<td><a href="safety.html">5 Safety controls</a></td>
+<td>How to keep control of permissions when the agent reads outside
+content</td>
+<td>A permission boundary you can test, and automatic checks</td>
+</tr>
+<tr>
+<td><a href="theory.html">6 Orchestration theory</a></td>
+<td>How a system learns while the agent’s weights stay fixed</td>
+<td>A formal account of learning from experience and a controlled
+experiment plan</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-every-lesson-runs">How every lesson runs</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What you do</th>
+<th>What is left at the end</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Before class</td>
+<td>Install software, download dependencies and materials, log in, then
+run a minimal working check</td>
+<td>preflight.md and accessible local materials</td>
+</tr>
+<tr>
+<td>In class</td>
+<td>Analyze the problem together, configure complex rules, run short
+exercises, then check the results</td>
+<td>A versioned output with recorded sources</td>
+</tr>
+<tr>
+<td>After class: review and extension</td>
+<td>Recall and check first, then compare examples, then choose one path
+to go deeper</td>
+<td>A review record and one connected extension exercise</td>
+</tr>
+</tbody>
+</table>
+<p>Tools accumulate from lesson to lesson. Lesson 1 sets up compilation
+and plotting, Lesson 2 adds a browser and a knowledge base, Lesson 3
+brings in version control and background execution, and Lesson 4
+connects scheduling and results pages. Complete installations and
+downloads in advance. In class, we work through how to use the tools in
+research and which judgments are essential. Record tool commands in the
+project files so a new session can continue the work. The <a
+href="toolbox.html">Toolbox</a> lists the tools for each stage.</p>
+<p>The course is for graduate students and their supervisors. Lesson 1
+starts with files and completed examples; later lessons develop your
+ability to judge evidence, design controls, and derive the conditions
+under which a learning system works. When you are ready, start with <a
+href="setup.html">Lesson 0</a>. The teaching plan is in the <a
+href="syllabus.html">Syllabus</a>.</p>
 </article>
 <nav class="pager"><span></span><a class="next" href="syllabus.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh"> 课程大纲</span><span lang="en"> Syllabus</span></a></nav>
 </main>

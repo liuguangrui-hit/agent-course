@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent 自动化与自进化 · 用 Agent 做科研</title>
+<title>自动化 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,173 +17,130 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html" class="cur"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="automate-schedule.html" class="sub"><span class="num">4.1</span><span lang="zh">定时与无人值守</span><span lang="en">Scheduling and headless runs</span></a>
-<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验榜</span><span lang="en">Playbooks</span></a>
-<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果页</span><span lang="en">The results page</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html" class="cur"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="automate-schedule.html" class="sub"><span class="num">4.1</span><span lang="zh">定时调度与无人值守</span><span lang="en">Scheduling and unattended runs</span></a>
+<a href="automate-playbook.html" class="sub"><span class="num">4.2</span><span lang="zh">经验管理与评估</span><span lang="en">Managing and evaluating playbooks</span></a>
+<a href="automate-pages.html" class="sub"><span class="num">4.3</span><span lang="zh">结果展示</span><span lang="en">Presenting results</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip new">+ 定时任务</span><span class="chip new">+ 无人值守调用</span><span class="chip new">+ 手机通知</span><span class="chip new">+ 经验榜</span><span class="chip new">+ GitHub Pages</span></div><h1 id="agent-自动化与自进化">4 Agent 自动化与自进化</h1>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip new">+ 定时任务</span><span class="chip new">+ 无人值守调用</span><span class="chip new">+ 手机通知</span><span class="chip new">+ 经验榜</span><span class="chip new">+ GitHub Pages</span></div><h1 id="自动化">4 自动化</h1>
 <div class="goal">
-<p>一小时后，你的工作台会在夜里自己干活：晚上十点从问题清单里挑一个问题，写预测，把实验送上服务器；早上七点收回结果，请另一家
-Agent
-审，把这一轮学到的做法记进经验榜，更新一个手机上就能打开的结果网页，再推一条通知到你手机上。每过三轮，一个独立的反思检查会判断这个循环是否还在正道上，必要时让它停下。</p>
+<p>让一轮研究在新会话里接得上，中断后能恢复，失败后留下原因。再从运行中提炼一条候选经验，设计它怎样在下一批任务上接受检验。</p>
 </div>
-<p><span class="meta">课堂核心 60 分钟。课后深入 4.1 至 4.3
-共约一个半小时，按需选读。</span></p>
+<p><span class="meta">课前完成准备，课上 60
+分钟，课后先复习再选做深入。</span></p>
+<div class="stage-nav">
+<p><a href="#课前预备">课前预备</a> · <a
+href="#课上一小时">课上一小时</a> · <a
+href="#课后复习与拔高">课后复习与拔高</a></p>
+</div>
+<p>凌晨实验已经启动，写状态时连接断了。早上的 Agent
+读到未完成，是否会再启动一份？夜间运行最需要先解决的，是它醒来时怎样知道已经发生了什么。</p>
+<p>研究循环还有第二个问题。它每天完成一轮，产物越来越多，能力是否也在提高？把流程接起来以后，再给经验设置独立的检验。</p>
 <div class="download">
-<p><a href="downloads/lesson-4-zh.zip">下载第 4 课练习材料</a></p>
+<p><a href="downloads/lesson-4-zh.zip">下载第 4 课材料</a></p>
 </div>
-<p>练习材料接着第 3 课的仓库，多了几样：<code>LOOP.md</code>
-写一轮循环怎么走，<code>STATE.md</code>
-记到哪一步了，<code>playbook.md</code>
-是空的经验榜，<code>review_task.md</code> 和
-<code>reflection_task.md</code>
-是审查和反思的任务，<code>code/make_page.py</code>
-生成结果页，<code>ledger.csv</code> 是空的用量账本。</p>
-<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<h2 id="课前预备">课前预备</h2>
+<p><span class="meta">预留 15 至 30 分钟，沿用前几课环境。</span></p>
 <div class="install">
-<p><strong>本课暗线：让 Agent 不用你叫也会开工，干完会告诉你。</strong>
-到第 3
-课为止，每件事都从你在对话框里发一句话开始。这一课添五样：定时任务让它按时开工；命令行版的
-Claude 和 Codex 让一个 Agent
-在无人值守时把事交给另一家；手机通知让它跑完叫你；经验榜让它每轮把做法记下来；GitHub
-Pages 把结果变成网页。</p>
+<p><strong>课前工具准备。</strong>
+下载材料并补齐依赖，准备本地结果页和命令行入口。恢复逻辑、状态转移和经验检验都在课堂里做。</p>
 </div>
-<p>在 Claude 里打开 <code>lesson-4</code> 文件夹，先发：</p>
-<pre class="text"><code>先读 ../lesson-3/AGENTS.md，把里面的工具用法抄进本文件夹的 AGENTS.md。
-这个项目还要在夜里无人值守地跑。检查并补上：
-1. Claude Code 和 Codex 的命令行版，各用一句话测试能在命令行里无人值守地回答；
-2. 手机通知：用 ntfy，起一个别人猜不到的频道名，告诉我手机上装哪个应用、订阅哪个频道，然后发一条测试通知；
-3. 在我的 GitHub 上建一个公开仓库 lab-results，打开 GitHub Pages，放一个只有标题的 index.html，给我网址。
-装之前列出打算装什么、装在哪，等我同意。
-最后在 AGENTS.md 里补几行：通知怎么发，结果页在哪个仓库，未发表的数字和代码不进公开仓库。</code></pre>
-<p>手机上收到测试通知，打开网址看到标题，就装好了。五样里另外两样不用装：经验榜就是练习材料里的
-<code>playbook.md</code>，练习 1 第一次写进去；定时任务在练习 2
-里让它自己建。</p>
-<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
-<p>打开练习材料 <code>preview/site/</code> 里的结果页。它用第 3
-课的真实结果当第一轮：顶上一行是跑了几轮，预测命中了几次；下面每轮一行：问题，预测，对错，审查是否通过；页尾是经验榜，每条后面写着它来自哪一轮。这是公开页，只到对错这一层；完整的数字和图在
-<code>preview/internal/</code> 的内部页里。</p>
-<p>再打开
-<code>preview/notification.txt</code>，这是早上七点推到手机上的那条通知：一句话结论加结果页的链接。</p>
-<h2 id="讲10-分钟">讲，10 分钟</h2>
-<p><strong>每一轮都是一个新对话。</strong>
-一个对话开着跑一周，每醒一次都要把一周的内容重读一遍，越跑越慢，越跑越贵，也越容易忘掉第一天的要求。正确的做法是每次定时开工都开一个新对话，从
-<code>STATE.md</code>
-读到上次停在哪里，干完把进度写回去。记忆在文件里，不在对话里。</p>
-<p><strong>一件事只有一个对话在干。</strong>
-两个定时任务撞在一起，或者昨晚那轮还没收工今晚的又开工，两个对话会同时改同一批文件。开工第一步是占锁：建一个
-<code>.lock</code> 文件夹，建不成说明别人在干，退出。</p>
-<p><strong>自进化靠经验榜，不靠改规则。</strong>
-每轮收工时，把这一轮哪个做法有效、哪个出了问题，写成一两条经验，下一轮开工先读。经验榜只记做法，评价标准不归它改：预测命中率和审查是否通过，是这个循环的尺子，尺子不能跟着被量的东西一起变。</p>
-<p><strong>放手之前装一个刹车。</strong>
-全自动的循环最常见的失败，是沿着一个错的方向认真地跑很久。每三轮让一个独立的对话读一遍全部记录，判断方向对不对，它有权写一个
-<code>STOP</code> 文件让循环停下来等你。</p>
-<h2 id="练习-1先手动跑一轮15-分钟">练习 1：先手动跑一轮，15 分钟</h2>
-<p>读一遍 <code>LOOP.md</code>，它把一轮分成开工和收工两半：</p>
-<pre class="text"><code>按 LOOP.md 跑一轮开工：读 STATE.md 和 playbook.md，从 ../lesson-2/vault/questions.md 里挑一个还没做过的问题，
-写预测并提交，改代码，冒烟测试，送上服务器。这一轮为了课上演示，只跑 1 个种子、10 轮。
-干完把进度写进 STATE.md，然后停下。</code></pre>
-<p>几分钟后实验跑完，开一个新对话：</p>
-<pre class="text"><code>按 LOOP.md 跑一轮收工。</code></pre>
-<p>收工会拉回结果，写结果说明，用 Codex
-的命令行版审，把结果和错了的预测写回第 2
-课的知识库，按新的分歧补一个问题进问题清单，再更新经验榜和结果页，发通知。看手机。最后一步让循环不会做完三个问题就断粮。</p>
-<h2 id="练习-2让它自己按时开工15-分钟">练习 2：让它自己按时开工，15
-分钟</h2>
-<pre class="text"><code>建两个定时任务，都在本文件夹里运行：
-每晚 22:00 按 LOOP.md 跑开工，每早 07:00 按 LOOP.md 跑收工。
-每次都是新对话，开工前先看 STATE.md 和有没有 STOP 文件。
-定时任务用 Accept edits 模式，用到的命令写进项目设置的允许表，别的命令一律不放行。
-建好后各手动触发一次测试，告诉我它们在哪里能看到，怎样暂停。</code></pre>
-<p>Claude
-桌面版的定时任务在侧栏里能看到，可以暂停和手动运行。电脑要开着；合上盖子的笔记本到点不会开工，这时把定时任务换到服务器上，用命令行版跑，见
-<a href="automate-schedule.html">4.1</a>。</p>
-<h2 id="练习-3装刹车10-分钟">练习 3：装刹车，10 分钟</h2>
-<pre class="text"><code>再建一个定时任务，每天 08:00 看一眼：自上次反思以来如果又完成了三轮，就运行一次反思检查，否则直接退出。反思检查是一个独立的新对话，读 STATE.md，playbook.md，所有轮次的预测、结果和审查意见，不改它们，只写反思报告，必要时写 STOP。
-回答三个问题：预测命中率在变好还是变坏；最近几轮的问题是否越来越小、越来越像；经验榜里有没有哪条经验其实是在掩盖问题。
-写成 reflections/日期.md。如果它认为方向错了，写一个 STOP 文件说明理由，并推一条通知给我。</code></pre>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<pre class="text"><code>把 lesson-2，lesson-3，lesson-4 放成相邻目录，确认自己的问题清单和上一课结果能找到。
+按 README.md 准备锁定环境与 logs/，保留第 3 课可运行实现；没有完成时记下，使用包内预览作课堂起点。
+检查所选官方非交互入口，用包内 wake_review.py 对 preflight-input.md 做一次零延迟调用，确认当前账号可用。
+本例用 Claude 的受限无工具调用，输入由脚本经 stdin 提供；命令说明见 README.md。不开长期定时。
+打开 preview/site/index.html 和 preview/internal/round-1.html，只确认页面可读。
+列出已有调度器和通知渠道，不新增频道，不发送消息，不进行部署。
+把实际命令、文件位置和未解决项写入 preflight.md，稳定入口写入 AGENTS.md。</code></pre>
+<p>开课前应能找到 <code>LOOP.md</code> 与
+<code>STATE.md</code>，恢复演示和本地预览。这里不提前运行故障演示，也不填写恢复结论，故障会怎样影响下一步要在课堂观察。</p>
+<p>课堂一起接一次真实的短延迟唤醒，核对机器、时区与执行状态。定时器只触发一次，进程退出便停止；课后再扩到少量周期运行。外部通知和发布另选具体目标与范围。</p>
+<h2 id="课上一小时">课上一小时</h2>
+<h3 id="先看一轮的记录与交接5-分钟">先看一轮的记录与交接，5 分钟</h3>
+<p>先核对
+preflight.md，确认本课的本地演练条件，再查看上一轮留下的状态。</p>
+<p>练习材料的 <code>LOOP.md</code> 是交接规则，<code>STATE.md</code>
+记当前步骤，每轮在自己的目录留下预测、结果与审阅。预览网页使用第 3
+课的实跑结果生成，打开内部页可以追回原始数字。</p>
+<p>恢复演示把一个故障做给你看：产物已写出，状态还没来得及提交，程序退出。再次执行时先核查产物，再补状态，输出数量仍然是一份。你会看到它怎样从已存在的产物接上状态。</p>
+<h3 id="研究循环的状态转移10-分钟">研究循环的状态转移，10 分钟</h3>
+<p>一轮研究先选题并冻结预测，再执行与校验，最后审阅并归档。每条转移都要有完成条件，例如执行转到校验时，退出码和产物清单都要满足要求。</p>
+<p>状态未知要先查询，运行失败按原因恢复，研究假设被否定则正常进入结论。程序失败与科学负结果分开，循环才知道该修代码还是改理解。</p>
+<p>自动化固定了这些转移。系统学习则改变以后的选择或做法，并要在未见任务上测出改进。两者在记录里分别展示。</p>
+<h3 id="练习一做一次中断恢复15-分钟">练习一，做一次中断恢复，15
+分钟</h3>
+<pre class="text"><code>先读 recovery_demo.py，说明它模拟的动作与故障点。
+按 README 在独立演示目录运行，模拟产物写出后退出，再重新运行。
+核对输出数量、事件记录与最终状态，解释它怎样识别同一动作。
+随后用同样思路检查 LOOP.md：找出启动实验与写状态之间的空档。</code></pre>
+<p>同一动作重复请求后，只产生一次预定效果，叫作幂等。一次网络超时不告诉你动作有没有发生，所以恢复时要能查询已知身份，或在本地核对对应产物。</p>
+<h3 id="练习二定时审阅与收工交接15-分钟">练习二，定时审阅与收工交接，15
+分钟</h3>
+<pre class="text"><code>沿用第 3 课已完成的一轮，或从包内预览复制为演练起点，标明来源。
+把本轮 result.md 交给 wake_review.py，设五秒后触发一次，调用最长九十秒，输出到新的 one-shot-review/。
+一起检查 run.json 中的主机与时区、计划时间与实际时间，再核对输入哈希和退出码，并查看最终的 review.md。
+只有 completed 才把审阅意见交给新会话；超时、失败和空输出先记录原因，不推进审阅完成状态。
+新会话只读 LOOP.md、STATE.md 与本轮记录，核查后接手收工，生成本地页并检查重复效果。</code></pre>
+<p>命令由老师和学员一起核对后运行。路径换成这一轮实际记录，输出目录每次另起：</p>
+<pre class="bash"><code>python3 wake_review.py --input preview/runs/1/result.md --out one-shot-review --delay-seconds 5 --timeout-seconds 90</code></pre>
+<p>计划等待时按 Ctrl+C，再检查 cancelled 与 calls_started
+为零，可验证尚未发起调用。运行中按 Ctrl+C
+会停止本次子进程。最后确认进程已退出，没有留下周期唤醒。</p>
+<p>任务锁决定哪个会话能写，运行身份决定它写的是哪次动作。锁超时需要核查持有者与进程；旧会话仍能恢复写入时，仅按时间删锁会制造两个写作者。</p>
+<h3 id="练习三留下候选经验和测试10-分钟">练习三，留下候选经验和测试，10
+分钟</h3>
+<pre class="text"><code>从本轮失败或成功里提炼至多一条经验，写适用条件、具体动作和来源。
+列出它预期会改变哪类未见任务，主要评估指标是什么。
+保留一份无经验对照，再设计同格式近似长度的安慰剂对照。
+经验先标为候选，测试方案放入下一批任务，不把本次成功直接当成有效性证明。</code></pre>
+<p>当前循环完成后，课后再设置少量定时运行。先确认停止条件、恢复方法和额度耗尽的行为，再延长无人值守时间。</p>
+<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<h4 id="常见错误与处理方法">常见错误与处理方法</h4>
 <div class="pitfall">
-<p><strong>一个对话跑一周。</strong>
-每次醒来都重读一周的上下文，又慢又贵，早先的要求也忘了。每轮开新对话，进度存在文件里。</p>
+<p><strong>每次醒来都从第一步重做。</strong>
+状态指向产物与动作身份，恢复先核查已发生的效果。</p>
 </div>
 <div class="pitfall">
-<p><strong>两轮撞车。</strong>
-昨晚的实验还没跑完，今晚的又开工，两个对话改同一批文件，结果对不上预测。开工先占锁，占不到就退出。</p>
+<p><strong>有锁就认为没有并发。</strong>
+核查锁由谁持有、接管后旧会话能否继续写，所有共享写入走同一入口。</p>
 </div>
 <div class="pitfall">
-<p><strong>认真地跑错方向。</strong>
-循环每晚都顺利完成，结果页每天都有新的一行，但问题一轮比一轮小，或者某个好结果其实来自一个没控制住的因素。设一个独立的反思检查，有权叫停。好结果和坏结果一样要被检查。</p>
+<p><strong>轮数增加就说系统进化。</strong>
+固定未见任务和评分标准，比较是否产生可重复收益。</p>
 </div>
 <div class="pitfall">
-<p><strong>等待时空转。</strong>
-一轮里有一步要等实验，整个循环就停在那里，几个小时没有人看。只让真正依赖这个结果的步骤等，其他事照做；等待时一定有监视器挂着，不然一停就是一夜。</p>
+<p><strong>把运行失败丢掉，结果页只留成功。</strong>
+失败轮次保留状态与原因，才能判断改进作用在哪一环。</p>
 </div>
-<div class="pitfall">
-<p><strong>经验榜越来越长。</strong>
-每轮加两条，一个月后六十条，互相矛盾，下一轮根本读不完。经验榜限定条数，新经验和旧的相近就合并，挤出去的进归档。</p>
-</div>
-<div class="pitfall">
-<p><strong>让循环改自己的尺子。</strong>
-经验榜里出现一条把预测写宽一点，命中率立刻上升。评价标准和预测格式固定在
-<code>LOOP.md</code> 里，经验榜只能改做法。</p>
-</div>
-<div class="pitfall">
-<p><strong>半夜额度用完。</strong>
-定时任务跑到一半额度耗尽，它会反复重试，或者停在半截没人知道。开工前看一眼额度，不够就在状态文件里记下来，等下一个时间点，同时推一条通知。</p>
-</div>
-<div class="promo">
-<p><strong>在 AI 科学家里。</strong> <a
-href="https://github.com/liuguangrui-hit/ai-scientist">AI
-科学家</a>就是这个循环放大后的样子：问题来自文献森林，预测登记进假设森林，实验结果回来后对照，经验写进按行为分开的经验榜，每个季度一次独立反思，可以叫停整个流程。它的经验榜先从几千篇已发表论文里学，再用到自己的课题上，评价它的尺子只有一把：用学到的认识去预测还没看过的论文结果，准不准。</p>
-</div>
-<h2 id="工作台多了什么">工作台多了什么</h2>
+<h4 id="工作台小结">工作台小结</h4>
 <div class="bench">
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>Agent 因此能做的事</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>定时任务</td>
-<td>不用你叫，按时开工</td>
-</tr>
-<tr>
-<td>无人值守调用</td>
-<td>在没人看着的时候，把审查交给另一家</td>
-</tr>
-<tr>
-<td>手机通知</td>
-<td>跑完或卡住时叫你，只说结论</td>
-</tr>
-<tr>
-<td>经验榜</td>
-<td>每轮把做法记下来，下一轮先读，经验可以检验</td>
-</tr>
-<tr>
-<td>GitHub Pages</td>
-<td>结果变成网页，手机上看</td>
-</tr>
-</tbody>
-</table>
-<p>四堂必修课的工具到这里装齐了：两家
-Agent，编译画图和看页面，浏览器和知识库，版本和服务器，定时和通知。结课作品就是用它们为你自己的课题搭一个这样的工作台。两堂选修讲怎样给它装上锁，以及怎样算清这套东西的账。</p>
+<p>前几课的文件现在被状态转移连接起来。课堂的单次定时器按时触发任务，运行器记录执行身份。审阅给出结论判定，经验榜提出下一次的做法。结果页把它们汇到同一个入口，帮助你决定下一步工作。</p>
 </div>
-<h2 id="换成你自己的课题">换成你自己的课题</h2>
-<p>拿你自己的问题清单和实验代码，按 <code>LOOP.md</code>
-的格式写一份你的循环，先手动跑两轮，确认每一步都能从文件接上，再交给定时任务。头几天每天早上看一眼结果页和反思检查，确认它稳了，再改成只看通知。</p>
-<h2 id="课后深入">课后深入</h2>
+<p><a href="https://github.com/liuguangrui-hit/ai-scientist">AI
+科学家</a>把类似职责分给独立模块。本课先用自己的一个问题把最小循环走通，再考虑扩大任务量。</p>
+<h2 id="课后复习与拔高">课后复习与拔高</h2>
+<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
+<p>只读课堂的 <code>STATE.md</code>
+和本轮文件，列出下一位接手者应先查询什么。再关掉
+Agent，从状态图走一遍失败恢复，区别程序执行失败和科学负结果。把仍靠猜测的转移写到
+<code>review-after-class.md</code>，补上可核查的完成条件。</p>
+<h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
+<p>甲看到状态仍是未启动，直接重发实验。乙先用已记任务标识查询，发现产物已生成，只补状态。分别指出二者在断连窗口中可能造成的效果。再看一轮正常执行但否定了预测的实验：它该重试程序，还是进入结论与经验候选？写出理由。</p>
+<details>
+<summary>
+先画恢复路径，再看对照思路
+</summary>
+<p>状态落后于实际动作时，甲可能重复执行。乙依据动作身份核查效果，恢复才有依据。程序成功且产物完整的科学负结果可以正常归档；经验是否有效继续交给未见任务测试。</p>
+</details>
+<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
+<p>先重做一次中断恢复，再从课堂单次唤醒选一条路径。周期调度先安排少量运行，核对暂停与删除入口；外部通知和部署沿用已经明确的目标与授权范围。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -192,261 +149,227 @@ Agent，编译画图和看页面，浏览器和知识库，版本和服务器，
 </colgroup>
 <thead>
 <tr>
-<th>节</th>
-<th>内容</th>
-<th>时长</th>
+<th>路径</th>
+<th>接着解决什么</th>
+<th>交付</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="automate-schedule.html">4.1 定时与无人值守</a></td>
-<td>定时任务的几种做法；命令行版的用法与权限；状态文件；额度</td>
-<td>30 分钟</td>
+<td><a href="automate-schedule.html">4.1 定时调度与无人值守</a></td>
+<td>65 分钟，把课堂恢复接到调度与接管</td>
+<td>状态转移、锁归属和停止演示</td>
 </tr>
 <tr>
-<td><a href="automate-playbook.html">4.2 经验榜</a></td>
-<td>一条经验的样子；合并与上限；怎样判断经验榜真的有用；反思检查</td>
-<td>30 分钟</td>
+<td><a href="automate-playbook.html">4.2 经验管理与评估</a></td>
+<td>70 分钟，让候选经验进入三组检验</td>
+<td>经验版本、冻结任务与对照方案</td>
 </tr>
 <tr>
-<td><a href="automate-pages.html">4.3 结果页</a></td>
-<td>从结果文件生成网页；放什么不放什么；通知里写什么</td>
-<td>25 分钟</td>
+<td><a href="automate-pages.html">4.3 结果展示</a></td>
+<td>45 分钟，让失败与未知状态也进入页面</td>
+<td>本地完整页与待发布投影</td>
 </tr>
 </tbody>
 </table>
-<section id="要点" class="keypoints">
-<h2>要点</h2>
-<ul>
-<li>每轮开新对话，进度和记忆都在文件里。</li>
-<li>一件事只有一个对话在干，开工先占锁。</li>
-<li>经验榜改做法，不改尺子；条数有上限。</li>
-<li>放手之前装刹车：独立反思，有权叫停。</li>
-<li>结果做成网页，通知只推结论和链接。</li>
-</ul>
-</section>
+<p>换自己的课题时，故意选一个可以安全中断的步骤。先让恢复规则经受一次实际失败，再延长无人值守时间。</p>
 </article>
-<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip new">+ Scheduled tasks</span><span class="chip new">+ Headless runs</span><span class="chip new">+ Phone alerts</span><span class="chip new">+ Playbooks</span><span class="chip new">+ GitHub Pages</span></div><h1 id="automation-and-self-evolution">4 Automation and
-Self-Evolution</h1>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip new">+ Scheduled tasks</span><span class="chip new">+ Headless runs</span><span class="chip new">+ Phone alerts</span><span class="chip new">+ Playbooks</span><span class="chip new">+ GitHub Pages</span></div><h1 id="research-automation">4 Research automation</h1>
 <div class="goal">
-<p>In an hour your workbench will be ready to work overnight: at 10 pm
-it picks a question, writes predictions and sends the experiment to the
-server. At 7 am it brings back results, asks another vendor’s agent to
-review, records what it learned in the playbook, updates a results page
-you can open on your phone, and sends you a notification. Every three
-rounds, an independent reflection check judges whether the loop is still
-on track and stops it if needed.</p>
+<p>Build a research loop that a new session can resume, that recovers
+from interruptions and records the reasons for failures. Extract one
+candidate playbook entry from a run and design a test on the next batch
+of tasks.</p>
 </div>
-<p><span class="meta">Core class: 60 minutes. Self-study sections 4.1 to
-4.3 take about an hour and a half in total; read what you
-need.</span></p>
+<p><span class="meta">Prepare before class, spend 60 minutes in class,
+then review and choose an optional extension.</span></p>
+<div class="stage-nav">
+<p><a href="#before-class">Before class</a> · <a href="#in-class">In
+class</a> · <a href="#after-class">After class: review and
+extension</a></p>
+</div>
+<p>An experiment started in the early morning, and the connection
+dropped while the status was being written. Will the morning agent read
+“not finished” and start another copy? An overnight workflow needs a
+reliable way to determine what has already happened when a session
+resumes.</p>
+<p>A research loop has a second problem. It finishes one round a day and
+produces more and more, but is its capability improving too? Once the
+process is connected, give the lessons it learns an independent
+test.</p>
 <div class="download">
-<p><a href="downloads/lesson-4-en.zip">Download the Session 4
+<p><a href="downloads/lesson-4-en.zip">Download the Lesson 4
 materials</a></p>
 </div>
-<p>The materials extend Session 3’s repository with a few additions:
-<code>LOOP.md</code> describes a round, <code>STATE.md</code> records
-progress, <code>playbook.md</code> is an empty playbook,
-<code>review_task.md</code> and <code>reflection_task.md</code> are the
-review and reflection tasks, <code>code/make_page.py</code> builds the
-results page, and <code>ledger.csv</code> is an empty usage ledger.</p>
-<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
-tools at the start: send the card in 1 minute</h2>
+<h2 id="before-class">Before class</h2>
+<p><span class="meta">Allow 15 to 30 minutes, reusing the environment
+from earlier lessons.</span></p>
 <div class="install">
-<p><strong>This session’s hidden thread: let the agent start without you
-calling it, and tell you when it finishes.</strong> Through Session 3,
-every job began with a message from you. This session adds five things:
-scheduled tasks to start on time; command-line Claude and Codex so one
-agent can hand work to another vendor unattended; phone notifications
-when work finishes; a playbook to record methods each round; and GitHub
-Pages to turn results into a web page.</p>
+<p><strong>Before-class setup.</strong> Download the materials and
+install missing dependencies, and prepare a local results page and a
+command-line entry point. Recovery logic, state transitions and testing
+playbook entries are all done in class.</p>
 </div>
-<p>Open the <code>lesson-4</code> folder in Claude and send:</p>
-<pre class="text"><code>First read ../lesson-3/AGENTS.md and copy its tool instructions into this folder&#39;s AGENTS.md.
-This project also needs to run unattended overnight. Check and set up:
-1. Command-line Claude Code and Codex. Test each with one sentence to show it can answer unattended from the command line;
-2. Phone notifications with ntfy. Choose a channel name others cannot guess, tell me which phone app to install and which channel to subscribe to, then send a test notification;
-3. A public repository on my GitHub called lab-results. Enable GitHub Pages, add an index.html containing only a title, and give me the URL.
-Before installing, list what you plan to install and where, and wait for my OK.
-Finally add a few lines to AGENTS.md: how to send notifications, which repository holds the results page, and that unpublished numbers and code stay out of the public repository.</code></pre>
-<p>Once the test notification reaches your phone and the URL shows the
-title, setup is done. The other two need no installation: the playbook
-is <code>playbook.md</code> in the materials, first filled in Exercise
-1; the agent creates scheduled tasks in Exercise 2.</p>
-<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
-minutes</h2>
-<p>Open the results page under <code>preview/site/</code>. It uses
-Session 3’s real results as round one. The top line shows how many
-rounds ran and how many predictions were right. Below, each round has a
-row: question, prediction, right or wrong, and whether the review
-passed. At the bottom is the playbook, each entry naming the round it
-came from. This is the public page, so it stops at right or wrong; the
-full numbers and figures are on the internal page under
-<code>preview/internal/</code>.</p>
-<p>Then open <code>preview/notification.txt</code>: the notification
-sent to your phone at 7 am, with a one-sentence conclusion and a link to
-the results page.</p>
-<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
-<p><strong>Every round is a new conversation.</strong> Keep one
-conversation running for a week, and each wake-up rereads the whole
-week. It gets slower, more expensive, and more likely to forget day
-one’s requirements. Start a new conversation for every scheduled run.
-Read <code>STATE.md</code> to find where the last one stopped, then
-write progress back when done. Memory lives in files.</p>
-<p><strong>Only one conversation works on a task.</strong> Two scheduled
-tasks may overlap, or tonight’s round may begin before last night’s
-ends. Both then edit the same files. First acquire a lock: create a
-<code>.lock</code> folder. If creation fails, someone else is working;
-exit.</p>
-<p><strong>Self-evolution comes from the playbook, not changing
-rules.</strong> At the end of each round, record one or two entries on
-what worked and what failed. Read them at the start of the next round.
-The playbook records methods; it cannot change the evaluation criteria.
-Prediction accuracy and passing review are the loop’s yardstick. The
-yardstick cannot change along with what it measures.</p>
-<p><strong>Fit a brake before letting go.</strong> A common failure of a
-fully automated loop is diligently following a wrong direction for a
-long time. Every three rounds, have an independent conversation read all
-records and judge the direction. It can write a <code>STOP</code> file
-to halt the loop and wait for you.</p>
-<h2 id="exercise-1-run-one-round-manually-15-minutes">Exercise 1: run
-one round manually, 15 minutes</h2>
-<p>Read <code>LOOP.md</code>. It splits a round into starting work and
-wrapping up:</p>
-<pre class="text"><code>Follow LOOP.md to start one round: read STATE.md and playbook.md, and pick an untried question from ../lesson-2/vault/questions.md.
-Write and commit predictions, change the code, run a smoke test, and send the experiment to the server. For this class demo, use only 1 seed and 10 epochs.
-Write progress to STATE.md, then stop.</code></pre>
-<p>A few minutes later, when the experiment finishes, start a new
-conversation:</p>
-<pre class="text"><code>Follow LOOP.md to wrap up one round.</code></pre>
-<p>Wrapping up brings back results, writes the report, calls
-command-line Codex to review, writes results and wrong predictions back
-to Session 2’s knowledge base, adds a question based on the new
-disagreement, updates the playbook and results page, and sends a
-notification. Check your phone. Adding a question keeps the loop from
-running out after the first three.</p>
-<h2 id="exercise-2-let-it-start-on-schedule-15-minutes">Exercise 2: let
-it start on schedule, 15 minutes</h2>
-<pre class="text"><code>Create two scheduled tasks, both running in this folder:
-at 22:00 each night, follow LOOP.md to start work; at 07:00 each morning, follow LOOP.md to wrap up.
-Use a new conversation each time. Before starting, check STATE.md and whether a STOP file exists.
-Use Accept edits mode for the scheduled tasks. Put the commands they need in the project&#39;s allow list; allow no other commands.
-Trigger each once manually to test. Tell me where I can see them and how to pause them.</code></pre>
-<p>Claude desktop’s scheduled tasks appear in the sidebar, where you can
-pause or run them manually. The computer must stay awake. A laptop with
-its lid closed will not start at the scheduled time. Move tasks to the
-server and use the command-line version in that case; see <a
-href="automate-schedule.html">4.1</a>.</p>
-<h2 id="exercise-3-fit-the-brake-10-minutes">Exercise 3: fit the brake,
-10 minutes</h2>
-<pre class="text"><code>Create another scheduled task to check daily at 08:00: if three more rounds have finished since the last reflection, run a reflection check; otherwise exit. The check is an independent new conversation. It reads STATE.md, playbook.md, and every round&#39;s predictions, results and reviews, changes none of them, and writes only its reflection report, plus STOP when needed.
-Answer three questions: is prediction accuracy improving or worsening? Are recent questions getting smaller and more alike? Does any playbook entry hide a problem?
-Write to reflections/&lt;date&gt;.md. If the direction looks wrong, write a STOP file with the reason and send me a notification.</code></pre>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<pre class="text"><code>Place lesson-2, lesson-3 and lesson-4 as neighboring directories, and confirm that my question list and the previous lesson&#39;s results can be found.
+Prepare the locked environment and logs/ as README.md says, keeping the runnable implementation from Lesson 3; if it was not finished, note that and use the packaged preview as the starting point in class.
+Check the official non-interactive entry I chose, and make one zero-delay call on preflight-input.md with the packaged wake_review.py to confirm the current account works.
+This example uses a restricted, tool-free Claude call, with input supplied by the script through stdin; the command is explained in README.md. Do not set up a long-term schedule.
+Open preview/site/index.html and preview/internal/round-1.html, and only confirm that the pages are readable.
+List the existing schedulers and notification channels. Do not add channels, send messages or deploy anything.
+Write the actual commands, file locations and unresolved items into preflight.md, and the stable entry points into AGENTS.md.</code></pre>
+<p>Before class you should be able to find <code>LOOP.md</code> and
+<code>STATE.md</code>, the recovery demonstration and the local preview.
+Do not run the failure demonstration in advance or fill in the recovery
+conclusion; how a failure affects the next step is observed in
+class.</p>
+<p>In class we connect one real short-delay wake-up together and check
+the machine, time zone and execution status. The timer fires only once
+and stops when the process exits; after class it is extended to a few
+periodic runs. External notifications and publishing each need a
+specific target and scope chosen separately.</p>
+<h2 id="in-class">In class</h2>
+<h3 id="records-and-handoff-between-rounds-5-minutes">Records and
+handoff between rounds, 5 minutes</h3>
+<p>First check preflight.md and confirm that this lesson only needs a
+local rehearsal, then look at the state left by the previous round.</p>
+<p>In the exercise materials, <code>LOOP.md</code> holds the handover
+rules and <code>STATE.md</code> records the current step; each round
+leaves its prediction, result and review in its own directory. The
+preview pages are generated from the actual runs of Lesson 3, and
+opening the internal page traces back to the raw numbers.</p>
+<p>The recovery demonstration shows you a failure: the output has been
+written, the status has not yet been committed, and the program exits.
+On the next run it checks the output first, then fills in the status,
+and the number of outputs is still one. You will see how it picks up the
+status from an output that already exists.</p>
+<h3 id="draw-the-loop-as-state-transitions-10-minutes">Draw the loop as
+state transitions, 10 minutes</h3>
+<p>A round of research goes through topic selection, prediction freeze,
+execution, verification, review and archiving. Every transition needs a
+completion condition; for example, moving from execution to verification
+requires both the exit code and the product list to meet their
+requirements.</p>
+<p>An unknown status is queried first, a failed run is recovered
+according to its cause, and a refuted research hypothesis moves normally
+into the conclusion. Only when program failures and negative scientific
+results are kept apart does the loop know whether to fix the code or
+change its understanding.</p>
+<p>Automation implements these transitions. System learning changes
+later choices or methods, and the improvement has to be measured on
+unseen tasks. The two are shown separately in the record.</p>
+<h3 id="exercise-1-recover-from-one-interruption-15-minutes">Exercise 1:
+recover from one interruption, 15 minutes</h3>
+<pre class="text"><code>First read recovery_demo.py and explain which action and which failure point it simulates.
+Run it in a separate demonstration directory as the README says, simulating an exit after the product is written, then run it again.
+Check the number of outputs, the event record and the final state, and explain how it recognizes the same action.
+Then use the same idea to check LOOP.md: find the gap between starting the experiment and writing the state.</code></pre>
+<p>When repeated requests for the same action produce the intended
+effect only once, the action is idempotent. A network timeout does not
+tell you whether the action happened, so recovery must be able to query
+a known action ID, or check the corresponding output locally.</p>
+<h3
+id="exercise-2-schedule-a-read-only-review-and-hand-the-wrap-up-to-a-new-session-15-minutes">Exercise
+2: schedule a read-only review and hand the wrap-up to a new session, 15
+minutes</h3>
+<pre class="text"><code>Reuse a round completed in Lesson 3, or copy the packaged preview as a rehearsal starting point, and state its source.
+Give this round&#39;s result.md to wake_review.py, set to fire once after five seconds with a maximum call time of ninety seconds, writing to a new one-shot-review/.
+Together check the host and time zone in run.json, the planned and actual times, the input hash, the exit code and the final review.md.
+Only a completed run hands its review comments to a new session; for a timeout, failure or empty output, record the reason first and do not advance the review to completed.
+The new session reads only LOOP.md, STATE.md and this round&#39;s records, checks them, then takes over and finishes the round, generating the local page and checking for duplicated effects.</code></pre>
+<p>The teacher and students check the command together before running
+it. Replace the path with this round’s actual record, and use a new
+output directory each time:</p>
+<pre class="bash"><code>python3 wake_review.py --input preview/runs/1/result.md --out one-shot-review --delay-seconds 5 --timeout-seconds 90</code></pre>
+<p>Pressing Ctrl+C during the planned wait, then checking that it shows
+cancelled and calls_started is zero, verifies that no call was made.
+Pressing Ctrl+C during the run stops this subprocess. Finally confirm
+that the process has exited and no periodic wake-up was left behind.</p>
+<p>The task lock determines which session may write; the run ID
+identifies the action being recorded. A lock timeout needs a check of
+the holder and its process; if the old session can still resume writing,
+deleting the lock by time alone creates two writers.</p>
+<h3
+id="exercise-3-record-a-candidate-playbook-entry-and-its-test-10-minutes">Exercise
+3: record a candidate playbook entry and its test, 10 minutes</h3>
+<pre class="text"><code>Distill at most one playbook entry from this round&#39;s failure or success, writing its conditions of use, the concrete action and its source.
+List which kind of unseen task it is expected to change, and the main evaluation metric.
+Keep a no-playbook control, then design a placebo control in the same format and of similar length.
+Mark the entry as a candidate first and put the test plan into the next batch of tasks; do not take this round&#39;s success as proof that it works.</code></pre>
+<p>Once the current loop is complete, set up a few timed runs after
+class. First confirm the stop conditions, the recovery method and what
+happens when quota runs out, and only then extend the unattended
+time.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+summary, 5 minutes</h3>
+<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h4>
 <div class="pitfall">
-<p><strong>One conversation runs for a week.</strong> Each wake-up
-rereads a week’s context, slowly and expensively, and forgets early
-requirements. Start a new conversation each round and keep progress in
-files.</p>
-</div>
-<div class="pitfall">
-<p><strong>Rounds collide.</strong> Tonight’s round starts before last
-night’s experiment finishes. Two conversations edit the same files and
-results no longer match predictions. Acquire the lock first; exit if you
-cannot.</p>
-</div>
-<div class="pitfall">
-<p><strong>Diligently following a wrong direction.</strong> The loop
-finishes every night and adds a row each day, but questions keep
-shrinking, or a good result comes from an uncontrolled factor. Add an
-independent reflection check with power to stop it. Check good results
-as well as bad ones.</p>
+<p><strong>Redoing everything from step one on every wake-up.</strong>
+The state points to products and action identities, and recovery first
+checks which effects have already happened.</p>
 </div>
 <div class="pitfall">
-<p><strong>Idle waiting.</strong> One step waits for an experiment, and
-the whole loop sits there for hours. Wait only on steps that need the
-result; keep doing other work. Always leave a monitor running while
-waiting, or a pause can last all night.</p>
+<p><strong>Assuming there is no concurrency because there is a
+lock.</strong> Check who holds the lock and whether the old session can
+keep writing after a takeover; all shared writes go through the same
+entry point.</p>
 </div>
 <div class="pitfall">
-<p><strong>The playbook keeps growing.</strong> Two entries per round
-become sixty in a month, contradicting each other and too long to read.
-Cap the entries, merge similar ones, and archive displaced entries.</p>
+<p><strong>Saying the system evolved because the number of rounds went
+up.</strong> Fix the unseen tasks and the scoring standard, and compare
+whether a repeatable gain appears.</p>
 </div>
 <div class="pitfall">
-<p><strong>The loop changes its own yardstick.</strong> A playbook entry
-says to widen predictions, and accuracy rises at once. Fix evaluation
-criteria and the prediction format in <code>LOOP.md</code>. The playbook
-changes only methods.</p>
+<p><strong>Discarding failed runs so the results page shows only
+successes.</strong> Only when failed rounds retain their status and
+cause can you judge which stage an improvement affects.</p>
 </div>
-<div class="pitfall">
-<p><strong>Quota runs out at midnight.</strong> A scheduled task
-exhausts the quota halfway through, then retries repeatedly or stops
-without anyone knowing. Check quota before starting. If it is
-insufficient, record that in the state file, wait for the next scheduled
-time, and send a notification.</p>
-</div>
-<div class="promo">
-<p><strong>Inside the AI Scientist.</strong> The <a
-href="https://github.com/liuguangrui-hit/ai-scientist">AI Scientist</a>
-is this loop at a larger scale: questions from the literature forest,
-predictions in the hypothesis forest, comparisons when results return,
-and experience in playbooks separated by behaviour. An independent
-quarterly reflection can stop the whole workflow. Its playbooks first
-learn from thousands of published papers, then apply that learning to
-its own topics. There is one yardstick: how accurately do learned
-insights predict results in papers it has not yet seen?</p>
-</div>
-<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<h4 id="workbench-summary">Workbench summary</h4>
 <div class="bench">
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Tool</th>
-<th>What it lets the agent do</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Scheduled tasks</td>
-<td>Start on time without you calling it</td>
-</tr>
-<tr>
-<td>Headless calls</td>
-<td>Hand reviews to another vendor while nobody is watching</td>
-</tr>
-<tr>
-<td>Phone notifications</td>
-<td>Call you when work ends or gets stuck, with just the conclusion</td>
-</tr>
-<tr>
-<td>Playbook</td>
-<td>Record methods each round, read them before the next, and test the
-experience</td>
-</tr>
-<tr>
-<td>GitHub Pages</td>
-<td>Turn results into a web page you can read on your phone</td>
-</tr>
-</tbody>
-</table>
-<p>The four core sessions’ tools are now installed: two vendors’ agents;
-compiling, plotting and viewing pages; a browser and knowledge base;
-versioning and a server; scheduling and notifications. Your final
-project uses them to build a workbench like this for your own topic. The
-two electives cover putting locks on it and counting its cost.</p>
+<p>The files from earlier lessons are now connected by state
+transitions. The one-shot timer starts the session, the runner records
+run details, the reviewer assesses the conclusions, and the playbook
+suggests methods for future tasks. The results page gathers them into
+one entry point, so you can decide what to continue.</p>
 </div>
-<h2 id="now-with-your-own-topic">Now with your own topic</h2>
-<p>Use your own question list and experiment code to write a loop in the
-format of <code>LOOP.md</code>. Run two rounds manually first and
-confirm each step can pick up from files. Then hand it to scheduled
-tasks. For the first few days, check the results page and reflection
-each morning. Once it is stable, read only the notifications.</p>
-<h2 id="self-study-sections">Self-study sections</h2>
+<p><a href="https://github.com/liuguangrui-hit/ai-scientist">AI
+Scientist</a> divides similar responsibilities among separate modules.
+In this lesson, first get the minimal loop working with one question of
+your own, then consider scaling up the workload.</p>
+<h2 id="after-class">After class: review and extension</h2>
+<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
+<p>Reading only the class <code>STATE.md</code> and this round’s files,
+list what the next person to take over should query first. Then close
+the agent and walk through failure recovery on the state diagram,
+separating a failed program execution from a negative scientific result.
+Write the transitions that still rely on guessing into
+<code>review-after-class.md</code>, and add completion conditions that
+can be checked.</p>
+<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
+minutes</h3>
+<p>A sees that the status is still “not started” and resends the
+experiment straight away. B first queries with the recorded job
+identifier, finds the product already generated, and only fills in the
+status. Say what effect each could have in the disconnection window.
+Then look at an experiment that ran normally but refuted its prediction:
+should it retry the program, or move into the conclusion and a candidate
+playbook entry? Write your reasons.</p>
+<details>
+<summary>
+Draw the recovery path first, then see the comparison notes
+</summary>
+<p>When the status lags behind the actual action, A may execute twice. B
+checks the effect from the action identity, so its recovery has a basis.
+A negative scientific result from a successful program with complete
+products can be archived normally; whether an entry works is still left
+to testing on unseen tasks.</p>
+</details>
+<h3 id="further-study">Further study</h3>
+<p>First redo one interruption recovery, then choose one path that
+builds on the single wake-up from class. Start periodic scheduling with
+a few runs and check the controls for pausing and deleting the schedule;
+external notification and deployment keep to targets and authorization
+already made clear.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -455,49 +378,38 @@ each morning. Once it is stable, read only the notifications.</p>
 </colgroup>
 <thead>
 <tr>
-<th>Section</th>
-<th>Content</th>
-<th>Time</th>
+<th>Path</th>
+<th>Next task</th>
+<th>Deliverable</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="automate-schedule.html">4.1 Scheduling and headless
+<td><a href="automate-schedule.html">4.1 Scheduling and unattended
 runs</a></td>
-<td>Scheduling options; command-line use and permissions; state files;
-quotas</td>
-<td>30 minutes</td>
+<td>65 minutes: connect class recovery to scheduling and takeover</td>
+<td>State transitions, lock ownership and a stop demonstration</td>
 </tr>
 <tr>
-<td><a href="automate-playbook.html">4.2 Playbook</a></td>
-<td>An experience entry; merging and caps; testing whether it helps;
-reflection checks</td>
-<td>30 minutes</td>
+<td><a href="automate-playbook.html">4.2 Managing and evaluating
+playbooks</a></td>
+<td>70 minutes: put a candidate playbook entry through a three-group
+test</td>
+<td>Entry versions, frozen tasks and the control plan</td>
 </tr>
 <tr>
-<td><a href="automate-pages.html">4.3 Results page</a></td>
-<td>Generating pages from result files; what to publish; what to put in
-notifications</td>
-<td>25 minutes</td>
+<td><a href="automate-pages.html">4.3 Presenting results</a></td>
+<td>45 minutes: put failures and unknown states on the page too</td>
+<td>A complete local page and a public view prepared for
+publication</td>
 </tr>
 </tbody>
 </table>
-<section id="key-points" class="keypoints">
-<h2>Key points</h2>
-<ul>
-<li>Start a new conversation each round. Progress and memory live in
-files.</li>
-<li>Only one conversation works on a task. Acquire the lock first.</li>
-<li>The playbook changes methods, not the yardstick; cap its
-entries.</li>
-<li>Fit a brake before letting go: an independent reflection with power
-to stop.</li>
-<li>Make results into a web page; notifications carry only a conclusion
-and link.</li>
-</ul>
-</section>
+<p>When you switch to your own topic, deliberately choose a step that
+can be interrupted safely. Let the recovery rules survive one actual
+failure first, then extend the unattended time.</p>
 </article>
-<nav class="pager"><a class="prev" href="experiment-evidence.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.3 结果能说明什么</span><span lang="en">3.3 What a result shows</span></a><a class="next" href="automate-schedule.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.1 定时与无人值守</span><span lang="en">4.1 Scheduling and headless runs</span></a></nav>
+<nav class="pager"><a class="prev" href="experiment-evidence.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.3 结果判读</span><span lang="en">3.3 Interpreting results</span></a><a class="next" href="automate-schedule.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4.1 定时调度与无人值守</span><span lang="en">4.1 Scheduling and unattended runs</span></a></nav>
 </main>
 </div>
 </body>

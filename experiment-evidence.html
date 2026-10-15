@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>结果能说明什么 · 用 Agent 做科研</title>
+<title>结果判读 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,271 +17,258 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
 <a href="experiment-git.html" class="sub"><span class="num">3.1</span><span lang="zh">Git 与 GitHub</span><span lang="en">Git and GitHub</span></a>
 <a href="experiment-server.html" class="sub"><span class="num">3.2</span><span lang="zh">服务器与后台任务</span><span lang="en">Servers and background jobs</span></a>
-<a href="experiment-evidence.html" class="cur sub"><span class="num">3.3</span><span lang="zh">结果能说明什么</span><span lang="en">What a result shows</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="experiment-evidence.html" class="cur sub"><span class="num">3.3</span><span lang="zh">结果判读</span><span lang="en">Interpreting results</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="结果能说明什么">3.3 结果能说明什么</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>Agent
-能在一下午跑完以前一周的实验，也能在一下午写出一份看起来很扎实、其实什么都没证明的结果说明。这一节讲怎样让一个实验真的说明点什么：实验前写预测，实验里放对照，实验后有人审。</p>
-<h2 id="预测怎么写">预测怎么写</h2>
-<p>一条有用的预测有三部分：</p>
-<ol type="1">
-<li>一个数字或者方向：带噪验证集早停，最终准确率比干净验证集低 2 到 5
-个点。</li>
-<li>一句理由：验证集的噪声让停止点晚几轮，网络已经开始记错误标签。</li>
-<li>怎样判对错：低 2 到 5 个点算对，其余都算错。</li>
-</ol>
-<p>第三部分最容易漏。没有它，任何结果都能被说成大致符合预期。</p>
-<p>预测写完立刻提交到 Git。提交记录摆明了预测在先，结果在后。</p>
-<h2 id="对照">对照</h2>
-<p>只跑自己的方法，结果再好也说明不了它好在哪里。一个实验至少要有：</p>
-<table>
-<thead>
-<tr>
-<th>对照</th>
-<th>回答的问题</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>不加任何处理的基线</td>
-<td>有没有提升</td>
-</tr>
-<tr>
-<td>已知有效的方法</td>
-<td>提升算不算大</td>
-</tr>
-<tr>
-<td>本该没有效果的处理</td>
-<td>提升是不是来自别的东西</td>
-</tr>
-</tbody>
-</table>
-<p>第三种最容易被忽略。比如你在提示里加了一段经验让 Agent
-做得更好，那就再跑一组加同样长度、但内容无关的文字，看提升还在不在。很多看起来漂亮的效果，加上这种对照后就消失了，原来只是因为提示变长了。</p>
-<h2 id="种子和波动">种子和波动</h2>
-<p>同一个实验换个随机种子，结果会变。第 1
-课的实验每个设置跑五个种子。比较两个方法时，两边用同样的种子，按种子配对相减，看这五个差值：均值多大，95%
-置信区间跨不跨过零。区间跨过零，就不能说一个比另一个好。</p>
-<pre class="text"><code>对 results.csv 里每个设置，报五个种子的均值和标准差。
-对比两种早停时，按种子配对算差值，报差值的均值和 95% 置信区间；区间跨过零的，结论写差别不明显。</code></pre>
-<h2 id="怀疑好结果">怀疑好结果</h2>
-<p>坏结果大家都会查：代码有没有错，参数对不对。好结果往往直接写进论文。对好结果用同样的标准：</p>
-<ul>
-<li>换一组种子，效果还在不在？</li>
-<li>换一个噪声水平，方向一致吗？</li>
-<li>加上本该没效果的对照，差距还在吗？</li>
-<li>是不是测试集泄漏进了训练或者早停？</li>
-</ul>
-<p>最后一条在早停实验里尤其常见：用测试集选停止点，结果当然好。</p>
-<h2 id="结果说明的样子">结果说明的样子</h2>
-<pre class="text"><code># 带噪验证集早停
-
-提交 3f2a1c9
-
-这张表摘自第 3 课预览的真实结果。
-
-## 预测与结果
-| 预测 | 结果 | 对错 |
-|---|---|---|
-| 准确率比干净验证集低 2 到 4 点 | 高 0.99 点，配对差的 95% 置信区间跨过零 | 错 |
-| 停止点晚 2 到 6 轮 | 早 2.6 轮 | 错 |
-| 最终准确率 92% 到 96% | 93.25% | 对 |
-
-## 这说明了什么
-带噪验证集照样看得出网络何时开始记错误标签，早停把准确率从 68.37% 拉回 93.25%。
-
-## 没说明什么
-一段话：只在这个合成任务上试过，没有试非对称噪声。</code></pre>
-<p>没说明什么那一段写一次，写在这里。不要把限定拆开散到每一句话里，满篇的可能和在一定程度上，读者反而找不到你真正的结论。</p>
-<h2 id="审查">审查</h2>
-<p>写说明的 Agent
-和跑实验的是同一个，看不出自己的盲点。审查交给另一家，只看预测、结果文件和说明三样东西，查数字是否对得上，结论是否超出数字，提交编号是否对应。</p>
-<p>审查意见对应具体的提交编号。说明改了，旧意见就过期了，要重审。审查做完也不等于通过，要看意见里的判断。</p>
-<h2 id="预测错了怎么办">预测错了怎么办</h2>
-<p>预测错了是这个流程里最有价值的结果。它说明你对这个现象的理解有一处不对。让
-Agent 把错的那条预测和实际结果写进知识库的分歧表，第 4
-课的循环会从这里接着提下一个问题。</p>
-<h2 id="练习">练习</h2>
-<p>在练习 3
-的结果上，补一个本该没有效果的对照：验证集换成完全随机的标签，按它早停。预测它的结果，跑，对照。</p>
-<details>
-<summary>
-会看到什么
-</summary>
-<p>随机标签的验证集里没有关于真实标签的信息，按它选停止点，通常停得很早或者很随意。如果它也带来和带噪验证集差不多的提升，说明提升主要来自早停这个动作本身，而不是验证集里的信息。这本身就是一个值得写进分歧表的发现。</p>
-</details>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
-<div class="pitfall">
-<p><strong>限定散在每一句里。</strong>
-每句话都加可能，读者找不到结论。没说明什么集中写一段。</p>
-</div>
-<div class="pitfall">
-<p><strong>差距小于波动还说更好。</strong> 0.3
-个点的平均差距，五个种子里有正有负，不能说谁更好。按种子配对算差值的置信区间，跨过零就写差别不明显。</p>
-</div>
-<div class="pitfall">
-<p><strong>测试集参与了选择。</strong>
-用测试集早停或调参，结果当然好看。验证集从训练集里切，测试集只在最后用一次。</p>
-</div>
-</article>
-<article lang="en"><h1 id="what-results-show">3.3 What results show</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>An agent can finish a week’s experiments in an afternoon. It can also
-spend that afternoon writing a solid-looking report that proves nothing.
-This section covers how to make an experiment show something:
-predictions before it, controls during it, and a review after it.</p>
-<h2 id="writing-predictions">Writing predictions</h2>
-<p>A useful prediction has three parts:</p>
-<ol type="1">
-<li>A number or direction: with early stopping on a noisy validation
-set, final accuracy will be 2 to 5 percentage points below that with a
-clean validation set.</li>
-<li>A one-sentence reason: validation noise delays stopping by a few
-epochs, by which time the network has started memorizing wrong
-labels.</li>
-<li>A rule for right or wrong: a drop of 2 to 5 points is right;
-anything else is wrong.</li>
-</ol>
-<p>The third is easiest to miss. Without it, any result can be described
-as broadly expected.</p>
-<p>Commit predictions to Git as soon as you write them. The commit
-history makes the order clear: predictions first, results later.</p>
-<h2 id="controls">Controls</h2>
-<p>Running only your method cannot show what makes it good, however good
-the result. An experiment needs at least:</p>
+<article lang="zh"><h1 id="结果判读">3.3 结果判读</h1>
+<p><span class="meta">课后深入，约 80 分钟。</span></p>
+<p>带噪验证早停比干净验证早停高 0.99
+个百分点。你准备怎样写这句结论？先看差值的不确定性，再看实验是否区分了你关心的解释。</p>
+<h2 id="配对差值与区间估计">配对差值与区间估计</h2>
+<p>设同一种子下两种方法的差值为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>，共
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+个独立种子。报告配对均值与区间：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>d</mi><mi>i</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>±</mo><msub><mi>t</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mo>,</mo><mn>0.975</mn></mrow></msub><mfrac><msub><mi>s</mi><mi>d</mi></msub><msqrt><mi>n</mi></msqrt></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\bar d=\frac{1}{n}\sum_i d_i,\qquad
+\bar d\pm t_{n-1,0.975}\frac{s_d}{\sqrt n}.
+</annotation></semantics></math></p>
+<p>预览的 CE 四成噪声比较，五个种子的差值标准差约 1.07 个百分点，得到
+95% 区间负 0.34 到
+2.32。这里的区间来自配对差值，不能用两组各自的标准差替代。</p>
+<p>种子数很少时，区间依赖差值分布假设。把每个差值也展示出来，检查异常值与依赖；任务或数据集也有抽样时，按真正独立的单位做分层分析。</p>
+<h2 id="差异检验与等价检验">差异检验与等价检验</h2>
+<p>区间跨零，当前数据还无法确认正负差异。若研究主张是两种验证方式在实际应用上等价，先给有意义的界，例如正负
+2 个百分点，再做等价检验和样本量设计。</p>
+<p>标准的双单侧等价检验在每侧 5% 水平下，看 90%
+区间是否完全落在等价界内。95% 区间完全落入是更保守的充分条件。预览的 95%
+区间超过正 2，单凭它不能宣布这个等价主张成立。</p>
+<p>想证明事前提出的等价主张，增加独立重复并降低估计不确定性，保留原先的界。根据结果临时放宽界，会改变要回答的问题。</p>
+<h2 id="带噪验证标签为什么仍能排序">带噪验证标签为什么仍能排序</h2>
+<p>先看一个可以推导的情形。<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+类分类中，验证标签以概率
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>η</mi><annotation encoding="application/x-tex">\eta</annotation></semantics></math>
+均匀翻成其他类别，且翻转独立于输入和预测。某个固定模型的干净验证准确率是
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>，带噪准确率的期望为：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">̃</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>η</mi><mo stretchy="false" form="postfix">)</mo><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>C</mi><mi>η</mi></mrow><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\tilde a=(1-\eta)a+\frac{\eta}{C-1}(1-a)
+=\left(1-\frac{C\eta}{C-1}\right)a+\frac{\eta}{C-1}.
+</annotation></semantics></math></p>
+<p>当
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>&lt;</mo><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">\eta&lt;(C-1)/C</annotation></semantics></math>，斜率为正，期望上的模型排名保持不变。十分类、四成翻转时，斜率约
+0.556。标签变坏了，平均排序信息仍能留下来，但有限验证集上的噪声会让排序更不稳定。</p>
+<p>练习包的
+<code>verify_noise_identity.py</code>，枚举正确与错误预测下的翻转结果，复算这条等式。再读原实验的早停实现：它监测的是交叉熵，这条准确率等式并没有直接证明该实现的行为。下一步可以比较两种验证指标，再改变噪声生成方式。</p>
+<h2 id="竞争解释与判别实验">竞争解释与判别实验</h2>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
-<th>Control</th>
-<th>Question it answers</th>
+<th>竞争解释</th>
+<th>新增干预</th>
+<th>看什么</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>A baseline with no treatment</td>
-<td>Is there an improvement?</td>
+<td>验证标签仍保留排序信息</td>
+<td>逐步提高验证噪声，固定训练轨迹</td>
+<td>选轮次质量和排序相关性如何下降</td>
 </tr>
 <tr>
-<td>A method known to work</td>
-<td>Is the improvement large?</td>
+<td>提前停止本身已经足够</td>
+<td>预先抽取随机停止轮次，匹配平均训练预算</td>
+<td>验证选择是否超过随机选择</td>
 </tr>
 <tr>
-<td>A treatment that should have no effect</td>
-<td>Does the improvement come from something else?</td>
+<td>对称噪声结构保留了信号</td>
+<td>改为类别相关或实例相关噪声</td>
+<td>排名与选轮次的优势是否改变</td>
 </tr>
 </tbody>
 </table>
-<p>The third is often overlooked. If adding experience to a prompt helps
-the agent, run another group with equally long but irrelevant text. Does
-the gain remain? Many impressive effects disappear with this control:
-the prompt was simply longer.</p>
-<h2 id="seeds-and-variation">Seeds and variation</h2>
-<p>Change the random seed and the result changes. Session 1’s experiment
-runs five seeds per setting. To compare methods, use the same seeds for
-both and subtract within each pair. Look at the five differences: how
-large is the mean, and does its 95% confidence interval cross zero? If
-it crosses zero, you cannot say one is better.</p>
-<pre class="text"><code>For each setting in results.csv, report the mean and standard deviation across five seeds.
-Compare the two early-stopping methods with paired differences by seed. Report the mean difference and its 95% confidence interval. If the interval crosses zero, say the difference is not clear.</code></pre>
-<h2 id="question-good-results">Question good results</h2>
-<p>Everyone checks bad results: is the code wrong, are the parameters
-right? Good results often go straight into the paper. Apply the same
-standard to them:</p>
-<ul>
-<li>Does the effect remain with another set of seeds?</li>
-<li>Is the direction consistent at another noise level?</li>
-<li>Does the gap remain with a control that should have no effect?</li>
-<li>Did the test set leak into training or early stopping?</li>
-</ul>
-<p>The last is especially common in early-stopping experiments. Of
-course the result looks good if you choose the stopping point with the
-test set.</p>
-<h2 id="what-a-result-report-looks-like">What a result report looks
-like</h2>
-<pre class="text"><code># Early stopping with a noisy validation set
-
-Commit 3f2a1c9
-
-This table comes from Session 3&#39;s real preview results.
-
-## Predictions and results
-| Prediction | Result | Right or wrong |
-|---|---|---|
-| Accuracy 2 to 4 points below clean validation | 0.99 points above; the paired difference&#39;s 95% confidence interval crosses zero | Wrong |
-| Stops 2 to 6 epochs later | 2.6 epochs earlier | Wrong |
-| Final accuracy 92% to 96% | 93.25% | Right |
-
-## What this shows
-Noisy validation still reveals when the network starts memorizing wrong labels. Early stopping brings accuracy back from 68.37% to 93.25%.
-
-## What it does not show
-One paragraph: tested only on this synthetic task, not with asymmetric noise.</code></pre>
-<p>State what it does not show once, here. Do not scatter qualifications
-across every sentence. With “may” and “to some extent” everywhere,
-readers cannot find your actual conclusion.</p>
-<h2 id="review">Review</h2>
-<p>The agent writing the report also ran the experiment and cannot see
-its own blind spots. Give the review to another vendor. It reads only
-predictions, result files and the report, checking whether numbers
-match, conclusions go beyond them, and commit IDs correspond.</p>
-<p>Review comments apply to a specific commit ID. Once the report
-changes, old comments expire; review again. A completed review is not a
-pass. Read its judgment.</p>
-<h2 id="when-a-prediction-is-wrong">When a prediction is wrong</h2>
-<p>A wrong prediction is the most valuable result in this workflow. It
-shows a gap in your understanding of the phenomenon. Have the agent
-write the wrong prediction and actual result into the knowledge base’s
-conflict table. Session 4’s loop draws its next question from there.</p>
-<h2 id="exercise">Exercise</h2>
-<p>Add a control that should have no effect to Exercise 3’s results:
-replace validation labels with completely random labels and use them for
-early stopping. Predict, run, compare.</p>
-<details>
-<summary>
-What you will see
-</summary>
-<p>A validation set with random labels has no information about the true
-labels. Using it to choose a stopping point usually stops very early or
-arbitrarily. If it gives about the same gain as noisy validation, the
-gain mainly comes from stopping early itself, rather than information in
-the validation set. That is a finding worth putting in the conflict
-table.</p>
-</details>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>先登记每种解释的预测，再执行，按表中的观测决定下一项实验。</p>
+<h2 id="多次尝试的完整记录">多次尝试的完整记录</h2>
+<p>试十种设置只展示最好的一种，会把随机波动变成方法优势。计划中指定主要比较；其余作为探索性分析保留全部尝试，新的发现再用独立数据或新种子确认。</p>
+<p>效果依赖某个设置时，先问什么机制预测了这个依赖。增加跨条件实验，报告交互作用，避免只按显著与否分组。</p>
+<h2 id="练习">练习</h2>
+<p>运行包内等式核验，再提出一个交叉熵早停与准确率选轮次可能不同的情形。写明要新增哪列曲线，怎样配对分析，什么结果会改变解释。可用同一训练轨迹比较选择规则，测试集只用于最终报告。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>Qualifications in every sentence.</strong> Put “may” in every
-sentence and readers cannot find the conclusion. Keep what the result
-does not show in one paragraph.</p>
+<p><strong>用测试曲线最高点当可实现算法。</strong>
+这可以描述轨迹或给事后参照，实际选择必须由事前允许的信息完成。</p>
 </div>
 <div class="pitfall">
-<p><strong>Calling a gap smaller than the variation an
-improvement.</strong> A mean gap of 0.3 points, positive for some of
-five seeds and negative for others, cannot tell you which is better.
-Compute the confidence interval of paired differences by seed. If it
-crosses zero, say the difference is not clear.</p>
+<p><strong>期望排序推导直接代替有限样本实验。</strong>
+增加验证集规模和噪声类型的对照，测排名稳定性。</p>
 </div>
 <div class="pitfall">
-<p><strong>The test set helps make choices.</strong> Early stopping or
-tuning with the test set makes results look good. Hold validation data
-out of training; use the test set only once, at the end.</p>
+<p><strong>主要比较失败就换一个显著结果讲。</strong>
+保留主比较结论，探索性发现用下一次独立实验确认。</p>
 </div>
 </article>
-<nav class="pager"><a class="prev" href="experiment-server.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.2 服务器与后台任务</span><span lang="en">3.2 Servers and background jobs</span></a><a class="next" href="automate.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4 Agent 自动化与自进化</span><span lang="en">4 Automation and Self-Evolution</span></a></nav>
+<article lang="en"><h1 id="interpreting-results">3.3 Interpreting results</h1>
+<p><span class="meta">After-class deep dive, about 80
+minutes.</span></p>
+<p>Accuracy with early stopping on noisy validation is 0.99 percentage
+points higher than with early stopping on clean validation. How will you
+write that conclusion? First look at the uncertainty of the difference,
+then at whether the experiment separated the explanations you care
+about.</p>
+<h2 id="estimate-paired-differences-and-intervals">Estimate paired
+differences and intervals</h2>
+<p>Let the difference between the two methods under the same seed be
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>i</mi></msub><annotation encoding="application/x-tex">d_i</annotation></semantics></math>,
+over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+independent seeds. Report the paired mean and interval:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>d</mi><mi>i</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><mover><mi>d</mi><mo accent="true">‾</mo></mover><mo>±</mo><msub><mi>t</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn><mo>,</mo><mn>0.975</mn></mrow></msub><mfrac><msub><mi>s</mi><mi>d</mi></msub><msqrt><mi>n</mi></msqrt></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\bar d=\frac{1}{n}\sum_i d_i,\qquad
+\bar d\pm t_{n-1,0.975}\frac{s_d}{\sqrt n}.
+</annotation></semantics></math></p>
+<p>In the preview’s CE comparison at 40% noise, the standard deviation
+of the differences over five seeds is about 1.07 percentage points,
+giving a 95% interval of minus 0.34 to 2.32. This interval comes from
+the paired differences; it cannot be replaced by each group’s own
+standard deviation.</p>
+<p>With very few seeds, the interval depends on assumptions about the
+distribution of differences. Show each difference as well, and check for
+outliers and dependence; when tasks or datasets are also sampled, do a
+stratified analysis by the truly independent unit.</p>
+<h2
+id="distinguish-tests-of-difference-from-tests-of-equivalence">Distinguish
+tests of difference from tests of equivalence</h2>
+<p>When the interval crosses zero, the current data cannot yet confirm a
+positive or negative difference. If the research claim is that the two
+validation approaches are equivalent in practice, first give a
+meaningful margin, such as plus or minus 2 percentage points, then do an
+equivalence test and sample-size planning.</p>
+<p>The standard two one-sided tests procedure, at the 5% level on each
+side, checks whether the 90% interval lies entirely within the
+equivalence margin. A 95% interval lying entirely inside is a more
+conservative sufficient condition. The preview’s 95% interval goes
+beyond plus 2, so on its own it cannot establish this equivalence
+claim.</p>
+<p>To prove an equivalence claim stated in advance, add independent
+replications and reduce the uncertainty of the estimate, keeping the
+original margin. Widening the margin on the spot in light of the result
+changes the question being answered.</p>
+<h2 id="why-noisy-validation-labels-can-preserve-model-rankings">Why
+noisy validation labels can preserve model rankings</h2>
+<p>Start with a case we can analyze mathematically. In
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>-class
+classification, validation labels are flipped uniformly to the other
+classes with probability
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>η</mi><annotation encoding="application/x-tex">\eta</annotation></semantics></math>,
+independently of the input and the prediction. If a fixed model’s clean
+validation accuracy is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>,
+the expected noisy accuracy is:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">̃</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>η</mi><mo stretchy="false" form="postfix">)</mo><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>a</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mi>C</mi><mi>η</mi></mrow><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>a</mi><mo>+</mo><mfrac><mi>η</mi><mrow><mi>C</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\tilde a=(1-\eta)a+\frac{\eta}{C-1}(1-a)
+=\left(1-\frac{C\eta}{C-1}\right)a+\frac{\eta}{C-1}.
+</annotation></semantics></math></p>
+<p>When
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>&lt;</mo><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">\eta&lt;(C-1)/C</annotation></semantics></math>,
+the slope is positive and the expected ranking of models stays the same.
+With ten classes and 40% flips, the slope is about 0.556. The labels got
+worse, but the average ranking information survives; noise on a finite
+validation set still makes the ranking less stable.</p>
+<p>The exercise package’s <code>verify_noise_identity.py</code>
+enumerates the flip outcomes under correct and incorrect predictions and
+recomputes this identity. Then read the early-stopping implementation of
+the original experiment: it monitors cross-entropy, and this accuracy
+identity does not directly prove how that implementation behaves. A next
+step is to compare the two validation metrics, then change how the noise
+is generated.</p>
+<h2 id="design-controls-that-distinguish-mechanisms">Design controls
+that distinguish mechanisms</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Competing explanation</th>
+<th>New intervention</th>
+<th>What to look at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation labels still keep ranking information</td>
+<td>Raise validation noise step by step, with the training trajectory
+fixed</td>
+<td>How the quality of the chosen epoch and the rank correlation
+decline</td>
+</tr>
+<tr>
+<td>Stopping early is already enough by itself</td>
+<td>Draw random stopping epochs in advance, matching the average
+training budget</td>
+<td>Whether validation-based selection beats random selection</td>
+</tr>
+<tr>
+<td>The symmetric noise structure preserved the signal</td>
+<td>Switch to class-dependent or instance-dependent noise</td>
+<td>Whether the advantage in ranking and epoch selection changes</td>
+</tr>
+</tbody>
+</table>
+<p>First record each explanation’s prediction in advance, then run, and
+decide the next experiment from the observations in the table.</p>
+<h2 id="record-all-experimental-attempts">Record all experimental
+attempts</h2>
+<p>Trying ten settings and showing only the best turns random
+fluctuation into a method advantage. Name the main comparison in the
+plan; keep all other attempts as exploratory analysis, and confirm new
+findings with independent data or new seeds.</p>
+<p>When an effect depends on a setting, first ask which mechanism
+predicted that dependence. Add cross-condition experiments and report
+the interaction, rather than sorting results into significant and not
+significant.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Run the identity check in the package, then propose a case where
+cross-entropy early stopping and accuracy-based epoch selection might
+differ. State which additional curve you would record, how to analyze it
+in pairs, and which result would change the explanation. You can compare
+selection rules on the same training trajectory; the test set is used
+only for the final report.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
+<div class="pitfall">
+<p><strong>Treating the peak of the test curve as an achievable
+algorithm.</strong> It can describe the trajectory or serve as a
+post-hoc reference, but the actual selection must use only information
+allowed in advance.</p>
+</div>
+<div class="pitfall">
+<p><strong>Letting the derivation of the expected ranking replace a
+finite-sample experiment.</strong> Add controls on validation-set size
+and noise type, and measure ranking stability.</p>
+</div>
+<div class="pitfall">
+<p><strong>Switching to a significant result when the main comparison
+fails.</strong> Keep the conclusion of the main comparison, and confirm
+exploratory findings with the next independent experiment.</p>
+</div>
+</article>
+<nav class="pager"><a class="prev" href="experiment-server.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.2 服务器与后台任务</span><span lang="en">3.2 Servers and background jobs</span></a><a class="next" href="automate.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">4 自动化</span><span lang="en">4 Research automation</span></a></nav>
 </main>
 </div>
 </body>

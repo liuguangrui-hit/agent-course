@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用量账本 · 用 Agent 做科研</title>
+<title>用量与成本核算 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,248 +17,212 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
-<a href="theory-usage.html" class="cur sub"><span class="num">6.1</span><span lang="zh">用量账本</span><span lang="en">The usage ledger</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
+<a href="theory-learning.html" class="sub"><span class="num">6.1</span><span lang="zh">经验学习与策略表示</span><span lang="en">Learning through experience</span></a>
+<a href="theory-evaluation.html" class="sub"><span class="num">6.2</span><span lang="zh">学习收益评估</span><span lang="en">Evaluating learning gains</span></a>
+<a href="theory-transfer.html" class="sub"><span class="num">6.3</span><span lang="zh">原点漂移与迁移</span><span lang="en">Origin drift and transfer</span></a>
+<a href="theory-usage.html" class="cur sub"><span class="num">6.4</span><span lang="zh">用量与成本核算</span><span lang="en">Usage and cost accounting</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="用量账本">6.1 用量账本</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p>这一节讲账本记什么，从哪里取数，怎样分段，以及几条常用的算式。</p>
-<h2 id="记什么">记什么</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>列</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>日期</td>
-<td></td>
-</tr>
-<tr>
-<td>事情</td>
-<td>一句话，比如第 7 轮收工，读 14 篇论文写笔记</td>
-</tr>
-<tr>
-<td>Agent</td>
-<td>Claude 或 Codex，哪个账号</td>
-</tr>
-<tr>
-<td>对话数</td>
-<td>这件事开了几个对话，含 Sub-agent</td>
-</tr>
-<tr>
-<td>输入 token，缓存读取，缓存写入，输出 token</td>
-<td>分开记，四者价格不同，输入和缓存读取通常占大头</td>
-</tr>
-<tr>
-<td>审稿轮次，是否提出实质意见</td>
-<td>只有审稿类的事情填，供算审稿该在第几轮停</td>
-</tr>
-<tr>
-<td>估算费用</td>
-<td>按官方 API
-价格估；订阅用户实际付的是月费，这一列只用来比相对大小</td>
-</tr>
-<tr>
-<td>耗时</td>
-<td>从开工到收工的墙上时间</td>
-</tr>
-<tr>
-<td>是否采用</td>
-<td>产出最后是被用上了，改了一部分，还是推翻重来</td>
-</tr>
-</tbody>
-</table>
-<p>最后一列最容易漏，也最重要。没有它，你只知道花了多少，不知道值不值。</p>
-<h2 id="从哪里取数">从哪里取数</h2>
-<p>Claude Code 把每个对话的用量记在本机的日志里，<a
-href="https://github.com/ryoppippi/ccusage">ccusage</a>
-按天、按对话汇总这些日志。Codex
-也有类似的本地记录。对话里也能随时查看当前用量和额度。</p>
-<pre class="text"><code>用 ccusage 列出今天每个对话的输入输出 token 和起止时间，按开始时间排序。
-对照 STATE.md 的记录，把每个对话对应到账本里的一件事，填进 ledger.csv。
-起止时间之差含着空闲的时间，耗时一列以 STATE.md 里记的开工和收工时间为准。</code></pre>
-<h2 id="按事情分段">按事情分段</h2>
-<p>账要按事情记，不按天记。一天的总数告诉你今天花得多，但不告诉你花在哪。最简单的分段办法是开工和收工各记一笔：开工时记下时间和当前累计用量，收工时再记一次，差值就是这件事的用量。</p>
-<p>第 4 课的循环里，这一步可以写进
-<code>LOOP.md</code>：开工的第一步、收工的最后一步，各往账本里追加一行。</p>
-<h2 id="几条常用算式">几条常用算式</h2>
-<p><strong>对话长度的成本。</strong> 每轮新增约 c 个 token，n
-轮的对话累计输入约 c · n² / 2。拆成 m 段，每段 n / m
-轮，每轮都要连带读一遍 h 个 token 的交接文件，另外每换一段要付一次
-r，用来写交接文件和重新熟悉任务。总量约 c · n² / (2m) + n · h + m ·
-r。中间一项和 m 无关，对 m 求最小，最佳段数约为 n · √(c /
-2r)。交接文件越短，每轮多读的越少；换段的代价 r
-越大，段就该分得越少。</p>
-<p><strong>再做一轮的价值。</strong> 第 k 轮发现实质问题的概率
-p_k，一个问题的价值 V，一轮的花费 C。p_k · V &lt; C 时停。p_k
-从账本里过去同类事情的记录数出来。</p>
-<p><strong>并行的划算条件。</strong> 串行耗时 T、花费 S；并行耗时
-T′、花费 S′。你的时间每小时值 w，当 (T − T′) · w &gt; S′ − S
-时并行划算。</p>
-<p><strong>每个被采用结果的成本。</strong>
-一段时间的总花费除以被采用的结果数。比较两种编排，比的是这个数，不是单次花费。</p>
-<p>这些式子都很粗。它们的用处不是给出精确的答案，而是把要不要再审一轮这种问题，拆成几个能从账本里查到的数和一个你自己判断的价值。</p>
+<article lang="zh"><h1 id="用量与成本核算">6.4 用量与成本核算</h1>
+<p><span class="meta">课后深入，约 40 分钟。</span></p>
+<p>一张经验榜提高了正确率，却让每次任务多花一倍时间。它是否值得部署，需要结合学习收益和资源成本作判断。</p>
+<h2 id="用量来源与统计口径">用量来源与统计口径</h2>
+<p>记录任务与执行者并注明起止时间，再分别填写输入、输出与缓存用量。不同产品的输入字段可能已包含缓存读取，也可能只计未缓存输入，先查日志定义，再做加总。</p>
+<p>练习包的账本明确把未缓存输入，缓存读，缓存写和输出分列，四列互不重叠。新增自己的日志时，保留原始字段与来源，转换成统一口径。读不到的数留缺失，零是一个实际测量值。</p>
+<p>订阅费用、API 费用和按 API
+价折算的资源量分别写。示例费率只是演算假设，实际价格到官方页面核对，不能当作订阅的逐
+token 账单。</p>
+<h2 id="对话分段的简化模型">对话分段的简化模型</h2>
+<p>每轮增加
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+个历史 token，共
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+轮，若每轮完整读取累计历史，输入总量约为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">cn(n+1)/2</annotation></semantics></math>。这是未考虑压缩与截断的模型。</p>
+<p>均匀拆成
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+段，每轮读交接长度
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>，每次换段另付成本
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>，忽略与
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+无关的小项，可写：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>≈</mo><mfrac><mrow><mi>c</mi><msup><mi>n</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><mo>+</mo><mi>n</mi><mi>h</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>r</mi><mo>,</mo><mspace width="2.0em"></mspace><msup><mi>m</mi><mo>*</mo></msup><mo>≈</mo><mi>n</mi><msqrt><mfrac><mi>c</mi><mrow><mn>2</mn><mi>r</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">F(m)\approx\frac{cn^2}{2m}+nh+(m-1)r,\qquad
+m^*\approx n\sqrt{\frac{c}{2r}}.</annotation></semantics></math></p>
+<p>计算器另计首段启动成本，两式相差固定的
+r。最优段数不受影响，节省比例以计算器的一段基准为准。把各项统一成同一种成本单位，再代入相邻整数和合法范围。实际缓存、压缩和任务切换会改变形状，用自己的逐轮日志验证。更短的会话还可能增加遗漏，交付采用率也要比较。</p>
+<h2 id="多做一轮的价值">多做一轮的价值</h2>
+<p>再审一轮发现实质问题的概率为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>，问题价值为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>，本轮成本为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>。粗略决策看
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>V</mi><mo>−</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">pV-C</annotation></semantics></math>。<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
+从同类历史任务估计，样本少时做敏感性分析。</p>
+<p>既定必需核查仍应完成。这条式子适合在合格产物上决定追加审阅，不能用来略过尚未完成的验收。</p>
+<h2 id="并行的成本与收益">并行的成本与收益</h2>
+<p>串行与并行分别花费
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>,</mo><msup><mi>S</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">S,S&#39;</annotation></semantics></math>，实际耗时为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>,</mo><msup><mi>T</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">T,T&#39;</annotation></semantics></math>，时间价值为
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>。在质量相同的前提下，可比较：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo>−</mo><msup><mi>T</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mi>w</mi><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>S</mi><mo>′</mo></msup><mo>−</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(T-T&#39;)w-(S&#39;-S).</annotation></semantics></math></p>
+<p>并行多出的说明与整合会消耗
+token，质量也可能变化。记录证据抽查通过率、返工和失败，再算每份被采用产物的总成本。</p>
+<h2 id="学习方案的部署目标">学习方案的部署目标</h2>
+<p>把回报、资源与风险写进同一目标，例如：</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>λ</mi><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>μ</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">U(B)=J(B)-\lambda C(B)-\mu R(B).</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+和
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
+分别表示已定义的资源与风险指标，权重体现实际取舍。也可以把成本设成硬约束，只在预算内比较回报。选择方式事前确定，保留原始多指标结果，避免权重变化掩盖退步。</p>
 <h2 id="练习">练习</h2>
-<p>为你自己的工作台记一周账，然后挑一个你一直拿不准的编排问题，用上面的一条算式算一次。把结论和你原来的直觉对照。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>运行 <code>calc.py</code>
+复算三项编排决策。再把经验试验的写榜与评估成本加入，改变时间价值和成本上限，找出结论何时变化。然后把自己的逐轮日志接进同一口径，比较推算与实际花费。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>只记总数。</strong>
-一周一个数字，说明不了任何编排问题。按事情分段，开工收工各记一笔。</p>
+<p><strong>缓存输入重复加总。</strong>
+保留产品原始口径，转换前确认包含关系。</p>
 </div>
 <div class="pitfall">
-<p><strong>漏了是否采用。</strong>
-只比花费，省钱的流程可能一半产出被推翻。记下每个结果最后的去向。</p>
+<p><strong>把折算费率当真实扣费。</strong> 分列订阅、API
+支出与资源估算。</p>
 </div>
 <div class="pitfall">
-<p><strong>把粗算当精算。</strong>
-式子里的数都是估的，算出的是量级和方向。结论差距不大时，按你的判断来，不必为了几个百分点改编排。</p>
+<p><strong>只算执行，不算写榜和挑榜。</strong>
+全流程记录，比较同预算下的最终回报。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://github.com/ryoppippi/ccusage">ccusage</a></li>
-<li><a href="https://code.claude.com/docs/en/costs">Claude Code
-成本管理</a></li>
-</ul>
+<p>工具可参考 <a href="https://github.com/ryoppippi/ccusage">ccusage</a>
+与 <a href="https://code.claude.com/docs/en/costs">Claude
+成本管理</a>，是否支持当前日志格式要实读验证。</p>
 </article>
-<article lang="en"><h1 id="usage-ledger">6.1 Usage ledger</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>This section covers what to record, where to get numbers, how to
-separate tasks, and a few useful formulas.</p>
-<h2 id="what-to-record">What to record</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Column</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Date</td>
-<td></td>
-</tr>
-<tr>
-<td>Task</td>
-<td>One sentence, such as wrapping up round 7 or reading 14 papers and
-writing notes</td>
-</tr>
-<tr>
-<td>Agent</td>
-<td>Claude or Codex, and which account</td>
-</tr>
-<tr>
-<td>Conversation count</td>
-<td>Conversations used for this task, including Sub-agents</td>
-</tr>
-<tr>
-<td>Input tokens, cache reads, cache writes, output tokens</td>
-<td>Record separately; all four have different prices. Input and cache
-reads usually dominate</td>
-</tr>
-<tr>
-<td>Review round, substantive comment proposed?</td>
-<td>Only for review tasks, to calculate which round to stop at</td>
-</tr>
-<tr>
-<td>Estimated cost</td>
-<td>At official API prices. Subscribers pay a monthly fee; this column
-compares relative costs only</td>
-</tr>
-<tr>
-<td>Time taken</td>
-<td>Elapsed time from start to finish</td>
-</tr>
-<tr>
-<td>Adopted?</td>
-<td>Used, partly revised, or rejected and redone</td>
-</tr>
-</tbody>
-</table>
-<p>The last column is easiest to miss and matters most. Without it, you
-know what you spent but not whether it was worth it.</p>
-<h2 id="where-numbers-come-from">Where numbers come from</h2>
-<p>Claude Code records each conversation’s usage in local logs. <a
-href="https://github.com/ryoppippi/ccusage">ccusage</a> summarizes them
-by day or conversation. Codex has similar local records. You can also
-check current usage and quota within a conversation.</p>
-<pre class="text"><code>Use ccusage to list today&#39;s input and output tokens and start and end times per conversation, sorted by start time.
-Match conversations to tasks using STATE.md and fill ledger.csv.
-Start-to-end time includes idle time. Use the start and finish times in STATE.md for the time-taken column.</code></pre>
-<h2 id="separate-by-task">Separate by task</h2>
-<p>Record by task, not day. A daily total says you spent a lot but not
-where. The simplest method is recording at both start and finish: note
-the time and cumulative usage at the start, then again at the end. The
-difference is that task’s usage.</p>
-<p>In Session 4’s loop, add this to <code>LOOP.md</code>: append a
-ledger row as the first startup step and the last wrap-up step.</p>
-<h2 id="useful-formulas">Useful formulas</h2>
-<p><strong>Cost of conversation length.</strong> With about c new tokens
-per round, a conversation of n rounds has roughly c · n² / 2 total input
-tokens. Split it into m parts of n / m rounds. Each round also reads an
-h-token handoff file, and each new part costs r to write the handoff and
-get familiar with the task again. The total is about c · n² / (2m) + n ·
-h + m · r. The middle term is independent of m. Minimizing over m gives
-about n · √(c / 2r) parts. Shorter handoff files mean less rereading
-each round; a higher switching cost r means fewer parts.</p>
-<p><strong>Value of another round.</strong> If round k finds a
-substantive problem with probability p_k, a problem is worth V, and a
-round costs C, stop when p_k · V &lt; C. Count p_k from past similar
-tasks in the ledger.</p>
-<p><strong>When parallel work pays off.</strong> Sequential work takes T
-and costs S; parallel work takes T′ and costs S′. If your time is worth
-w per hour, parallel pays off when (T − T′) · w &gt; S′ − S.</p>
-<p><strong>Cost per adopted result.</strong> Total cost over a period
-divided by adopted results. Compare orchestration methods on this
-number, not cost per run.</p>
-<p>These formulas are rough. They do not give precise answers. They
-break questions such as whether to review again into numbers you can get
-from the ledger and a value you judge yourself.</p>
+<article lang="en"><h1 id="usage-and-cost-accounting">6.4 Usage and cost accounting</h1>
+<p><span class="meta">After-class deep dive, about 40
+minutes.</span></p>
+<p>A playbook raised accuracy but doubled the time each task takes.
+Whether it is worth deploying depends on connecting the learning gain to
+a resource decision.</p>
+<h2 id="record-usage-sources-and-accounting-conventions">Record usage
+sources and accounting conventions</h2>
+<p>Record the task, the executor and the start and end times, then the
+input, output and cache. In different products, the input field may
+already include cache reads, or may count only uncached input; check the
+log definitions first, then add things up.</p>
+<p>The exercise package’s ledger explicitly lists uncached input, cache
+reads, cache writes and output as four non-overlapping columns. When
+adding your own logs, keep the original fields and source, and convert
+to a common basis. Leave values you cannot read as missing; zero is an
+actual measurement.</p>
+<p>Write subscription fees, API spending and resource estimates valued
+at API rates separately. The example rates are only assumptions for the
+worked example; check actual prices on the official pages, and do not
+treat them as a per-token bill for a subscription.</p>
+<h2 id="a-simplified-model-of-splitting-conversations">A simplified
+model of splitting conversations</h2>
+<p>If each turn adds
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+tokens of history over
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+turns, and every turn reads the full accumulated history, total input is
+about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">cn(n+1)/2</annotation></semantics></math>.
+This model ignores compression and truncation.</p>
+<p>Split evenly into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>
+segments, with each turn reading a handover of length
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>
+and each segment change costing an extra
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>;
+ignoring small terms that do not depend on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>,
+we can write:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>≈</mo><mfrac><mrow><mi>c</mi><msup><mi>n</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>m</mi></mrow></mfrac><mo>+</mo><mi>n</mi><mi>h</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>r</mi><mo>,</mo><mspace width="2.0em"></mspace><msup><mi>m</mi><mo>*</mo></msup><mo>≈</mo><mi>n</mi><msqrt><mfrac><mi>c</mi><mrow><mn>2</mn><mi>r</mi></mrow></mfrac></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">F(m)\approx\frac{cn^2}{2m}+nh+(m-1)r,\qquad
+m^*\approx n\sqrt{\frac{c}{2r}}.</annotation></semantics></math></p>
+<p>The calculator also charges for first-segment startup, adding a
+constant r; this leaves the optimal segment count unchanged, and savings
+percentages use the calculator’s own one-segment baseline. Put all terms
+in the same unit of cost, then evaluate neighboring integers within the
+valid range. Real caching, compression and task switching change the
+shape, so verify with your own turn-by-turn logs. Shorter sessions may
+also cause more omissions, so compare how often deliverables are
+actually adopted too.</p>
+<h2 id="the-value-of-one-more-round">The value of one more round</h2>
+<p>Let the probability that another round of review finds a substantive
+problem be
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>,
+the value of the problem
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math>,
+and the cost of the round
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.
+A rough decision looks at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>V</mi><mo>−</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">pV-C</annotation></semantics></math>.
+Estimate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
+from similar past tasks, and do a sensitivity analysis when the sample
+is small.</p>
+<p>Checks already established as required must still be done. This
+formula is for deciding on extra review of an output that meets the
+required criteria; it cannot be used to skip acceptance checks not yet
+completed.</p>
+<h2 id="what-parallelism-buys">What parallelism buys</h2>
+<p>Let serial and parallel work cost
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>,</mo><msup><mi>S</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">S,S&#39;</annotation></semantics></math>
+with wall-clock times
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>,</mo><msup><mi>T</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">T,T&#39;</annotation></semantics></math>,
+and let the value of time be
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>.
+Given equal quality, compare:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>T</mi><mo>−</mo><msup><mi>T</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mi>w</mi><mo>−</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>S</mi><mo>′</mo></msup><mo>−</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(T-T&#39;)w-(S&#39;-S).</annotation></semantics></math></p>
+<p>The extra instructions and integration in parallel work consume
+tokens, and quality may change too. Record the pass rate of evidence
+spot-checks, rework and failures, then compute the total cost per
+product actually adopted.</p>
+<h2 id="define-the-deployment-objective">Define the deployment
+objective</h2>
+<p>Write reward, resources and risk into one objective, for example:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>J</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>λ</mi><mi>C</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>μ</mi><mi>R</mi><mo stretchy="false" form="prefix">(</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">U(B)=J(B)-\lambda C(B)-\mu R(B).</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
+are defined resource and risk metrics, and the weights reflect the
+actual trade-off. You can also make cost a hard constraint and compare
+reward only within budget. Set the decision rule in advance and keep the
+raw multi-metric results, so a change of weights does not hide a
+regression.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Keep a week’s ledger for your workbench. Pick an orchestration
-question you have been unsure about and calculate it with one formula
-above. Compare the conclusion with your earlier intuition.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Run <code>calc.py</code> to recompute the three orchestration
+decisions. Then add the costs of writing and evaluating the playbook in
+the experience trial, change the value of time and the cost cap, and
+find when the conclusion changes. Next, connect your own turn-by-turn
+logs on the same basis and compare the estimate with actual
+spending.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Only totals.</strong> One number per week answers no
-orchestration question. Record by task, at start and finish.</p>
+<p><strong>Adding cached input in twice.</strong> Keep the product’s
+original definitions, and confirm what includes what before
+converting.</p>
 </div>
 <div class="pitfall">
-<p><strong>Missing adoption.</strong> Comparing only cost may favour a
-workflow whose outputs are rejected half the time. Record what happened
-to each result.</p>
+<p><strong>Treating converted rates as real charges.</strong> List
+subscriptions, API spending and resource estimates separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>Treating rough estimates as precise.</strong> The formula
-inputs are estimates; the answers give scale and direction. If the gap
-is small, use your judgment rather than changing orchestration over a
-few percentage points.</p>
+<p><strong>Counting execution only, not writing and choosing the
+playbook.</strong> Record the whole process, and compare final reward
+under the same budget.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://github.com/ryoppippi/ccusage">ccusage</a></li>
-<li><a href="https://code.claude.com/docs/en/costs">Claude Code cost
-management</a></li>
-</ul>
+<p>For tools, see <a
+href="https://github.com/ryoppippi/ccusage">ccusage</a> and <a
+href="https://code.claude.com/docs/en/costs">Claude cost management</a>;
+check their output against your actual logs to confirm support for the
+current format.</p>
 </article>
-<nav class="pager"><a class="prev" href="theory.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6 选修 编排理论</span><span lang="en">6 Elective: Theory</span></a><span></span></nav>
+<nav class="pager"><a class="prev" href="theory-transfer.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">6.3 原点漂移与迁移</span><span lang="en">6.3 Origin drift and transfer</span></a><span></span></nav>
 </main>
 </div>
 </body>

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>选修 编排安全 · 用 Agent 做科研</title>
+<title>安全控制 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,148 +17,48 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html" class="cur"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="safety-sandbox.html" class="sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandbox</span></a>
-<a href="safety-hooks.html" class="sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥</span><span lang="en">Hooks and secrets</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html" class="cur"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="safety-sandbox.html" class="sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandboxes</span></a>
+<a href="safety-hooks.html" class="sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥管理</span><span lang="en">Hooks and secret management</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 权限规则</span><span class="chip new">+ 沙箱</span><span class="chip new">+ Hooks</span><span class="chip new">+ 密钥管理</span></div><h1 id="选修-编排安全">5 选修 编排安全</h1>
+<article lang="zh"><div class="toolbox"><span class="tb-label">工具箱</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python 环境</span><span class="chip">LaTeX</span><span class="chip">PDF 渲染</span><span class="chip">AGENTS.md</span><span class="chip">Skill</span><span class="chip">Ego 浏览器</span><span class="chip">Obsidian</span><span class="chip">文献接口</span><span class="chip">Sub-agent</span><span class="chip">Git 与 GitHub</span><span class="chip">SSH 与 Tailscale</span><span class="chip">tmux 后台任务</span><span class="chip">监视器</span><span class="chip">定时任务</span><span class="chip">无人值守调用</span><span class="chip">手机通知</span><span class="chip">经验榜</span><span class="chip">GitHub Pages</span><span class="chip new">+ 权限规则</span><span class="chip new">+ 沙箱</span><span class="chip new">+ Hooks</span><span class="chip new">+ 密钥管理</span></div><h1 id="安全控制">5 安全控制</h1>
 <div class="goal">
-<p>一小时后，你的工作台有一张权限表：常用的命令不再一次次问你，危险的命令一律拒绝；命令被关进沙箱，只能写项目文件夹和临时目录，只能连你允许的网站；另有两道自动检查，改完论文自动核对数字，推送之前自动查有没有密钥混进去。</p>
+<p>给工作台画清信息流和权限边界，用无害测试验证它。完成一张能力表、一次允许与拒绝测试，以及两道有明确覆盖范围的自动检查。</p>
 </div>
-<p><span class="meta">课堂核心 60 分钟。课后深入 5.1 与 5.2
-共约一小时。第 4 课之后选修。</span></p>
+<p><span class="meta">选修课。课前完成准备，课上 60
+分钟，课后先复习再选做深入。</span></p>
+<div class="stage-nav">
+<p><a href="#课前预备">课前预备</a> · <a
+href="#课上一小时">课上一小时</a> · <a
+href="#课后复习与拔高">课后复习与拔高</a></p>
+</div>
+<p>同一个 Agent
+能读网页、改代码，还能登录服务器。它从网页里读到的内容，怎样才不会获得执行任务的权力？需要通过实际动作与凭据权限限制这种影响。</p>
+<p>本课使用普通测试文件和空凭据样例验证权限。涉及攻击评测时，攻击样本在专门服务器环境中生成与运行，课程页面只讲威胁模型和防御指标。</p>
 <div class="download">
-<p><a href="downloads/lesson-5-zh.zip">下载第 5 课练习材料</a></p>
+<p><a href="downloads/lesson-5-zh.zip">下载第 5 课材料</a></p>
 </div>
-<p>练习材料是两份配置的起点：<code>settings.example.json</code> 给
-Claude Code，<code>config.example.toml</code> 给 Codex；还有一个
-<code>hooks/</code> 文件夹，放两道检查的脚本骨架。</p>
-<h2 id="开课先装工具1-分钟发出去">开课先装工具，1 分钟发出去</h2>
+<h2 id="课前预备">课前预备</h2>
+<p><span class="meta">预留 20 至 40 分钟，提前处理组件下载。</span></p>
 <div class="install">
-<p><strong>本课暗线：给前四课装好的工作台装上锁。</strong> 到第 4
-课，Agent 能登录出版社，连服务器，推
-GitHub，夜里还会自己开工。能力越多，一次失手的代价越大。这一课添四样：权限规则决定哪些命令自动放行，哪些一律拒绝；沙箱从系统层面限制它能写哪里，能连哪里；Hooks
-在特定时刻自动跑检查，不靠它记得；密钥管理让密码和 Key
-不出现在对话和仓库里。</p>
+<p><strong>课前工具准备。</strong> 检查 Python 与 Git，确认 Bash
+和扫描器可用，备份现有配置。角色权限怎样划分，配置怎样合并，沙箱怎样实测，课堂一起处理。</p>
 </div>
-<p>打开你第 4 课的工作台文件夹，先发：</p>
-<pre class="text"><code>这个项目要收紧权限。先不改任何配置，做四件事：
-1. 读 AGENTS.md、LOOP.md 和最近的运行日志，列出这个工作台实际用到的命令，按 git，uv，ssh，gh 和其他分类；
-2. 检查沙箱需要的系统组件是否齐全，没有就告诉我需要装什么；
-3. 装 gitleaks，用它扫一遍这个仓库的全部历史，告诉我有没有密钥混进去过；
-4. 找出散在 AGENTS.md，LOOP.md 和脚本里的密钥类信息，比如 ntfy 的频道名，挪进一个列入 .gitignore 的 .env，原处改成引用变量名。
-装之前列出打算装什么，等我同意。</code></pre>
-<p>第 1 项的清单就是下面写权限表的依据。</p>
-<h2 id="先看成品5-分钟">先看成品，5 分钟</h2>
-<p>打开
-<code>preview/settings.json</code>。三段：拒绝表在最前，列出无论如何都不许做的事，比如删除整个目录，读你的
-SSH
-私钥，用管理员权限执行；允许表列出这个工作台天天要用，可以不问就做的命令；其余的照常问你。下面一段打开沙箱，写明它能写的目录和能连的网站。最后是两个
-Hook。</p>
-<h2 id="讲10-分钟">讲，10 分钟</h2>
-<p><strong>一路点同意等于没有权限检查。</strong>
-每条命令都问，十分钟后你就不看了，直接点同意。权限表的作用是让该问的才问：天天用的放进允许表，绝不能做的放进拒绝表，剩下少数才弹出来，你会认真看。</p>
-<p><strong>权限表管 Agent，沙箱管命令。</strong> 权限表决定 Agent
-能不能发起某条命令。命令一旦运行，它会调用别的程序、读别的文件，权限表管不到。沙箱在操作系统层面限制这条命令和它调用的一切：只能写这个文件夹，只能连这几个网站。两层叠在一起，才放心让它无人值守。</p>
-<p><strong>外部内容是数据，不是指令。</strong> Agent 读进来的网页，PDF
-和邮件里，可能有人专门写了给 Agent
-看的话，要它去做别的事。模型并不总能分辨。办法是分工：读外部内容的那一步只能写笔记文件夹，不能推送，不能运行别的命令；需要推送和发消息的那一步，不直接读外部原文，只读整理好的笔记，并且把笔记也当作资料看待，不当作命令。</p>
-<p><strong>检查交给 Hook，不交给记性。</strong> 在
-<code>AGENTS.md</code> 里写改完论文要核对数字，Agent
-多数时候照做，偶尔会忘。Hook
-是在特定事件发生时一定会运行的脚本：每次改完 <code>.tex</code>
-文件，每次推送之前。它不会忘。</p>
-<h2 id="练习-1写权限表15-分钟">练习 1：写权限表，15 分钟</h2>
-<pre class="text"><code>按刚才列出的命令清单，写 .claude/settings.json：
-拒绝：删除目录的命令，读 ~/.ssh 和 ~/.aws 下的文件，sudo，向未列出的地址推送；
-允许：git 的提交、查看和推送，uv run，ssh lab，gh，以及本项目的几个脚本；
-其余照常询问。对照 settings.example.json 的格式。
-再把同样的意思写成 Codex 的 .codex/config.toml。写完给我看，等我同意再保存。</code></pre>
-<p>保存后试三下：让它删掉 <code>runs/</code>
-目录，它应该被拒绝；让它提交一次，它应该不问就做；让它 ssh lab
-uptime，应该照常连上。读 ~/.ssh 的禁令拦的是 Agent 直接打开私钥文件，ssh
-命令自己用密钥不受影响。</p>
-<h2 id="练习-2打开沙箱10-分钟">练习 2：打开沙箱，10 分钟</h2>
-<pre class="text"><code>在 settings.json 里打开沙箱，用默认的可写范围；网络只允许 github.com，arxiv.org 和 api.openalex.org。
-ssh 走的不是网站名单，把 ssh lab 设成在沙箱外运行的例外，它已经在允许表里。不许命令在被沙箱拦下后自己换到沙箱外重试。
-打开后做三个测试并告诉我结果：用命令往 ~/Desktop 写一个文件，应该失败；访问一个不在名单里的网站，应该停下来问我；ssh lab uptime 应该成功。</code></pre>
-<p>名单外的网站默认是问你，夜里没人回答时等于拒绝。要它直接拒绝，得把严格名单那一项写进用户级配置，或者启动时用
-<code>--settings</code> 指定配置文件，写在项目配置里不生效，练习材料的
-README 写了具体做法。</p>
-<p>Codex
-默认就在沙箱里运行，可写范围是工作目录。对照一下两边的设置是否一致。</p>
-<h2 id="练习-3两道自动检查15-分钟">练习 3：两道自动检查，15 分钟</h2>
-<pre class="text"><code>在 hooks/ 里补完两个脚本，并在 settings.json 里挂上：
-1. 每次编辑 paper/ 下的 .tex 文件之后，运行 code/check_numbers.py，它来自第 1 课的参考答案，练习材料里也附了一份；有对不上的数字就把结果告诉你，要求你修正；
-2. 每次运行 git push 之前，用 gitleaks 扫这次要推的提交，发现密钥就阻止推送。
-两个脚本都要在几秒内跑完。装好后各触发一次给我看。</code></pre>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
-<div class="pitfall">
-<p><strong>一路点同意。</strong>
-每条都问，你很快就不看了。常用的进允许表，危险的进拒绝表，留下的少数你才会认真看。</p>
-</div>
-<div class="pitfall">
-<p><strong>自己的电脑上跳过全部权限。</strong>
-嫌麻烦打开完全放行的模式，Agent
-在错误的文件夹里执行了一次批量删除。完全放行只用在本身就隔离的环境里，比如一台一次性的虚拟机。</p>
-</div>
-<div class="pitfall">
-<p><strong>把密钥贴进对话。</strong>
-对话记录会被保存，有时会被同步到别的设备。密钥放进系统钥匙串或者不进仓库的
-<code>.env</code>，让 Agent 引用变量名，不看具体的值。</p>
-</div>
-<div class="pitfall">
-<p><strong>读外部内容的一步权限最大。</strong>
-同一个对话既读网页又能推送代码，网页里写给 Agent
-的话就有机会变成真的动作。读外部内容的一步只能写笔记，推送和发消息的一步只读整理过的笔记。</p>
-</div>
-<div class="pitfall">
-<p><strong>Hook 太慢。</strong> 每次改文件都跑一个两分钟的检查，Agent
-的每一步都被拖住。Hook 只放几秒能跑完的检查，慢的放进收工流程。</p>
-</div>
-<div class="pitfall">
-<p><strong>规则写进了全局配置。</strong>
-本该只管这个项目的拒绝表写进了用户级的配置，别的项目莫名其妙不能用
-ssh。项目的规则放在项目里，全局只放所有项目都该遵守的几条。</p>
-</div>
-<h2 id="工作台多了什么">工作台多了什么</h2>
-<div class="bench">
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>Agent 因此能做的事</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>权限规则</td>
-<td>常用命令不问就做，危险命令一律拒绝</td>
-</tr>
-<tr>
-<td>沙箱</td>
-<td>命令只能写项目文件夹和临时目录，只能连名单里的网站</td>
-</tr>
-<tr>
-<td>Hooks</td>
-<td>改完论文自动核数字，推送前自动查密钥</td>
-</tr>
-<tr>
-<td>密钥管理</td>
-<td>用到密钥时引用变量名，值不进对话也不进仓库</td>
-</tr>
-</tbody>
-</table>
-<p>有了这几样，前四课的工作台才适合真正放手让它夜里跑。</p>
-</div>
-<h2 id="课后深入">课后深入</h2>
+<pre class="text"><code>解压本课材料，只读 settings.example.json、config.example.toml 与 README.md，先不复制到生效位置。
+核对 Python，Git，Bash 与 gitleaks 是否能返回版本；缺项按官方入口安装。
+按下表核对自己的系统与组件，缺项提前下载；系统策略问题记下来，课堂一起判断。
+备份现有项目配置到自己的课前目录，准备一个无真实凭据的一次性演示目录。
+把系统，Agent 版本，组件状态和错误信息写到 preflight.md，不填写任何密钥值。</code></pre>
+<p>Claude 的 shell
+沙箱按系统分路线，组件检查只确认是否存在，实际隔离在课上测试。下表依据<a
+href="https://code.claude.com/docs/en/sandboxing">官方沙箱说明</a>。</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -167,217 +67,353 @@ ssh。项目的规则放在项目里，全局只放所有项目都该遵守的�
 </colgroup>
 <thead>
 <tr>
-<th>节</th>
-<th>内容</th>
-<th>时长</th>
+<th>系统</th>
+<th>课前检查</th>
+<th>未就绪时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS</td>
+<td>在终端运行 <code>command -v sandbox-exec</code>，会话用
+<code>/sandbox</code> 看状态</td>
+<td>保留组件或策略提示，课堂诊断</td>
+</tr>
+<tr>
+<td>Linux 与 WSL2</td>
+<td>运行 <code>command -v bwrap</code> 与
+<code>command -v socat</code>，会话用 <code>/sandbox</code> 看依赖</td>
+<td>按发行版装 bubblewrap 与
+socat，涉及系统策略时交老师或管理员处理</td>
+</tr>
+<tr>
+<td>Windows 原生</td>
+<td>在 PowerShell 用 <code>wsl -l -v</code> 看是否已有 WSL2</td>
+<td>Claude 的这一沙箱演示使用 WSL2；尚未准备好则看课堂支持环境，Codex
+的原生 Windows 沙箱另按其配置实测</td>
+</tr>
+</tbody>
+</table>
+<p>带到课堂的是可调用的检查器、空配置起点和普通测试目录。不要在课前照抄成品权限表，也不提前改系统安全策略。</p>
+<p>本机不支持某项隔离时，提前告诉老师。课堂用受支持的演示环境观察该边界，个人记录标明观察环境；自己的设备只记录实际测到的能力，课后再补迁移测试。</p>
+<h2 id="课上一小时">课上一小时</h2>
+<h3 id="先看一条数据怎样流动5-分钟">先看一条数据怎样流动，5 分钟</h3>
+<p>先核对 preflight.md
+的组件与备份记录，再沿一条资料流动找权限边界。</p>
+<p>第 2
+课取回的论文经阅读助手变成笔记，再进入写作助手，最后到发布任务。若笔记保留了外部操作要求，换成内部文件也没有自动变可信。</p>
+<p>所以资料要带来源，进入可执行任务前再检查动作是否由用户任务授权。读取外部资料的进程尽量没有发布凭据，发布器只接收经过选取的产物与固定目标。</p>
+<h3 id="三层权限控制10-分钟">三层权限控制，10 分钟</h3>
+<p>权限规则决定 Agent
+能调用哪项工具。进程隔离限制被运行的代码能接触哪些文件和网络。凭据服务或远端账号限制最终能做什么。</p>
+<p>其中任何一层放得很宽，其他层都要承担更大负担。允许运行任意 Python
+脚本，意味着被允许的脚本也能做文件与网络操作；仅禁止 Agent
+的直接读取工具还管不到这些路径。</p>
+<p>Hooks
+可在特定入口加检查。它的能力取决于挂在哪个事件，失败时是否阻断，执行者能否绕过。先说覆盖范围，再测真实行为。</p>
+<h3 id="练习一按角色配权限15-分钟">练习一，按角色配权限，15 分钟</h3>
+<pre class="text"><code>为阅读，实验，审阅和发布分别写能力表。
+阅读者只向自己的笔记目录输出，实验者只在执行目录和已分配资源内运行。
+审阅者只读冻结版本并输出意见，发布者只接收批准的产物和目标。
+逐项说明文件范围、网络范围与凭据来源，再对照当前官方配置生成候选设置。</code></pre>
+<p>模型名称可以替换，权限跟任务角色走。共享写入仍指定一个整合者。</p>
+<h3
+id="练习二实测一条允许和一条拒绝10-分钟">练习二，实测一条允许和一条拒绝，10
+分钟</h3>
+<pre class="text"><code>在一次性演示目录内准备普通测试文件，列出预期允许和拒绝的动作。
+使用当前生效的权限和沙箱分别执行，记录实际结果、错误码与配置来源。
+再从另一个受控入口测试同一边界，例如直接文件工具与子进程读取。
+若某项没有真正隔离，写明缺口，修正后重测。</code></pre>
+<p>测试内容保持无害，越界目标由自己预先创建。系统权限、联网隔离和远端账号分别测试，不能从其中一项推断全部已生效。</p>
+<h3
+id="练习三两道自动检查的覆盖范围15-分钟">练习三，两道自动检查的覆盖范围，15
+分钟</h3>
+<pre class="text"><code>运行包内 Hook 验证，再查看数字核查与推送前扫描各由哪个事件触发。
+用普通测试输入分别触发成功，发现问题，检查器失败三种分支。
+确认修改后检查能反馈问题，发布前检查失败会阻断。
+把未覆盖的入口与最后一道全量检查写进运行说明。</code></pre>
+<p>扫描器测试使用失效样例或替身，输出隐藏疑似值。真实凭据由本地或服务端设施管理，Agent
+只拿到完成任务所需的权限。</p>
+<h3 id="检查与工作台小结5-分钟">检查与工作台小结，5 分钟</h3>
+<h4 id="常见错误与处理方法">常见错误与处理方法</h4>
+<div class="pitfall">
+<p><strong>笔记由自己写，就认为可信。</strong>
+来源标签保留到后续步骤，执行动作重新核对任务授权。</p>
+</div>
+<div class="pitfall">
+<p><strong>拒绝读取文件，却允许同进程任意脚本。</strong>
+检查子进程、网络和凭据边界，必要时换隔离用户或容器。</p>
+</div>
+<div class="pitfall">
+<p><strong>Hook 单元测试通过，就宣布沙箱安全。</strong>
+分别记录脚本分支测试和实际系统边界测试。</p>
+</div>
+<div class="pitfall">
+<p><strong>沙箱外的 SSH 例外没有另管。</strong>
+本机限制到不了服务器，远端账号与作业权限单独配置。</p>
+</div>
+<h4 id="工作台小结">工作台小结</h4>
+<div class="bench">
+<p>安全配置现在有可观察的含义：哪项任务能读什么，哪个进程持有什么凭据，哪些动作实际被拒绝。扩展工具以后重新沿信息流检查，测试记录跟配置版本一起保存。</p>
+</div>
+<h2 id="课后复习与拔高">课后复习与拔高</h2>
+<h3 id="先复盘15-分钟">先复盘，15 分钟</h3>
+<p>从课堂实际配置重画信息流：外部材料怎样进入笔记，哪个进程能调用工具，哪里持有凭据。给每条边标上控制与一次测试结果，把尚未测试的边写到
+<code>review-after-class.md</code>。</p>
+<h3 id="正反例辨析20-分钟">正反例辨析，20 分钟</h3>
+<p>甲记录文件读取工具拒绝访问，于是宣称该文件已隔离；同一进程却仍能运行任意脚本。乙分别测试文件工具和受控子进程，并记录配置版本与实际拒绝结果。指出两份记录各证明了什么。再判断
+Hook 分支测试全部通过，是否已经证明本机沙箱与远端 SSH
+都执行了同一边界。</p>
+<details>
+<summary>
+先写覆盖范围，再看对照思路
+</summary>
+<p>甲只测到一个入口。乙把进程路径也纳入观察，仍需按实际控制逐项验证。Hook
+分支、系统隔离和远端账号是不同测试对象，应各留有效配置与行为证据。</p>
+</details>
+<h3 id="沿课堂往深处做">沿课堂往深处做</h3>
+<p>先在自己的练习环境补齐允许与拒绝测试，再选一条路径。复杂配置有不明处时保留最小复现，在后续答疑中共同检查。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>路径</th>
+<th>接着解决什么</th>
+<th>交付</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="safety-sandbox.html">5.1 权限与沙箱</a></td>
-<td>权限模式；规则的写法与优先级；沙箱管什么；两家的对应设置</td>
-<td>30 分钟</td>
+<td>60 分钟，换入口和执行端后重测</td>
+<td>能力表、配置版本与行为矩阵</td>
 </tr>
 <tr>
-<td><a href="safety-hooks.html">5.2 Hooks 与密钥</a></td>
-<td>Hook 的几个时刻；写一个 Hook；密钥放在哪；泄露了怎么办</td>
-<td>30 分钟</td>
+<td><a href="safety-hooks.html">5.2 Hooks 与密钥管理</a></td>
+<td>60 分钟，检查事件覆盖与失败阻断</td>
+<td>分支记录与固定交付入口的全量检查</td>
 </tr>
 </tbody>
 </table>
-<section id="要点" class="keypoints">
-<h2>要点</h2>
-<ul>
-<li>拒绝表在前，允许表其次，剩下的才问你。</li>
-<li>权限表管 Agent 发起什么，沙箱管命令能碰什么，两层都要。</li>
-<li>外部内容是数据：读的一步只能写笔记，推送的一步不读原文。</li>
-<li>必须做的检查交给 Hook，不靠记性。</li>
-<li>密钥不进对话，不进仓库。</li>
-</ul>
-</section>
+<p>最后用一次普通任务验证合法工作仍可完成，再尝试一次预先定义的越界动作。两种结果一起构成验收。</p>
 </article>
-<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Permission rules</span><span class="chip new">+ Sandbox</span><span class="chip new">+ Hooks</span><span class="chip new">+ Secrets</span></div><h1 id="elective-orchestration-safety">5 Elective: Orchestration
-Safety</h1>
+<article lang="en"><div class="toolbox"><span class="tb-label">Toolbox</span><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Python env</span><span class="chip">LaTeX</span><span class="chip">PDF rendering</span><span class="chip">AGENTS.md</span><span class="chip">Skills</span><span class="chip">Ego browser</span><span class="chip">Obsidian</span><span class="chip">Literature APIs</span><span class="chip">Sub-agents</span><span class="chip">Git and GitHub</span><span class="chip">SSH and Tailscale</span><span class="chip">tmux jobs</span><span class="chip">Monitors</span><span class="chip">Scheduled tasks</span><span class="chip">Headless runs</span><span class="chip">Phone alerts</span><span class="chip">Playbooks</span><span class="chip">GitHub Pages</span><span class="chip new">+ Permission rules</span><span class="chip new">+ Sandbox</span><span class="chip new">+ Hooks</span><span class="chip new">+ Secrets</span></div><h1 id="safety-controls">5 Safety controls</h1>
 <div class="goal">
-<p>In an hour your workbench will have a permission table: common
-commands stop asking each time, and dangerous commands are always
-refused. Commands run in a sandbox, writing only to the project folder
-and temporary directories and connecting only to sites you allow. Two
-automatic checks verify numbers after paper edits and scan for secrets
-before a push.</p>
+<p>Map the information flow and permission boundaries of your workbench,
+and verify them with harmless tests. Complete a capability table, one
+test of an allowed and a denied action, and two automatic checks with a
+clear scope of coverage.</p>
 </div>
-<p><span class="meta">Core class: 60 minutes. Self-study sections 5.1
-and 5.2 take about an hour in total. An elective after Session
-4.</span></p>
+<p><span class="meta">Elective. Prepare before class, spend 60 minutes
+in class, then review and choose an optional extension.</span></p>
+<div class="stage-nav">
+<p><a href="#before-class">Before class</a> · <a href="#in-class">In
+class</a> · <a href="#after-class">After class: review and
+extension</a></p>
+</div>
+<p>The same agent can read web pages, change code and log in to servers.
+How do you keep what it reads on a web page from gaining the power to
+carry out tasks? Enforce the boundary through controls on actions and
+credentials.</p>
+<p>This lesson verifies permissions with ordinary test files and dummy
+credentials. Where attack evaluation is involved, attack samples are
+generated and run in a dedicated server environment, and the course
+pages cover only the threat model and defense metrics.</p>
 <div class="download">
-<p><a href="downloads/lesson-5-en.zip">Download the Session 5
+<p><a href="downloads/lesson-5-en.zip">Download the Lesson 5
 materials</a></p>
 </div>
-<p>The materials give you two configuration starting points:
-<code>settings.example.json</code> for Claude Code and
-<code>config.example.toml</code> for Codex. A <code>hooks/</code> folder
-holds skeleton scripts for the two checks.</p>
-<h2 id="install-tools-at-the-start-send-the-card-in-1-minute">Install
-tools at the start: send the card in 1 minute</h2>
+<h2 id="before-class">Before class</h2>
+<p><span class="meta">Allow 20 to 40 minutes, and deal with component
+downloads in advance.</span></p>
 <div class="install">
-<p><strong>This session’s hidden thread: put locks on the workbench
-built in the first four sessions.</strong> By Session 4 the agent can
-log in to publishers, connect to servers, push to GitHub, and start work
-overnight. More capabilities make a mistake more costly. This session
-adds four things: permission rules decide which commands run
-automatically and which are always refused; a sandbox limits writes and
-connections at the system level; Hooks run checks at specific moments
-without relying on memory; and secret management keeps passwords and
-keys out of conversations and repositories.</p>
+<p><strong>Before-class setup.</strong> Check Python and Git, confirm
+that Bash and the scanner work, and back up your existing configuration.
+How to divide role permissions, how configuration merges and how to test
+the sandbox are handled together in class.</p>
 </div>
-<p>Open your Session 4 workbench folder and send:</p>
-<pre class="text"><code>This project needs tighter permissions. Don&#39;t change any configuration yet. Do four things:
-1. Read AGENTS.md, LOOP.md and recent run logs. List the commands this workbench actually uses, grouped as git, uv, ssh, gh and other;
-2. Check whether the system components needed for the sandbox are installed. If not, tell me what is missing;
-3. Install gitleaks and scan this repository&#39;s entire history. Tell me whether any secrets have been committed;
-4. Find secret information scattered in AGENTS.md, LOOP.md and scripts, such as the ntfy channel name. Move it into a .env listed in .gitignore, replacing the original values with variable references.
-Before installing, list what you plan to install and wait for my OK.</code></pre>
-<p>Item 1 gives you the list to base the permission table on.</p>
-<h2 id="see-the-finished-product-5-minutes">See the finished product, 5
-minutes</h2>
-<p>Open <code>preview/settings.json</code>. Three parts: the deny list
-comes first, with things never allowed, such as deleting a whole
-directory, reading your SSH private key, or running with administrator
-privileges. The allow list holds commands this workbench uses daily that
-can run without asking. The rest still ask. Below, a section enables the
-sandbox and names writable directories and allowed sites. Last are two
-Hooks.</p>
-<h2 id="talk-10-minutes">Talk, 10 minutes</h2>
-<p><strong>Clicking yes to everything defeats permission
-checks.</strong> If every command asks, after ten minutes you stop
-reading and just approve. A permission table leaves only the right
-questions: everyday commands go in the allow list, forbidden actions in
-the deny list, and the few remaining prompts get your attention.</p>
-<p><strong>Permission rules govern the agent; the sandbox governs
-commands.</strong> The rules decide whether the agent may start a
-command. Once running, that command can call other programs and read
-other files, beyond the rules’ reach. The sandbox limits the command and
-everything it calls at the operating-system level: write only in this
-folder, connect only to these sites. Use both layers before leaving it
-unattended.</p>
-<p><strong>External content is data, not instructions.</strong> Web
-pages, PDFs and emails may contain text aimed at agents, asking them to
-do something else. Models cannot always tell. Split responsibilities:
-the step reading external content can write only to the notes folder,
-cannot push, and cannot run other commands. The step that pushes or
-sends messages reads only prepared notes, not external originals, and
-treats those notes as material rather than commands too.</p>
-<p><strong>Give checks to Hooks, not memory.</strong> Write “check
-numbers after editing the paper” in <code>AGENTS.md</code> and the agent
-usually follows it, but sometimes forgets. A Hook is a script that
-always runs at a specific event, such as after a <code>.tex</code> edit
-or before a push. It does not forget.</p>
-<h2 id="exercise-1-write-the-permission-table-15-minutes">Exercise 1:
-write the permission table, 15 minutes</h2>
-<pre class="text"><code>Using the command list above, write .claude/settings.json:
-Deny: commands deleting directories, reads under ~/.ssh and ~/.aws, sudo, and pushes to unlisted destinations;
-Allow: git commits, inspection and pushes, uv run, ssh lab, gh, and this project&#39;s scripts;
-Ask for anything else. Follow the format in settings.example.json.
-Write the equivalent for Codex in .codex/config.toml. Show me both and wait for my OK before saving.</code></pre>
-<p>After saving, try three things: ask it to delete <code>runs/</code>,
-which should be denied; commit, which should run without asking; and ssh
-lab uptime, which should connect as usual. The ban on reading ~/.ssh
-stops the agent opening private key files directly; ssh using the key
-itself is unaffected.</p>
-<h2 id="exercise-2-enable-the-sandbox-10-minutes">Exercise 2: enable the
-sandbox, 10 minutes</h2>
-<pre class="text"><code>Enable the sandbox in settings.json with its default writable scope. Allow network access only to github.com, arxiv.org and api.openalex.org.
-ssh does not use the website list. Make ssh lab an exception that runs outside the sandbox; it is already in the allow list. Don&#39;t let commands retry outside the sandbox after being blocked.
-Run three tests and report: writing a file to ~/Desktop with a command should fail; visiting an unlisted site should stop and ask me; ssh lab uptime should succeed.</code></pre>
-<p>Unlisted sites ask you by default, which means refusal at night when
-nobody answers. For outright refusal, put the strict-list setting in
-user configuration or specify a configuration file with
-<code>--settings</code> at startup. It does not take effect in project
-configuration. The materials’ README gives the steps.</p>
-<p>Codex runs in a sandbox by default, with the working directory
-writable. Compare the two configurations for consistency.</p>
-<h2 id="exercise-3-two-automatic-checks-15-minutes">Exercise 3: two
-automatic checks, 15 minutes</h2>
-<pre class="text"><code>Finish two scripts in hooks/ and connect them in settings.json:
-1. After every edit to a .tex file under paper/, run code/check_numbers.py from Session 1&#39;s answers, also included in these materials. If numbers don&#39;t match, return the results to you and require a fix;
-2. Before every git push, use gitleaks to scan the commits being pushed. Block the push if it finds secrets.
-Both scripts must finish within a few seconds. Trigger each once to show me it works.</code></pre>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<pre class="text"><code>Unzip this lesson&#39;s materials. Only read settings.example.json, config.example.toml and README.md; do not copy them to where they take effect yet.
+Check that Python, Git, Bash and gitleaks return versions; install anything missing from the official sources.
+Check my system and components against the table below and download what is missing in advance; note system policy problems so we can judge them together in class.
+Back up the existing project configuration to my own pre-class directory, and prepare a disposable demonstration directory with no real credentials.
+Write the system, agent versions, component status and error messages into preflight.md. Do not fill in any key values.</code></pre>
+<p>Claude’s shell sandbox uses different mechanisms on different
+operating systems. The component check only confirms that things exist;
+actual isolation is tested in class. The table below is based on the <a
+href="https://code.claude.com/docs/en/sandboxing">official sandboxing
+guide</a>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>System</th>
+<th>Check before class</th>
+<th>If not ready</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS</td>
+<td>Run <code>command -v sandbox-exec</code> in the terminal, and check
+status in the session with <code>/sandbox</code></td>
+<td>Keep the component or policy message for diagnosis in class</td>
+</tr>
+<tr>
+<td>Linux and WSL2</td>
+<td>Run <code>command -v bwrap</code> and <code>command -v socat</code>,
+and check dependencies in the session with <code>/sandbox</code></td>
+<td>Install bubblewrap and socat for your distribution; system policy
+issues go to the teacher or administrator</td>
+</tr>
+<tr>
+<td>Native Windows</td>
+<td>In PowerShell, use <code>wsl -l -v</code> to see whether WSL2 is
+already there</td>
+<td>This Claude sandbox demonstration uses WSL2; if it is not ready, use
+the environment supported in class. Codex’s native Windows sandbox is
+tested separately according to its own configuration</td>
+</tr>
+</tbody>
+</table>
+<p>Bring to class a runnable checker, an empty configuration as a
+starting point, and an ordinary test directory. Do not copy a finished
+permission table before class, and do not change system security policy
+in advance.</p>
+<p>If your machine does not support some kind of isolation, tell the
+teacher in advance. In class you observe that boundary in a supported
+demonstration environment and record which environment you observed in
+your own record; on your own device, record only the capabilities
+actually tested, and add the transfer test after class.</p>
+<h2 id="in-class">In class</h2>
+<h3 id="trace-information-through-the-workbench-5-minutes">Trace
+information through the workbench, 5 minutes</h3>
+<p>First check the components and backup record in preflight.md, then
+follow one flow of material to find the permission boundaries.</p>
+<p>Papers retrieved in Lesson 2 become notes through the reading helper,
+then go to the writing helper, and finally to the publishing task. If a
+note preserves an instruction from an external source, it does not
+automatically become trustworthy just because it is now an internal
+file.</p>
+<p>Keep source information with the material, and before it enters an
+executable task, check whether the action was authorized by the user’s
+task. Processes that read external material should hold no publishing
+credentials where possible, and the publisher accepts only selected
+products and a fixed target.</p>
+<h3 id="three-layers-of-control-10-minutes">Three layers of control, 10
+minutes</h3>
+<p>Permission rules decide which tools the agent can call. Process
+isolation limits which files and networks the code being run can touch.
+A credential service or remote account limits what can ultimately be
+done.</p>
+<p>If any one layer is configured too broadly, the other layers carry a
+heavier load. Allowing any Python script to run means an allowed script
+can also do file and network operations; forbidding only the agent’s
+direct read tool does not cover those paths.</p>
+<p>Hooks can add checks at specific entry points. What they can do
+depends on which event they are attached to, whether failures block the
+action, and whether the executing process can bypass them. State the
+coverage first, then test the real behavior.</p>
+<h3 id="exercise-1-assign-permissions-by-role-15-minutes">Exercise 1:
+assign permissions by role, 15 minutes</h3>
+<pre class="text"><code>Write a capability table for each of reading, experimenting, reviewing and publishing.
+The reader outputs only to its own notes directory; the experimenter runs only in the execution directory and on allocated resources.
+The reviewer reads only frozen versions and outputs comments; the publisher accepts only approved products and targets.
+For each, state the file scope, network scope and credential source, then generate candidate settings against the current official configuration.</code></pre>
+<p>Model names can be swapped; permissions follow the task role. Assign
+one integrator to handle shared writes.</p>
+<h3
+id="exercise-2-test-one-allowed-and-one-denied-action-10-minutes">Exercise
+2: test one allowed and one denied action, 10 minutes</h3>
+<pre class="text"><code>Prepare ordinary test files in a disposable demonstration directory and list the actions expected to be allowed and denied.
+Execute each with the permissions and sandbox currently in effect, recording the actual result, the error code and the source of the configuration.
+Then test the same boundary from another controlled entry point, for example the direct file tool versus a read from a subprocess.
+If something is not really isolated, write down the gap, fix it and retest.</code></pre>
+<p>Keep the test content harmless, and create the out-of-bounds target
+yourself in advance. System permissions, network isolation and remote
+accounts are tested separately; you cannot infer from one of them that
+all are in effect.</p>
+<h3 id="exercise-3-test-the-coverage-of-two-checks-15-minutes">Exercise
+3: test the coverage of two checks, 15 minutes</h3>
+<pre class="text"><code>Run the Hook verification in the package, then see which event triggers the number checker and which triggers the pre-push scan.
+Use ordinary test inputs to trigger three branches for each: success, problem found, and checker failure.
+Confirm that the check after an edit reports problems back, and that a failed pre-publication check blocks.
+Write the entry points not covered, and the final full check, into the run instructions.</code></pre>
+<p>Scanner tests use invalid samples or stand-ins, and the output hides
+suspected values. Real credentials are managed by local or server-side
+facilities, and the agent gets only the permissions needed to complete
+its task.</p>
+<h3 id="check-and-workbench-summary-5-minutes">Check and workbench
+summary, 5 minutes</h3>
+<h4 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h4>
 <div class="pitfall">
-<p><strong>Clicking yes to everything.</strong> If every command asks,
-you soon stop reading. Put common commands in the allow list and
-dangerous ones in the deny list, so you read the few prompts left.</p>
+<p><strong>Trusting a note because you wrote it yourself.</strong> Keep
+the source label in later steps, and recheck task authorization before
+executing actions.</p>
 </div>
 <div class="pitfall">
-<p><strong>Skipping all permissions on your own computer.</strong> To
-avoid prompts, you enable unrestricted mode, and the agent deletes files
-in bulk in the wrong folder. Use unrestricted mode only in an isolated
-environment, such as a disposable virtual machine.</p>
+<p><strong>Denying file reads but allowing any script in the same
+process.</strong> Check the subprocess, network and credential
+boundaries, and switch to an isolated user or container where
+needed.</p>
 </div>
 <div class="pitfall">
-<p><strong>Pasting secrets into the conversation.</strong> Conversation
-history is saved and may sync to other devices. Put secrets in the
-system keychain or an uncommitted <code>.env</code>. Have the agent
-refer to variable names without seeing values.</p>
+<p><strong>Declaring the sandbox safe because the Hook unit tests
+passed.</strong> Record script branch tests and actual system boundary
+tests separately.</p>
 </div>
 <div class="pitfall">
-<p><strong>Giving the external-reading step the most
-permissions.</strong> One conversation can read web pages and push code,
-so text aimed at the agent in a page can turn into actions. The
-external-reading step can write only notes; the pushing and messaging
-step reads only prepared notes.</p>
+<p><strong>SSH exceptions outside the sandbox are not managed
+separately.</strong> Local restrictions do not reach the server; remote
+accounts and job permissions are configured on their own.</p>
 </div>
-<div class="pitfall">
-<p><strong>Slow Hooks.</strong> A two-minute check after each edit holds
-up every step. Hooks get checks that finish in seconds; slow checks
-belong in wrapping up.</p>
-</div>
-<div class="pitfall">
-<p><strong>Project rules in global configuration.</strong> A project’s
-deny list goes into user configuration, and other projects suddenly
-cannot use ssh. Keep project rules in the project. Global configuration
-gets only rules that apply everywhere.</p>
-</div>
-<h2 id="what-the-workbench-gained">What the workbench gained</h2>
+<h4 id="workbench-summary">Workbench summary</h4>
 <div class="bench">
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Tool</th>
-<th>What it lets the agent do</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Permission rules</td>
-<td>Run common commands without asking and always refuse dangerous
-ones</td>
-</tr>
-<tr>
-<td>Sandbox</td>
-<td>Write only to the project folder and temporary directories, and
-connect only to listed sites</td>
-</tr>
-<tr>
-<td>Hooks</td>
-<td>Check numbers after paper edits and scan for secrets before
-pushes</td>
-</tr>
-<tr>
-<td>Secret management</td>
-<td>Refer to variable names when using secrets, keeping values out of
-conversations and repositories</td>
-</tr>
-</tbody>
-</table>
-<p>With these, the workbench from the first four sessions is ready to
-run overnight on its own.</p>
+<p>The safety configuration can now be assessed through observable
+behavior: which task can read what, which process holds which
+credential, and which actions are actually denied. After adding tools,
+check along the information flow again, and save test records with the
+configuration version.</p>
 </div>
-<h2 id="self-study-sections">Self-study sections</h2>
+<h2 id="after-class">After class: review and extension</h2>
+<h3 id="review-first-15-minutes">Review first, 15 minutes</h3>
+<p>Redraw the information flow from the configuration actually used in
+class: how external material enters notes, which process can call tools,
+and where credentials are held. Label each edge with its control and one
+test result, and write the edges not yet tested into
+<code>review-after-class.md</code>.</p>
+<h3 id="compare-the-examples-20-minutes">Compare the examples, 20
+minutes</h3>
+<p>A records that the file read tool was denied access, and so claims
+the file is isolated; yet the same process can still run any script. B
+tests the file tool and a controlled subprocess separately, and records
+the configuration version and the actual denials. Say what each record
+proves. Then judge whether all Hook branch tests passing already proves
+that both the local sandbox and remote SSH enforce the same
+boundary.</p>
+<details>
+<summary>
+Write the coverage first, then see the comparison notes
+</summary>
+<p>A tested only one entry point. B brought the process path into view
+as well, but each actual control still needs verifying one by one. Hook
+branches, system isolation and remote accounts are different test
+targets, and each should keep its own effective configuration and
+behavioral evidence.</p>
+</details>
+<h3 id="further-study">Further study</h3>
+<p>First complete the allowed and denied tests in your own exercise
+environment, then choose one path. Where complex configuration is
+unclear, keep a minimal reproduction and check it together in a later
+Q&amp;A session.</p>
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -386,39 +422,30 @@ run overnight on its own.</p>
 </colgroup>
 <thead>
 <tr>
-<th>Section</th>
-<th>Content</th>
-<th>Time</th>
+<th>Path</th>
+<th>Next task</th>
+<th>Deliverable</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="safety-sandbox.html">5.1 Permissions and sandbox</a></td>
-<td>Permission modes; rule syntax and precedence; sandbox scope;
-equivalent settings for both vendors</td>
-<td>30 minutes</td>
+<td><a href="safety-sandbox.html">5.1 Permissions and sandboxes</a></td>
+<td>60 minutes: retest after changing the entry point and execution
+environment</td>
+<td>Capability table, configuration version and behavior matrix</td>
 </tr>
 <tr>
-<td><a href="safety-hooks.html">5.2 Hooks and secrets</a></td>
-<td>Hook events; writing a Hook; where secrets live; handling leaks</td>
-<td>30 minutes</td>
+<td><a href="safety-hooks.html">5.2 Hooks and secret management</a></td>
+<td>60 minutes: check event coverage and blocking on failure</td>
+<td>Branch records and a full check at a fixed delivery entry point</td>
 </tr>
 </tbody>
 </table>
-<section id="key-points" class="keypoints">
-<h2>Key points</h2>
-<ul>
-<li>Deny first, allow second, then ask about the rest.</li>
-<li>Permission rules govern what the agent starts; the sandbox governs
-what commands can touch. Use both.</li>
-<li>External content is data: the reading step can write only notes, and
-the pushing step does not read originals.</li>
-<li>Give mandatory checks to Hooks, not memory.</li>
-<li>Keep secrets out of conversations and repositories.</li>
-</ul>
-</section>
+<p>Finally, verify with one ordinary task that legitimate work can still
+be completed, then try one predefined out-of-bounds action. Both results
+together make up the acceptance check.</p>
 </article>
-<nav class="pager"><a class="prev" href="automate-pages.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.3 结果页</span><span lang="en">4.3 The results page</span></a><a class="next" href="safety-sandbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandbox</span></a></nav>
+<nav class="pager"><a class="prev" href="automate-pages.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">4.3 结果展示</span><span lang="en">4.3 Presenting results</span></a><a class="next" href="safety-sandbox.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandboxes</span></a></nav>
 </main>
 </div>
 </body>

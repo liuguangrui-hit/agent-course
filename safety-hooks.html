@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hooks 与密钥 · 用 Agent 做科研</title>
+<title>Hooks 与密钥管理 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,315 +17,227 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="safety-sandbox.html" class="sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandbox</span></a>
-<a href="safety-hooks.html" class="cur sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥</span><span lang="en">Hooks and secrets</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="safety-sandbox.html" class="sub"><span class="num">5.1</span><span lang="zh">权限与沙箱</span><span lang="en">Permissions and sandboxes</span></a>
+<a href="safety-hooks.html" class="cur sub"><span class="num">5.2</span><span lang="zh">Hooks 与密钥管理</span><span lang="en">Hooks and secret management</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
-<article lang="zh"><h1 id="hooks-与密钥">5.2 Hooks 与密钥</h1>
-<p><span class="meta">课后深入，约 30 分钟。</span></p>
-<p><code>AGENTS.md</code> 里的约定，Agent
-多数时候照做，偶尔会忘。对必须每次都做的检查，靠它记得不够。Hook
-是在特定时刻一定会运行的脚本，把检查从约定变成机制。这一节也讲密钥：Agent
-要用到很多账号，密钥放哪里，泄露了怎么办。</p>
-<h2 id="hook-的几个时刻">Hook 的几个时刻</h2>
+<article lang="zh"><h1 id="hooks-与密钥管理">5.2 Hooks 与密钥管理</h1>
+<p><span class="meta">课后深入，约 60 分钟。</span></p>
+<p>改完文件后的检查能告诉 Agent
+数字错了，却撤不回已经发生的编辑。推送前的检查可以阻断发布，但前提是那次推送经过了这个入口。</p>
+<h2 id="事件与检查时机">事件与检查时机</h2>
 <table>
 <thead>
 <tr>
 <th>时刻</th>
-<th>典型用法</th>
+<th>作用</th>
+<th>需要补的边界</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>运行一个工具之前</td>
-<td>推送前查密钥；拦下某类命令</td>
+<td>编辑之后</td>
+<td>快速发现格式或数字问题</td>
+<td>命令行改文件是否也覆盖</td>
 </tr>
 <tr>
-<td>运行一个工具之后</td>
-<td>改完文件跑格式化或核对脚本</td>
+<td>工具调用之前</td>
+<td>在指定入口阻断危险动作</td>
+<td>其他工具是否能做相同动作</td>
 </tr>
 <tr>
-<td>你发出一句话时</td>
-<td>自动附上当天的状态</td>
+<td>提交或发布入口</td>
+<td>核查即将交付的完整产物</td>
+<td>检查器故障时是否阻断</td>
 </tr>
 <tr>
-<td>Agent 每答完一次，或整个会话结束时</td>
-<td>检查有没有留下未提交的改动</td>
+<td>任务结束</td>
+<td>核查未完成项与状态</td>
+<td>会话崩溃后由谁接续</td>
 </tr>
 </tbody>
 </table>
-<p>运行之前的 Hook 可以阻止这次操作，并把理由告诉 Agent；运行之后的 Hook
-可以把检查结果交给 Agent，要求它修正。</p>
-<h2 id="写一个-hook">写一个 Hook</h2>
-<p>改完论文自动核对数字。Hook 挂在编辑文件之后，只在改的是
-<code>.tex</code> 时才运行：</p>
-<pre class="text"><code>{
-  &quot;hooks&quot;: {
-    &quot;PostToolUse&quot;: [
-      {
-        &quot;matcher&quot;: &quot;Edit|Write&quot;,
-        &quot;hooks&quot;: [{ &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;python3 hooks/check_tex.py&quot; }]
-      }
-    ]
-  }
-}</code></pre>
-<p><code>check_tex.py</code> 从标准输入读到这次改的是哪个文件，不是
-<code>.tex</code> 就直接退出；是的话运行第 1 课的
-<code>check_numbers.py</code>，有对不上的数字就把原因写到错误输出，以退出码
-2 退出。退出码 2 是约定好的信号：Agent
-会看到这段原因并去修正。其他非零退出码只算 Hook 自己出错，Agent
-看不到原因。</p>
-<p>写 Hook 交给 Agent 就行：</p>
-<pre class="text"><code>写一个 Hook：每次编辑 paper/ 下的 .tex 文件之后运行 code/check_numbers.py，对不上时把结果告诉你并要求修正。
-按当前官方文档的格式挂进 .claude/settings.json，写完故意改错一个数字测试它。</code></pre>
-<p>Codex 也支持 Hook，配置写法不同，同样让它按自己的文档写。</p>
-<p>这个 Hook 只盯 Agent 用编辑工具改的文件，Agent
-用命令改的文件它看不到。所以它是随手提醒，最终那一道核对放在提交或收工时再跑一次全量的
-<code>check_numbers.py</code>。</p>
-<h2 id="hook-要快">Hook 要快</h2>
-<p>Hook
-在每次对应事件时都运行。一个要跑两分钟的检查挂在每次编辑之后，Agent
-的每一步都会被拖住。几秒内跑完的检查才挂
-Hook；慢的检查，比如重跑整个实验，放进收工流程。</p>
-<h2 id="密钥放在哪">密钥放在哪</h2>
-<p>Agent 会用到 GitHub 的令牌，各种 API
-Key，服务器的登录。原则只有一条：值不出现在对话里，也不进仓库。</p>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>放在哪</th>
-<th>怎么用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>系统钥匙串</td>
-<td>由命令行工具自己读取，比如 gh 登录后的令牌</td>
-</tr>
-<tr>
-<td>项目里的 <code>.env</code>，列入 <code>.gitignore</code></td>
-<td>脚本启动时自己加载 <code>.env</code>，拒绝表禁止 Agent
-读这个文件</td>
-</tr>
-<tr>
-<td>SSH 密钥</td>
-<td>留在 <code>~/.ssh/</code>，拒绝表禁止 Agent 读这个目录</td>
-</tr>
-</tbody>
-</table>
-<p>让 Agent
-帮你配置时，告诉它变量名，值由你自己填进文件，不要贴进对话。</p>
-<p>登录网站也是同样的道理。第 2 课让 Agent
-用浏览器下载论文，你自己在浏览器里登录一次，Agent
-沿用登录状态，它从头到尾不需要知道密码。</p>
-<h2 id="推送前查密钥">推送前查密钥</h2>
-<pre class="text"><code>写一个 Hook：每次运行 git push 之前，用 gitleaks 扫描这次要推送的提交，发现疑似密钥就阻止推送，并告诉你是哪个文件哪一行。</code></pre>
-<p>gitleaks
-偶尔会误报，比如一串像密钥的测试数据。误报时把那一行加进它的忽略清单，不要关掉整个检查。</p>
-<h2 id="泄露了怎么办">泄露了怎么办</h2>
-<p>密钥一旦推到
-GitHub，即使下一次提交就删掉，历史里也还在，公开仓库几分钟内就可能被自动扫描到。顺序是：</p>
-<ol type="1">
-<li>立刻到对应的网站作废这个密钥，生成新的；</li>
-<li>新密钥放进 <code>.env</code> 或钥匙串；</li>
-<li>再考虑清理历史。</li>
-</ol>
-<p>第一步最重要。清理历史很麻烦，而且不能保证没人已经拿到；作废了的密钥，拿到也没用。</p>
+<p>包内 <code>hooks/check_tex.py</code>
+处理编辑事件，<code>hooks/pre_push_secrets.sh</code>
+处理受支持的单分支推送。先读 README
+的支持范围，再看测试，避免把一种入口的保护推到所有动作上。</p>
+<h2 id="分支测试与实际触发分开">分支测试与实际触发分开</h2>
+<p>先给脚本喂事件输入，确认成功，发现问题和内部失败的退出行为。再在
+Agent
+的真实配置里触发同一事件，检查脚本是否被调用，错误是否可见，预期阻断是否发生。</p>
+<pre class="text"><code>运行 code/test_hooks.py，保存分支验证结果。
+接到自己的演示配置后，再用一个无害编辑和一次本地测试推送触发。
+记录配置版本，事件名，脚本退出码与 Agent 实际反馈。
+扫描器不可用或超时时，发布入口应失败关闭，不能跳过检查继续。</code></pre>
+<p>Hook 配置和事件字段随产品版本变化，当前格式查 <a
+href="https://code.claude.com/docs/en/hooks">Claude Hooks</a>。Codex
+的可用事件与接口查它自己的当前文档，分别测试。</p>
+<h2 id="交付入口的全量检查">交付入口的全量检查</h2>
+<p>单个编辑 Hook
+用来快速反馈，发布入口再对冻结产物做全量检查。把受检文件哈希和结果保存，发布器确认将发布的就是这一版。</p>
+<p>若 Agent 有权删除 Hook
+或改核查器，保护强度也随之变化。需要更强边界时，把发布凭据和最终检查放到由另一权限主体维护的环境中。</p>
+<h2 id="进程与凭据访问">进程与凭据访问</h2>
+<p><code>.gitignore</code>
+防止常规提交，不阻止程序读取；环境变量也会被子进程继承。一个能运行任意代码的
+Agent，通常能借这些路径接触同一用户下的凭据。</p>
+<p>按能力选存放方式：普通本地使用可以让工具从钥匙串读取；需要隔离时，把敏感调用交给受限服务，向任务提供短期、窄作用域的凭据。变量名留在文档，值不进对话与仓库。</p>
+<h2 id="凭据泄露后的处理">凭据泄露后的处理</h2>
+<p>先在服务端吊销或轮换凭据，限制继续使用。再检查访问记录和影响范围，更新依赖它的配置，最后处理仓库历史与缓存副本。</p>
+<p>历史清理不能召回已被复制的凭据。测试时用失效样例或扫描器替身，日志隐藏疑似值。误报应逐项核实并限定忽略范围，扫描器错误继续按失败处理。</p>
 <h2 id="练习">练习</h2>
-<p>给你的工作台加第三道检查：每次 Agent 答完，如果有未提交的改动，提醒
-Agent 提交或者说明为什么不提交。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>在一次性目录创建无效样例，验证扫描器会报问题且输出已脱敏。再模拟扫描器不在
+PATH 中，检查发布是否被阻断。把这两种失败分别记在验证表里。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>关键检查写在 AGENTS.md 里。</strong>
-多数时候照做，偶尔会忘，忘的那次就出事。每次都必须做的检查交给
-Hook。</p>
+<p><strong>PostToolUse 能阻止已经完成的编辑。</strong>
+把反馈与发布阻断分别设计，先后时刻写清。</p>
 </div>
 <div class="pitfall">
-<p><strong>误报一次就关掉检查。</strong> 一次误报后整个 Hook
-被删掉，下次真的有密钥就没人拦了。误报的那一行加进忽略清单。</p>
+<p><strong>扫描器崩溃被当成没有发现问题。</strong>
+检查成功状态、退出码和报告完整性。</p>
 </div>
 <div class="pitfall">
-<p><strong>泄露后先删提交。</strong>
-花半小时清理历史，密钥这期间一直有效。先作废，再清理。</p>
+<p><strong>密钥从仓库挪进环境变量，就宣布 Agent 看不到。</strong>
+检查实际进程与凭据能力，必要时隔离执行者。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/hooks">Claude Code
-Hooks</a></li>
-<li><a href="https://github.com/gitleaks/gitleaks">gitleaks</a></li>
-</ul>
+<p>继续读 <a href="https://github.com/gitleaks/gitleaks">gitleaks
+官方说明</a>，对照实际版本配置扫描范围。</p>
 </article>
-<article lang="en"><h1 id="hooks-and-secrets">5.2 Hooks and secrets</h1>
-<p><span class="meta">Self-study, about 30 minutes.</span></p>
-<p>The agent usually follows <code>AGENTS.md</code> conventions, but
-sometimes forgets. Memory is not enough for checks that must run every
-time. A Hook is a script that always runs at a specific moment, turning
-a convention into a mechanism. This section also covers secrets: the
-agent uses many accounts, so where do keys live, and what if one
-leaks?</p>
-<h2 id="hook-events">Hook events</h2>
+<article lang="en"><h1 id="hooks-and-secret-management">5.2 Hooks and secret
+management</h1>
+<p><span class="meta">After-class deep dive, about 60
+minutes.</span></p>
+<p>A check after a file edit can tell the agent a number is wrong, but
+cannot undo the edit that already happened. A pre-push check can block
+publication, but only if that push went through this entry point.</p>
+<h2 id="choose-the-right-event-for-each-check">Choose the right event
+for each check</h2>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
 </colgroup>
 <thead>
 <tr>
-<th>Event</th>
-<th>Typical use</th>
+<th>Moment</th>
+<th>What it does</th>
+<th>Coverage to verify</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Before a tool runs</td>
-<td>Scan for secrets before pushing; block a kind of command</td>
+<td>After an edit</td>
+<td>Catches format or number problems quickly</td>
+<td>Are edits made from the command line covered too</td>
 </tr>
 <tr>
-<td>After a tool runs</td>
-<td>Format files or run a checking script after edits</td>
+<td>Before a tool call</td>
+<td>Blocks dangerous actions at the specified entry</td>
+<td>Can other tools do the same action</td>
 </tr>
 <tr>
-<td>When you send a message</td>
-<td>Attach today’s state automatically</td>
+<td>Commit or publication entry</td>
+<td>Checks the complete product about to be delivered</td>
+<td>Does it block when the checker fails</td>
 </tr>
 <tr>
-<td>After each agent response, or when the session ends</td>
-<td>Check for uncommitted changes</td>
+<td>End of the task</td>
+<td>Checks unfinished items and state</td>
+<td>Who picks up if the session crashes</td>
 </tr>
 </tbody>
 </table>
-<p>A pre-run Hook can block the action and tell the agent why. A
-post-run Hook can return check results and require a fix.</p>
-<h2 id="writing-a-hook">Writing a Hook</h2>
-<p>Check numbers automatically after paper edits. Attach the Hook after
-file editing and run it only for <code>.tex</code> files:</p>
-<pre class="text"><code>{
-  &quot;hooks&quot;: {
-    &quot;PostToolUse&quot;: [
-      {
-        &quot;matcher&quot;: &quot;Edit|Write&quot;,
-        &quot;hooks&quot;: [{ &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;python3 hooks/check_tex.py&quot; }]
-      }
-    ]
-  }
-}</code></pre>
-<p><code>check_tex.py</code> reads the edited filename from standard
-input. If it is not <code>.tex</code>, it exits. Otherwise it runs
-Session 1’s <code>check_numbers.py</code>. If numbers do not match, it
-writes the reason to standard error and exits with code 2. Exit code 2
-is the agreed signal: the agent sees the reason and fixes it. Other
-nonzero codes count only as a Hook failure, and the agent does not see
-the reason.</p>
-<p>Let the agent write the Hook:</p>
-<pre class="text"><code>Write a Hook that runs code/check_numbers.py after every edit to a .tex file under paper/. If numbers don&#39;t match, return the results to you and require a fix.
-Connect it in .claude/settings.json using the current official documentation&#39;s format. Then deliberately change a number to an incorrect one to test it.</code></pre>
-<p>Codex also supports Hooks with different configuration syntax. Have
-it follow its own documentation too.</p>
-<p>This Hook watches only files changed with the agent’s editing tools,
-not changes made through commands. Treat it as a quick reminder. Run a
-full <code>check_numbers.py</code> again at commit or wrap-up for the
-final check.</p>
-<h2 id="keep-hooks-fast">Keep Hooks fast</h2>
-<p>A Hook runs on every matching event. A two-minute check after each
-edit holds up every step. Attach only checks that finish in a few
-seconds. Slow checks, such as rerunning the whole experiment, belong in
-wrapping up.</p>
-<h2 id="where-secrets-live">Where secrets live</h2>
-<p>The agent uses GitHub tokens, API keys and server logins. One rule:
-values stay out of conversations and repositories.</p>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Location</th>
-<th>How to use it</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>System keychain</td>
-<td>Command-line tools read it themselves, such as gh’s token after
-login</td>
-</tr>
-<tr>
-<td>A project <code>.env</code> listed in <code>.gitignore</code></td>
-<td>Scripts load <code>.env</code> at startup; deny rules stop the agent
-reading it</td>
-</tr>
-<tr>
-<td>SSH keys</td>
-<td>Keep in <code>~/.ssh/</code>; deny rules stop the agent reading the
-directory</td>
-</tr>
-</tbody>
-</table>
-<p>When the agent helps configure this, tell it variable names. Fill
-values into the file yourself; do not paste them into the
-conversation.</p>
-<p>Website login follows the same principle. In Session 2 you sign in
-once in the browser, and the agent reuses that state to download papers.
-It never needs to know the password.</p>
-<h2 id="scan-for-secrets-before-pushing">Scan for secrets before
-pushing</h2>
-<pre class="text"><code>Write a Hook: before each git push, use gitleaks to scan the commits being pushed. Block the push if it finds a suspected secret, and tell you the file and line.</code></pre>
-<p>gitleaks sometimes flags a false positive, such as test data that
-looks like a key. Add that line to its ignore list rather than disabling
-the check.</p>
-<h2 id="when-a-secret-leaks">When a secret leaks</h2>
-<p>Once a key reaches GitHub, deleting it in the next commit leaves it
-in history. Automated scanners may find it in a public repository within
-minutes. In order:</p>
-<ol type="1">
-<li>Revoke the key on the relevant site at once and generate a new
-one;</li>
-<li>Put the new key in <code>.env</code> or the keychain;</li>
-<li>Then consider cleaning the history.</li>
-</ol>
-<p>The first step matters most. Cleaning history is difficult and cannot
-guarantee nobody already got the key. A revoked key is useless even if
-someone has it.</p>
+<p>The packaged <code>hooks/check_tex.py</code> handles edit events, and
+<code>hooks/pre_push_secrets.sh</code> handles supported single-branch
+pushes. First read the supported scope in the README, then look at the
+tests, so the protection of one entry point is not assumed to cover
+every action.</p>
+<h2 id="test-script-branches-and-actual-event-handling-separately">Test
+script branches and actual event handling separately</h2>
+<p>First feed event input to the script and confirm its exit behavior on
+success, on finding a problem and on internal failure. Then trigger the
+same event in the agent’s real configuration and check whether the
+script was called, whether errors are visible, and whether the action
+was blocked as expected.</p>
+<pre class="text"><code>Run code/test_hooks.py and save the branch verification results.
+After connecting it to my own demonstration configuration, trigger it with one harmless edit and one local test push.
+Record the configuration version, event name, script exit code and the agent&#39;s actual feedback.
+When the scanner is unavailable or times out, the publication entry should fail closed and must not skip the check and carry on.</code></pre>
+<p>Hook configuration and event fields change with product versions;
+look up the current format in <a
+href="https://code.claude.com/docs/en/hooks">Claude Hooks</a>. For
+Codex, look up its available events and interfaces in its own current
+docs, and test them separately.</p>
+<h2 id="the-final-check-relies-on-the-delivery-entry-point">The final
+check relies on the delivery entry point</h2>
+<p>A single edit Hook gives quick feedback; the publication entry then
+does a full check on the frozen product. Save the hashes of the checked
+files and the results, so the publisher can confirm that what it is
+about to publish is this version.</p>
+<p>If the agent has permission to delete Hooks or change the checker,
+the strength of the protection changes with it. When you need a stronger
+boundary, put the publishing credentials and the final check in an
+environment maintained by a separate authority.</p>
+<h2 id="process-access-to-credentials">Process access to
+credentials</h2>
+<p><code>.gitignore</code> prevents ordinary commits but does not stop
+programs from reading; environment variables are also inherited by
+subprocesses. An agent that can run arbitrary code can usually reach the
+credentials of the same user through these paths.</p>
+<p>Choose storage by capability: for ordinary local use, a tool can read
+from the keychain; when isolation is needed, hand sensitive calls to a
+restricted service and give the task short-lived, narrowly scoped
+credentials. Variable names stay in the documentation; values stay out
+of conversations and repositories.</p>
+<h2 id="responding-to-a-credential-leak">Responding to a credential
+leak</h2>
+<p>First revoke or rotate the credential on the server side, to stop
+further use. Then check access records and the extent of impact, update
+the configuration that depends on it, and finally deal with repository
+history and cached copies.</p>
+<p>Cleaning history cannot recall credentials that have already been
+copied. Tests use invalid samples or scanner stand-ins, and logs hide
+suspected values. False positives are verified one by one with a limited
+ignore scope, and scanner errors are still treated as failures.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Add a third check to your workbench: after each agent response, if
-there are uncommitted changes, remind it to commit or explain why it is
-not committing.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Create an invalid sample in a disposable directory and verify that
+the scanner reports the problem and its output is masked. Then simulate
+the scanner not being on PATH and check whether publication is blocked.
+Record the two kinds of failure separately in the verification
+table.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>Critical checks only in AGENTS.md.</strong> Usually followed,
-sometimes forgotten, and the missed check is when things go wrong. Give
-checks that must run every time to Hooks.</p>
+<p><strong>Believing PostToolUse can block an edit that has already been
+made.</strong> Design feedback and publication blocking separately, and
+state when each check runs.</p>
 </div>
 <div class="pitfall">
-<p><strong>Disabling a check over one false positive.</strong> Delete
-the whole Hook and the next real secret has nothing to stop it. Add the
-false-positive line to the ignore list.</p>
+<p><strong>A crashed scanner is taken as having found no
+problems.</strong> Check the success status, the exit code and the
+completeness of the report.</p>
 </div>
 <div class="pitfall">
-<p><strong>Deleting commits before revoking a leaked key.</strong> Half
-an hour cleaning history leaves the key active the whole time. Revoke
-first, clean later.</p>
+<p><strong>Declaring the agent cannot see a key because it moved from
+the repository to an environment variable.</strong> Check the actual
+process and credential capabilities, and isolate the executor where
+needed.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://code.claude.com/docs/en/hooks">Claude Code
-Hooks</a></li>
-<li><a href="https://github.com/gitleaks/gitleaks">gitleaks</a></li>
-</ul>
+<p>Further reading: <a
+href="https://github.com/gitleaks/gitleaks">official gitleaks
+documentation</a>; configure the scan scope against the version you
+actually use.</p>
 </article>
-<nav class="pager"><a class="prev" href="safety-sandbox.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandbox</span></a><a class="next" href="theory.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6 选修 编排理论</span><span lang="en">6 Elective: Theory</span></a></nav>
+<nav class="pager"><a class="prev" href="safety-sandbox.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">5.1 权限与沙箱</span><span lang="en">5.1 Permissions and sandboxes</span></a><a class="next" href="theory.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">6 编排理论</span><span lang="en">6 Orchestration theory</span></a></nav>
 </main>
 </div>
 </body>

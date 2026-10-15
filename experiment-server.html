@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>服务器与后台任务 · 用 Agent 做科研</title>
+<title>服务器与后台任务 · Agent 科研</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><span lang="zh">用 Agent 做科研</span><span lang="en">Research with Agents</span></a>
+  <a class="brand" href="index.html"><span lang="zh">Agent 科研</span><span lang="en">AI Agents for Research</span></a>
   <button class="lang-toggle" type="button" aria-label="切换语言 Switch language"><span lang="zh">English</span><span lang="en">中文</span></button>
 </header>
 <div class="layout">
@@ -17,243 +17,179 @@
 <a href="index.html"><span lang="zh">首页</span><span lang="en">Home</span></a>
 <a href="syllabus.html"><span lang="zh">课程大纲</span><span lang="en">Syllabus</span></a>
 <a href="toolbox.html"><span lang="zh">工具箱</span><span lang="en">Toolbox</span></a>
-<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Setup</span></a>
-<a href="writing.html"><span class="num">1</span><span lang="zh">Agent 写作</span><span lang="en">Writing with Agents</span></a>
-<a href="explore.html"><span class="num">2</span><span lang="zh">Agent 探索</span><span lang="en">Exploring with Agents</span></a>
-<a href="experiment.html"><span class="num">3</span><span lang="zh">Agent 实验</span><span lang="en">Experimenting with Agents</span></a>
+<a href="setup.html"><span class="num">0</span><span lang="zh">课前准备</span><span lang="en">Getting started</span></a>
+<a href="writing.html"><span class="num">1</span><span lang="zh">写作绘图</span><span lang="en">Writing and figures</span></a>
+<a href="explore.html"><span class="num">2</span><span lang="zh">知识库</span><span lang="en">Research knowledge bases</span></a>
+<a href="experiment.html"><span class="num">3</span><span lang="zh">实验分析</span><span lang="en">Experimental analysis</span></a>
 <a href="experiment-git.html" class="sub"><span class="num">3.1</span><span lang="zh">Git 与 GitHub</span><span lang="en">Git and GitHub</span></a>
 <a href="experiment-server.html" class="cur sub"><span class="num">3.2</span><span lang="zh">服务器与后台任务</span><span lang="en">Servers and background jobs</span></a>
-<a href="experiment-evidence.html" class="sub"><span class="num">3.3</span><span lang="zh">结果能说明什么</span><span lang="en">What a result shows</span></a>
-<a href="automate.html"><span class="num">4</span><span lang="zh">Agent 自动化与自进化</span><span lang="en">Automation and Self-Evolution</span></a>
-<a href="safety.html"><span class="num">5</span><span lang="zh">选修 编排安全</span><span lang="en">Elective: Safety</span></a>
-<a href="theory.html"><span class="num">6</span><span lang="zh">选修 编排理论</span><span lang="en">Elective: Theory</span></a>
+<a href="experiment-evidence.html" class="sub"><span class="num">3.3</span><span lang="zh">结果判读</span><span lang="en">Interpreting results</span></a>
+<a href="automate.html"><span class="num">4</span><span lang="zh">自动化</span><span lang="en">Research automation</span></a>
+<a href="safety.html"><span class="num">5</span><span lang="zh">安全控制</span><span lang="en">Safety controls</span></a>
+<a href="theory.html"><span class="num">6</span><span lang="zh">编排理论</span><span lang="en">Orchestration theory</span></a>
 </nav>
 <main>
 <article lang="zh"><h1 id="服务器与后台任务">3.2 服务器与后台任务</h1>
-<p><span class="meta">课后深入，约 30 分钟。需要一台能 SSH
-登录的服务器。</span></p>
-<p>实验室的服务器有 GPU，有大内存，开着不关。让 Agent
-用上它，要解决三个问题：连得上，跑得久，不用守着。这一节按这个顺序讲，再讲连接卡住时怎么办。</p>
-<h2 id="连得上ssh-配置">连得上：SSH 配置</h2>
-<p>每次输入地址、用户名和端口既麻烦又容易错。让 Agent 在
-<code>~/.ssh/config</code> 里给服务器起个短名字：</p>
+<p><span class="meta">课后深入，约 50 分钟。</span></p>
+<p>SSH
+启动实验后连接断了。任务究竟没启动，还是已经在服务器上跑？直接重试可能多跑一份。后台执行首先要能查询并确认任务状态。</p>
+<h2 id="先确认机器与目录">先确认机器与目录</h2>
+<p>沿用实验室的 SSH
+密钥与网络方案，给主机起短名，连接设置超时和心跳。第一次连接核对主机身份，再确认用户、工作目录与资源分配。</p>
 <pre class="text"><code>Host lab
-    HostName 100.64.0.5
-    User zhang
+    HostName lab.example.edu
+    User researcher
     ConnectTimeout 15
     ServerAliveInterval 15
     ServerAliveCountMax 2</code></pre>
-<p>之后 <code>ssh lab</code> 就能连上。后三行是超时设置：15
-秒连不上就放弃，连上后每 15
-秒确认一次对方还在，两次没回应就断开。没有这几行，网络一抖，Agent
-的命令会一直挂着，它也跟着卡住。这几行管的是连接；远端命令本身卡住，要靠下面的
-tmux 和日志，不让 SSH 等它。</p>
-<p>登录用密钥，不用密码。密钥在你的电脑上生成，公钥交给服务器管理员或者自己加到服务器的
-<code>~/.ssh/authorized_keys</code> 里。Agent
-不需要也不应该知道你的服务器密码。</p>
-<h2 id="校外连得上tailscale">校外连得上：Tailscale</h2>
-<p>服务器常在学校内网里，出了校园连不上。<a
-href="https://tailscale.com/">Tailscale</a>
-把你的电脑和服务器放进同一个虚拟局域网，只要两边都在线，在校外也能连。电脑和服务器各装一个，用同一个账号登录，服务器会得到一个
-100 开头的地址，写进上面的配置。</p>
-<p>如果服务器由学校统一管理，先问管理员能不能装；有的学校提供自己的
-VPN，道理相同。</p>
-<h2 id="跑得久tmux">跑得久：tmux</h2>
-<p>直接在 SSH 会话里启动的程序，SSH 一断往往跟着停。tmux
-在服务器上开一个不会随连接断开的会话，实验在里面跑：</p>
-<pre class="text"><code>ssh lab &quot;mkdir -p ~/label-noise-lab/logs; tmux new -d -s lab &#39;cd ~/label-noise-lab; uv run python code/run_experiment.py &gt; logs/run.log 2&gt;&amp;1; echo \$? &gt; logs/exit_code&#39;&quot;</code></pre>
-<p>实验结束时，不管成败，退出码都会写进
-<code>logs/exit_code</code>。<code>-d</code> 表示开好会话立刻返回，SSH
-随即断开，实验在服务器上接着跑。日志写进文件，任何时候都能看。你自己想看实验进度，<code>ssh lab</code>
-登录后 <code>tmux attach -t lab</code> 就能接进去。</p>
-<p>不用 tmux
-时，也可以用完全脱离终端的方式启动。关键是启动命令立刻返回，不让 SSH
-等着后台程序。有一个容易犯的错：把几条命令用 <code>&amp;&amp;</code>
-连起来，最后一条放到后台，整串都会被放到后台，它的输出把 SSH
-连接一直占着。启动命令单独写一句。</p>
-<h2 id="不用守着监视器">不用守着：监视器</h2>
-<p>实验要跑两小时。让 Agent
-每隔几秒问一次跑完没有，每问一次它都要重读整个对话，又慢又贵。Claude
-Code 有后台命令和监视器：一条命令在后台跑，Agent
-去做别的或者干脆停下来，命令有输出或者结束时再把它叫醒。</p>
-<pre class="text"><code>设一个监视器：每 5 分钟 ssh lab 看一次 ~/label-noise-lab/logs/exit_code 是否出现，出现就叫醒你；同时看一眼 run.log 的最后几行，日志超过 20 分钟没有变化也叫醒你。
-你醒来后，退出码不是 0 或者日志停了，读日志找原因，告诉我；退出码是 0，接着做练习 3。</code></pre>
-<p>间隔设几分钟足够。</p>
-<h2 id="服务器上的环境">服务器上的环境</h2>
-<p>在服务器上用 uv 装环境，和本机一样：仓库里有
-<code>pyproject.toml</code> 和锁文件
-<code>uv.lock</code>，<code>uv sync</code> 一步装好和本机相同版本的
-Python 包。系统库和显卡驱动不归它管，结果说明里记下服务器的显卡和 CUDA
-版本。跑之前让 Agent 先看一眼 GPU 是不是有人在用：</p>
-<pre class="text"><code>ssh lab nvidia-smi，告诉我哪几块卡空着。只用空着的卡。</code></pre>
-<h2 id="数据放在服务器上">数据放在服务器上</h2>
-<p>服务器和你的电脑之间如果经过中转网络，速度可能只有每秒几
-KB。不要从电脑传数据集到服务器，也不要把整个结果目录拉回来：</p>
-<ul>
-<li>数据集在服务器上直接下载；</li>
-<li>分析和汇总在服务器上做，只把汇总后的小文件拉回来；</li>
-<li>稍大的文件先压缩再拉。</li>
-</ul>
-<h2 id="停掉一个实验">停掉一个实验</h2>
-<p>最稳的办法是关掉 tmux
-会话：<code>ssh lab tmux kill-session -t lab</code>。不要让 Agent
-按命令名匹配去杀进程，它在服务器上执行的那条 SSH
-命令本身也含有这个名字，会把自己一起杀掉。真要按名字找，让它先列出进程编号给你看，再按编号停。</p>
-<h2 id="连接卡住时">连接卡住时</h2>
-<p>所有 SSH 突然都超时，先别重试。让 Agent 查一下 Tailscale 的状态，或者
-ping
-一下服务器。如果是网络问题，接着反复重连只会更堵。停下来，告诉你，等网络恢复。</p>
+<p>示例地址需替换成自己的主机。密码和私钥保留在本地认证设施中。Tailscale
+或学校 VPN 只解决连接路径，服务器的使用权限和集群调度规则仍要遵守。</p>
+<h2 id="用运行编号启动">用运行编号启动</h2>
+<p>每次实验先分配唯一运行编号，把配置和日志放到对应目录。启动器收到同一编号时，先查是否已有运行、完成或失败记录。网络重试据此决定继续查询还是重新提交。</p>
+<p>集群有调度器时，优先使用作业编号与状态接口。普通实验室机器可用
+tmux，运行脚本负责写退出码和完成清单。启动返回作业标识后，Agent
+可以结束当前等待。</p>
+<pre class="text"><code>为本轮准备独立目录，保存配置与执行提交。
+启动前检查该运行编号是否已存在。启动后立即返回任务标识。
+实验脚本把日志、退出码和产物清单写入本轮目录，只有校验完整后才写完成状态。
+连接失败时先按运行编号查询，确认未启动后再提交。</code></pre>
+<h2 id="状态与日志检查">状态与日志检查</h2>
+<p>日志静止可能是计算耗时，也可能是进程卡住。先查进程或作业状态，再结合心跳和阶段预期。监视器记录最后检查时间，成功、失败和状态未知分开报告。</p>
+<p>日志中出现一行
+done，也要核对退出码、预期行数和数值有效性。程序可能在写完部分结果后失败，输出文件存在仍不足以判完成。</p>
+<p>监视器的检查间隔按任务时长设定。短演示可以更频繁，数小时实验通常隔几分钟查一次；任务结束后停止监视。</p>
+<h2 id="按执行记录恢复">按执行记录恢复</h2>
+<p>实验可恢复时，checkpoint
+记录训练状态、随机状态与优化器。续跑代码要确认数据与配置匹配。只能从头重跑时，新开运行编号，保留失败轮次及重跑关系。</p>
+<p>连接恢复后读取状态，不能凭上一段聊天推断完成位置。停任务时按确认过的作业编号或进程编号操作，先区分任务进程与共享服务。</p>
+<h2 id="资源与数据留在执行端">资源与数据留在执行端</h2>
+<p>先确认资源分配，再启动实验。看到 GPU
+空闲只是一次观测，不能保证它已经分给本任务。共享集群遵循调度器，普通服务器与同组成员约定占用。</p>
+<p>数据尽量在服务器直接取得，摘要与分析也在那里生成。只拉回必要的小结果、元数据和图片，模型权重等大文件留下明确位置与校验信息。</p>
 <h2 id="练习">练习</h2>
-<p>把练习 2 的实验分成两组种子，在服务器上开两个 tmux
-会话同时跑，一个监视器看两份日志。这个实验只用 CPU；你自己的实验用 GPU
-时，再让每个会话指定一块空着的卡。</p>
-<h2 id="最容易出错的地方">最容易出错的地方</h2>
+<p>启动一个本课短运行，中途断开终端，再从新会话按运行编号查询。模拟一次未知状态：假设启动回包丢失，检查会不会重复启动。</p>
+<p>交付一张状态表，记录每次查询看到的进程、退出码与产物。根据这张表说明何时能安全重试，何时需要先核实。</p>
+<h2 id="常见错误与处理方法">常见错误与处理方法</h2>
 <div class="pitfall">
-<p><strong>命令挂着不返回。</strong> 后台程序没有完全脱离，SSH
-一直等着它。放进 tmux，启动命令立刻返回；每次 SSH 都有超时。</p>
+<p><strong>启动没回包就再发一次。</strong>
+先按运行编号查执行端，避免重复消耗资源。</p>
 </div>
 <div class="pitfall">
-<p><strong>大文件来回传。</strong>
-中转网络被堵死，所有连接一起超时。数据在服务器上下载，只拉回小文件。</p>
+<p><strong>日志不动就杀任务。</strong>
+结合阶段时长与进程状态，先判定卡在哪里。</p>
 </div>
 <div class="pitfall">
-<p><strong>超时后狂重连。</strong> 网络已经堵了，Agent
-每几秒重试一次，越试越堵。超时两次就停，查网络状态，告诉你。</p>
+<p><strong>恢复时换了配置，沿用旧编号。</strong>
+身份变化新建运行，保留续跑或重跑关系。</p>
 </div>
-<h2 id="延伸阅读">延伸阅读</h2>
-<ul>
-<li><a href="https://github.com/tmux/tmux/wiki/Getting-Started">tmux
-入门</a></li>
-<li><a href="https://tailscale.com/kb/1017/install">Tailscale
-快速开始</a></li>
-</ul>
+<p>继续看 <a
+href="https://github.com/tmux/tmux/wiki/Getting-Started">tmux 入门</a>
+与 <a href="https://tailscale.com/kb/1017/install">Tailscale
+官方安装</a>。</p>
 </article>
 <article lang="en"><h1 id="servers-and-background-jobs">3.2 Servers and background
 jobs</h1>
-<p><span class="meta">Self-study, about 30 minutes. Needs a server you
-can SSH into.</span></p>
-<p>A lab server has GPUs, plenty of memory, and stays on. To let the
-agent use it, solve three problems: connect, keep running, and stop
-waiting. This section follows that order, then covers stuck
-connections.</p>
-<h2 id="connect-ssh-configuration">Connect: SSH configuration</h2>
-<p>Typing an address, username and port every time is tedious and
-error-prone. Have the agent give the server a short name in
-<code>~/.ssh/config</code>:</p>
+<p><span class="meta">After-class deep dive, about 50
+minutes.</span></p>
+<p>You start an experiment over SSH and the connection drops. Did the
+job never start, or is it already running on the server? Simply retrying
+may run a second copy. Background execution first has to resolve this
+uncertainty.</p>
+<h2 id="confirm-the-machine-and-directory-first">Confirm the machine and
+directory first</h2>
+<p>Use the lab’s SSH keys and network setup, give the host a short name,
+and set a timeout and keepalive for the connection. On first connection,
+check the host identity, then confirm the user, working directory and
+resource allocation.</p>
 <pre class="text"><code>Host lab
-    HostName 100.64.0.5
-    User zhang
+    HostName lab.example.edu
+    User researcher
     ConnectTimeout 15
     ServerAliveInterval 15
     ServerAliveCountMax 2</code></pre>
-<p>Then <code>ssh lab</code> connects. The last three lines set
-timeouts: give up if connection takes over 15 seconds; once connected,
-check every 15 seconds that the server is still there; disconnect after
-two missed replies. Without them, a network hiccup can leave the command
-hanging and the agent stuck. These lines govern the connection. For a
-stuck remote command, use tmux and logs below so SSH does not wait for
-it.</p>
-<p>Log in with a key, not a password. Generate the key on your computer
-and give the public key to the server administrator, or add it to the
-server’s <code>~/.ssh/authorized_keys</code> yourself. The agent does
-not need and should not know your server password.</p>
-<h2 id="connect-off-campus-tailscale">Connect off campus: Tailscale</h2>
-<p>Servers are often on the university’s internal network and
-unreachable off campus. <a href="https://tailscale.com/">Tailscale</a>
-puts your computer and the server on the same virtual local network. If
-both are online, you can connect from off campus. Install it on both and
-sign in with the same account. The server gets an address starting with
-100; put it in the configuration above.</p>
-<p>If the university manages the server, ask the administrator before
-installing it. Some universities provide their own VPN; the idea is the
-same.</p>
-<h2 id="keep-running-tmux">Keep running: tmux</h2>
-<p>A program started directly in an SSH session often stops when SSH
-disconnects. tmux opens a server session that survives disconnection.
-Run the experiment inside it:</p>
-<pre class="text"><code>ssh lab &quot;mkdir -p ~/label-noise-lab/logs; tmux new -d -s lab &#39;cd ~/label-noise-lab; uv run python code/run_experiment.py &gt; logs/run.log 2&gt;&amp;1; echo \$? &gt; logs/exit_code&#39;&quot;</code></pre>
-<p>When the experiment ends, success or failure, its exit code goes to
-<code>logs/exit_code</code>. <code>-d</code> returns as soon as the
-session starts. SSH disconnects and the experiment continues on the
-server. Logs go to a file you can read any time. To see progress
-yourself, log in with <code>ssh lab</code>, then join with
-<code>tmux attach -t lab</code>.</p>
-<p>Without tmux, you can also launch fully detached from the terminal.
-The launch command must return at once so SSH does not wait for the
-background program. A common mistake is joining commands with
-<code>&amp;&amp;</code> and putting the last in the background: the
-whole chain goes into the background, and its output holds the SSH
-connection open. Write the launch as a separate command.</p>
-<h2 id="stop-waiting-a-monitor">Stop waiting: a monitor</h2>
-<p>An experiment takes two hours. If the agent asks every few seconds
-whether it is done, it rereads the whole conversation every time. That
-is slow and expensive. Claude Code has background commands and monitors:
-a command runs in the background while the agent does something else or
-stops, then wakes it when there is output or the command ends.</p>
-<pre class="text"><code>Set a monitor: every 5 minutes, use ssh lab to check whether ~/label-noise-lab/logs/exit_code exists. Wake when it appears. Also check the last few lines of run.log; wake if the log has not changed for over 20 minutes.
-When you wake, if the exit code is not 0 or the log has stopped, read the log to find the cause and tell me. If the exit code is 0, continue with Exercise 3.</code></pre>
-<p>A few minutes between checks is enough.</p>
-<h2 id="the-server-environment">The server environment</h2>
-<p>Use uv on the server just as locally. With
-<code>pyproject.toml</code> and the lockfile <code>uv.lock</code> in the
-repository, <code>uv sync</code> installs the same Python package
-versions in one step. It does not manage system libraries or GPU
-drivers. Record the server’s GPU and CUDA version in the result report.
-Before running, have the agent check whether anyone is using the
-GPUs:</p>
-<pre class="text"><code>Run ssh lab nvidia-smi and tell me which GPUs are free. Use only free GPUs.</code></pre>
-<h2 id="keep-data-on-the-server">Keep data on the server</h2>
-<p>If traffic between the server and your computer goes through a relay,
-speeds may be only a few KB per second. Do not upload datasets from your
-computer or bring back the whole result directory:</p>
-<ul>
-<li>Download datasets directly on the server;</li>
-<li>Analyse and summarize there, then bring back only small summary
-files;</li>
-<li>Compress larger files before transferring.</li>
-</ul>
-<h2 id="stopping-an-experiment">Stopping an experiment</h2>
-<p>The most reliable way is closing its tmux session:
-<code>ssh lab tmux kill-session -t lab</code>. Do not have the agent
-kill processes by matching command names. Its SSH command on the server
-contains the same name, so it may kill itself too. If you need to search
-by name, have it list process IDs first, then stop by ID.</p>
-<h2 id="when-connections-hang">When connections hang</h2>
-<p>If all SSH calls suddenly time out, stop retrying. Have the agent
-check Tailscale’s status or ping the server. If the network is at fault,
-repeated reconnections only add congestion. The agent should stop, tell
-you, and wait for the network to recover.</p>
+<p>Replace the example address with your own host. Passwords and private
+keys stay in your local authentication setup. Tailscale or a university
+VPN only provides connectivity; the server’s usage permissions and the
+cluster’s scheduling rules still apply.</p>
+<h2 id="start-with-a-run-id">Start with a run ID</h2>
+<p>Before each experiment, assign a unique run ID and put its
+configuration and logs in the matching directory. When the launcher
+receives the same ID, it first checks whether a running, finished or
+failed record already exists. A network retry uses this to decide
+whether to keep querying or resubmit.</p>
+<p>When the cluster has a scheduler, prefer its job IDs and status
+interface. On an ordinary lab machine you can use tmux, with the run
+script responsible for writing the exit code and the completion list.
+Once the launch returns a job identifier, the agent can stop
+waiting.</p>
+<pre class="text"><code>Prepare a separate directory for this round, saving the configuration and execution commit.
+Before launching, check whether this run ID already exists. After launching, return the job identifier immediately.
+The experiment script writes the log, exit code and product list into this round&#39;s directory, and writes the completion status only after verifying they are complete.
+If the connection fails, first query by run ID, and resubmit only after confirming it did not start.</code></pre>
+<h2 id="check-status-as-well-as-logs">Check status as well as logs</h2>
+<p>A silent log may mean a long computation, or a stuck process. First
+check the process or job status, then interpret it alongside the
+heartbeat and the expected stage duration. The monitor records the last
+check time and reports success, failure and unknown status
+separately.</p>
+<p>Even when a log line says done, check the exit code, the expected
+number of rows and that values are valid. A program can fail after
+writing part of its results, so an existing output file is not enough to
+judge completion.</p>
+<p>Set the monitor’s check interval by job length. A short demonstration
+can be checked more often; an experiment of several hours is usually
+checked every few minutes. Stop monitoring when the job ends.</p>
+<h2 id="recover-from-the-run-records">Recover from the run records</h2>
+<p>When an experiment can resume, the checkpoint records the training
+state, random state and optimizer. The resuming code must confirm that
+data and configuration match. When you can only rerun from scratch,
+assign a new run ID and keep the failed round and its relation to the
+rerun.</p>
+<p>After the connection comes back, read the status; do not infer how
+far it got from the previous conversation. When stopping a job, act on a
+confirmed job ID or process ID, and first tell the job’s processes apart
+from shared services.</p>
+<h2 id="keep-resources-and-data-on-the-execution-host">Keep resources
+and data on the execution host</h2>
+<p>Confirm the resource allocation before starting the experiment.
+Seeing a GPU idle is one observation; it does not guarantee the GPU is
+allocated to this job. On a shared cluster follow the scheduler; on an
+ordinary server, agree on usage with your group.</p>
+<p>Get data directly on the server wherever possible, and produce
+summaries and analyses there too. Pull back only the necessary small
+results, metadata and figures; large files such as model weights stay
+put, with a clear location and checksum.</p>
 <h2 id="exercise">Exercise</h2>
-<p>Split Exercise 2’s experiment into two groups of seeds and run them
-at once in two tmux sessions on the server, with one monitor watching
-both logs. This experiment uses only the CPU. For your own GPU
-experiments, have each session use a free GPU.</p>
-<h2 id="where-agents-go-wrong-most">Where agents go wrong most</h2>
+<p>Start a short run from this lesson, disconnect the terminal partway
+through, then query by run ID from a new session. Simulate an unknown
+status: suppose the launch reply was lost, and check whether the job
+would be launched twice.</p>
+<p>Hand in a status table recording the process, exit code and products
+seen at each query. From the table, explain when it is safe to retry and
+when you must verify first.</p>
+<h2 id="common-mistakes-and-how-to-fix-them">Common mistakes and how to
+fix them</h2>
 <div class="pitfall">
-<p><strong>A command hangs instead of returning.</strong> The background
-program has not fully detached, so SSH keeps waiting. Put it in tmux and
-make the launch command return at once. Give every SSH call a
-timeout.</p>
+<p><strong>Sending the launch again because no reply came back.</strong>
+First query the executor by run ID, to avoid using resources twice.</p>
 </div>
 <div class="pitfall">
-<p><strong>Large files going back and forth.</strong> The relay gets
-congested and all connections time out. Download data on the server and
-bring back only small files.</p>
+<p><strong>Killing a job because the log is not moving.</strong> Combine
+the stage duration with the process status, and first judge where it is
+stuck.</p>
 </div>
 <div class="pitfall">
-<p><strong>Reconnecting wildly after a timeout.</strong> The network is
-already congested, and retries every few seconds make it worse. Stop
-after two timeouts, check network status, and tell you.</p>
+<p><strong>Changing the configuration on recovery but keeping the old
+ID.</strong> When the configuration or other run details change, create
+a new run, and keep its relation as a resume or a rerun.</p>
 </div>
-<h2 id="further-reading">Further reading</h2>
-<ul>
-<li><a href="https://github.com/tmux/tmux/wiki/Getting-Started">Getting
-started with tmux</a></li>
-<li><a href="https://tailscale.com/kb/1017/install">Tailscale
-quickstart</a></li>
-</ul>
+<p>Further reading: <a
+href="https://github.com/tmux/tmux/wiki/Getting-Started">Getting started
+with tmux</a> and <a
+href="https://tailscale.com/kb/1017/install">Tailscale’s official
+installation guide</a>.</p>
 </article>
-<nav class="pager"><a class="prev" href="experiment-git.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.1 Git 与 GitHub</span><span lang="en">3.1 Git and GitHub</span></a><a class="next" href="experiment-evidence.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3.3 结果能说明什么</span><span lang="en">3.3 What a result shows</span></a></nav>
+<nav class="pager"><a class="prev" href="experiment-git.html"><small><span lang="zh">上一节</span><span lang="en">Previous</span></small><span lang="zh">3.1 Git 与 GitHub</span><span lang="en">3.1 Git and GitHub</span></a><a class="next" href="experiment-evidence.html"><small><span lang="zh">下一节</span><span lang="en">Next</span></small><span lang="zh">3.3 结果判读</span><span lang="en">3.3 Interpreting results</span></a></nav>
 </main>
 </div>
 </body>
